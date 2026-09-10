@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GDG Main Platform Frontend
 
-## Getting Started
+The frontend for the Google Developer Groups on Campus - University of Jeddah Unified Community Platform.
 
-First, run the development server:
+This repository is intentionally separate from the backend. It owns the user interface and consumes the backend API; it does not own database access, authentication authority, authorization decisions, or domain business logic.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Status
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This is an initial documentation package. Application source code, repository URL, deployment configuration, CI, design system, API base URL for each environment, and the published API contract are **TBD**.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Approved technical direction
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Area | Direction |
+| --- | --- |
+| Frontend framework | Next.js with React and TypeScript |
+| Styling | Tailwind CSS |
+| Motion | Framer Motion and GSAP, when justified |
+| Backend relationship | Consume the separate NestJS API only |
+| API contract | Consume the backend's published Swagger/OpenAPI contract |
+| Local frontend address in the technical guide | `http://localhost:3000` |
+| Node.js | LTS, version 20 or newer per the technical guide |
 
-## Learn More
+The explicit project decision is that **Next.js is frontend only**. NestJS in the separate backend repository is the authoritative backend.
 
-To learn more about Next.js, take a look at the following resources:
+## Documentation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Architecture](docs/architecture.md)
+- [Decision and source governance](docs/decision-governance.md)
+- [Development workflow](docs/development-workflow.md)
+- [API integration](docs/api-integration.md)
+- [UI standards](docs/ui-standards.md)
+- [Testing](docs/testing.md)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Getting started
 
-## Deploy on Vercel
+The technical guide describes this expected local workflow once application code and `package.json` exist:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Install Node.js LTS (20+), Git, and a code editor.
+2. Clone this repository and run `npm install`.
+3. Create `.env.local` from the approved environment-variable template when it is supplied. The expected public API variable is `NEXT_PUBLIC_API_URL`; its environment-specific value is **TBD**.
+4. Run the repository's confirmed development command. The technical guide uses `npm run dev` and expects the frontend at `http://localhost:3000`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Do not add or assume scripts until `package.json` is created and reviewed.
+
+## Product scope at a glance
+
+The platform is intended to bring community membership, applications, events and registrations, teams, tasks, announcements, recommendations, attendance, organizational information, and approved member communication into one platform. Product detail and priority remain subject to approved requirements; see the backend contract for executable behavior.
+
+## Sources
+
+- [Unified Community Platform proposal](../../sources/GDG_منصة_موحدة.pdf) - product vision, user roles, and proposed capabilities.
+- [Web Doc Final](../../sources/Web%20Doc%20Final.pdf) - approved technical stack and initial local setup guidance.
+- Approved Notion tasks - task-scoped requirements and acceptance criteria; link the exact task in the relevant issue, PR, or decision record.
+
+The paths above are reference links for the documentation package. Copy the two source files to the organization’s agreed documentation location, or replace these links, when this package is placed in its final repository.
