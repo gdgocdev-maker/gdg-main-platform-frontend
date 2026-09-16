@@ -76,13 +76,13 @@ export default function SignupCredentials() {
       >
         Phone number
         <span className="mt-1.5 flex h-9 items-center rounded-md border border-black/15 text-[12px] font-normal">
-          <span className="relative h-full border-r border-black/15">
+          <span className="relative h-full border-e border-black/15">
             <select
               id="country-code"
               name="country-code"
               defaultValue="+966"
               aria-label="Country code"
-              className="h-full appearance-none rounded-l-md bg-white px-2.75 pr-6 text-[12px] font-normal outline-none"
+              className="h-full appearance-none rounded-s-md bg-white px-2.75 pe-6 text-[12px] font-normal outline-none"
             >
               {countryCodeOptions.map(({ code }) => (
                 <option
@@ -93,7 +93,7 @@ export default function SignupCredentials() {
                 </option>
               ))}
             </select>
-            <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-[11px]">
+            <span className="pointer-events-none absolute inset-e-2 top-1/2 -translate-y-1/2 text-[11px]">
               ⌄
             </span>
           </span>

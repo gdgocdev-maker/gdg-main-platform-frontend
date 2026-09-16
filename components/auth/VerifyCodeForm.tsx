@@ -95,7 +95,7 @@ export default function VerifyCodeForm() {
         Didn&apos;t get the code?{" "}
         <button
           type="button"
-          className="font-bold text-blue hover:text-blue/90 active:text-blue/80"
+          className="cursor-pointer font-bold text-blue hover:text-blue/90 active:text-blue/80"
         >
           Resend Code
         </button>

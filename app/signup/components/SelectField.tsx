@@ -27,7 +27,7 @@ export default function SelectField({
             {placeholder}
           </option>
         </select>
-        <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[11px]">
+        <span className="pointer-events-none absolute inset-e-3 top-1/2 -translate-y-1/2 text-[11px]">
           ⌄
         </span>
       </span>

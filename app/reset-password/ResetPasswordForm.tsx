@@ -2,7 +2,13 @@
 
 import PasswordInput from "@/components/auth/PasswordInput"
 
-export default function ResetPasswordForm() {
+type ResetPasswordFormProps = {
+  submitLabel?: string
+}
+
+export default function ResetPasswordForm({
+  submitLabel = "Reset Password"
+}: ResetPasswordFormProps) {
   return (
     <form className="mt-9 w-full">
       <label
@@ -35,7 +41,7 @@ export default function ResetPasswordForm() {
         type="button"
         className="mt-9.5 h-8.75 w-full rounded-[5px] bg-blue text-[12px] font-bold text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
       >
-        Reset Password
+        {submitLabel}
       </button>
     </form>
   )
