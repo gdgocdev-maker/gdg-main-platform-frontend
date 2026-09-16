@@ -1,3 +1,5 @@
+import PasswordInput from "@/components/auth/PasswordInput"
+
 const countryCodeOptions = [{ country: "Saudi Arabia", code: "+966" }]
 
 export default function SignupCredentials() {
@@ -34,7 +36,7 @@ export default function SignupCredentials() {
         className="block text-[12px] font-bold"
       >
         Password <span className="text-red">*</span>
-        <input
+        <PasswordInput
           id="password"
           name="password"
           type="password"
@@ -60,7 +62,7 @@ export default function SignupCredentials() {
         className="block text-[12px] font-bold"
       >
         Confirm Password <span className="text-red">*</span>
-        <input
+        <PasswordInput
           id="confirm-password"
           name="confirm-password"
           type="password"
