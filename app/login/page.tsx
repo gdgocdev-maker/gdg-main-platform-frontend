@@ -1,7 +1,6 @@
 import Image from "next/image"
 import type { Metadata } from "next"
 import Link from "next/link"
-import AuthCard from "@/components/auth/AuthCard"
 import AuthVisualPanel from "@/components/auth/AuthVisualPanel"
 
 export const metadata: Metadata = {
@@ -14,7 +13,7 @@ export default function LogIn() {
       <AuthVisualPanel side="left" />
 
       <section className="flex h-auto flex-1 items-center justify-center bg-white lg:h-full">
-        <AuthCard>
+        <div className="relative flex h-auto w-full flex-col items-center bg-white px-8.75 pt-10.25 min-[760px]:w-109.5 min-[760px]:rounded-[20px] min-[760px]:shadow-[0_0_15px_rgba(0,0,0,0.15)] ">
           <Image
             src="/colorful-logo.svg"
             alt=""
@@ -76,13 +75,14 @@ export default function LogIn() {
           <p className="mt-4 pb-8 text-[11px] text-black/55">
             Don’t have an account?
             <Link
-              href="#"
+              href="/signup"
               className="font-bold text-blue ms-1 hover:text-blue/90 active:text-blue/80"
             >
               Create an account
             </Link>
           </p>
-        </AuthCard>
+        </div>
+
       </section>
     </main>
   )
