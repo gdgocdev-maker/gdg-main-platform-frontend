@@ -43,7 +43,7 @@ export default function SignupDetails({ onBack }: SignupDetailsProps) {
         placeholder="Select your major"
       />
 
-      <div className="col-span-full mt-15 flex w-full flex-col gap-3 lg:flex-row">
+      <div className="col-span-full mt-10 mb-3 flex w-full flex-col gap-3 lg:flex-row">
         <button
           type="button"
           onClick={onBack}

@@ -23,7 +23,7 @@ export default function SignupFlow() {
         onSubmit={handleSubmit}
         className="mt-17.5 flex w-full flex-1 flex-col"
       >
-        <div className="grid w-full grid-cols-1 gap-x-4.5 gap-y-3.25 min-[760px]:grid-cols-2">
+        <div className="grid w-full grid-cols-1 gap-x-4.5 gap-y-3.25 md:grid-cols-2">
           {step === 1 ? (
             <SignupCredentials />
           ) : (

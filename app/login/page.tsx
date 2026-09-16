@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 
 export default function LogIn() {
   return (
-    <main className="flex h-auto min-h-screen min-w-0 flex-col overflow-hidden bg-white text-primary-font lg:h-screen lg:min-w-270 lg:flex-row">
+    <main className="flex h-auto min-h-screen min-w-0 flex-col bg-white text-primary-font lg:h-screen lg:flex-row">
       <AuthVisualPanel side="left" />
 
       <section className="flex h-auto flex-1 items-center justify-center bg-white lg:h-full">
-        <div className="relative flex h-auto w-full flex-col items-center bg-white px-8.75 pt-10.25 min-[760px]:w-109.5 min-[760px]:rounded-[20px] min-[760px]:shadow-[0_0_15px_rgba(0,0,0,0.15)] ">
+        <div className="relative flex h-auto w-full flex-col items-center bg-white px-8.75 pt-10.25 md:w-109.5 md:rounded-[20px] md:shadow-[0_0_15px_rgba(0,0,0,0.15)] ">
           <Image
             src="/colorful-logo.svg"
             alt=""
@@ -22,7 +22,7 @@ export default function LogIn() {
             priority
           />
 
-          <h2 className="mt-3 text-[25px] font-bold leading-[1.1] tracking-[-1px] text-center sm:text-[32px]">
+          <h2 className="mt-3 text-[25px] font-bold leading-[1.1] tracking-[-1px] text-center md:text-[32px]">
             Continue with your email
           </h2>
           <p className="mt-1 text-[13px] text-black/45">
@@ -82,7 +82,6 @@ export default function LogIn() {
             </Link>
           </p>
         </div>
-
       </section>
     </main>
   )
