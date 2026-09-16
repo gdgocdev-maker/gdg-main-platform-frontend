@@ -10,7 +10,7 @@ export default function AuthVisualPanel({ side }: AuthVisualPanelProps) {
   return (
     <section
       className={`
-        relative flex h-full w-[48%] flex-col overflow-hidden bg-light-blue px-8.5 pt-8.75 shadow-[0_0_15px_rgba(0,0,0,0.15)]
+        hidden relative h-auto w-full flex-col overflow-hidden bg-light-blue px-8.5 pt-8.75 shadow-[0_0_15px_rgba(0,0,0,0.15)] lg:flex lg:h-full lg:w-[48%]
         ${isLeft ? "rounded-tr-[30px]" : "rounded-tl-[30px]"}`}
     >
       <Image

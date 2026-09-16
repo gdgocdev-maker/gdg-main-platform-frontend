@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 
 export default function LogIn() {
   return (
-    <main className="flex h-screen min-w-270 overflow-hidden bg-white text-primary-font">
+    <main className="flex h-auto min-h-screen min-w-0 flex-col overflow-hidden bg-white text-primary-font lg:h-screen lg:min-w-270 lg:flex-row">
       <AuthVisualPanel side="left" />
 
-      <section className="flex h-full flex-1 items-center justify-center bg-white">
+      <section className="flex h-auto flex-1 items-center justify-center bg-white lg:h-full">
         <AuthCard>
           <Image
             src="/colorful-logo.svg"
@@ -23,7 +23,7 @@ export default function LogIn() {
             priority
           />
 
-          <h2 className="mt-3 text-[32px] font-bold leading-[1.1] tracking-[-1px]">
+          <h2 className="mt-3 text-[25px] font-bold leading-[1.1] tracking-[-1px] text-center sm:text-[32px]">
             Continue with your email
           </h2>
           <p className="mt-1 text-[13px] text-black/45">
@@ -73,7 +73,7 @@ export default function LogIn() {
             </button>
           </form>
 
-          <p className="mt-auto pb-8 text-[11px] text-black/55">
+          <p className="mt-4 pb-8 text-[11px] text-black/55">
             Don’t have an account?
             <Link
               href="#"
