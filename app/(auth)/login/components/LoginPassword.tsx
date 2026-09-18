@@ -52,7 +52,7 @@ export default function LoginPassword({
             <AuthErrorMessage
               id="login-password-error"
               message={error}
-              className="absolute left-0 top-full mt-1"
+              className="absolute inset-s-0 top-full mt-1"
             />
           </div>
         </label>
