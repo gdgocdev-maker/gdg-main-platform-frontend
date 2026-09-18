@@ -3,6 +3,7 @@
 import { useState, useSyncExternalStore } from "react";
 import type { ReactElement, ReactNode } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 
@@ -42,10 +43,20 @@ const itemVariants: Variants = {
 type IconProps = { className?: string };
 type IconComponent = (props: IconProps) => ReactElement;
 
+// Arabic/English i18n is planned but not implemented yet — English is the current default.
+// Every date is formatted with this fixed locale rather than `undefined` (which resolves to
+// the *runtime's* default locale: Node's ICU default during SSR, the browser's language
+// during hydration). Those two defaults can differ, so `undefined` produces different text
+// on the server and the client and React flags it as a hydration mismatch. A fixed locale
+// keeps server and client output identical regardless of either environment's language
+// settings. When Arabic support is added, replace this constant with the real language
+// state (kept in sync across server/client instead of read from the browser at render time).
+const APP_LOCALE = "en-US";
+
 // Formats the utility-row "Today" label from the browser's local date, e.g. "Today, Wed 16 Sep".
 function formatTodayLabel(date: Date): string {
-  const weekday = date.toLocaleDateString(undefined, { weekday: "short" });
-  const month = date.toLocaleDateString(undefined, { month: "short" });
+  const weekday = date.toLocaleDateString(APP_LOCALE, { weekday: "short" });
+  const month = date.toLocaleDateString(APP_LOCALE, { month: "short" });
   return `Today, ${weekday} ${date.getDate()} ${month}`;
 }
 
@@ -384,6 +395,19 @@ function TopNav(): ReactElement {
 
 // Desktop (lg+) only — the vertical text+icon sidebar. Below lg, `CompactDashboardNav`
 // (rendered inside `main`, further down this file) takes over instead.
+// Highlights whichever sidebar item matches the current route. Dashboard uses an exact
+// match since "/dashboard" is a real top-level route today; every other item matches its
+// own route or any nested route under it (e.g. "/events/123", "/events/create"). This stays
+// correct regardless of whether Events/Tasks/Members/Achievements end up as top-level routes
+// or nested under "/dashboard" — only their `href` in mock-data.ts needs to change from the
+// current placeholder ("#") to the real path once those pages exist; no logic change needed.
+function isNavItemActive(pathname: string, href: string): boolean {
+  if (href === "/dashboard") {
+    return pathname === "/dashboard";
+  }
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 function SidebarLink({
   href,
   label,
@@ -415,17 +439,19 @@ function SidebarLink({
   );
 }
 
-function Sidebar({ activeId }: { activeId: string }): ReactElement {
+function Sidebar(): ReactElement {
+  const pathname = usePathname();
+
   return (
     <aside className="hidden shrink-0 border-e border-gdg-gray-light bg-white px-3 py-6 lg:block lg:w-60 xl:w-64">
       <nav aria-label="Dashboard sections" className="flex flex-col gap-1">
         {sidebarPrimaryItems.map((item) => (
           <SidebarLink
             key={item.id}
-            href={item.id === "dashboard" ? "/dashboard" : "#"}
+            href={item.href}
             label={item.label}
             Icon={sidebarIcons[item.id]}
-            active={item.id === activeId}
+            active={isNavItemActive(pathname, item.href)}
           />
         ))}
       </nav>
@@ -471,17 +497,19 @@ function NavIconButton({
   );
 }
 
-function CompactDashboardNav({ activeId }: { activeId: string }): ReactElement {
+function CompactDashboardNav(): ReactElement {
+  const pathname = usePathname();
+
   return (
     <nav aria-label="Dashboard" className="flex items-center justify-between gap-2 lg:hidden">
       <div className="flex items-center gap-1" role="group" aria-label="Dashboard sections">
         {sidebarPrimaryItems.map((item) => (
           <NavIconButton
             key={item.id}
-            href={item.id === "dashboard" ? "/dashboard" : "#"}
+            href={item.href}
             label={item.label}
             Icon={sidebarIcons[item.id]}
-            active={item.id === activeId}
+            active={isNavItemActive(pathname, item.href)}
           />
         ))}
       </div>
@@ -749,14 +777,14 @@ function CalendarCard({ data }: { data: CalendarMockData }): ReactElement {
     );
   };
 
-  const monthLabel = new Date(view.year, view.month, 1).toLocaleDateString(undefined, {
+  const monthLabel = new Date(view.year, view.month, 1).toLocaleDateString(APP_LOCALE, {
     month: "long",
     year: "numeric",
   });
   const cells = getMonthGridDays(view.year, view.month);
   const isSelectedMonthInView = view.year === data.year && view.month === data.month;
 
-  const selectedDateLabel = new Date(data.year, data.month, data.selectedDay).toLocaleDateString(undefined, {
+  const selectedDateLabel = new Date(data.year, data.month, data.selectedDay).toLocaleDateString(APP_LOCALE, {
     weekday: "long",
     month: "long",
     day: "numeric",
@@ -1057,7 +1085,7 @@ export default function DashboardPage(): ReactElement {
       <div className="flex min-h-full flex-1 flex-col bg-white text-gdg-dark">
         <TopNav />
         <div className="flex flex-1 flex-col lg:flex-row">
-          <Sidebar activeId="dashboard" />
+          <Sidebar />
           <motion.main
             variants={containerVariants}
             initial="hidden"
@@ -1066,7 +1094,7 @@ export default function DashboardPage(): ReactElement {
           >
             <UtilityRow user={currentUser} today={today} searchQuery={searchQuery} onSearchChange={setSearchQuery} />
             <WelcomeSection firstName={currentUser.name.split(" ")[0]} />
-            <CompactDashboardNav activeId="dashboard" />
+            <CompactDashboardNav />
             <SearchField searchQuery={searchQuery} onSearchChange={setSearchQuery} className="sm:hidden" />
             <MyEventsGrid tiles={myEventTiles} />
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-6">

@@ -15,6 +15,12 @@ export interface DashboardUser {
 export interface SidebarItem {
   id: string;
   label: string;
+  /**
+   * Real route once implemented; "#" is the intentional placeholder for pages that don't
+   * exist yet (Events, Tasks, Members, Achievements, Setting, Help). Swapping "#" for the
+   * real path is the only change needed to activate route-based highlighting for that item.
+   */
+  href: string;
 }
 
 export interface MyEventTile {
@@ -68,16 +74,16 @@ export const currentUser: DashboardUser = {
 export const topNavLinks = ["Home", "About Us", "Projects", "Events", "Community"];
 
 export const sidebarPrimaryItems: SidebarItem[] = [
-  { id: "dashboard", label: "Dashboard" },
-  { id: "events", label: "Events" },
-  { id: "tasks", label: "Tasks" },
-  { id: "members", label: "Members" },
-  { id: "achievements", label: "Achievements" },
+  { id: "dashboard", label: "Dashboard", href: "/dashboard" },
+  { id: "events", label: "Events", href: "#" },
+  { id: "tasks", label: "Tasks", href: "#" },
+  { id: "members", label: "Members", href: "#" },
+  { id: "achievements", label: "Achievements", href: "#" },
 ];
 
 export const sidebarSecondaryItems: SidebarItem[] = [
-  { id: "setting", label: "Setting" },
-  { id: "help", label: "Help & Support" },
+  { id: "setting", label: "Setting", href: "#" },
+  { id: "help", label: "Help & Support", href: "#" },
 ];
 
 export const myEventTiles: MyEventTile[] = [
