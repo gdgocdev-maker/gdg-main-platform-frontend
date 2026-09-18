@@ -17,7 +17,6 @@ export default function ResetPassword() {
           size="sm"
           title="Set New Password"
           description="Create a new password for your account"
-          className="min-h-116.25"
         >
           <ResetPasswordForm />
         </AuthCard>

@@ -17,7 +17,6 @@ export default function Activate() {
           size="sm"
           title="Create your password"
           description="Set your password to activate your account"
-          className="min-h-116.25"
         >
           <ResetPasswordForm submitLabel="Create password" />
         </AuthCard>

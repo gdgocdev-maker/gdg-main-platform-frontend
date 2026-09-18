@@ -18,13 +18,12 @@ export default function ForgotPassword() {
           size="sm"
           title="Forgot Password?"
           description="Enter your email and we’ll send you a verification code"
-          className="min-h-116.25"
         >
           <ForgotPasswordForm />
 
           <Link
             href="/login"
-            className="absolute inset-x-0 bottom-8 text-center text-[11px] font-bold text-blue hover:text-blue/90 active:text-blue/80"
+            className="mt-auto pt-6 pb-8 text-center text-[11px] font-bold text-blue hover:text-blue/90 active:text-blue/80"
           >
             Back to Sign in
           </Link>

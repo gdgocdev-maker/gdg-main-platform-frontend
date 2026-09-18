@@ -1,11 +1,22 @@
 import Image from "next/image"
 import Link from "next/link"
+import AuthErrorMessage from "@/app/components/auth/AuthErrorMessage"
 
 type LoginEmailProps = {
+  value: string
+  error: string
+  onChange: (value: string) => void
+  onBlur: () => void
   onContinue: () => void
 }
 
-export default function LoginEmail({ onContinue }: LoginEmailProps) {
+export default function LoginEmail({
+  value,
+  error,
+  onChange,
+  onBlur,
+  onContinue
+}: LoginEmailProps) {
   return (
     <>
       <form
@@ -14,6 +25,7 @@ export default function LoginEmail({ onContinue }: LoginEmailProps) {
           onContinue()
         }}
         className="mt-15 w-full"
+        noValidate
       >
         <label
           htmlFor="email"
@@ -22,13 +34,28 @@ export default function LoginEmail({ onContinue }: LoginEmailProps) {
           Email address <span className="text-red">*</span>
         </label>
 
-        <input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="Enter your email"
-          className="mt-1.5 h-9 w-full rounded-md border border-black/15 px-2.75 text-[12px] outline-none placeholder:text-black/40"
-        />
+        <div className="relative">
+          <input
+            id="email"
+            name="email"
+            type="email"
+            value={value}
+            onChange={(event) => onChange(event.target.value)}
+            onBlur={onBlur}
+            placeholder="Enter your email"
+            autoComplete="email"
+            maxLength={254}
+            aria-invalid={Boolean(error)}
+            aria-describedby={error ? "login-email-error" : undefined}
+            className="mt-1.5 h-9 w-full rounded-md border border-black/15 px-2.75 text-[12px] outline-none placeholder:text-black/40"
+          />
+
+          <AuthErrorMessage
+            id="login-email-error"
+            message={error}
+            className="absolute left-0 top-full mt-1"
+          />
+        </div>
 
         <button
           type="submit"

@@ -9,7 +9,6 @@ type AuthCardProps = {
   title: string
   description: string
   children: ReactNode
-  className?: string
 }
 
 const sizeClasses = {
@@ -29,7 +28,7 @@ export default function AuthCard({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
-      className={`relative flex h-auto w-full flex-col items-center bg-white px-8.75 pt-10.25 md:rounded-[20px] md:shadow-[0_0_15px_rgba(0,0,0,0.15)] ${sizeClasses[size]}`}
+      className={`relative flex h-auto w-full flex-col items-center bg-white px-8.75 pt-10.25 md:rounded-[20px] md:shadow-[0_0_15px_rgba(0,0,0,0.15)] ${sizeClasses[size]} `}
     >
       <Image
         src="/colorful-logo.svg"
@@ -50,7 +49,7 @@ export default function AuthCard({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.45, ease: "easeOut" }}
-        className="w-full"
+        className="flex w-full flex-1 flex-col"
       >
         {children}
       </motion.div>

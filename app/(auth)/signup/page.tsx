@@ -20,7 +20,7 @@ export default function SignUp() {
         >
           <SignupFlow />
 
-          <p className="absolute inset-x-0 bottom-8 text-center text-[11px] text-black/55">
+          <p className="mt-6 pb-8 text-center text-[11px] text-black/55 md:absolute md:inset-x-0 md:bottom-5 md:mt-0 md:pb-0">
             already have an account?
             <Link
               href="/login"

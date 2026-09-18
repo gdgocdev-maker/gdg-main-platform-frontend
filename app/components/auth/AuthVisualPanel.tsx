@@ -18,14 +18,6 @@ const contentGroupVariants: Variants = {
   }
 }
 
-const fadeUpVariants: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.45, ease: "easeOut" }
-  }
-}
 
 const barsGroupVariants: Variants = {
   hidden: {},
@@ -69,7 +61,6 @@ export default function AuthVisualPanel({
         initial={shouldAnimate ? "hidden" : false}
         animate="visible"
       >
-        <motion.div variants={fadeUpVariants}>
           <Image
             src="/black-logo-with-colors.svg"
             alt="Google Developer Group on Campus, University of Jeddah"
@@ -77,30 +68,22 @@ export default function AuthVisualPanel({
             height={30}
             priority
           />
-        </motion.div>
 
         <div className="mt-26">
-          <motion.p
-            variants={fadeUpVariants}
-            className="font-mono text-[15px] font-bold tracking-[2px] text-blue"
-          >
+          <p className="font-mono text-[15px] font-bold tracking-[2px] text-blue">
             GDG ON CAMPUS · UJ
-          </motion.p>
-          <motion.h1
-            variants={fadeUpVariants}
+          </p>
+          <h1
             className="mt-2.25 text-[50px] font-bold leading-[1.08] tracking-[-1.2px]"
           >
             Learn together.
             <span className="block text-blue">Build what’s next.</span>
-          </motion.h1>
-          <motion.p
-            variants={fadeUpVariants}
-            className="mt-4.25 max-w-95 text-[14px] leading-[1.45]"
-          >
+          </h1>
+          <p className="mt-4.25 max-w-95 text-[14px] leading-[1.45]">
             Connect with the community, manage your membership,
             <br />
             and take part in GDG UJ activities
-          </motion.p>
+          </p>
         </div>
       </motion.div>
 
