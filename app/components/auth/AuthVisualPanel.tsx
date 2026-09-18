@@ -2,6 +2,7 @@
 
 import { motion, type Variants } from "framer-motion"
 import Image from "next/image"
+import useDesktopMediaQuery from "@/app/lib/useDesktopMediaQuery"
 
 type AuthVisualPanelProps = {
   side: "left" | "right"
@@ -17,7 +18,6 @@ const contentGroupVariants: Variants = {
     }
   }
 }
-
 
 const barsGroupVariants: Variants = {
   hidden: {},
@@ -44,14 +44,15 @@ export default function AuthVisualPanel({
   animateOnMount = false
 }: AuthVisualPanelProps) {
   const isLeft = side === "left"
+  const isDesktop = useDesktopMediaQuery()
   const barPosition = isLeft ? "left-0" : "right-0"
-  const shouldAnimate = animateOnMount
+  const shouldAnimate = animateOnMount && isDesktop
   const barVariants = getBarVariants(side)
 
   return (
     <motion.section
-      layoutId="auth-visual-panel"
-      transition={{ duration: 0.6, ease: "easeInOut" }}
+      layoutId={isDesktop ? "auth-visual-panel" : undefined}
+      transition={isDesktop ? { duration: 0.6, ease: "easeInOut" } : undefined}
       className={`
         relative z-20 hidden h-auto w-full flex-col overflow-hidden bg-light-blue px-8.5 pt-8.75 shadow-[0_0_15px_rgba(0,0,0,0.15)] lg:flex lg:h-full lg:w-[48%]
         ${isLeft ? "rounded-tr-[30px]" : "rounded-tl-[30px]"}`}
@@ -59,23 +60,21 @@ export default function AuthVisualPanel({
       <motion.div
         variants={contentGroupVariants}
         initial={shouldAnimate ? "hidden" : false}
-        animate="visible"
+        animate={isDesktop ? "visible" : false}
       >
-          <Image
-            src="/black-logo-with-colors.svg"
-            alt="Google Developer Group on Campus, University of Jeddah"
-            width={350}
-            height={30}
-            priority
-          />
+        <Image
+          src="/black-logo-with-colors.svg"
+          alt="Google Developer Group on Campus, University of Jeddah"
+          width={350}
+          height={30}
+          priority
+        />
 
         <div className="mt-26">
           <p className="font-mono text-[15px] font-bold tracking-[2px] text-blue">
             GDG ON CAMPUS · UJ
           </p>
-          <h1
-            className="mt-2.25 text-[50px] font-bold leading-[1.08] tracking-[-1.2px]"
-          >
+          <h1 className="mt-2.25 text-[50px] font-bold leading-[1.08] tracking-[-1.2px]">
             Learn together.
             <span className="block text-blue">Build what’s next.</span>
           </h1>
@@ -91,7 +90,7 @@ export default function AuthVisualPanel({
         aria-hidden="true"
         variants={barsGroupVariants}
         initial={shouldAnimate ? "hidden" : false}
-        animate="visible"
+        animate={isDesktop ? "visible" : false}
       >
         <motion.div
           variants={barVariants}

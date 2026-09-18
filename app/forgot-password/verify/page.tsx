@@ -17,7 +17,6 @@ export default async function VerifyCode() {
           size="sm"
           title="Verify Code"
           description="we sent code to your email"
-          className="min-h-116.25"
         >
           <VerifyCodeForm />
         </AuthCard>

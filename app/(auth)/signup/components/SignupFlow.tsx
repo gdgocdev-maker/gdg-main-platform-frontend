@@ -10,6 +10,7 @@ import {
   validateConfirmPassword,
   validatePassword
 } from "@/app/lib/validation/password"
+import { validateRequiredText } from "@/app/lib/validation/text"
 import SignupCredentials from "./SignupCredentials"
 import SignupDetails from "./SignupDetails"
 import SignupProgress from "./SignupProgress"
@@ -51,36 +52,15 @@ function normalizeText(value: string) {
 }
 
 function validateName(value: string) {
+  const requiredTextError = validateRequiredText(value, "Full name")
+  if (requiredTextError) {
+    return requiredTextError
+  }
+
   const trimmed = normalizeText(value)
-
-  if (!trimmed) {
-    return "Please enter your full name."
-  }
-
-  if (trimmed.length > 255) {
-    return "Full name must be 255 characters or fewer."
-  }
 
   if (!/^[\p{L}\p{M}\s.'-]+$/u.test(trimmed)) {
     return "Name can only include letters, spaces, and common punctuation."
-  }
-
-  return ""
-}
-
-function validateRequiredText(
-  value: string,
-  fieldLabel: string,
-  maxLength = 255
-) {
-  const trimmed = normalizeText(value)
-
-  if (!trimmed) {
-    return `Please enter your ${fieldLabel.toLowerCase()}.`
-  }
-
-  if (trimmed.length > maxLength) {
-    return `${fieldLabel} must be ${maxLength} characters or fewer.`
   }
 
   return ""
