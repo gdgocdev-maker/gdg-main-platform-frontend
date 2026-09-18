@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function VerifyCode() {
   return (
     <main className="flex min-h-screen min-w-0 flex-col bg-white text-primary-font lg:h-screen lg:flex-row">
-      <AuthVisualPanel side="left" />
+      <AuthVisualPanel side="left" animateOnMount={true}/>
 
       <section className="flex flex-1 items-center justify-center bg-white lg:h-full">
         <AuthCard

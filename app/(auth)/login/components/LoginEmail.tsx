@@ -6,11 +6,13 @@ type LoginEmailProps = {
 }
 
 export default function LoginEmail({ onContinue }: LoginEmailProps) {
- 
   return (
     <>
       <form
-        onSubmit={onContinue}
+        onSubmit={(event) => {
+          event.preventDefault()
+          onContinue()
+        }}
         className="mt-15 w-full"
       >
         <label

@@ -1,3 +1,6 @@
+"use client"
+
+import { motion } from "framer-motion"
 import Image from "next/image"
 import type { ReactNode } from "react"
 
@@ -10,21 +13,23 @@ type AuthCardProps = {
 }
 
 const sizeClasses = {
-  sm: "md:w-109.5",
-  md: "md:w-full md:max-w-135",
-  lg: "md:w-full md:max-w-150"
+  sm: "md:w-109.5 md:h-120!",
+  md: "md:w-109.5 md:h-130!",
+  lg: "md:w-full md:max-w-135 md:h-150!"
 } as const
 
 export default function AuthCard({
   size,
   title,
   description,
-  children,
-  className = ""
+  children
 }: AuthCardProps) {
   return (
-    <div
-      className={`relative flex h-auto w-full flex-col items-center bg-white px-8.75 pt-10.25 md:rounded-[20px] md:shadow-[0_0_15px_rgba(0,0,0,0.15)] ${sizeClasses[size]} ${className}`}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+      className={`relative flex h-auto w-full flex-col items-center bg-white px-8.75 pt-10.25 md:rounded-[20px] md:shadow-[0_0_15px_rgba(0,0,0,0.15)] ${sizeClasses[size]}`}
     >
       <Image
         src="/colorful-logo.svg"
@@ -41,7 +46,14 @@ export default function AuthCard({
         {description}
       </p>
 
-      {children}
-    </div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.45, ease: "easeOut" }}
+        className="w-full"
+      >
+        {children}
+      </motion.div>
+    </motion.div>
   )
 }

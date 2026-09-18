@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import AuthCard from "@/app/components/auth/AuthCard"
+import AuthStepTransition from "@/app/components/auth/AuthStepTransition"
 import LoginEmail from "./LoginEmail"
 import LoginPassword from "./LoginPassword"
 
@@ -11,7 +12,7 @@ export default function LoginFlow() {
 
   return (
     <AuthCard
-      size="sm"
+      size="md"
       title={isEmailStep ? "Continue with your email" : "Enter your password"}
       description={
         isEmailStep
@@ -19,11 +20,16 @@ export default function LoginFlow() {
           : "Enter your password to continue."
       }
     >
-      {isEmailStep ? (
-        <LoginEmail onContinue={() => setStep(2)} />
-      ) : (
-        <LoginPassword onBack={() => setStep(1)} />
-      )}
+      <AuthStepTransition
+        stepKey={step}
+        className="flex w-full flex-col items-center"
+      >
+        {isEmailStep ? (
+          <LoginEmail onContinue={() => setStep(2)} />
+        ) : (
+          <LoginPassword onBack={() => setStep(1)} />
+        )}
+      </AuthStepTransition>
     </AuthCard>
   )
 }

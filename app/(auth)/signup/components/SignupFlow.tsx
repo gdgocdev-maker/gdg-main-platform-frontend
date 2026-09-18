@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import AuthStepTransition from "@/app/components/auth/AuthStepTransition"
 import SignupCredentials from "./SignupCredentials"
 import SignupDetails from "./SignupDetails"
 import SignupProgress from "./SignupProgress"
@@ -21,15 +22,18 @@ export default function SignupFlow() {
       <SignupProgress step={step} />
       <form
         onSubmit={handleSubmit}
-        className="mt-17.5 flex w-full flex-1 flex-col"
+        className="mt-22.5 flex w-full flex-1 flex-col"
       >
-        <div className="grid w-full grid-cols-1 gap-x-4.5 gap-y-3.25 md:grid-cols-2">
+        <AuthStepTransition
+          stepKey={step}
+          className="grid w-full grid-cols-1 gap-x-4.5 gap-y-3.25 md:grid-cols-2"
+        >
           {step === 1 ? (
             <SignupCredentials />
           ) : (
             <SignupDetails onBack={() => setStep(1)} />
           )}
-        </div>
+        </AuthStepTransition>
       </form>
     </>
   )

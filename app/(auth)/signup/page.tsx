@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import AuthVisualPanel from "@/app/components/auth/AuthVisualPanel"
+import AuthFormPanel from "@/app/components/auth/AuthFormPanel"
 import AuthCard from "@/app/components/auth/AuthCard"
 import SignupFlow from "./components/SignupFlow"
 
@@ -11,16 +12,15 @@ export const metadata: Metadata = {
 export default function SignUp() {
   return (
     <main className="flex h-auto min-h-screen min-w-0 flex-col bg-white text-primary-font lg:h-screen lg:flex-row">
-      <section className="flex h-auto flex-1 items-center justify-center bg-white lg:h-full">
+      <AuthFormPanel>
         <AuthCard
-          size="md"
+          size="lg"
           title="Create your account"
           description="Join the GDG UJ community"
-          className="!h-[37.5rem]"
         >
           <SignupFlow />
 
-          <p className="mt-auto pb-8 text-[11px] text-black/55">
+          <p className="absolute inset-x-0 bottom-8 text-center text-[11px] text-black/55">
             already have an account?
             <Link
               href="/login"
@@ -30,9 +30,12 @@ export default function SignUp() {
             </Link>
           </p>
         </AuthCard>
-      </section>
+      </AuthFormPanel>
 
-      <AuthVisualPanel side="right" />
+      <AuthVisualPanel
+        side="right"
+        animateOnMount
+      />
     </main>
   )
 }
