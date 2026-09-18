@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
-import Image from "next/image"
-import AuthVisualPanel from "@/components/auth/AuthVisualPanel"
+import AuthVisualPanel from "@/app/components/auth/AuthVisualPanel"
+import AuthCard from "@/app/components/auth/AuthCard"
 import ResetPasswordForm from "@/app/reset-password/ResetPasswordForm"
 
 export const metadata: Metadata = {
@@ -13,24 +13,14 @@ export default function Activate() {
       <AuthVisualPanel side="left" />
 
       <section className="flex flex-1 items-center justify-center bg-white lg:h-full">
-        <div className="relative flex min-h-116.25 w-full flex-col items-center bg-white px-8.75 pt-10.25 md:w-109.5 md:rounded-[20px] md:shadow-[0_0_15px_rgba(0,0,0,0.15)]">
-          <Image
-            src="/colorful-logo.svg"
-            alt=""
-            width={82}
-            height={82}
-            priority
-          />
-
-          <h1 className="mt-3 text-center text-[25px] font-bold leading-[1.1] tracking-[-1px] md:text-[32px]">
-            Create your password
-          </h1>
-          <p className="mt-1 text-center text-[13px] text-black/45">
-            Set your password to activate your account
-          </p>
-
+        <AuthCard
+          size="sm"
+          title="Create your password"
+          description="Set your password to activate your account"
+          className="min-h-116.25"
+        >
           <ResetPasswordForm submitLabel="Create password" />
-        </div>
+        </AuthCard>
       </section>
     </main>
   )

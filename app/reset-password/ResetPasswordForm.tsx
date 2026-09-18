@@ -1,6 +1,6 @@
 "use client"
 
-import PasswordInput from "@/components/auth/PasswordInput"
+import PasswordInput from "@/app/components/auth/PasswordInput"
 
 type ResetPasswordFormProps = {
   submitLabel?: string

@@ -1,4 +1,4 @@
-import PasswordInput from "@/components/auth/PasswordInput"
+import PasswordInput from "@/app/components/auth/PasswordInput"
 
 const countryCodeOptions = [{ country: "Saudi Arabia", code: "+966" }]
 

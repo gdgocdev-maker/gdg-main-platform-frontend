@@ -50,7 +50,7 @@ export default function VerifyCodeForm() {
 
   return (
     <form
-      className="mt-22.5 w-full"
+      className="mt-19 w-full"
     >
       <input
         type="hidden"

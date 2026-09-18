@@ -1,6 +1,6 @@
 "use client"
 
-import { type FormEvent, useState } from "react"
+import { useState } from "react"
 import SignupCredentials from "./SignupCredentials"
 import SignupDetails from "./SignupDetails"
 import SignupProgress from "./SignupProgress"
@@ -8,7 +8,7 @@ import SignupProgress from "./SignupProgress"
 export default function SignupFlow() {
   const [step, setStep] = useState<1 | 2>(1)
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
 
     if (step === 1) {

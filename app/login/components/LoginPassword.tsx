@@ -1,28 +1,17 @@
 import Link from "next/link"
-import { type FormEvent } from "react"
-import PasswordInput from "@/components/auth/PasswordInput"
+import PasswordInput from "@/app/components/auth/PasswordInput"
 
 type LoginPasswordProps = {
   onBack: () => void
 }
 
 export default function LoginPassword({ onBack }: LoginPasswordProps) {
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-  }
+ 
 
   return (
     <>
-      <h2 className="mt-3 text-center text-[25px] font-bold leading-[1.1] tracking-[-1px] md:text-[32px]">
-        Welcome Back
-      </h2>
-      <p className="mt-1 text-center text-[13px] text-black/45">
-        Enter your Password to continue.
-      </p>
-
       <form
-        onSubmit={handleSubmit}
-        className="mt-17.5 w-full"
+        className="mt-15 w-full"
       >
         <label
           htmlFor="login-password"

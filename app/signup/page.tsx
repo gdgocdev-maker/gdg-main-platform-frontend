@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
-import Image from "next/image"
 import Link from "next/link"
-import AuthVisualPanel from "@/components/auth/AuthVisualPanel"
+import AuthVisualPanel from "@/app/components/auth/AuthVisualPanel"
+import AuthCard from "@/app/components/auth/AuthCard"
 import SignupFlow from "./components/SignupFlow"
 
 export const metadata: Metadata = {
@@ -12,23 +12,12 @@ export default function SignUp() {
   return (
     <main className="flex h-auto min-h-screen min-w-0 flex-col bg-white text-primary-font lg:h-screen lg:flex-row">
       <section className="flex h-auto flex-1 items-center justify-center bg-white lg:h-full">
-        <div className="relative flex h-150 w-full flex-col items-center bg-white px-8.75 pt-10.25 md:w-full md:max-w-135 md:rounded-[20px] md:shadow-[0_0_15px_rgba(0,0,0,0.15)] ">
-          <div className="flex w-full flex-col items-center gap-1.5">
-            <Image
-              src="/colorful-logo.svg"
-              alt=""
-              width={82}
-              height={82}
-              priority
-            />
-            <h2 className="mt-3 text-center text-[25px] font-bold leading-[1.1] tracking-[-1px] md:text-[32px]">
-              Create your account
-            </h2>
-            <p className="mt-1 text-center text-[16px] text-black/45">
-              Join the GDG UJ community
-            </p>
-          </div>
-
+        <AuthCard
+          size="md"
+          title="Create your account"
+          description="Join the GDG UJ community"
+          className="!h-[37.5rem]"
+        >
           <SignupFlow />
 
           <p className="mt-auto pb-8 text-[11px] text-black/55">
@@ -40,7 +29,7 @@ export default function SignUp() {
               Sign in
             </Link>
           </p>
-        </div>
+        </AuthCard>
       </section>
 
       <AuthVisualPanel side="right" />

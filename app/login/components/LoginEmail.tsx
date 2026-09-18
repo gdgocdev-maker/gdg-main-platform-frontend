@@ -2,27 +2,16 @@ import Image from "next/image"
 import Link from "next/link"
 
 type LoginEmailProps = {
-  
   onContinue: () => void
 }
 
-export default function LoginEmail({
-  onContinue
-}: LoginEmailProps) {
-
-
+export default function LoginEmail({ onContinue }: LoginEmailProps) {
+ 
   return (
     <>
-      <h2 className="mt-3 text-center text-[25px] font-bold leading-[1.1] tracking-[-1px] md:text-[32px]">
-        Continue with your email
-      </h2>
-      <p className="mt-1 text-[13px] text-black/45">
-        Welcome back! Please enter your details.
-      </p>
-
       <form
         onSubmit={onContinue}
-        className="mt-17.5 w-full"
+        className="mt-15 w-full"
       >
         <label
           htmlFor="email"
