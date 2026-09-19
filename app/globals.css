@@ -1,11 +1,64 @@
 @import "tailwindcss";
 
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /* GDG brand palette (approved Figma) */
+  --gdg-red: #ea4335;
+  --gdg-yellow: #f9ab00;
+  --gdg-green: #34a853;
+  --gdg-blue: #4285f4;
+  --gdg-dark: #1e1e1e;
+  --gdg-gray-light: #f0f0f0;
+
+  /* GDG secondary/pastel palette (approved Figma) */
+  --gdg-pink-light: #f8d8d8;
+  --gdg-yellow-light: #ffe7a5;
+  --gdg-yellow-accent: #ffd427;
+  --gdg-green-light: #ccf6c5;
+  --gdg-green-accent: #5cdb6d;
+  --gdg-blue-light: #c3ecf6;
+  --gdg-blue-accent: #57caff;
+  --gdg-pink-accent: #ff7daf;
+}
+
 @theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
   --font-sans: var(--font-google-sans);
-  --color-light-blue: #EDF9FC;
-  --color-primary-font: #1e1e1e;
-  --color-green: #34a853;
-  --color-blue: #4285f4;
-  --color-yellow: #f9ab00;
-  --color-red: #ea4335;
+  --font-mono: var(--font-geist-mono);
+
+  --color-gdg-red: var(--gdg-red);
+  --color-gdg-yellow: var(--gdg-yellow);
+  --color-gdg-green: var(--gdg-green);
+  --color-gdg-blue: var(--gdg-blue);
+  --color-gdg-dark: var(--gdg-dark);
+  --color-gdg-gray-light: var(--gdg-gray-light);
+
+  --color-gdg-pink-light: var(--gdg-pink-light);
+  --color-gdg-yellow-light: var(--gdg-yellow-light);
+  --color-gdg-yellow-accent: var(--gdg-yellow-accent);
+  --color-gdg-green-light: var(--gdg-green-light);
+  --color-gdg-green-accent: var(--gdg-green-accent);
+  --color-gdg-blue-light: var(--gdg-blue-light);
+  --color-gdg-blue-accent: var(--gdg-blue-accent);
+  --color-gdg-pink-accent: var(--gdg-pink-accent);
+
+  /* Align Tailwind's "sm" breakpoint with the frontend team's shared
+     Small tier (480px-767px); md/lg/xl/2xl already match 768/1024/1280/1536. */
+  --breakpoint-sm: 30rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-google-sans), Arial, Helvetica, sans-serif;
 }
