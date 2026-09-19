@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ForgotPassword() {
   return (
-    <main className="flex h-auto min-h-screen min-w-0 flex-col bg-white text-primary-font lg:h-screen lg:flex-row">
+    <main className="flex min-h-screen min-w-0 flex-col bg-white text-primary-font lg:h-screen lg:min-h-0 lg:flex-row">
       <AuthVisualPanel side="left" />
 
       <section className="flex h-auto flex-1 items-center justify-center bg-white lg:h-full">

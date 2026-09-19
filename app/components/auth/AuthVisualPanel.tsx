@@ -54,7 +54,7 @@ export default function AuthVisualPanel({
       layoutId={isDesktop ? "auth-visual-panel" : undefined}
       transition={isDesktop ? { duration: 0.6, ease: "easeInOut" } : undefined}
       className={`
-        relative z-20 hidden h-auto w-full flex-col overflow-hidden bg-light-blue px-8.5 pt-8.75 shadow-[0_0_15px_rgba(0,0,0,0.15)] lg:flex lg:h-full lg:w-[48%]
+        relative z-20 hidden h-full w-full flex-col overflow-hidden bg-light-blue px-8.5 pt-8.75 shadow-[0_0_15px_rgba(0,0,0,0.15)] lg:flex lg:w-[48%]
         ${isLeft ? "rounded-tr-[30px]" : "rounded-tl-[30px]"}`}
     >
       <motion.div

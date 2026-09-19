@@ -29,6 +29,14 @@
   --font-sans: var(--font-google-sans);
   --font-mono: var(--font-geist-mono);
 
+  /* Keep the auth/dashboard color tokens used throughout the app */
+  --color-light-blue: #edf9fc;
+  --color-primary-font: #1e1e1e;
+  --color-green: #34a853;
+  --color-blue: #4285f4;
+  --color-yellow: #f9ab00;
+  --color-red: #ea4335;
+
   --color-gdg-red: var(--gdg-red);
   --color-gdg-yellow: var(--gdg-yellow);
   --color-gdg-green: var(--gdg-green);

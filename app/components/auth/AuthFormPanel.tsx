@@ -15,7 +15,7 @@ export default function AuthFormPanel({ children }: AuthFormPanelProps) {
     <motion.section
       layoutId={isDesktop ? "auth-form-panel" : undefined}
       transition={isDesktop ? { duration: 0.6, ease: "easeInOut" } : undefined}
-      className="relative z-10 flex h-auto flex-1 items-center justify-center bg-white lg:h-full"
+      className="relative z-10 flex h-full flex-1 items-center justify-center bg-white"
     >
       {children}
     </motion.section>
