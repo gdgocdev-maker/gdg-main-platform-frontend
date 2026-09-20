@@ -22,7 +22,7 @@ export default function SelectField({
   return (
     <label
       htmlFor={id}
-      className="relative block text-[12px] font-bold"
+        className="relative block text-sm font-medium"
     >
       {label} <span className="text-red">*</span>
       <span className="relative mt-1.5 block">
@@ -34,7 +34,7 @@ export default function SelectField({
           onBlur={onBlur}
           aria-invalid={Boolean(error)}
           aria-describedby={error ? `${id}-error` : undefined}
-          className={`h-9 w-full appearance-none rounded-md border bg-white px-2.75 text-[12px] font-normal outline-none ${
+          className={`h-9 w-full appearance-none rounded-md border bg-white px-2.75 text-base font-normal outline-none ${
             value ? "text-black" : "text-black/40"
           } ${error ? "border-red" : "border-black/15"}`}
         >
@@ -50,7 +50,7 @@ export default function SelectField({
           <option value="Cybersecurity">Cybersecurity</option>
           <option value="Data Science">Data Science</option>
         </select>
-        <span className="pointer-events-none absolute inset-e-3 top-1/2 -translate-y-1/2 text-[11px]">
+        <span className="pointer-events-none absolute inset-e-3 top-1/2 -translate-y-1/2 text-xs">
           ⌄
         </span>
       </span>

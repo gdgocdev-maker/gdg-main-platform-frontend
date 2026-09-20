@@ -617,10 +617,10 @@ function UpcomingEventsCard({ events }: { events: UpcomingEvent[] }): ReactEleme
               <div className="flex items-start justify-between gap-3">
                 <div className="flex flex-col items-center justify-center rounded-lg bg-white px-2.5 py-1 leading-none text-gdg-dark shadow-sm">
                   <span className="text-base font-bold">{event.day}</span>
-                  <span className="text-[10px] font-medium uppercase tracking-wide">{event.month}</span>
+                  <span className="text-xs font-medium uppercase tracking-wide">{event.month}</span>
                 </div>
                 {event.featured && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-gdg-yellow-accent px-2.5 py-1 text-[11px] font-semibold text-gdg-dark">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-gdg-yellow-accent px-2.5 py-1 text-xs font-medium text-gdg-dark">
                     <IconStar className="h-3 w-3" />
                     Featured
                   </span>
@@ -742,7 +742,7 @@ function CalendarCard({ data }: { data: CalendarMockData }): ReactElement {
         </button>
       </div>
 
-      <div className="grid grid-cols-7 text-center text-[11px] font-medium uppercase tracking-wide text-gray-400">
+      <div className="grid grid-cols-7 text-center text-xs font-medium uppercase tracking-wide text-gray-400">
         {WEEKDAY_LABELS.map((weekday) => (
           <span key={weekday}>{weekday}</span>
         ))}
@@ -773,7 +773,7 @@ function CalendarCard({ data }: { data: CalendarMockData }): ReactElement {
       </div>
 
       <div className="mt-3 rounded-xl bg-gdg-gray-light/60 p-3">
-        <p className="text-[11px] font-medium uppercase tracking-wide text-gray-400">Today</p>
+        <p className="text-xs font-medium uppercase tracking-wide text-gray-400">Today</p>
         <p className="mt-0.5 text-sm font-semibold text-gdg-dark">{selectedDateLabel}</p>
         <p className="mt-1 text-xs text-gray-500">{hasSelectedEvent ? "1 event scheduled" : "No events scheduled"}</p>
       </div>

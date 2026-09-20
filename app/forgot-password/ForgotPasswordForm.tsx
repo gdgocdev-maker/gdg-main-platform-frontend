@@ -60,7 +60,7 @@ export default function ForgotPasswordForm() {
     >
       <label
         htmlFor="email"
-        className="relative block text-[12px] font-bold"
+        className="relative block text-sm font-medium"
       >
         Email address <span className="text-red">*</span>
         <input
@@ -75,7 +75,7 @@ export default function ForgotPasswordForm() {
           maxLength={EMAIL_MAX_LENGTH}
           aria-invalid={Boolean(emailError)}
           aria-describedby={emailError ? "email-error" : undefined}
-          className="mt-1.5 h-9 w-full rounded-md border border-black/15 px-2.75 text-[12px] outline-none placeholder:text-black/40"
+          className="mt-1.5 h-9 w-full rounded-md border border-black/15 px-2.75 text-base outline-none placeholder:text-black/40"
         />
         <AuthErrorMessage
           id="email-error"
@@ -87,7 +87,7 @@ export default function ForgotPasswordForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="mt-7 h-8.75 w-full rounded-[5px] bg-blue text-[12px] font-bold text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
+        className="mt-7 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
       >
         {isSubmitting ? "Sending..." : "Send Code"}
       </button>

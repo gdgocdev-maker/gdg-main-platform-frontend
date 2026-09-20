@@ -44,7 +44,7 @@ export default function AuthErrorMessage({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -4 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
-          className={`pointer-events-none text-[10px] font-medium text-red ${className}`}
+          className={`pointer-events-none text-xs font-normal text-red ${className}`}
         >
           {message}
         </motion.p>

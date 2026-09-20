@@ -94,7 +94,7 @@ export function ProfileHero({
           <div className="flex flex-col items-center gap-3 text-center md:hidden">
             {avatarWithUpload}
             <div className="flex flex-col items-center gap-1">
-              <h1 className="font-[family-name:var(--font-heading)] text-2xl font-semibold sm:text-3xl">
+              <h1 className="text-4xl font-bold leading-tight">
                 {name}
               </h1>
               <p className="text-base text-foreground/80 sm:text-lg">
@@ -111,7 +111,7 @@ export function ProfileHero({
               {editControls}
             </div>
             <div className="flex flex-col items-start gap-1 text-left">
-              <h1 className="font-[family-name:var(--font-heading)] text-4xl font-semibold">
+              <h1 className="text-5xl font-bold leading-tight">
                 {name}
               </h1>
               <p className="text-xl text-foreground/80">

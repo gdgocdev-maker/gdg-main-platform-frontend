@@ -38,10 +38,10 @@ export default function AuthCard({
         priority
       />
 
-      <h1 className="mt-3 text-center text-[25px] font-bold leading-[1.1] tracking-[-1px] md:text-[32px]">
+      <h1 className="mt-3 text-center text-4xl font-bold leading-tight md:text-5xl">
         {title}
       </h1>
-      <p className="mt-1 text-center text-[13px] text-black/45">
+      <p className="mt-1 text-center text-sm text-black/45">
         {description}
       </p>
 

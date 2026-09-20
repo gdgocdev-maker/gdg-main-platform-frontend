@@ -166,7 +166,7 @@ export default function ProfilePage({}: PageProps<"/profile">) {
 
   return (
     <div
-      className="flex flex-1 flex-col bg-white text-[#171717] font-[family-name:var(--font-inter)]"
+      className="flex flex-1 flex-col bg-white text-[#171717]"
       style={{ "--background": "#ffffff", "--foreground": "#171717" } as CSSProperties}
     >
       <TopNav />

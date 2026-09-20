@@ -24,7 +24,7 @@ export default function SignupDetails({
     <>
       <label
         htmlFor="university"
-        className="relative block text-[12px] font-bold"
+        className="relative block text-sm font-medium"
       >
         University <span className="text-red">*</span>
         <input
@@ -38,7 +38,7 @@ export default function SignupDetails({
           maxLength={255}
           aria-invalid={Boolean(errors.university)}
           aria-describedby={errors.university ? "university-error" : undefined}
-          className={`mt-1.5 h-9 w-full rounded-md border px-2.75 text-[12px] font-normal outline-none placeholder:text-black/40 ${
+          className={`mt-1.5 h-9 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
             errors.university ? "border-red" : "border-black/15"
           }`}
         />
@@ -50,7 +50,7 @@ export default function SignupDetails({
       </label>
       <label
         htmlFor="university-id"
-        className="relative block text-[12px] font-bold"
+        className="relative block text-sm font-medium"
       >
         University ID <span className="text-red">*</span>
         <input
@@ -66,7 +66,7 @@ export default function SignupDetails({
           aria-describedby={
             errors.universityId ? "university-id-error" : undefined
           }
-          className={`mt-1.5 h-9 w-full rounded-md border px-2.75 text-[12px] font-normal outline-none placeholder:text-black/40 ${
+          className={`mt-1.5 h-9 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
             errors.universityId ? "border-red" : "border-black/15"
           }`}
         />
@@ -106,14 +106,14 @@ export default function SignupDetails({
         <button
           type="button"
           onClick={onBack}
-          className="h-8.75 w-full rounded-[5px] border border-blue text-[12px] font-bold text-blue transition-colors duration-200 hover:bg-blue/10 active:bg-blue/20"
+          className="h-8.75 w-full rounded-[5px] border border-blue text-sm font-medium text-blue transition-colors duration-200 hover:bg-blue/10 active:bg-blue/20"
         >
           Back
         </button>
         <button
           type="submit"
           disabled={isSubmitting}
-          className="h-8.75 w-full rounded-[5px] bg-blue text-[12px] font-bold text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
+          className="h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
         >
           {isSubmitting ? "Creating account..." : "Create account"}
         </button>
