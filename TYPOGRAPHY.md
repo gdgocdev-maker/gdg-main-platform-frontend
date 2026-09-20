@@ -27,23 +27,23 @@ per component.
 
 | Role | Tailwind class | Size (px) | Size (rem) | Line height | Weight |
 | ---- | --------------- | --------- | ---------- | ----------- | ------ |
-| Hero / H1 | `text-5xl` | 48px | 3rem | `leading-tight` (1.1) | `font-bold` (700) |
-| H1 (mobile) | `text-4xl` | 36px | 2.25rem | `leading-tight` (1.1) | `font-bold` (700) |
-| H2 (section title) | `text-3xl` | 30px | 1.875rem | `leading-snug` (1.25) | `font-bold` (700) |
-| H3 (card / subsection title) | `text-2xl` | 24px | 1.5rem | `leading-snug` (1.25) | `font-semibold` (600) |
-| H4 (widget title) | `text-xl` | 20px | 1.25rem | `leading-normal` (1.5) | `font-semibold` (600) |
-| H5 (minor heading) | `text-lg` | 18px | 1.125rem | `leading-normal` (1.5) | `font-medium` (500) |
-| Body (default) | `text-base` | 16px | 1rem | `leading-relaxed` (1.625) | `font-normal` (400) |
-| Body (large / intro paragraph) | `text-lg` | 18px | 1.125rem | `leading-relaxed` (1.625) | `font-normal` (400) |
-| Body (small / secondary text) | `text-sm` | 14px | 0.875rem | `leading-normal` (1.5) | `font-normal` (400) |
-| Caption / helper text | `text-xs` | 12px | 0.75rem | `leading-normal` (1.5) | `font-normal` (400) |
-| Button text | `text-sm` | 14px | 0.875rem | `leading-none` (1) | `font-medium` (500) |
-| Form label | `text-sm` | 14px | 0.875rem | `leading-normal` (1.5) | `font-medium` (500) |
-| Form input text | `text-base` | 16px | 1rem | `leading-normal` (1.5) | `font-normal` (400) |
-| Nav link | `text-sm` | 14px | 0.875rem | `leading-none` (1) | `font-medium` (500) |
-| Badge / tag / status pill | `text-xs` | 12px | 0.75rem | `leading-none` (1) | `font-medium` (500) |
-| Table header | `text-xs` | 12px | 0.75rem | `leading-normal` (1.5) | `font-semibold` (600) |
-| Table cell | `text-sm` | 14px | 0.875rem | `leading-normal` (1.5) | `font-normal` (400) |
+| Hero / H1 | `text-5xl` | 40px | 2.5rem | `leading-tight` (1.1) | `font-bold` (700) |
+| H1 (mobile) | `text-4xl` | 32px | 2rem | `leading-tight` (1.1) | `font-bold` (700) |
+| H2 (section title) | `text-3xl` | 28px | 1.75rem | `leading-snug` (1.25) | `font-bold` (700) |
+| H3 (card / subsection title) | `text-2xl` | 22px | 1.375rem | `leading-snug` (1.25) | `font-semibold` (600) |
+| H4 (widget title) | `text-xl` | 18px | 1.125rem | `leading-normal` (1.5) | `font-semibold` (600) |
+| H5 (minor heading) | `text-lg` | 16px | 1rem | `leading-normal` (1.5) | `font-medium` (500) |
+| Body (default) | `text-base` | 15px | 0.9375rem | `leading-normal` (1.5) | `font-normal` (400) |
+| Body (large / intro paragraph) | `text-lg` | 16px | 1rem | `leading-normal` (1.5) | `font-normal` (400) |
+| Body (small / secondary text) | `text-sm` | 13px | 0.8125rem | `leading-normal` (1.5) | `font-normal` (400) |
+| Caption / helper text | `text-xs` | 11px | 0.6875rem | `leading-normal` (1.5) | `font-normal` (400) |
+| Button text | `text-sm` | 13px | 0.8125rem | `leading-none` (1) | `font-medium` (500) |
+| Form label | `text-sm` | 13px | 0.8125rem | `leading-normal` (1.5) | `font-medium` (500) |
+| Form input text | `text-base` | 15px | 0.9375rem | `leading-normal` (1.5) | `font-normal` (400) |
+| Nav link | `text-sm` | 13px | 0.8125rem | `leading-none` (1) | `font-medium` (500) |
+| Badge / tag / status pill | `text-xs` | 11px | 0.6875rem | `leading-none` (1) | `font-medium` (500) |
+| Table header | `text-xs` | 11px | 0.6875rem | `leading-normal` (1.5) | `font-semibold` (600) |
+| Table cell | `text-sm` | 13px | 0.8125rem | `leading-normal` (1.5) | `font-normal` (400) |
 
 ---
 

@@ -23,7 +23,7 @@ export default function LoginPassword({
 }: LoginPasswordProps) {
   return (
     <>
-      <form className="mt-15 w-full" onSubmit={onSubmit} noValidate>
+      <form className="mt-12 w-full" onSubmit={onSubmit} noValidate>
         <label htmlFor="login-password" className="block text-sm font-medium">
           Password <span className="text-red">*</span>
           <div className="relative">
@@ -57,7 +57,7 @@ export default function LoginPassword({
         <button
           type="submit"
           disabled={isSubmitting}
-          className="mt-5.5 h-8.75 w-full cursor-pointer rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
+          className="mt-5 h-8.75 w-full cursor-pointer rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
         >
           {isSubmitting ? "Signing in..." : "Sign in"}
         </button>
@@ -65,7 +65,7 @@ export default function LoginPassword({
       <button
         type="button"
         onClick={onBack}
-        className="mt-23.5 mb-10 h-8.75 w-26.5 self-start rounded-[5px] bg-blue/65 text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/75 active:bg-blue/85"
+        className="mt-16 mb-8 h-8.75 w-26.5 self-start rounded-[5px] bg-blue/65 text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/75 active:bg-blue/85"
       >
         Back
       </button>

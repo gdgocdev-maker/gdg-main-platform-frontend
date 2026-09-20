@@ -24,7 +24,7 @@ export function SocialLinksPanel({
       initial="hidden"
       animate="visible"
       variants={{ visible: { transition: { staggerChildren: 0.05 } } }}
-      className="flex flex-col gap-4"
+      className="flex flex-col gap-3"
     >
       {links.map((link) => (
         <SocialLinkRow

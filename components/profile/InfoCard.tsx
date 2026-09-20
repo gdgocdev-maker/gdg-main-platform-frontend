@@ -22,11 +22,11 @@ export function InfoCard({
   onChange,
 }: InfoCardProps) {
   return (
-    <div className="flex-1 rounded-card border border-gray-350 bg-white p-6 sm:p-8">
-      <h3 className="mb-5 text-lg font-semibold text-gray-500 sm:text-xl">
+    <div className="flex-1 rounded-card border border-gray-350 bg-white p-4 sm:p-6">
+      <h3 className="mb-3 text-base font-semibold text-gray-500 sm:text-lg">
         {data.heading}
       </h3>
-      <dl className="flex flex-col gap-4">
+      <dl className="flex flex-col gap-3">
         {data.rows.map((row) => {
           const error = errors[row.key];
           const isPhone = row.key === "phone";
@@ -35,13 +35,13 @@ export function InfoCard({
           return (
             <div
               key={row.key}
-              className={`flex gap-4 ${
+              className={`flex gap-3 ${
                 isEditing
                   ? "flex-col sm:flex-row sm:items-center sm:justify-between"
                   : "items-baseline justify-between"
               }`}
             >
-              <dt className="shrink-0 text-sm text-gray-500 sm:text-base">
+              <dt className="shrink-0 text-xs text-gray-500 sm:text-sm">
                 {row.label}
               </dt>
               {isEditing ? (
@@ -61,7 +61,7 @@ export function InfoCard({
                       }`}
                     >
                       {isPhone && (
-                        <span className="shrink-0 text-sm font-semibold text-gray-500 sm:text-base">
+                        <span className="shrink-0 text-xs font-semibold text-gray-500 sm:text-sm">
                           +966
                         </span>
                       )}
@@ -76,7 +76,7 @@ export function InfoCard({
                           onChange(row.key, raw);
                         }}
                         aria-invalid={Boolean(error)}
-                        className="min-w-0 border-0 bg-transparent text-left text-sm font-semibold text-foreground outline-none sm:text-right sm:text-base"
+                        className="min-w-0 border-0 bg-transparent text-left text-xs font-semibold text-foreground outline-none sm:text-right sm:text-sm"
                       />
                     </div>
                   )}
@@ -85,7 +85,7 @@ export function InfoCard({
                   )}
                 </div>
               ) : (
-                <dd className="text-right text-sm font-semibold text-foreground sm:text-base">
+                <dd className="text-right text-xs font-semibold text-foreground sm:text-sm">
                   {isPhone ? `+966 ${formatPhone(row.value)}` : row.value}
                 </dd>
               )}

@@ -1,6 +1,19 @@
 import AuthErrorMessage from "@/app/components/auth/AuthErrorMessage"
 import SelectField from "./SelectField"
 
+const collegeOptions = [
+  { value: "Computer Science", label: "Computer Science" },
+  { value: "Information Technology", label: "Information Technology" },
+  { value: "Engineering", label: "Engineering" },
+]
+
+const majorOptions = [
+  { value: "Software Engineering", label: "Software Engineering" },
+  { value: "Information Systems", label: "Information Systems" },
+  { value: "Cybersecurity", label: "Cybersecurity" },
+  { value: "Data Science", label: "Data Science" },
+]
+
 type SignupDetailsProps = {
   values: Record<string, string>
   errors: Record<string, string>
@@ -38,7 +51,7 @@ export default function SignupDetails({
           maxLength={255}
           aria-invalid={Boolean(errors.university)}
           aria-describedby={errors.university ? "university-error" : undefined}
-          className={`mt-1.5 h-9 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
+          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
             errors.university ? "border-red" : "border-black/15"
           }`}
         />
@@ -66,7 +79,7 @@ export default function SignupDetails({
           aria-describedby={
             errors.universityId ? "university-id-error" : undefined
           }
-          className={`mt-1.5 h-9 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
+          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
             errors.universityId ? "border-red" : "border-black/15"
           }`}
         />
@@ -80,6 +93,7 @@ export default function SignupDetails({
         id="college"
         label="College"
         placeholder="Select your college"
+        options={collegeOptions}
         value={values.college}
         error={errors.college}
         onChange={(value) => onChange("college", value)}
@@ -89,16 +103,17 @@ export default function SignupDetails({
         id="major"
         label="Major"
         placeholder="Select your major"
+        options={majorOptions}
         value={values.major}
         error={errors.major}
         onChange={(value) => onChange("major", value)}
         onBlur={() => onBlur("major")}
       />
 
-      <div className="relative col-span-full h-0">
+      <div className="relative col-span-full min-h-4 text-center">
         <AuthErrorMessage
           message={formError}
-          className="absolute inset-x-0 bottom-full mb-1 text-center"
+          className="text-center"
         />
       </div>
 

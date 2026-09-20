@@ -184,7 +184,7 @@ export default function ProfilePage({}: PageProps<"/profile">) {
         onAvatarSelect={handleAvatarSelect}
         onHeaderImageSelect={handleHeaderImageSelect}
       />
-      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-4 px-4 py-6 sm:px-6 sm:py-8 md:gap-5 md:px-10 md:py-10 lg:px-16">
+      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-3 px-4 py-4 sm:px-6 sm:py-6 md:gap-4 md:px-10 md:py-8 lg:px-16">
         <ProfileChips chips={chips} />
         <ProfileBio
           bio={isEditing ? bioDraft : bio}

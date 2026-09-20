@@ -258,7 +258,7 @@ const sidebarIcons: Record<string, IconComponent> = {
 /* Small presentational primitives                                     */
 /* ------------------------------------------------------------------ */
 
-function Badge({ className, children }: { className: string; children: ReactNode }): ReactElement {
+function TaskBadge({ className, children }: { className: string; children: ReactNode }): ReactElement {
   return <span className={`inline-flex items-center text-xs font-medium ${className}`}>{children}</span>;
 }
 
@@ -952,10 +952,10 @@ function TasksPanel({ tasks, searchQuery }: { tasks: DashboardTask[]; searchQuer
                     </td>
                     <td className="py-2.5 pe-4 text-gray-600">{task.deadline}</td>
                     <td className="py-2.5 pe-4">
-                      <Badge className={priorityStyles[task.priority]}>{task.priority}</Badge>
+                      <TaskBadge className={priorityStyles[task.priority]}>{task.priority}</TaskBadge>
                     </td>
                     <td className="py-2.5">
-                      <Badge className={statusStyles[task.status]}>{task.status}</Badge>
+                      <TaskBadge className={statusStyles[task.status]}>{task.status}</TaskBadge>
                     </td>
                   </motion.tr>
                 ))}
@@ -979,8 +979,8 @@ function TasksPanel({ tasks, searchQuery }: { tasks: DashboardTask[]; searchQuer
                     <p className="mt-0.5 text-xs text-gray-500">{task.description}</p>
                     <div className="mt-2 flex flex-wrap items-center gap-2">
                       <span className="text-xs text-gray-500">{task.deadline}</span>
-                      <Badge className={priorityStyles[task.priority]}>{task.priority}</Badge>
-                      <Badge className={statusStyles[task.status]}>{task.status}</Badge>
+                      <TaskBadge className={priorityStyles[task.priority]}>{task.priority}</TaskBadge>
+                      <TaskBadge className={statusStyles[task.status]}>{task.status}</TaskBadge>
                     </div>
                   </div>
                 </div>

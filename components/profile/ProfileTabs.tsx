@@ -42,7 +42,7 @@ export function ProfileTabs({
   return (
     <div className="w-full">
       <Tabs tabs={tabs} activeId={activeId} onChange={setActiveId} />
-      <div className="mt-6">
+      <div className="mt-4">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeId}

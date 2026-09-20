@@ -28,6 +28,25 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-inter);
+  /* Compact platform type scale from TYPOGRAPHY.md */
+  --text-5xl: 2.5rem;
+  --text-5xl--line-height: 1.1;
+  --text-4xl: 2rem;
+  --text-4xl--line-height: 1.1;
+  --text-3xl: 1.75rem;
+  --text-3xl--line-height: 1.25;
+  --text-2xl: 1.375rem;
+  --text-2xl--line-height: 1.25;
+  --text-xl: 1.125rem;
+  --text-xl--line-height: 1.5;
+  --text-lg: 1rem;
+  --text-lg--line-height: 1.5;
+  --text-base: 0.9375rem;
+  --text-base--line-height: 1.5;
+  --text-sm: 0.8125rem;
+  --text-sm--line-height: 1.5;
+  --text-xs: 0.6875rem;
+  --text-xs--line-height: 1.5;
   /* Placeholder heading font standing in for the Figma-specified "Google Sans Flex"
      (not on Google Fonts) until the real font file is vendored. */
   --font-heading: var(--font-inter);
@@ -38,8 +57,8 @@
 
   /* Profile page palette, pulled from the Figma export */
   --color-charcoal: #353131; /* header / footer background */
-  --color-cream: #f2e5d5;
-  --color-avatar-bg: #f4dcbe;
+  --color-cream: #C9E3EE;
+  --color-avatar-bg: #8AD4DE;
   --color-brand-red: #ea4335;
   --color-navy: #325fa6;
   --color-accent-blue: #4e8df5;

@@ -1,7 +1,12 @@
 import AuthErrorMessage from "@/app/components/auth/AuthErrorMessage"
 import PasswordInput from "@/app/components/auth/PasswordInput"
+import SelectField from "./SelectField"
 
 const countryCodeOptions = [{ country: "Saudi Arabia", code: "+966" }]
+const genderOptions = [
+  { value: "female", label: "Female" },
+  { value: "male", label: "Male" },
+]
 
 type SignupCredentialsProps = {
   values: Record<string, string>
@@ -29,7 +34,7 @@ export default function SignupCredentials({
     <>
       <label
         htmlFor="full-name"
-        className="relative block text-sm font-medium"
+        className="relative order-1 block text-sm font-medium"
       >
         Full name <span className="text-red">*</span>
         <input
@@ -44,7 +49,7 @@ export default function SignupCredentials({
           maxLength={255}
           aria-invalid={Boolean(fullNameError)}
           aria-describedby={fullNameError ? "full-name-error" : undefined}
-          className={`mt-1.5 h-9 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
+          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
             fullNameError ? "border-red" : "border-black/15"
           }`}
         />
@@ -54,9 +59,20 @@ export default function SignupCredentials({
           className="absolute left-0 top-full mt-1"
         />
       </label>
+      <SelectField
+        id="gender"
+        label="Gender"
+        placeholder="Select your gender"
+        options={genderOptions}
+        className="order-2"
+        value={values.gender}
+        error={errors.gender}
+        onChange={(value) => onChange("gender", value)}
+        onBlur={() => onBlur("gender")}
+      />
       <label
         htmlFor="email"
-        className="relative block text-sm font-medium"
+        className="relative order-3 block text-sm font-medium"
       >
         Email address <span className="text-red">*</span>
         <input
@@ -71,7 +87,7 @@ export default function SignupCredentials({
           maxLength={254}
           aria-invalid={Boolean(emailError)}
           aria-describedby={emailError ? "email-error" : undefined}
-          className={`mt-1.5 h-9 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
+          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
             emailError ? "border-red" : "border-black/15"
           }`}
         />
@@ -83,7 +99,7 @@ export default function SignupCredentials({
       </label>
       <label
         htmlFor="password"
-        className="relative block text-sm font-medium"
+        className="relative order-5 block text-sm font-medium"
       >
         Password <span className="text-red">*</span>
         <PasswordInput
@@ -99,7 +115,7 @@ export default function SignupCredentials({
           maxLength={128}
           aria-invalid={Boolean(passwordError)}
           aria-describedby={passwordError ? "password-error" : undefined}
-          className={`mt-1.5 h-9 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
+          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
             passwordError ? "border-red" : "border-black/15"
           }`}
         />
@@ -111,7 +127,7 @@ export default function SignupCredentials({
       </label>
       <label
         htmlFor="confirm-email"
-        className="relative block text-sm font-medium"
+        className="relative order-4 block text-sm font-medium"
       >
         Confirm email <span className="text-red">*</span>
         <input
@@ -128,7 +144,7 @@ export default function SignupCredentials({
           aria-describedby={
             confirmEmailError ? "confirm-email-error" : undefined
           }
-          className={`mt-1.5 h-9 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
+          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
             confirmEmailError ? "border-red" : "border-black/15"
           }`}
         />
@@ -140,7 +156,7 @@ export default function SignupCredentials({
       </label>
       <label
         htmlFor="confirm-password"
-        className="relative block text-sm font-medium"
+        className="relative order-6 block text-sm font-medium"
       >
         Confirm Password <span className="text-red">*</span>
         <PasswordInput
@@ -158,7 +174,7 @@ export default function SignupCredentials({
           aria-describedby={
             confirmPasswordError ? "confirm-password-error" : undefined
           }
-          className={`mt-1.5 h-9 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
+          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
             confirmPasswordError ? "border-red" : "border-black/15"
           }`}
         />
@@ -170,11 +186,11 @@ export default function SignupCredentials({
       </label>
       <label
         htmlFor="phone"
-        className="relative block text-sm font-medium"
+        className="relative order-7 block text-sm font-medium"
       >
         Phone number
         <span
-          className={`mt-1.5 flex h-9 items-center rounded-md border text-base font-normal ${
+          className={`mt-1.5 flex h-8 items-center rounded-md border text-base font-normal ${
             phoneError ? "border-red" : "border-black/15"
           }`}
         >
@@ -221,16 +237,16 @@ export default function SignupCredentials({
         />
       </label>
 
-      <div className="relative col-span-full h-0">
+      <div className="relative order-8 col-span-full min-h-4 text-center">
         <AuthErrorMessage
           message={formError}
-          className="absolute inset-x-0 bottom-full mb-1 text-center"
+          className="text-center"
         />
       </div>
 
       <button
         type="submit"
-        className="col-span-full mb-3 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
+        className="order-9 col-span-full -mt-1 mb-1 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
       >
         Continue
       </button>

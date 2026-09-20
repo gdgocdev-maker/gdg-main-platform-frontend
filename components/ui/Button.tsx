@@ -7,10 +7,10 @@ const variantClasses = {
   // Sized to the Figma "Edit profile" button spec (271x69px, 32px text at desktop) —
   // this variant is only used for that button, so its sizing lives here directly.
   outline:
-    "border-2 border-brand-red bg-white text-foreground hover:bg-brand-red/5 gap-2 px-4 py-2 text-sm font-normal sm:px-5 sm:text-base md:text-lg",
+    "border-2 border-brand-red bg-white text-foreground hover:bg-brand-red/5 gap-1.5 px-3 py-1.5 text-xs font-normal sm:px-4 sm:text-sm",
   solid:
-    "bg-navy text-white hover:bg-navy/90 px-6 py-3 text-sm font-medium sm:text-base md:text-lg",
-  pill: "bg-white text-navy hover:bg-white/90 px-6 py-3 text-sm font-medium sm:text-base md:text-lg",
+    "bg-navy text-white hover:bg-navy/90 px-4 py-2 text-xs font-medium sm:text-sm",
+  pill: "bg-white text-navy hover:bg-white/90 px-4 py-2 text-xs font-medium sm:text-sm",
 } as const;
 
 type ButtonProps = {

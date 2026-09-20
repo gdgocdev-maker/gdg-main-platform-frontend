@@ -24,7 +24,7 @@ export default function LoginEmail({
           event.preventDefault()
           onContinue()
         }}
-        className="mt-15 w-full"
+        className="mt-12 w-full"
         noValidate
       >
         <label htmlFor="email" className="block text-sm font-medium">
@@ -53,11 +53,11 @@ export default function LoginEmail({
         </div>
         <button
           type="submit"
-          className="mt-7 h-8.75 w-full cursor-pointer rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
+          className="mt-5 h-8.75 w-full cursor-pointer rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
         >
           Continue
         </button>
-        <div className="my-7 flex items-center gap-3.25 text-xs text-black/35">
+        <div className="my-5 flex items-center gap-3.25 text-xs text-black/35">
           <span className="h-px flex-1 bg-black/15" />
           <span>OR</span>
           <span className="h-px flex-1 bg-black/15" />
@@ -70,7 +70,7 @@ export default function LoginEmail({
           Sign in with Google
         </button>
       </form>
-      <p className="mt-4 pb-8 text-sm text-black/55">
+      <p className="mt-4 pb-8 text-center text-sm text-black/55 md:absolute md:inset-x-0 md:bottom-3 md:mt-0 md:w-full md:pb-0">
         Don’t have an account?
         <Link href="/signup" className="ms-1 text-sm font-medium text-blue hover:text-blue/90 active:text-blue/80">
           Create an account

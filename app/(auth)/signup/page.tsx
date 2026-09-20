@@ -16,11 +16,11 @@ export default function SignUp() {
         <AuthCard
           size="lg"
           title="Create your account"
-          description="Join the GDG UJ community"
+          description=""
         >
           <SignupFlow />
 
-          <p className="mt-6 pb-8 text-center text-sm text-black/55 md:absolute md:inset-x-0 md:bottom-5 md:mt-0 md:pb-0">
+          <p className="mt-0 pb-0 text-center text-sm text-black/55 md:mt-0 md:pb-0">
             already have an account?
             <Link
               href="/login"
