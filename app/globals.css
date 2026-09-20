@@ -28,7 +28,28 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-google-sans);
   --font-mono: var(--font-geist-mono);
+  /* Placeholder heading font standing in for the Figma-specified "Google Sans Flex"
+     (not on Google Fonts) until the real font file is vendored. */
+  --font-heading: var(--font-inter);
 
+  /* Team breakpoint table: xs <480, sm 480-767, md 768-1023, lg 1024-1279, xl 1280-1535, 2xl 1536+.
+     Tailwind's md/lg/xl/2xl defaults already match; only sm moves from 640px to 480px. */
+  --breakpoint-sm: 30rem;
+
+  /* Profile page palette, pulled from the Figma export */
+  --color-charcoal: #353131; /* header / footer background */
+  --color-cream: #f2e5d5;
+  --color-avatar-bg: #f4dcbe;
+  --color-brand-red: #ea4335;
+  --color-navy: #325fa6;
+  --color-accent-blue: #4e8df5;
+  --color-gray-500: #5f5959;
+  --color-gray-400: #8c8989;
+  --color-gray-350: #a1a1a1;
+  --color-gray-300: #bcbdbf;
+
+  --radius-chip: 1.375rem;
+  --radius-card: 1.4375rem;
   /* Keep the auth/dashboard color tokens used throughout the app */
   --color-light-blue: #edf9fc;
   --color-primary-font: #1e1e1e;
@@ -55,7 +76,6 @@
 
   /* Align Tailwind's "sm" breakpoint with the frontend team's shared
      Small tier (480px-767px); md/lg/xl/2xl already match 768/1024/1280/1536. */
-  --breakpoint-sm: 30rem;
 }
 
 @media (prefers-color-scheme: dark) {
