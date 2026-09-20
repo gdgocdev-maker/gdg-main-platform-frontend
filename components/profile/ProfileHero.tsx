@@ -75,7 +75,7 @@ export function ProfileHero({
       transition={{ duration: 0.4, ease: "easeOut" }}
     >
       <div
-        className="relative h-24 bg-cream bg-cover bg-center sm:h-32 md:h-40 lg:h-[189px]"
+        className="relative h-16 bg-cream bg-cover bg-center sm:h-20 md:h-24 lg:h-30"
         style={headerImageUrl ? { backgroundImage: `url(${headerImageUrl})` } : undefined}
       >
         {isEditing && (
@@ -89,15 +89,15 @@ export function ProfileHero({
       </div>
 
       <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-10 lg:px-16">
-        <div className="-mt-16 sm:-mt-20 md:-mt-24">
+        <div className="-mt-8 sm:-mt-10 md:-mt-12">
           {/* Mobile: centered, stacked */}
-          <div className="flex flex-col items-center gap-3 text-center md:hidden">
+          <div className="flex flex-col items-center gap-2 text-center md:hidden">
             {avatarWithUpload}
             <div className="flex flex-col items-center gap-1">
-              <h1 className="font-[family-name:var(--font-heading)] text-2xl font-semibold sm:text-3xl">
+              <h1 className="text-3xl font-bold leading-tight">
                 {name}
               </h1>
-              <p className="text-base text-foreground/80 sm:text-lg">
+              <p className="text-sm text-foreground/80 sm:text-base">
                 {email} · Member since {memberSince}
               </p>
             </div>
@@ -105,16 +105,16 @@ export function ProfileHero({
           </div>
 
           {/* Desktop: avatar + button share a row, name/meta left-aligned below */}
-          <div className="hidden md:flex md:flex-col md:gap-4">
+          <div className="hidden md:flex md:flex-col md:gap-3">
             <div className="flex items-end justify-between">
               {avatarWithUpload}
               {editControls}
             </div>
             <div className="flex flex-col items-start gap-1 text-left">
-              <h1 className="font-[family-name:var(--font-heading)] text-4xl font-semibold">
+              <h1 className="text-4xl font-bold leading-tight">
                 {name}
               </h1>
-              <p className="text-xl text-foreground/80">
+              <p className="text-lg text-foreground/80">
                 {email} · Member since {memberSince}
               </p>
             </div>
@@ -122,7 +122,7 @@ export function ProfileHero({
         </div>
       </div>
 
-      <div className="h-4 sm:h-5 md:h-6" />
+      <div className="h-3 sm:h-4 md:h-5" />
     </motion.section>
   );
 }

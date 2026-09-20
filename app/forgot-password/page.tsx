@@ -23,7 +23,7 @@ export default function ForgotPassword() {
 
           <Link
             href="/login"
-            className="mt-auto pt-6 pb-8 text-center text-[11px] font-bold text-blue hover:text-blue/90 active:text-blue/80"
+            className="mt-auto pb-8 pt-6 text-center text-sm font-medium text-blue hover:text-blue/90 active:text-blue/80"
           >
             Back to Sign in
           </Link>

@@ -17,6 +17,7 @@ import SignupProgress from "./SignupProgress"
 
 type FieldName =
   | "fullName"
+  | "gender"
   | "email"
   | "password"
   | "confirmEmail"
@@ -35,6 +36,7 @@ const FIELD_ERROR_TIMEOUT = 3000
 
 const defaultValues: FormValues = {
   fullName: "",
+  gender: "",
   email: "",
   password: "",
   confirmEmail: "",
@@ -97,6 +99,9 @@ function validateCredentials(values: FormValues) {
 
   const fullNameError = validateName(values.fullName)
   if (fullNameError) nextErrors.fullName = fullNameError
+
+  const genderError = validateSelect(values.gender, "gender")
+  if (genderError) nextErrors.gender = genderError
 
   const emailError = validateEmail(values.email)
   if (emailError) nextErrors.email = emailError
@@ -359,11 +364,11 @@ export default function SignupFlow() {
           )
         }}
         noValidate
-        className="mt-22.5 flex w-full flex-1 flex-col"
+        className="mt-20 flex w-full flex-col"
       >
         <AuthStepTransition
           stepKey={step}
-          className="grid w-full grid-cols-1 gap-x-4.5 gap-y-5.5 md:grid-cols-2"
+          className="grid w-full grid-cols-1 gap-x-4.5 gap-y-2.5 md:grid-cols-2"
         >
           {step === 1 ? (
             <SignupCredentials

@@ -12,8 +12,8 @@ export function ProfileBio({
   onChange,
 }: ProfileBioProps) {
   return (
-    <div className="w-full rounded-card border border-gray-400 bg-white px-5 py-6 sm:px-8">
-      <p className="mb-2 text-sm font-semibold text-gray-500 sm:text-base">
+    <div className="w-full rounded-card border border-gray-400 bg-white px-4 py-4 sm:px-6">
+      <p className="mb-1 text-xs font-semibold text-gray-500 sm:text-sm">
         Short Bio
       </p>
       {isEditing ? (
@@ -23,11 +23,11 @@ export function ProfileBio({
           placeholder={placeholder}
           rows={3}
           maxLength={500}
-          className="w-full resize-none text-base leading-relaxed text-foreground outline-none placeholder:text-gray-300 sm:text-lg md:text-xl"
+          className="w-full resize-none text-sm leading-relaxed text-foreground outline-none placeholder:text-gray-300 sm:text-base md:text-lg"
         />
       ) : (
         <p
-          className={`text-base leading-relaxed sm:text-lg md:text-xl ${
+          className={`text-sm leading-relaxed sm:text-base md:text-lg ${
             bio ? "text-foreground" : "text-gray-300"
           }`}
         >

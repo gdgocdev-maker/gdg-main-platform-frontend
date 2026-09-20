@@ -7,14 +7,14 @@ import type { ReactNode } from "react"
 type AuthCardProps = {
   size: "sm" | "md" | "lg"
   title: string
-  description: string
+  description?: string
   children: ReactNode
 }
 
 const sizeClasses = {
   sm: "md:w-109.5 md:h-120!",
   md: "md:w-109.5 md:h-130!",
-  lg: "md:w-full md:max-w-135 md:h-150!"
+  lg: "md:w-full md:max-w-135 md:min-h-145! md:pt-8.5"
 } as const
 
 export default function AuthCard({
@@ -38,12 +38,14 @@ export default function AuthCard({
         priority
       />
 
-      <h1 className="mt-3 text-center text-[25px] font-bold leading-[1.1] tracking-[-1px] md:text-[32px]">
+      <h1 className="mt-3 text-center text-4xl font-bold leading-tight md:text-5xl">
         {title}
       </h1>
-      <p className="mt-1 text-center text-[13px] text-black/45">
-        {description}
-      </p>
+      {description && (
+        <p className="mt-1 text-center text-sm text-black/45">
+          {description}
+        </p>
+      )}
 
       <motion.div
         initial={{ opacity: 0 }}

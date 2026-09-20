@@ -71,14 +71,14 @@ export default function AuthVisualPanel({
         />
 
         <div className="mt-26">
-          <p className="font-mono text-[15px] font-bold tracking-[2px] text-blue">
+          <p className="text-base font-bold tracking-[2px] text-blue">
             GDG ON CAMPUS · UJ
           </p>
-          <h1 className="mt-2.25 text-[50px] font-bold leading-[1.08] tracking-[-1.2px]">
+          <h1 className="mt-2.25 text-5xl font-bold leading-tight">
             Learn together.
             <span className="block text-blue">Build what’s next.</span>
           </h1>
-          <p className="mt-4.25 max-w-95 text-[14px] leading-[1.45]">
+          <p className="mt-4.25 max-w-95 text-sm leading-normal">
             Connect with the community, manage your membership,
             <br />
             and take part in GDG UJ activities

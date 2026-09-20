@@ -16,7 +16,7 @@ type TabsProps = {
 
 export function Tabs({ tabs, activeId, onChange, className = "" }: TabsProps) {
   return (
-    <div role="tablist" className={`flex gap-8 sm:gap-10 md:gap-12 ${className}`}>
+    <div role="tablist" className={`flex gap-6 sm:gap-8 md:gap-10 ${className}`}>
       {tabs.map((tab) => {
         const isActive = tab.id === activeId;
         return (
@@ -26,7 +26,7 @@ export function Tabs({ tabs, activeId, onChange, className = "" }: TabsProps) {
             role="tab"
             aria-selected={isActive}
             onClick={() => onChange(tab.id)}
-            className={`relative pb-2 text-lg font-medium transition-colors sm:text-xl md:text-2xl ${
+            className={`relative pb-1 text-base font-medium transition-colors sm:text-lg md:text-xl ${
               isActive ? "text-accent-blue" : "text-gray-500"
             }`}
           >

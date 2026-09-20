@@ -129,7 +129,7 @@ export default function VerifyCodeForm() {
               onChange={(event) => updateCode(index, event.target.value)}
               onKeyDown={(event) => handleKeyDown(index, event.key)}
               onPaste={handlePaste}
-              className="h-12.5 min-w-0 flex-1 rounded-md border border-black/15 text-center text-[18px] outline-none focus:border-blue focus:ring-1 focus:ring-blue/25"
+              className="h-12.5 min-w-0 flex-1 rounded-md border border-black/15 text-center text-lg outline-none focus:border-blue focus:ring-1 focus:ring-blue/25"
             />
           ))}
         </div>
@@ -144,16 +144,16 @@ export default function VerifyCodeForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="mt-10.25 h-8.75 w-full rounded-[5px] bg-blue text-[12px] font-bold text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
+        className="mt-10.25 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
       >
         {isSubmitting ? "Verifying..." : "Verify Code"}
       </button>
 
-      <p className="mt-7.5 text-center text-[11px] text-black/45">
+      <p className="mt-7.5 text-center text-sm text-black/45">
         Didn&apos;t get the code?{" "}
         <button
           type="button"
-          className="cursor-pointer font-bold text-blue hover:text-blue/90 active:text-blue/80"
+          className="cursor-pointer text-sm font-medium text-blue hover:text-blue/90 active:text-blue/80"
         >
           Resend Code
         </button>

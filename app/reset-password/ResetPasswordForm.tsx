@@ -105,7 +105,7 @@ export default function ResetPasswordForm({
     >
       <label
         htmlFor="new-password"
-        className="relative block text-[11px] mb-6 font-bold"
+        className="relative mb-6 block text-sm font-medium"
       >
         New Password <span className="text-red">*</span>
         <PasswordInput
@@ -120,7 +120,7 @@ export default function ResetPasswordForm({
           maxLength={PASSWORD_MAX_LENGTH}
           aria-invalid={Boolean(passwordError)}
           aria-describedby={passwordError ? "new-password-error" : undefined}
-          className="mt-1.5 h-8.5 rounded-md border border-black/15 px-2.75 text-[12px] font-normal outline-none placeholder:text-black/40"
+          className="mt-1.5 h-8.5 rounded-md border border-black/15 px-2.75 text-base font-normal outline-none placeholder:text-black/40"
         />
         <AuthErrorMessage
           id="new-password-error"
@@ -131,7 +131,7 @@ export default function ResetPasswordForm({
 
       <label
         htmlFor="confirm-password"
-        className="relative mt-3 block text-[11px] font-bold"
+        className="relative mt-3 block text-sm font-medium"
       >
         Confirm Password <span className="text-red">*</span>
         <PasswordInput
@@ -148,7 +148,7 @@ export default function ResetPasswordForm({
           aria-describedby={
             confirmPasswordError ? "confirm-password-error" : undefined
           }
-          className="mt-1.5 h-8.5 rounded-md border border-black/15 px-2.75 text-[12px] font-normal outline-none placeholder:text-black/40"
+          className="mt-1.5 h-8.5 rounded-md border border-black/15 px-2.75 text-base font-normal outline-none placeholder:text-black/40"
         />
         <AuthErrorMessage
           id="confirm-password-error"
@@ -160,7 +160,7 @@ export default function ResetPasswordForm({
       <button
         type="submit"
         disabled={isSubmitting}
-        className="mt-9.5 h-8.75 w-full rounded-[5px] bg-blue text-[12px] font-bold text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
+        className="mt-9.5 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
       >
         {isSubmitting ? "Please wait..." : submitLabel}
       </button>

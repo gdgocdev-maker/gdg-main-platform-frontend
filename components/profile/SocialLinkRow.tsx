@@ -40,18 +40,18 @@ export function SocialLinkRow({
         hidden: { opacity: 0, y: 8 },
         visible: { opacity: 1, y: 0 },
       }}
-      className={`flex items-center gap-4 rounded-card border bg-white px-5 py-4 sm:px-6 ${
+      className={`flex items-center gap-3 rounded-card border bg-white px-4 py-3 sm:px-5 ${
         error ? "border-brand-red" : "border-gray-350"
       }`}
     >
       <span
-        className={`flex size-9 shrink-0 items-center justify-center rounded-lg sm:size-10 ${badgeClassName}`}
+        className={`flex size-8 shrink-0 items-center justify-center rounded-lg sm:size-9 ${badgeClassName}`}
       >
         <Icon className="size-5" />
       </span>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <span className="text-sm font-semibold text-foreground sm:text-base">
+        <span className="text-xs font-semibold text-foreground sm:text-sm">
           {link.label}
         </span>
         {isEditing ? (
@@ -62,7 +62,7 @@ export function SocialLinkRow({
               onChange={(event) => onChange(event.target.value)}
               placeholder={placeholderByPlatform[link.platform]}
               aria-invalid={Boolean(error)}
-              className="w-full min-w-0 border-0 border-b border-dashed border-gray-350 bg-transparent py-0.5 text-sm text-foreground outline-none placeholder:text-gray-300 focus:border-accent-blue sm:text-base"
+              className="w-full min-w-0 border-0 border-b border-dashed border-gray-350 bg-transparent py-0.5 text-xs text-foreground outline-none placeholder:text-gray-300 focus:border-accent-blue sm:text-sm"
             />
             {error && <span className="mt-1 text-xs text-brand-red">{error}</span>}
           </>
@@ -71,12 +71,12 @@ export function SocialLinkRow({
             href={link.value}
             target="_blank"
             rel="noopener noreferrer"
-            className="truncate text-sm text-accent-blue hover:underline sm:text-base"
+            className="truncate text-xs text-accent-blue hover:underline sm:text-sm"
           >
             {link.value}
           </a>
         ) : (
-          <span className="text-sm italic text-gray-300 sm:text-base">
+          <span className="text-xs italic text-gray-300 sm:text-sm">
             Not added yet
           </span>
         )}
