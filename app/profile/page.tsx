@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import type { CSSProperties } from "react";
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
+import { TopNav } from "@/components/dashboard/TopNav";
 import { ProfileBio } from "@/components/profile/ProfileBio";
 import { ProfileChips } from "@/components/profile/ProfileChips";
 import { ProfileHero } from "@/components/profile/ProfileHero";
@@ -170,7 +169,7 @@ export default function ProfilePage({}: PageProps<"/profile">) {
       className="flex flex-1 flex-col bg-white text-[#171717] font-[family-name:var(--font-inter)]"
       style={{ "--background": "#ffffff", "--foreground": "#171717" } as CSSProperties}
     >
-      <Header />
+      <TopNav />
       <ProfileHero
         initials={sampleProfile.initials}
         name={sampleProfile.name}
@@ -206,7 +205,6 @@ export default function ProfilePage({}: PageProps<"/profile">) {
           onSocialLinkChange={handleLinkChange}
         />
       </main>
-      <Footer />
     </div>
   );
 }
