@@ -1,100 +1,25 @@
 "use client";
 import { projects } from "@/data/home";
 import { GrNext, GrPrevious } from "react-icons/gr";
-import { motion, useAnimationControls } from "framer-motion";
+import { motion } from "framer-motion";
 import ProjectCard from "./ProjectCard";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 export default function FeaturedProjects() {
-  
-  const carouselProjects = [
-    ...projects,
-    ...projects,
-    ...projects,
-  ];
-
-  const [activeProject, setActiveProject] = useState(projects.length);
-
-  const controls = useAnimationControls();
-
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  const skipAnimation = useRef(false);
-
-  const firstRender = useRef(true);
-
-
-  useLayoutEffect(() => {
-    const activeCard = cardRefs.current[activeProject];
-
-    if (!activeCard) {
-      return;
-    }
-
-    const targetX = -activeCard.offsetLeft;
-
-    // Initial positioning — no animation.
-    if (firstRender.current) {
-      controls.set({ x: targetX });
-      firstRender.current = false;
-      return;
-    }
-
-    if (skipAnimation.current) {
-      controls.set({ x: targetX });
-      skipAnimation.current = false;
-      return;
-    }
-
-    controls.start({
-        x: targetX,
-        transition: {
-        duration: 0.35,
-        ease: "easeOut",
-  },
-});
-  }, [activeProject, controls]);
-
+  const [activeProject, setActiveProject] = useState(0);
+  const visibleProjects = Array.from({ length: 4 }, (_, index) => ({
+    project: projects[(activeProject + index) % projects.length],
+    index,
+  }));
 
   const handleNext = () => {
-    setActiveProject((prev) => prev + 1);
+    setActiveProject((prev) => (prev + 1) % projects.length);
   };
 
   const handlePrevious = () => {
-    setActiveProject((prev) => prev - 1);
-  };
-
-  const selectProject = (projectIndex: number) => {
-    const possibleIndexes = [
-      projectIndex,
-      projects.length + projectIndex,
-      projects.length * 2 + projectIndex,
-    ];
-
-    const closestIndex = possibleIndexes.reduce((closest, current) => {
-      const currentDistance = Math.abs(current - activeProject);
-      const closestDistance = Math.abs(closest - activeProject);
-
-      return currentDistance < closestDistance ? current : closest;
-    });
-
-    setActiveProject(closestIndex);
-  };
-
-  const handleAnimationComplete = () => {
-    if (activeProject >= projects.length * 2) {
-      skipAnimation.current = true;
-
-      setActiveProject((prev) => prev - projects.length);
-
-      return;
-    }
-
-    if (activeProject < projects.length) {
-      skipAnimation.current = true;
-
-      setActiveProject((prev) => prev + projects.length);
-    }
+    setActiveProject(
+      (prev) => (prev - 1 + projects.length) % projects.length
+    );
   };
 
   return (
@@ -104,31 +29,24 @@ export default function FeaturedProjects() {
       </h2>
 
       <div className="mt-10 flex flex-col items-center gap-4">
-        {/* Visible carousel area */}
-        <div className="w-full overflow-hidden">
+        {/* Visible project cards */}
+        <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <motion.div
-            className="flex w-max items-center gap-4"
-            animate={controls}
-            onAnimationComplete={handleAnimationComplete}
+            key={activeProject}
+            className="contents"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            {carouselProjects.map((project, index) => {
-              const projectIndex = index % projects.length;
-
-              return (
-                <div
-                  key={`${project.id}-${index}`}
-                  ref={(element) => {
-                    cardRefs.current[index] = element;
-                  }}
-                >
-                  <ProjectCard
-                    project={project}
-                    isActive={index === activeProject}
-                    onSelect={() => selectProject(projectIndex)}
-                  />
-                </div>
-              );
-            })}
+            {visibleProjects.map(({ project }) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                isActive
+                compact
+                onSelect={() => undefined}
+              />
+            ))}
           </motion.div>
         </div>
 

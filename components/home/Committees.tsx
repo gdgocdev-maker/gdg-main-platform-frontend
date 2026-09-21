@@ -16,8 +16,11 @@ export default function Committees() {
         {committees.map((committee, index) => (
           <div
             key={committee.id}
-            className="sticky top-[92px] mb-6 sm:top-[110px] sm:mb-8 lg:top-[130px]"
-            style={{ zIndex: index + 1 }}
+            className="sticky mb-6 sm:mb-8"
+            style={{
+              top: `calc(clamp(92px, 10vw, 130px) + ${index * 28}px)`,
+              zIndex: index + 1,
+            }}
           >
             <CommitteeCard committee={committee} />
           </div>

@@ -87,7 +87,7 @@ export default function WhatWeOffer() {
                       key={offer.number}
                       initial={{
                         opacity: 0,
-                        x: 15,
+                        x: 8,
                       }}
                       animate={{
                         opacity: 1,
@@ -96,12 +96,14 @@ export default function WhatWeOffer() {
                       exit={{
                         opacity: 0,
                         x: -15,
+                        transition: { duration: 0 },
                       }}
                       transition={{
-                        duration: 0.35,
+                        duration: 0.45,
+                        delay: 0.3,
                         ease: "easeOut",
                       }}
-                      className="min-w-0"
+                      className="min-w-0 overflow-hidden"
                     >
                       <h3 className="text-2xl font-semibold leading-snug">
                         {offer.title}
