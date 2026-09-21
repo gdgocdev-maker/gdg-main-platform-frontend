@@ -138,8 +138,8 @@ export default function CommitteeCard({
       <div
         className={
           activeCommittee.coLeader
-            ? "relative h-[135px] w-[105px] sm:h-[155px] sm:w-[120px] md:h-[175px] md:w-[135px]"
-            : "relative h-[160px] w-[140px] sm:h-[180px] sm:w-[160px] md:h-[205px] md:w-[180px]"
+            ? "relative h-[145px] w-[105px] sm:h-[165px] sm:w-[120px] md:h-[185px] md:w-[135px]"
+            : "relative h-[180px] w-[140px] sm:h-[200px] sm:w-[160px] md:h-[250px] md:w-[180px]"
         }
       >
         {/* Gradient Background */}
@@ -147,7 +147,7 @@ export default function CommitteeCard({
           className={
             activeCommittee.coLeader
               ? "absolute inset-0 rounded-[10px] bg-gradient-to-r from-[#4967A4] to-[#B85D55]"
-              : "absolute bottom-0 left-1/2 h-[160px] w-[140px] -translate-x-1/2 rounded-[10px] bg-gradient-to-r from-[#4967A4] to-[#B85D55] sm:h-[180px] sm:w-[160px] md:h-[205px] md:w-[180px]"
+              : "absolute bottom-0 left-1/2 h-[180px] w-[140px] -translate-x-1/2 rounded-[10px] bg-gradient-to-r from-[#4967A4] to-[#B85D55] sm:h-[200px] sm:w-[160px] md:h-[250px] md:w-[180px]"
           }
         />
 
@@ -171,7 +171,7 @@ export default function CommitteeCard({
     {/* Co-Leader */}
     {activeCommittee.coLeader && (
       <div className="flex flex-col items-center">
-        <div className="relative h-[135px] w-[105px] sm:h-[155px] sm:w-[120px] md:h-[175px] md:w-[135px]">
+        <div className="relative h-[145px] w-[105px] sm:h-[165px] sm:w-[120px] md:h-[185px] md:w-[135px]">
           {/* Gradient Background */}
           <div className="absolute inset-0 rounded-[10px] bg-gradient-to-r from-[#4967A4] to-[#B85D55]" />
 
