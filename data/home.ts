@@ -21,27 +21,6 @@ export const projects = [
       description: "Short Description of the project here",
       madeBy: "Developer community",
     },
-    {
-      id: "4",
-      img: "/images/project-placeholder.png",
-      projectName: "Project Name 4",
-      description: "Short Description of the project here",
-      madeBy: "Developer community",
-    },
-    {
-      id: "5",
-      img: "/images/project-placeholder.png",
-      projectName: "Project Name 5",
-      description: "Short Description of the project here",
-      madeBy: "Developer community",
-    },
-    {
-      id: "6",
-      img: "/images/project-placeholder.png",
-      projectName: "Project Name 6",
-      description: "Short Description of the project here",
-      madeBy: "Developer community",
-    },
   ];
     
 //   Mock data, The actual data will be retrieved from database 
@@ -83,7 +62,7 @@ export const events = [
     id: "2",
     image: "/images/jumanah-coleader.png",
     role: "Co-Lead",
-    name: "Jumanah Alshibi",
+    name: "Jumanah Alshaibi",
   },   
   {
     id: "3",
@@ -122,7 +101,7 @@ export const committees = [
     name: "Project Management",
     color: "#4285F4",
     description:
-      "A team focused on planning, organizing, and delivering successful projects that bring ideas to life.",
+      "Where ideas become structured plans with clear owners, clear deadlines, and clear outcomes. We bring together planning, coordination, and follow through to turn vision into execution, and execution into results.",
     lead: {
       name: "Mohammed Elkasabgy",
       image: "/images/PM-lead.png",

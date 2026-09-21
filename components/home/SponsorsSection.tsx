@@ -24,12 +24,12 @@ export default function SponsorsSection() {
                 ease: "easeOut",
                 delay: (index % sponsors.length) * 0.05,
               }}
-              className="h-[80px] w-[140px] shrink-0 overflow-hidden rounded-xl border border-gray-300 sm:h-[90px] sm:w-[160px] lg:h-[150px] lg:w-[180px]"
+              className="h-[80px] w-[80px] shrink-0 overflow-hidden rounded-full border border-gray-300 sm:h-[90px] sm:w-[90px] lg:h-[150px] lg:w-[150px]"
             >
               <img
                 src={sponsor.image}
                 alt={sponsor.name}
-                className="h-full w-full object-cover"
+                className="h-full w-full rounded-full object-cover"
               />
             </motion.div>
           ))}
