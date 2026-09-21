@@ -12,12 +12,14 @@ type ProjectCardProps = {
   project: Project;
   isActive: boolean;
   onSelect: () => void;
+  compact?: boolean;
 };
 
 export default function ProjectCard({
   project,
   isActive,
   onSelect,
+  compact = false,
 }: ProjectCardProps) {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (!isActive && (event.key === "Enter" || event.key === " ")) {
@@ -30,20 +32,26 @@ export default function ProjectCard({
     <motion.div
       onClick={!isActive ? onSelect : undefined}
       onKeyDown={handleKeyDown}
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
       role={!isActive ? "button" : undefined}
       tabIndex={!isActive ? 0 : undefined}
-      className={`shrink-0 overflow-hidden rounded-[28px] border border-black bg-gradient-to-b from-[#DE8B8B] to-[#6D95C0] ${
+      className={`shrink-0 overflow-hidden rounded-[28px] border border-black bg-gradient-to-b from-[#DE8B8B] to-[#6D95C0] shadow-sm transition-shadow hover:shadow-lg ${
         isActive
-          ? "flex h-[340px] w-[240px] flex-col md:h-[360px] md:w-[320px] xl:h-[280px] xl:w-[600px] xl:flex-row"
-          : "h-[320px] w-[70px] md:h-[360px] md:w-[90px] xl:h-[280px] xl:w-[150px]"
+          ? compact
+            ? "flex h-[360px] w-full min-w-0 flex-col"
+            : "flex h-[340px] w-[240px] flex-col md:h-[360px] md:w-[320px] xl:h-[280px] xl:w-[600px] xl:flex-row"
+          : "h-[320px] w-[70px] md:h-[360px] md:w-[90px] xl:h-[280px] xl:w-[180px]"
       }`}
     >
       {/* Image */}
       <div
         className={`shrink-0 ${
           isActive
-            ? "h-[160px] w-full p-3 pb-0 md:h-[190px] xl:h-[280px] xl:w-[280px] xl:p-0"
-            : "h-[320px] w-[70px] md:h-[360px] md:w-[90px] xl:h-[280px] xl:w-[150px]"
+            ? compact
+              ? "h-[160px] w-full shrink-0 p-3 pb-0"
+              : "h-[160px] w-full p-3 pb-0 md:h-[190px] xl:h-[280px] xl:w-[280px] xl:p-0"
+            : "h-[320px] w-[70px] md:h-[360px] md:w-[90px] xl:h-[280px] xl:w-[180px]"
         }`}
       >
         <div className="h-full w-full overflow-hidden rounded-[20px]">

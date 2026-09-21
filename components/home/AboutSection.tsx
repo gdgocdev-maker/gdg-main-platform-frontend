@@ -70,7 +70,7 @@ export default function AboutSection() {
           </motion.h2>
 
           <motion.p
-            className="mt-6 text-lg font-normal leading-normal"
+            className="mt-6 text-justify text-lg font-normal leading-normal"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -80,11 +80,14 @@ export default function AboutSection() {
               ease: "easeOut",
             }}
           >
-            We are a diverse community of people passionate about technology,
-            creativity, and learning. We bring together developers, technology
-            enthusiasts, creatives, and aspiring professionals to learn,
-            exchange ideas, collaborate on projects, and build meaningful
-            connections.
+We are a diverse and growing community of developers, technology enthusiasts, 
+creatives, and aspiring professionals united by a passion for technology, 
+innovation, and continuous learning. Our community brings together people with different backgrounds, 
+skills, and interests to learn from one another, exchange ideas, and build meaningful connections.
+Through workshops, events, technical activities, and collaborative projects,
+we create opportunities for members to develop their skills, explore new technologies, share their knowledge, 
+and turn ideas into real-world projects. Our platform brings the community’s events, announcements, activities, 
+and opportunities together in one place, making it easier for everyone to stay connected, get involved, and grow together.
           </motion.p>
         </div>
 
