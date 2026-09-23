@@ -240,13 +240,13 @@ export default function SignupCredentials({
       <div className="relative order-8 col-span-full min-h-4 text-center">
         <AuthErrorMessage
           message={formError}
-          className="text-center"
+          className="-translate-y-1 text-center"
         />
       </div>
 
       <button
         type="submit"
-        className="order-9 col-span-full -mt-1 mb-1 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
+        className="order-9 col-span-full -mt-5 mb-1 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
       >
         Continue
       </button>
