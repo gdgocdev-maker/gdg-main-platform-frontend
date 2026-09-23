@@ -4,6 +4,8 @@ import Navbar from "@/components/home/Navbar";
 import { motion } from "framer-motion";
 
 export default function HeroSection() {
+  const text = "Connect. Learn. Build. Grow.";
+
   return (
     <section
       id="home"
@@ -22,32 +24,41 @@ export default function HeroSection() {
 
       <div className="absolute inset-0 z-10 bg-black/50"></div>
 
-      <div className="relative z-30 flex w-full flex-col items-center gap-[80px] px-4">
+      <div className="relative z-30 flex w-full flex-col items-center gap-[6rem] px-4">
         <motion.h1
           className="max-w-[1200px] text-center text-4xl font-bold leading-tight text-white lg:text-5xl"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
         >
-          Connect. Learn. Build. Grow.
+          {text.split("").map((char, index) => (
+            <motion.span
+              key={`${char}-${index}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                delay: index * 0.08,
+                duration: 0.05,
+              }}
+            >
+              {char}
+            </motion.span>
+          ))}
         </motion.h1>
 
         <motion.div
           className="flex flex-wrap gap-[10px]"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.25 }}
+          transition={{ duration: 0.5 }}
         >
           <motion.button
-            className="relative flex h-[48px] w-[190px] items-center justify-start rounded-[40px] bg-[#1E1E1E] pl-5 text-base font-medium leading-none text-white lg:h-[60px] lg:w-[240px] lg:pl-[32px] lg:text-xl"
+            className="relative flex h-[38px] w-[180px] items-center justify-start rounded-[40px] bg-[#1E1E1E] pl-5 text-base font-medium leading-none text-white lg:h-[50px] lg:w-[230px] lg:pl-[32px] lg:text-xl"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
           >
             Explore Events
 
-            <span className="absolute right-2 top-1/2 flex h-[36px] w-[36px] -translate-y-1/2 items-center justify-center rounded-full bg-white lg:right-4 lg:h-[44px] lg:w-[44px]">
+            <span className="absolute end-0.5 top-1/2 flex h-[34px] w-[34px] -translate-y-1/2 items-center justify-center rounded-full bg-white lg:end-1 lg:h-[44px] lg:w-[44px]">
               <svg
-                className="h-6 w-6 lg:h-8 lg:w-8"
+                className="h-5 w-5 lg:h-7 lg:w-7"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -64,15 +75,15 @@ export default function HeroSection() {
           </motion.button>
 
           <motion.button
-            className="relative flex h-[48px] w-[130px] items-center justify-start rounded-[40px] bg-white pl-5 text-base font-medium leading-none text-black lg:h-[60px] lg:w-[170px] lg:pl-[32px] lg:text-xl "
+            className="relative flex h-[38px] w-[120px] items-center justify-start rounded-[40px] bg-white pl-5 text-base font-medium leading-none text-black lg:h-[50px] lg:w-[160px] lg:pl-[32px] lg:text-xl"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
           >
             Join Us
 
-            <span className="absolute right-2 top-1/2 flex h-[36px] w-[36px] -translate-y-1/2 items-center justify-center rounded-full bg-black lg:right-4 lg:h-[44px] lg:w-[44px]">
+            <span className="absolute end-0.5 top-1/2 flex h-[34px] w-[34px] -translate-y-1/2 items-center justify-center rounded-full bg-black lg:end-1 lg:h-[44px] lg:w-[44px]">
               <svg
-                className="h-6 w-6 lg:h-8 lg:w-8"
+                className="h-5 w-5 lg:h-7 lg:w-7"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
