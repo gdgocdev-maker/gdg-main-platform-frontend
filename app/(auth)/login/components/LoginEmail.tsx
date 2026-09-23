@@ -48,12 +48,12 @@ export default function LoginEmail({
           <AuthErrorMessage
             id="login-email-error"
             message={error}
-            className="absolute inset-s-0 top-full mt-1"
+            className="absolute inset-s-0 top-full mt-1.5"
           />
         </div>
         <button
           type="submit"
-          className="mt-5 h-8.75 w-full cursor-pointer rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
+          className="mt-6 h-8.75 w-full cursor-pointer rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
         >
           Continue
         </button>
@@ -70,12 +70,15 @@ export default function LoginEmail({
           Sign in with Google
         </button>
       </form>
-      <p className="mt-4 pb-8 text-center text-sm text-black/55 md:absolute md:inset-x-0 md:bottom-3 md:mt-0 md:w-full md:pb-0">
-        Don’t have an account?
-        <Link href="/signup" className="ms-1 text-sm font-medium text-blue hover:text-blue/90 active:text-blue/80">
-          Create an account
-        </Link>
-      </p>
+<p className="mt-2 pb-8 text-center text-sm text-black/55">
+  Don’t have an account?
+  <Link
+    href="/signup"
+    className="ms-1 text-sm font-medium text-blue hover:text-blue/90 active:text-blue/80"
+  >
+    Create an account
+  </Link>
+</p>
     </>
   )
 }

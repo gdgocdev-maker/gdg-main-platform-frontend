@@ -40,7 +40,7 @@ return (
   href="#home"
   whileHover={{ scale: 1.05 }}
   transition={{ duration: 0.2 }}
-  className="group flex flex-col items-center text-sm font-medium leading-none"
+  className="group flex flex-col items-center text-md font-medium leading-none"
 >
   <span>Home</span>
 
@@ -53,7 +53,7 @@ return (
   href="#about"
   whileHover={{ scale: 1.05 }}
   transition={{ duration: 0.2 }}
-  className="group flex flex-col items-center text-sm font-medium leading-none"
+  className="group flex flex-col items-center text-md font-medium leading-none"
 >
   <span>About Us</span>
 
@@ -66,7 +66,7 @@ return (
   href="#projects"
   whileHover={{ scale: 1.05 }}
   transition={{ duration: 0.2 }}
-  className="group flex flex-col items-center text-sm font-medium leading-none"
+  className="group flex flex-col items-center text-md font-medium leading-none"
 >
   <span>Projects</span>
 
@@ -79,7 +79,7 @@ return (
   href="#events"
   whileHover={{ scale: 1.05 }}
   transition={{ duration: 0.2 }}
-  className="group flex flex-col items-center text-sm font-medium leading-none"
+  className="group flex flex-col items-center text-md font-medium leading-none"
 >
   <span>Events</span>
 
@@ -92,7 +92,7 @@ return (
   href="#committees"
   whileHover={{ scale: 1.05 }}
   transition={{ duration: 0.2 }}
-  className="group flex flex-col items-center text-sm font-medium leading-none"
+  className="group flex flex-col items-center text-md font-medium leading-none"
 >
   <span>Community</span>
 
