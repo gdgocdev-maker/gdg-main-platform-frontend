@@ -368,7 +368,7 @@ export default function SignupFlow() {
       >
         <AuthStepTransition
           stepKey={step}
-          className="grid w-full grid-cols-1 gap-x-4.5 gap-y-2.5 md:grid-cols-2"
+          className="grid w-full grid-cols-1 gap-x-4.5 gap-y-4 md:grid-cols-2"
         >
           {step === 1 ? (
             <SignupCredentials
