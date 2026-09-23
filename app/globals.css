@@ -105,6 +105,16 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 @keyframes sponsors-marquee {
   from {
     transform: translateX(0);
