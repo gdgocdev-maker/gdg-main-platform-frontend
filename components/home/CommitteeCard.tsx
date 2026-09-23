@@ -87,7 +87,7 @@ export default function CommitteeCard({
 
             {/* Description */}
             <div className="mt-8 sm:mt-10 md:mt-16">
-              <p className="max-w-[540px] text-base font-normal leading-normal text-black">
+              <p className="max-w-[540px] text-justify text-base font-normal leading-normal text-black">
                 {activeCommittee.description}
               </p>
 
@@ -159,11 +159,11 @@ export default function CommitteeCard({
         />
       </div>
 
-      <p className="mt-3 text-center text-sm font-normal leading-normal text-black md:mt-4">
+      <p className="mt-3 text-center text-sm font-bold leading-normal text-black md:mt-4">
         {activeCommittee.name} Committee Lead
       </p>
 
-      <p className="mt-1 text-center text-sm font-normal leading-normal text-black">
+      <p className="mt-1 text-center text-sm font-bold leading-normal text-black">
         {activeCommittee.lead.name}
       </p>
     </div>
@@ -183,11 +183,11 @@ export default function CommitteeCard({
           />
         </div>
 
-        <p className="mt-3 text-center text-sm font-normal leading-normal text-black md:mt-4">
+        <p className="mt-3 text-center text-sm font-bold leading-normal text-black md:mt-4">
           {activeCommittee.name} Committee Co-Leader
         </p>
 
-        <p className="mt-1 text-center text-sm font-normal leading-normal text-black">
+        <p className="mt-1 text-center text-sm font-bold leading-normal text-black">
           {activeCommittee.coLeader.name}
         </p>
       </div>

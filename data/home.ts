@@ -160,7 +160,7 @@ export const committees = [
         id: "web-development",
         name: "Web Design & Development",
         description:
-          "Designing and building modern, responsive, and user-friendly web experiences.",
+          " A creative space for developers passionate about building modern web experiences. Members explore frontend and backend development, from design to deployment. The committee works with modern technologies to create functional and responsive websites. It encourages collaboration, problem solving, and clean development practices. Members turn ideas into real digital experiences and practical projects. ",
         lead: {
           name: "Leen Alghamdi",
           image: "/images/web-lead.png",
@@ -171,7 +171,7 @@ export const committees = [
         id: "artificial-intelligence",
         name: "Artificial Intelligence",
         description:
-          "Exploring artificial intelligence and developing smart solutions using modern AI technologies.",
+          "A space for exploring the world of artificial intelligence and emerging technologies. Members learn about AI concepts, machine learning, and intelligent applications. The committee encourages experimentation with AI tools and real-world use cases. Members collaborate on innovative projects that use AI to solve meaningful problems. It aims to make AI more accessible, practical, and impactful. ",
         lead: {
           name: "Atheer Alzahrani",
           image: "/images/leader-default.png",
@@ -182,7 +182,7 @@ export const committees = [
         id: "robotics-iot",
         name: "Robotics & IOT",
         description:
-          "Creating connected and intelligent systems by combining robotics, sensors, and IoT technologies.",
+          "A hands-on space for building smart systems that connect the physical and digital worlds. Members explore robotics, sensors, embedded systems, and Internet of Things technologies. The committee encourages experimentation, prototyping, and practical problem-solving. Members work together to design and build interactive and connected solutions. It turns ideas into real-world systems through technology and creativity. ",
         lead: {
           name: "Saeed Alghamdi",
           image: "/images/leader-default.png",
@@ -193,7 +193,7 @@ export const committees = [
         id: "cybersecurity",
         name: "Cybersecurity",
         description:
-          "A team focused on security, privacy, and protecting digital systems and information.",
+          "A space for learning how to protect systems, applications, networks, and digital information. Members explore cybersecurity concepts, security practices, and common digital threats. The committee promotes awareness of secure development and responsible technology use. Members practice identifying vulnerabilities and understanding how systems can be protected. It builds a strong foundation for creating safer and more secure digital environments. ",
         lead: {
           name: "Shadi Alnajar",
           image: "/images/Developers-Lead.png",
@@ -204,7 +204,7 @@ export const committees = [
         id: "automation",
         name: "Automation",
         description:
-          "Building automated solutions that simplify processes, improve efficiency, and reduce repetitive tasks.",
+          " A space focused on using technology to simplify tasks and improve workflows. Members explore automation tools, scripting, APIs, and process optimization. The committee encourages finding repetitive tasks that can be transformed into efficient solutions. Members collaborate to build automated workflows and practical productivity tools. It helps turn time-consuming processes into smarter and more efficient systems. ",
         lead: {
           name: "Asma Aldossari",
           image: "/images/leader-default.png",
@@ -215,7 +215,7 @@ export const committees = [
         id: "data-analysis",
         name: "Data Analysis",
         description:
-          "Turning data into meaningful insights through analysis, visualization, and data-driven solutions.",
+          "A space for turning raw data into meaningful insights and informed decisions. Members explore data collection, cleaning, analysis, visualization, and interpretation. The committee works with real-world datasets to understand patterns and trends. Members develop analytical thinking and learn how to communicate insights effectively. It connects data with practical solutions, helping transform information into knowledge. ",
         lead: {
           name: "Shahad Almazrui",
           image: "/images/PM-colead.png",

@@ -41,7 +41,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           {project.projectName}
         </h3>
 
-        <p className="mt-3 line-clamp-3 text-base font-normal leading-normal">
+        <p className="mt-3 line-clamp-3 text-justify text-base font-normal leading-normal">
           {project.description}
         </p>
 
