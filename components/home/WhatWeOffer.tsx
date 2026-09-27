@@ -7,9 +7,13 @@ import {
   useMotionValueEvent,
   useScroll,
 } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { useTextDirection } from "@/i18n/useTextDirection";
 import { useRef, useState } from "react";
 
 export default function WhatWeOffer() {
+  const t = useTranslations("home.offers");
+  const dir = useTextDirection();
   const [activeStep, setActiveStep] = useState(1);
   const mobileSectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -31,8 +35,8 @@ export default function WhatWeOffer() {
   return (
     <section id="offers" className="bg-white px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
       {/* Section Title */}
-      <h2 className="text-3xl font-bold leading-snug">
-        What We Offer
+      <h2 dir={dir} className="text-3xl font-bold leading-snug">
+        {t("title")}
       </h2>
 
       {/* ===================================================== */}
@@ -99,18 +103,18 @@ export default function WhatWeOffer() {
                         transition: { duration: 0 },
                       }}
                       transition={{
-                        duration: 0.45,
-                        delay: 0.3,
+                        duration: 0.35,
+                        delay: 0.5,
                         ease: "easeOut",
                       }}
                       className="min-w-0 overflow-hidden"
                     >
-                      <h3 className="text-2xl font-semibold leading-snug">
-                        {offer.title}
+                      <h3 dir={dir} className="text-2xl font-semibold leading-snug">
+                        {t(`items.${offer.number}.title`)}
                       </h3>
 
-                      <p className="mt-1 text-base font-normal leading-normal">
-                        {offer.description}
+                      <p dir={dir} className="mt-1 text-base font-normal leading-normal">
+                        {t(`items.${offer.number}.description`)}
                       </p>
                     </motion.div>
                   )}
@@ -175,14 +179,15 @@ export default function WhatWeOffer() {
 
                   {/* Content */}
                   <div className="min-w-0 pt-2">
-                    <h3 className="text-2xl font-semibold leading-snug">
-                      {offer.title}
+                    <h3 dir={dir} className="text-2xl font-semibold leading-snug">
+                      {t(`items.${offer.number}.title`)}
                     </h3>
 
                     <AnimatePresence mode="wait">
                       {isActive && (
                         <motion.p
                           key={offer.number}
+                          dir={dir}
                           initial={{
                             opacity: 0,
                             y: 15,
@@ -201,7 +206,7 @@ export default function WhatWeOffer() {
                           }}
                           className="mt-1 max-w-[280px] text-base font-normal leading-normal"
                         >
-                          {offer.description}
+                          {t(`items.${offer.number}.description`)}
                         </motion.p>
                       )}
                     </AnimatePresence>

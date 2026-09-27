@@ -1,3 +1,8 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+import { useTextDirection } from "@/i18n/useTextDirection";
+
 type TeamMember = {
   id: string;
   image: string;
@@ -10,6 +15,9 @@ type TeamCardProps = {
 };
 
 export default function TeamCard({ member }: TeamCardProps) {
+  const t = useTranslations("home.leadership");
+  const dir = useTextDirection();
+
   return (
     <div className="relative w-[172px] shrink-0 pt-[195px]">
       
@@ -19,7 +27,7 @@ export default function TeamCard({ member }: TeamCardProps) {
       {/* Image */}
       <img
         src={member.image}
-        alt={member.name}
+        alt={t(`team.${member.id}.name`)}
         className="absolute left-1/2 top-[-28px] z-10 h-[220px] w-[220px] -translate-x-1/2 object-contain"
       />
 
@@ -38,14 +46,14 @@ export default function TeamCard({ member }: TeamCardProps) {
         </p>
 
         {/* Role */}
-        <p className="text-sm font-normal leading-normal text-black">
-          {member.role}
+        <p dir={dir} className="text-sm font-normal leading-normal text-black">
+          {t(`team.${member.id}.role`)}
         </p>
 
         {/* Name */}
-        <h4 className="mt-[10px] text-xl font-semibold leading-normal text-black"
+        <h4 dir={dir} className="mt-[10px] text-xl font-semibold leading-normal text-black"
         >
-          {member.name}
+          {t(`team.${member.id}.name`)}
         </h4>
       </div>
     </div>

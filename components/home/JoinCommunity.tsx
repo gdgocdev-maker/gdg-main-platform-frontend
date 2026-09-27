@@ -1,19 +1,23 @@
 "use client";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { useTextDirection } from "@/i18n/useTextDirection";
 
 export default function JoinCommunity() {
+  const t = useTranslations("home.joinCommunity");
+  const dir = useTextDirection();
+
   return (
     <section className="px-6 py-16 mt-5 lg:px-10 lg:py-20">
       <div className="relative mx-auto flex min-h-[310px] max-w-[1100px] items-center overflow-visible rounded-2xl bg-gradient-to-r from-[#3562AC] via-[#D96A3D] to-[#95A35B] px-8 py-10 lg:px-12">
         
         <div className="max-w-[650px]">
-          <h3 className="text-2xl font-semibold leading-snug text-white">
-            Ready to Be Part of the Community?
+          <h3 dir={dir} className="text-2xl font-semibold leading-snug text-white">
+            {t("title")}
           </h3>
 
-          <h4 className="mt-5 max-w-[600px] text-lg font-normal leading-normal text-white">
-            Join our community, discover new opportunities, and build something
-            meaningful with us
+          <h4 dir={dir} className="mt-5 max-w-[600px] text-lg font-normal leading-normal text-white">
+            {t("description")}
           </h4>
 
 <motion.button
@@ -22,8 +26,8 @@ export default function JoinCommunity() {
   whileHover={{ scale: 1.03 }}
   whileTap={{ scale: 0.98 }}
 >
-  <span className="relative z-10">
-    Join Our Community!
+  <span className="relative z-10" dir={dir}>
+    {t("cta")}
   </span>
 
   <span className="absolute inset-x-4 top-1 h-[12px] rounded-full bg-white/30 blur-md" />

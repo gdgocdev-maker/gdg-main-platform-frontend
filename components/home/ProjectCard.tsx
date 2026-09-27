@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { useTextDirection } from "@/i18n/useTextDirection";
 
 type Project = {
   id: string;
@@ -15,6 +17,9 @@ type ProjectCardProps = {
 };
 
 export default function ProjectCard({ project }: ProjectCardProps) {
+  const t = useTranslations("home.projects");
+  const dir = useTextDirection();
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 15 }}
@@ -45,8 +50,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           {project.description}
         </p>
 
-        <p className="mt-2 text-sm font-normal leading-normal">
-          Made By {project.madeBy}
+        <p dir={dir} className="mt-2 text-sm font-normal leading-normal">
+          {t("madeBy", { name: project.madeBy })}
         </p>
 
         {/* View Project Button */}
@@ -55,7 +60,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             type="button"
             className="flex h-9 w-[135px] cursor-pointer items-center justify-between rounded-full bg-white px-1 pl-4 text-sm font-medium leading-none text-black"
           >
-            <span>View Project</span>
+            <span dir={dir}>{t("viewProject")}</span>
 
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-black">
               <svg

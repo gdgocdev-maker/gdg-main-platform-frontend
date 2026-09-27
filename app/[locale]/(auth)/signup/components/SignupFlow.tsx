@@ -79,11 +79,11 @@ function validatePhone(value: string) {
     return "Please enter a valid phone number."
   }
 
-  if (trimmed.length < 8 || trimmed.length > 15) {
-    return "Phone number must be 8 to 15 characters long."
-  }
+if (!/^05\d{8}$/.test(trimmed)) {
+  return "Must be 10 digits and start with 05"
+}
 
-  return ""
+return ""
 }
 
 function validateSelect(value: string, fieldLabel: string) {

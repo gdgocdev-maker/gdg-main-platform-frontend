@@ -1,11 +1,15 @@
 "use client";
 
 import { projects } from "@/data/home";
+import { useTranslations } from "next-intl";
+import { useTextDirection } from "@/i18n/useTextDirection";
 import { useRef, useState } from "react";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import ProjectCard from "./ProjectCard";
 
 export default function FeaturedProjects() {
+  const t = useTranslations("home.projects");
+  const dir = useTextDirection();
   // Mobile / Tablet
   const [activeProject, setActiveProject] = useState(0);
 
@@ -64,8 +68,8 @@ export default function FeaturedProjects() {
 
   return (
     <section id="projects" className="px-6 py-16 lg:px-10 lg:py-20">
-      <h2 className="text-3xl font-bold leading-snug">
-        Featured Projects
+      <h2 dir={dir} className="text-3xl font-bold leading-snug">
+        {t("title")}
       </h2>
 
       {/* Mobile / Tablet */}
@@ -89,7 +93,7 @@ export default function FeaturedProjects() {
           <div className="mt-8 flex justify-center gap-3">
             <button
               type="button"
-              aria-label="Previous project"
+              aria-label={t("previous")}
               onClick={handleMobilePrevious}
               disabled={activeProject === 0}
               className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-gray-300 text-white disabled:cursor-default disabled:opacity-50"
@@ -99,7 +103,7 @@ export default function FeaturedProjects() {
 
             <button
               type="button"
-              aria-label="Next project"
+              aria-label={t("next")}
               onClick={handleMobileNext}
               disabled={activeProject === projects.length - 1}
               className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-black text-white disabled:cursor-default disabled:opacity-50"
@@ -126,7 +130,7 @@ export default function FeaturedProjects() {
           <div className="mt-8 flex justify-center gap-3">
             <button
               type="button"
-              aria-label="Previous project"
+              aria-label={t("previous")}
               onClick={handleDesktopPrevious}
               disabled={desktopStart === 0}
               className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gray-300 text-white disabled:cursor-default disabled:opacity-50"
@@ -136,7 +140,7 @@ export default function FeaturedProjects() {
 
             <button
               type="button"
-              aria-label="Next project"
+              aria-label={t("next")}
               onClick={handleDesktopNext}
               disabled={desktopStart >= projects.length - 4}
               className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-black text-white disabled:cursor-default disabled:opacity-50"

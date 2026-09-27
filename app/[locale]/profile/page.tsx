@@ -35,7 +35,7 @@ function findRowValue(card: InfoCardData, key: string): string {
   return card.rows.find((row) => row.key === key)?.value ?? "";
 }
 
-export default function ProfilePage({}: PageProps<"/profile">) {
+export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
   const memberSince = useMemberSince();
   const [isEditing, setIsEditing] = useState(false);
 

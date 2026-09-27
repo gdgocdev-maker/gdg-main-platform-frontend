@@ -3,6 +3,8 @@
 import { CiCalendarDate, CiLocationOn } from "react-icons/ci";
 import { IoTimeOutline } from "react-icons/io5";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { useTextDirection } from "@/i18n/useTextDirection";
 
 type Event = {
   id: string;
@@ -18,6 +20,9 @@ type EventCardProps = {
 };
 
 export default function EventCard({ event }: EventCardProps) {
+  const t = useTranslations("home.events");
+  const dir = useTextDirection();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 15 }}
@@ -65,7 +70,7 @@ export default function EventCard({ event }: EventCardProps) {
             type="button"
             className="flex h-9 w-[108px] cursor-pointer items-center justify-between rounded-full bg-white px-1 pl-4 text-sm font-medium leading-none text-black"
           >
-            <span>Register</span>
+            <span dir={dir}>{t("register")}</span>
 
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-black">
               <svg

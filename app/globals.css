@@ -26,8 +26,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-inter);
+  --font-sans: var(--font-google-sans);
+  --font-mono: var(--font-google-sans);
   /* Compact platform type scale from TYPOGRAPHY.md */
   --text-5xl: 2.5rem;
   --text-5xl--line-height: 1.1;
@@ -47,9 +47,8 @@
   --text-sm--line-height: 1.5;
   --text-xs: 0.6875rem;
   --text-xs--line-height: 1.5;
-  /* Placeholder heading font standing in for the Figma-specified "Google Sans Flex"
-     (not on Google Fonts) until the real font file is vendored. */
-  --font-heading: var(--font-inter);
+  /* Heading font: Google Sans isn't on Google Fonts, so this shares the Roboto substitute above. */
+  --font-heading: var(--font-google-sans);
 
   /* Team breakpoint table: xs <480, sm 480-767, md 768-1023, lg 1024-1279, xl 1280-1535, 2xl 1536+.
      Tailwind's md/lg/xl/2xl defaults already match; only sm moves from 640px to 480px. */
@@ -100,8 +99,14 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), system-ui, sans-serif;
+  font-family: var(--font-google-sans), system-ui, sans-serif;
 }
+
+/* Unified platform-wide font swap: Arabic pages always render in IBM Plex Sans Arabic. */
+html[lang="ar"] body {
+  font-family: var(--font-ibm-plex-sans-arabic), Tahoma, sans-serif;
+}
+
 html {
   scroll-behavior: smooth;
 }

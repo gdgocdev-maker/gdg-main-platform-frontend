@@ -2,9 +2,13 @@
 
 import Navbar from "@/components/home/Navbar";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { useTextDirection } from "@/i18n/useTextDirection";
 
 export default function HeroSection() {
-  const text = "Connect. Learn. Build. Grow.";
+  const t = useTranslations("home.hero");
+  const dir = useTextDirection();
+  const words = t("tagline").split(" ");
 
   return (
     <section
@@ -26,11 +30,12 @@ export default function HeroSection() {
 
       <div className="relative z-30 flex w-full flex-col items-center gap-[6rem] px-4">
         <motion.h1
-          className="max-w-[1200px] text-center text-4xl font-bold leading-tight text-white lg:text-5xl"
+          dir={dir}
+          className="flex max-w-[1200px] flex-wrap justify-center gap-x-2 text-center text-4xl font-bold leading-tight text-white lg:text-5xl"
         >
-          {text.split("").map((char, index) => (
+          {words.map((word, index) => (
             <motion.span
-              key={`${char}-${index}`}
+              key={`${word}-${index}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{
@@ -38,7 +43,7 @@ export default function HeroSection() {
                 duration: 0.05,
               }}
             >
-              {char}
+              {word}
             </motion.span>
           ))}
         </motion.h1>
@@ -54,7 +59,7 @@ export default function HeroSection() {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
           >
-            Explore Events
+            <span dir={dir}>{t("exploreEvents")}</span>
 
             <span className="absolute end-0.5 top-1/2 flex h-[34px] w-[34px] -translate-y-1/2 items-center justify-center rounded-full bg-white lg:end-1 lg:h-[44px] lg:w-[44px]">
               <svg
@@ -79,7 +84,7 @@ export default function HeroSection() {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
           >
-            Join Us
+            <span dir={dir}>{t("joinUs")}</span>
 
             <span className="absolute end-0.5 top-1/2 flex h-[34px] w-[34px] -translate-y-1/2 items-center justify-center rounded-full bg-black lg:end-1 lg:h-[44px] lg:w-[44px]">
               <svg

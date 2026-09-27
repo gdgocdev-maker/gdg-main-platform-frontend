@@ -3,7 +3,13 @@ import { useState } from "react";
 import { IoMenu } from "react-icons/io5";
 import { IoIosClose } from "react-icons/io";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
+import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
+import { useTextDirection } from "@/i18n/useTextDirection";
+
 export default function Navbar() {
+const t = useTranslations("common.nav");
+const dir = useTextDirection();
 const [isOpen, setIsOpen] = useState(false);
 
 const menuVariants = {
@@ -35,14 +41,14 @@ return (
         <div>
             <img src="/images/gdg-white-logo.png" alt="GDG on Campus University of Jeddah logo" className="w-[350px] h-auto" />     
         </div>
-<div className="hidden gap-6 pt-4 lg:flex">
+<div className="hidden items-center gap-6 pt-4 lg:flex">
 <motion.a
   href="#home"
   whileHover={{ scale: 1.05 }}
   transition={{ duration: 0.2 }}
   className="group flex flex-col items-center text-md font-medium leading-none"
 >
-  <span>Home</span>
+  <span dir={dir}>{t("home")}</span>
 
   <span
     className="mt-1 h-[2px] w-0 rounded-full bg-[linear-gradient(90deg,#4285F4_0%,#34A853_33%,#FBBC05_66%,#EA4335_100%)] transition-all duration-300 group-hover:w-full"
@@ -55,7 +61,7 @@ return (
   transition={{ duration: 0.2 }}
   className="group flex flex-col items-center text-md font-medium leading-none"
 >
-  <span>About Us</span>
+  <span dir={dir}>{t("about")}</span>
 
   <span
     className="mt-1 h-[2px] w-0 rounded-full bg-[linear-gradient(90deg,#4285F4_0%,#34A853_33%,#FBBC05_66%,#EA4335_100%)] transition-all duration-300 group-hover:w-full"
@@ -68,7 +74,7 @@ return (
   transition={{ duration: 0.2 }}
   className="group flex flex-col items-center text-md font-medium leading-none"
 >
-  <span>Projects</span>
+  <span dir={dir}>{t("projects")}</span>
 
   <span
     className="mt-1 h-[2px] w-0 rounded-full bg-[linear-gradient(90deg,#4285F4_0%,#34A853_33%,#FBBC05_66%,#EA4335_100%)] transition-all duration-300 group-hover:w-full"
@@ -81,7 +87,7 @@ return (
   transition={{ duration: 0.2 }}
   className="group flex flex-col items-center text-md font-medium leading-none"
 >
-  <span>Events</span>
+  <span dir={dir}>{t("events")}</span>
 
   <span
     className="mt-1 h-[2px] w-0 rounded-full bg-[linear-gradient(90deg,#4285F4_0%,#34A853_33%,#FBBC05_66%,#EA4335_100%)] transition-all duration-300 group-hover:w-full"
@@ -94,12 +100,14 @@ return (
   transition={{ duration: 0.2 }}
   className="group flex flex-col items-center text-md font-medium leading-none"
 >
-  <span>Community</span>
+  <span dir={dir}>{t("community")}</span>
 
   <span
     className="mt-1 h-[2px] w-0 rounded-full bg-[linear-gradient(90deg,#4285F4_0%,#34A853_33%,#FBBC05_66%,#EA4335_100%)] transition-all duration-300 group-hover:w-full"
   />
 </motion.a>
+
+<LanguageSwitcher className="-mt-2" />
         </div>
         <button
             type="button"
@@ -128,7 +136,7 @@ return (
                 href="#home"
                 className="text-sm font-medium leading-none hover:underline"
               >
-                Home
+                <span dir={dir}>{t("home")}</span>
               </motion.a>
               <motion.a
               variants={itemVariants}
@@ -137,7 +145,7 @@ return (
               href="#about"
               className="text-sm font-medium leading-none hover:underline"
               >
-              About Us
+              <span dir={dir}>{t("about")}</span>
               </motion.a>
                 <motion.a
               variants={itemVariants}
@@ -145,21 +153,23 @@ return (
               transition={{ duration: 0.2 }}
               href="#projects"
               className="text-sm font-medium leading-none hover:underline"
-              >Projects</motion.a>
+              ><span dir={dir}>{t("projects")}</span></motion.a>
                 <motion.a
               variants={itemVariants}
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2 }}
               href="#events"
               className="text-sm font-medium leading-none hover:underline"
-              >Events</motion.a>
+              ><span dir={dir}>{t("events")}</span></motion.a>
                 <motion.a
                 variants={itemVariants}
                 whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2 }}
               href="#committees"
               className="text-sm font-medium leading-none hover:underline"
-              >Community</motion.a>
+              ><span dir={dir}>{t("community")}</span></motion.a>
+
+              <LanguageSwitcher className="mt-2" />
             </motion.div>
         )}
         </AnimatePresence>
