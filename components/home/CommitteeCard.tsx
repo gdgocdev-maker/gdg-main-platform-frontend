@@ -1,6 +1,8 @@
 "use client";
 import { GrPrevious } from "react-icons/gr";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { useTextDirection } from "@/i18n/useTextDirection";
 import { useState } from "react";
 
 type SubCommittee = {
@@ -40,11 +42,24 @@ type CommitteeCardProps = {
 export default function CommitteeCard({
   committee,
 }: CommitteeCardProps) {
+  const t = useTranslations("home.committees");
+  const dir = useTextDirection();
   const [activeSubCommittee, setActiveSubCommittee] =
     useState<SubCommittee | null>(null);
 
   const activeCommittee = activeSubCommittee ?? committee;
   const isSubCommittee = activeSubCommittee !== null;
+
+  // Sub-committees are nested under their parent committee's translation entry.
+  const basePath = isSubCommittee
+    ? `items.${committee.id}.subCommittees.${activeCommittee.id}`
+    : `items.${committee.id}`;
+  const activeName = t(`${basePath}.name`);
+  const activeDescription = t(`${basePath}.description`);
+  const activeLeadName = t(`${basePath}.leadName`);
+  const activeCoLeaderName = activeCommittee.coLeader
+    ? t(`items.${committee.id}.coLeaderName`)
+    : null;
 
   return (
     <div
@@ -73,22 +88,23 @@ export default function CommitteeCard({
                 className="mb-3 flex items-center gap-2 text-sm font-medium leading-normal text-black transition-opacity hover:opacity-60"
               >
                 <GrPrevious/>
-                Back To Developers 
+                <span dir={dir}>{t("backToDevelopers")}</span>
               </button>
             )}
 
             {/* Committee Name */}
             <h3
+              dir={dir}
               className="pt-1 text-2xl font-semibold leading-snug"
               style={{ color: committee.color }}
             >
-              {activeCommittee.name}
+              {activeName}
             </h3>
 
             {/* Description */}
             <div className="mt-8 sm:mt-10 md:mt-16">
-              <p className="max-w-[540px] text-justify text-base font-normal leading-normal text-black">
-                {activeCommittee.description}
+              <p dir={dir} className="max-w-[540px] text-justify text-base font-normal leading-normal text-black">
+                {activeDescription}
               </p>
 
               {/* Sub Committees */}
@@ -100,6 +116,7 @@ export default function CommitteeCard({
                         <button
                           key={subCommittee.id}
                           type="button"
+                          dir={dir}
                           onClick={() =>
                             setActiveSubCommittee(subCommittee)
                           }
@@ -109,7 +126,7 @@ export default function CommitteeCard({
                             "linear-gradient(white, white) padding-box, linear-gradient(90deg, #2D5495, #C44744, #EABB4E, #458B69) border-box",
                             }}
                         >
-                          {subCommittee.name}
+                          {t(`items.${committee.id}.subCommittees.${subCommittee.id}.name`)}
                         </button>
                       )
                     )}
@@ -154,22 +171,22 @@ export default function CommitteeCard({
         {/* Image */}
         <img
           src={activeCommittee.lead.image}
-          alt={activeCommittee.lead.name}
+          alt={activeLeadName}
           className="relative z-10 h-full w-full rounded-[10px] object-cover"
         />
       </div>
 
-      <p className="mt-3 text-center text-sm font-bold leading-normal text-black md:mt-4">
-        {activeCommittee.name} Committee Lead
+      <p dir={dir} className="mt-3 text-center text-sm font-bold leading-normal text-black md:mt-4">
+        {t("leadLabel", { name: activeName })}
       </p>
 
-      <p className="mt-1 text-center text-sm font-bold leading-normal text-black">
-        {activeCommittee.lead.name}
+      <p dir={dir} className="mt-1 text-center text-sm font-bold leading-normal text-black">
+        {activeLeadName}
       </p>
     </div>
 
     {/* Co-Leader */}
-    {activeCommittee.coLeader && (
+    {activeCommittee.coLeader && activeCoLeaderName && (
       <div className="flex flex-col items-center">
         <div className="relative h-[145px] w-[105px] sm:h-[165px] sm:w-[120px] md:h-[185px] md:w-[135px]">
           {/* Gradient Background */}
@@ -178,17 +195,17 @@ export default function CommitteeCard({
           {/* Image */}
           <img
             src={activeCommittee.coLeader.image}
-            alt={activeCommittee.coLeader.name}
+            alt={activeCoLeaderName}
             className="relative z-10 h-full w-full rounded-[10px] object-cover"
           />
         </div>
 
-        <p className="mt-3 text-center text-sm font-bold leading-normal text-black md:mt-4">
-          {activeCommittee.name} Committee Co-Leader
+        <p dir={dir} className="mt-3 text-center text-sm font-bold leading-normal text-black md:mt-4">
+          {t("coLeaderLabel", { name: activeName })}
         </p>
 
-        <p className="mt-1 text-center text-sm font-bold leading-normal text-black">
-          {activeCommittee.coLeader.name}
+        <p dir={dir} className="mt-1 text-center text-sm font-bold leading-normal text-black">
+          {activeCoLeaderName}
         </p>
       </div>
     )}

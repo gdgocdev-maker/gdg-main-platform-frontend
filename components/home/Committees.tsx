@@ -1,13 +1,20 @@
+"use client";
+
 import CommitteeCard from "./CommitteeCard";
 import { committees } from "@/data/home";
+import { useTranslations } from "next-intl";
+import { useTextDirection } from "@/i18n/useTextDirection";
 
 export default function Committees() {
+  const t = useTranslations("home.committees");
+  const dir = useTextDirection();
+
   return (
     <section id="committees" className="px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
       {/* Section Title */}
       <div className="sticky top-0 z-[100] bg-white py-4 sm:py-6">
-        <h2 className="text-start text-3xl font-bold leading-snug text-black">
-          Our Committees
+        <h2 dir={dir} className="text-start text-3xl font-bold leading-snug text-black">
+          {t("title")}
         </h2>
       </div>
 

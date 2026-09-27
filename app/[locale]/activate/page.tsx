@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import AuthVisualPanel from "@/app/components/auth/AuthVisualPanel"
 import AuthCard from "@/app/components/auth/AuthCard"
-import ResetPasswordForm from "@/app/reset-password/ResetPasswordForm"
+import ResetPasswordForm from "@/app/[locale]/reset-password/ResetPasswordForm"
 
 export const metadata: Metadata = {
   title: "Activate Account"

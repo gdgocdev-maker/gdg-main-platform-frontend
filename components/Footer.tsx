@@ -1,12 +1,18 @@
+"use client";
+
 import { FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
+import { useTranslations } from "next-intl";
+import { useTextDirection } from "@/i18n/useTextDirection";
 
 export default function Footer() {
+  const t = useTranslations("common");
+  const dir = useTextDirection();
   const links = [
-  { label: "Home", href: "#home" },
-  { label: "About Us", href: "#about" },
-  { label: "Events", href: "#events" },
-  { label: "Projects", href: "#projects" },
-  { label: "Community", href: "#committees" },
+  { label: t("nav.home"), href: "#home" },
+  { label: t("nav.about"), href: "#about" },
+  { label: t("nav.events"), href: "#events" },
+  { label: t("nav.projects"), href: "#projects" },
+  { label: t("nav.community"), href: "#committees" },
 ];
 
   return (
@@ -19,16 +25,14 @@ export default function Footer() {
             alt="Google Developer Group on Campus - University of Jeddah"
             className="w-[300px]"
           />
-          <p className="text-sm font-normal leading-normal text-[#9AA0A6]">
-            Connect. Learn. Build. Grow. — a student
-            developer community at the University of
-            Jeddah.
+          <p dir={dir} className="text-sm font-normal leading-normal text-[#9AA0A6]">
+            {t("footer.tagline")}
           </p>
         </div>
 
         {/* Links */}
         <div>
-          <h3 className="text-xl font-semibold leading-normal">Links</h3>
+          <h3 dir={dir} className="text-xl font-semibold leading-normal">{t("footer.linksTitle")}</h3>
 
           <div className="mt-2 h-[3px] w-[76px] rounded-full bg-white" />
 
@@ -37,6 +41,7 @@ export default function Footer() {
     <a
       key={link.label}
       href={link.href}
+      dir={dir}
       className="w-fit cursor-pointer text-sm font-medium leading-none hover:underline"
     >
       {link.label}
@@ -47,7 +52,7 @@ export default function Footer() {
 
         {/* Contact */}
         <div>
-          <h3 className="text-xl font-semibold leading-normal">Contact Us</h3>
+          <h3 dir={dir} className="text-xl font-semibold leading-normal">{t("footer.contactTitle")}</h3>
 
           <div className="mt-2 h-[3px] w-[145px] rounded-full bg-white" />
 
@@ -73,8 +78,8 @@ export default function Footer() {
 
       {/* Copyright */}
       <div className="mt-10 text-center">
-        <p className="text-sm font-normal leading-normal">
-          &copy; 2026 GDG on Campus — University of Jeddah
+        <p dir={dir} className="text-sm font-normal leading-normal">
+          {t("footer.copyright")}
         </p>
       </div>
     </footer>

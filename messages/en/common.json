@@ -1,0 +1,21 @@
+{
+  "brand": "GDG on Campus",
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "projects": "Projects",
+    "events": "Events",
+    "community": "Community"
+  },
+  "language": {
+    "label": "Language",
+    "en": "English",
+    "ar": "Arabic"
+  },
+  "footer": {
+    "tagline": "Connect. Learn. Build. Grow. — a student developer community at the University of Jeddah.",
+    "linksTitle": "Links",
+    "contactTitle": "Contact Us",
+    "copyright": "© 2026 GDG on Campus — University of Jeddah"
+  }
+}

@@ -1,9 +1,13 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { useTextDirection } from "@/i18n/useTextDirection";
 import { useEffect, useRef, useState } from "react";
 
 export default function AboutSection() {
+  const t = useTranslations("home.about");
+  const dir = useTextDirection();
   const [counts, setCounts] = useState({
     members: 0,
     events: 0,
@@ -57,6 +61,7 @@ export default function AboutSection() {
       <div className="flex flex-col lg:grid lg:grid-cols-[1.2fr_1fr] lg:gap-5">
         <div className="max-w-xl">
           <motion.h2
+            dir={dir}
             className="text-3xl font-bold leading-snug"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -66,10 +71,11 @@ export default function AboutSection() {
               ease: "easeOut",
             }}
           >
-            About Our Community
+            {t("title")}
           </motion.h2>
 
           <motion.p
+            dir={dir}
             className="mt-6 text-justify text-lg font-normal leading-normal"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -80,14 +86,7 @@ export default function AboutSection() {
               ease: "easeOut",
             }}
           >
-We are a diverse and growing community of developers, technology enthusiasts, 
-creatives, and aspiring professionals united by a passion for technology, 
-innovation, and continuous learning. Our community brings together people with different backgrounds, 
-skills, and interests to learn from one another, exchange ideas, and build meaningful connections.
-Through workshops, events, technical activities, and collaborative projects,
-we create opportunities for members to develop their skills, explore new technologies, share their knowledge, 
-and turn ideas into real-world projects. Our platform brings the community’s events, announcements, activities, 
-and opportunities together in one place, making it easier for everyone to stay connected, get involved, and grow together.
+            {t("description")}
           </motion.p>
         </div>
 
@@ -143,28 +142,28 @@ and opportunities together in one place, making it easier for everyone to stay c
           <h3 className="text-2xl font-bold text-[#EA4335] lg:text-4xl">
             +{counts.members}
           </h3>
-          <p className="mt-1 text-lg font-medium leading-normal">Members</p>
+          <p dir={dir} className="mt-1 text-lg font-medium leading-normal">{t("stats.members")}</p>
         </div>
 
         <div>
           <h3 className="text-2xl font-bold text-[#FFD327] lg:text-4xl">
             +{counts.events}
           </h3>
-          <p className="mt-1 text-lg font-medium leading-normal">Events</p>
+          <p dir={dir} className="mt-1 text-lg font-medium leading-normal">{t("stats.events")}</p>
         </div>
 
         <div>
           <h3 className="text-2xl font-bold text-[#4285F4] lg:text-4xl">
             +{counts.projects}
           </h3>
-          <p className="mt-1 text-lg font-medium leading-normal">Projects</p>
+          <p dir={dir} className="mt-1 text-lg font-medium leading-normal">{t("stats.projects")}</p>
         </div>
 
         <div>
           <h3 className="text-2xl font-bold text-[#34A852] lg:text-4xl">
             +{counts.communities}
           </h3>
-          <p className="mt-1 text-lg font-medium leading-normal">Communities</p>
+          <p dir={dir} className="mt-1 text-lg font-medium leading-normal">{t("stats.communities")}</p>
         </div>
       </div>
     </section>

@@ -1,14 +1,19 @@
 "use client";
 import {sponsors} from "@/data/home"
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
+import { useTextDirection } from "@/i18n/useTextDirection";
 
 const marqueeSponsors = [...sponsors, ...sponsors, ...sponsors ];
 
 export default function SponsorsSection() {
+  const t = useTranslations("home.sponsors");
+  const dir = useTextDirection();
+
   return (
     <section id="sponsors" className="p-8 lg:p-10">
-      <h2 className="text-3xl font-bold leading-snug">
-        Our Community Sponsors
+      <h2 dir={dir} className="text-3xl font-bold leading-snug">
+        {t("title")}
       </h2>
 
       <div className="mt-10 overflow-hidden">

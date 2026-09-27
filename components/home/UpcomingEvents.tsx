@@ -1,11 +1,15 @@
 "use client";
 
 import { events } from "@/data/home";
+import { useTranslations } from "next-intl";
+import { useTextDirection } from "@/i18n/useTextDirection";
 import { useRef, useState } from "react";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import EventCard from "./EventCard";
 
 export default function UpcomingEvents() {
+  const t = useTranslations("home.events");
+  const dir = useTextDirection();
   const [activeEvent, setActiveEvent] = useState(0);
 
   const eventRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -40,8 +44,8 @@ export default function UpcomingEvents() {
 
   return (
     <section id="events" className="px-6 py-16 lg:px-10 lg:py-20">
-      <h2 className="text-3xl font-bold leading-snug">
-        Upcoming Events
+      <h2 dir={dir} className="text-3xl font-bold leading-snug">
+        {t("title")}
       </h2>
 
       <div className="mt-10 overflow-hidden">
@@ -64,7 +68,7 @@ export default function UpcomingEvents() {
         <div className="mt-8 flex justify-center gap-3 lg:hidden">
           <button
             type="button"
-            aria-label="Previous event"
+            aria-label={t("previous")}
             onClick={handlePrevious}
             disabled={activeEvent === 0}
             className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-gray-300 text-white disabled:cursor-default disabled:opacity-50"
@@ -74,7 +78,7 @@ export default function UpcomingEvents() {
 
           <button
             type="button"
-            aria-label="Next event"
+            aria-label={t("next")}
             onClick={handleNext}
             disabled={activeEvent === events.length - 1}
             className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-black text-white disabled:cursor-default disabled:opacity-50"
