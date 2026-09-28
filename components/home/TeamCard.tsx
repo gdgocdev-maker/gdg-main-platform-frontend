@@ -23,14 +23,14 @@ export default function TeamCard({ member }: TeamCardProps) {
       
       {/* Gradient background */}
       <div
-        className="absolute left-0 top-0 h-[195px] w-[172px] rounded-[8px] bg-gradient-to-r from-[var(--committee-blue)] to-[var(--committee-red)]"
+        className="absolute left-0 top-0 h-[195px] w-[171.5px] rounded-[8px] bg-gradient-to-r from-[var(--committee-blue)] to-[var(--committee-red)]"
       />
 
       {/* Image */}
       <img
         src={member.image}
         alt={t(`team.${member.id}.name`)}
-        className="absolute left-1/2 top-[-28px] z-10 h-[220px] w-[220px] -translate-x-1/2 object-contain"
+        className="absolute start-1/2 top-[-25px] z-10 h-[220px] w-[220px] -translate-x-1/2 object-cover"
       />
 
       {/* Info */}

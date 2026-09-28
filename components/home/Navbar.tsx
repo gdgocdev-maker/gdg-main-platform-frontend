@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { useTextDirection } from "@/i18n/useTextDirection";
+import ThemeToggle from "@/components/ui/ThemeToggle"; 
 
 export default function Navbar() {
   const t = useTranslations("common.nav");
@@ -103,7 +104,7 @@ export default function Navbar() {
 
           <span className="mt-1 h-[2px] w-0 rounded-full bg-[var(--google-gradient)] transition-all duration-300 group-hover:w-full" />
         </motion.a>
-
+        <ThemeToggle />
         <LanguageSwitcher className="-mt-2" />
       </div>
 
