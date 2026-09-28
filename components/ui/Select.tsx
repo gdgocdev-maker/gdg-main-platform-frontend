@@ -43,7 +43,7 @@ export function Select({
         aria-haspopup="listbox"
         aria-expanded={open}
         className={`flex items-center gap-1.5 border-0 border-b border-dashed bg-transparent py-0.5 text-sm font-semibold outline-none sm:text-base ${
-          error ? "border-brand-red" : "border-gray-350"
+          error ? "border-gdg-red" : "border-gray-350"
         } ${value ? "text-foreground" : "font-normal text-gray-300"}`}
       >
         <span className="max-w-56 truncate text-left sm:max-w-64">
@@ -64,7 +64,7 @@ export function Select({
             exit={{ opacity: 0, y: -4, scale: 0.98 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
             role="listbox"
-            className="absolute right-0 z-20 mt-2 max-h-64 w-72 overflow-y-auto rounded-xl border border-gray-350 bg-white p-1.5 shadow-lg"
+            className="absolute right-0 z-20 mt-2 max-h-64 w-72 overflow-y-auto rounded-xl border border-gray-350 bg-surface p-1.5 shadow-lg"
           >
             {options.map((option) => {
               const isSelected = option === value;

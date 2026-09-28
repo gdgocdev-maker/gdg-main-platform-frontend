@@ -4,25 +4,26 @@ import PasswordInput from "@/app/components/auth/PasswordInput"
 import SelectField from "./SelectField"
 
 const countryCodeOptions = [{ country: "Saudi Arabia", code: "+966" }]
+
 const genderOptions = [
   { value: "female", labelKey: "female" },
   { value: "male", labelKey: "male" },
 ]
 
 type SignupCredentialsProps = {
-  values: Record<string, string>
-  errors: Record<string, string>
-  onChange: (field: string, value: string) => void
-  onBlur: (field: string) => void
-  formError: string
-}
+  values: Record<string, string>;
+  errors: Record<string, string>;
+  onChange: (field: string, value: string) => void;
+  onBlur: (field: string) => void;
+  formError: string;
+};
 
 export default function SignupCredentials({
   values,
   errors,
   onChange,
   onBlur,
-  formError
+  formError,
 }: SignupCredentialsProps) {
   const t = useTranslations("auth.signup")
   const fullNameError = errors.fullName ?? ""
@@ -38,7 +39,7 @@ export default function SignupCredentials({
         htmlFor="full-name"
         className="relative order-1 block text-sm font-medium"
       >
-        {t("fields.fullName.label")} <span className="text-red">*</span>
+        {t("fields.fullName.label")} <span className="text-gdg-red">*</span>
         <input
           id="full-name"
           name="fullName"
@@ -51,16 +52,20 @@ export default function SignupCredentials({
           maxLength={255}
           aria-invalid={Boolean(fullNameError)}
           aria-describedby={fullNameError ? "full-name-error" : undefined}
-          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
-            fullNameError ? "border-red" : "border-black/15"
+          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-foreground/40 ${
+            fullNameError
+              ? "border-gdg-red"
+              : "border-foreground/15"
           }`}
         />
+
         <AuthErrorMessage
           id="full-name-error"
           message={fullNameError}
           className="absolute start-0 top-full mt-1"
         />
       </label>
+
       <SelectField
         id="gender"
         label={t("fields.gender.label")}
@@ -75,11 +80,12 @@ export default function SignupCredentials({
         onChange={(value) => onChange("gender", value)}
         onBlur={() => onBlur("gender")}
       />
+
       <label
         htmlFor="email"
         className="relative order-3 block text-sm font-medium"
       >
-        {t("fields.email.label")} <span className="text-red">*</span>
+        {t("fields.email.label")} <span className="text-gdg-red">*</span>
         <input
           id="email"
           name="email"
@@ -92,21 +98,25 @@ export default function SignupCredentials({
           maxLength={254}
           aria-invalid={Boolean(emailError)}
           aria-describedby={emailError ? "email-error" : undefined}
-          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
-            emailError ? "border-red" : "border-black/15"
+          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-foreground/40 ${
+            emailError
+              ? "border-gdg-red"
+              : "border-foreground/15"
           }`}
         />
+
         <AuthErrorMessage
           id="email-error"
           message={emailError}
           className="absolute start-0 top-full mt-1"
         />
       </label>
+
       <label
         htmlFor="password"
         className="relative order-5 block text-sm font-medium"
       >
-        {t("fields.password.label")} <span className="text-red">*</span>
+        {t("fields.password.label")} <span className="text-gdg-red">*</span>
         <PasswordInput
           id="password"
           name="password"
@@ -120,21 +130,25 @@ export default function SignupCredentials({
           maxLength={128}
           aria-invalid={Boolean(passwordError)}
           aria-describedby={passwordError ? "password-error" : undefined}
-          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
-            passwordError ? "border-red" : "border-black/15"
+          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-foreground/40 ${
+            passwordError
+              ? "border-gdg-red"
+              : "border-foreground/15"
           }`}
         />
+
         <AuthErrorMessage
           id="password-error"
           message={passwordError}
           className="absolute start-0 top-full mt-1"
         />
       </label>
+
       <label
         htmlFor="confirm-email"
         className="relative order-4 block text-sm font-medium"
       >
-        {t("fields.confirmEmail.label")} <span className="text-red">*</span>
+        {t("fields.confirmEmail.label")} <span className="text-gdg-red">*</span>
         <input
           id="confirm-email"
           name="confirmEmail"
@@ -149,27 +163,33 @@ export default function SignupCredentials({
           aria-describedby={
             confirmEmailError ? "confirm-email-error" : undefined
           }
-          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
-            confirmEmailError ? "border-red" : "border-black/15"
+          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-foreground/40 ${
+            confirmEmailError
+              ? "border-gdg-red"
+              : "border-foreground/15"
           }`}
         />
+
         <AuthErrorMessage
           id="confirm-email-error"
           message={confirmEmailError}
           className="absolute start-0 top-full mt-1"
         />
       </label>
+
       <label
         htmlFor="confirm-password"
         className="relative order-6 block text-sm font-medium"
       >
-        {t("fields.confirmPassword.label")} <span className="text-red">*</span>
+        {t("fields.confirmPassword.label")} <span className="text-gdg-red">*</span>
         <PasswordInput
           id="confirm-password"
           name="confirmPassword"
           type="password"
           value={values.confirmPassword}
-          onChange={(event) => onChange("confirmPassword", event.target.value)}
+          onChange={(event) =>
+            onChange("confirmPassword", event.target.value)
+          }
           onBlur={() => onBlur("confirmPassword")}
           placeholder={t("fields.confirmPassword.placeholder")}
           autoComplete="new-password"
@@ -179,16 +199,20 @@ export default function SignupCredentials({
           aria-describedby={
             confirmPasswordError ? "confirm-password-error" : undefined
           }
-          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
-            confirmPasswordError ? "border-red" : "border-black/15"
+          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-foreground/40 ${
+            confirmPasswordError
+              ? "border-gdg-red"
+              : "border-foreground/15"
           }`}
         />
+
         <AuthErrorMessage
           id="confirm-password-error"
           message={confirmPasswordError}
           className="absolute start-0 top-full mt-1"
         />
       </label>
+
       <label
         htmlFor="phone"
         className="relative order-7 block text-sm font-medium"
@@ -198,31 +222,32 @@ export default function SignupCredentials({
         <span
           dir="ltr"
           className={`mt-1.5 flex h-8 items-center rounded-md border text-base font-normal ${
-            phoneError ? "border-red" : "border-black/15"
+            phoneError
+              ? "border-gdg-red"
+              : "border-foreground/15"
           }`}
         >
-          <span className="relative h-full border-e border-black/15">
+          <span className="relative h-full border-e border-foreground/15">
             <select
               id="country-code"
               name="countryCode"
               value={values.countryCode}
               onChange={(event) => onChange("countryCode", event.target.value)}
               aria-label={t("fields.phone.countryCode")}
-              className="h-full appearance-none rounded-s-md bg-white px-2.75 pe-6 text-base font-normal outline-none"
+              className="h-full appearance-none rounded-s-md bg-surface px-2.75 pe-6 text-base font-normal outline-none"
             >
               {countryCodeOptions.map(({ code }) => (
-                <option
-                  key={code}
-                  value={code}
-                >
+                <option key={code} value={code}>
                   {code}
                 </option>
               ))}
             </select>
+
             <span className="pointer-events-none absolute inset-e-2 top-1/2 -translate-y-1/2 text-xs">
               ⌄
             </span>
           </span>
+
           <input
             id="phone"
             name="phone"
@@ -234,9 +259,10 @@ export default function SignupCredentials({
             maxLength={15}
             aria-invalid={Boolean(phoneError)}
             aria-describedby={phoneError ? "phone-error" : undefined}
-            className="min-w-0 flex-1 px-2.75 outline-none placeholder:text-black/40"
+            className="min-w-0 flex-1 bg-transparent px-2.75 outline-none placeholder:text-foreground/40"
           />
         </span>
+
         <AuthErrorMessage
           id="phone-error"
           message={phoneError}
@@ -253,10 +279,10 @@ export default function SignupCredentials({
 
       <button
         type="submit"
-        className="order-9 col-span-full -mt-5 mb-1 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
+        className="order-9 col-span-full -mt-5 mb-1 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-[var(--white)] transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
       >
         {t("continue")}
       </button>
     </>
-  )
+  );
 }

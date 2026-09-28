@@ -23,7 +23,7 @@ export default function SignUp({ params }: PageProps<"/[locale]/signup">) {
   const t = useTranslations("auth.signup")
 
   return (
-    <main className="flex min-h-screen min-w-0 flex-col bg-white text-primary-font lg:h-screen lg:min-h-0 lg:flex-row">
+    <main className="flex min-h-screen min-w-0 flex-col bg-background text-foreground lg:h-screen lg:min-h-0 lg:flex-row">
       <AuthFormPanel>
         <AuthCard
           size="lg"
@@ -32,7 +32,7 @@ export default function SignUp({ params }: PageProps<"/[locale]/signup">) {
         >
           <SignupFlow />
 
-          <p className="mt-2 pb-8 text-center text-sm text-black/55">
+          <p className="mt-2 pb-8 text-center text-sm text-foreground/55">
             {t("haveAccount")}
             <Link
               href="/login"
@@ -49,5 +49,5 @@ export default function SignUp({ params }: PageProps<"/[locale]/signup">) {
         animateOnMount
       />
     </main>
-  )
+  );
 }

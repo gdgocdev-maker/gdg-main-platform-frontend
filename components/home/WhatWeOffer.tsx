@@ -33,7 +33,7 @@ export default function WhatWeOffer() {
   });
 
   return (
-    <section id="offers" className="bg-white px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
+    <section id="offers" className="bg-background px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
       {/* Section Title */}
       <h2 dir={dir} className="text-3xl font-bold leading-snug">
         {t("title")}
@@ -68,7 +68,7 @@ export default function WhatWeOffer() {
                 style={{
                   backgroundColor: isActive
                     ? offer.color
-                    : "#9CA3AF",
+                    : "var(--muted)",
                 }}
               />
 
@@ -161,7 +161,7 @@ export default function WhatWeOffer() {
                   style={{
                     backgroundColor: isActive
                       ? offer.color
-                      : "#9CA3AF",
+                      : "var(--muted)",
                   }}
                 />
 

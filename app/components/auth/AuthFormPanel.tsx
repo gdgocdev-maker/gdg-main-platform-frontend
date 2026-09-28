@@ -1,23 +1,26 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import type { ReactNode } from "react"
-import useDesktopMediaQuery from "@/app/lib/useDesktopMediaQuery"
+import { motion } from "framer-motion";
+import type { ReactNode } from "react";
+
+import useDesktopMediaQuery from "@/app/lib/useDesktopMediaQuery";
 
 type AuthFormPanelProps = {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
 export default function AuthFormPanel({ children }: AuthFormPanelProps) {
-  const isDesktop = useDesktopMediaQuery()
+  const isDesktop = useDesktopMediaQuery();
 
   return (
     <motion.section
       layoutId={isDesktop ? "auth-form-panel" : undefined}
-      transition={isDesktop ? { duration: 0.6, ease: "easeInOut" } : undefined}
-      className="relative z-10 flex h-full flex-1 items-center justify-center bg-white"
+      transition={
+        isDesktop ? { duration: 0.6, ease: "easeInOut" } : undefined
+      }
+      className="relative z-10 flex h-full flex-1 items-center justify-center bg-background"
     >
       {children}
     </motion.section>
-  )
+  );
 }

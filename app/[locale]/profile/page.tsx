@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import type { CSSProperties } from "react";
 import { TopNav } from "@/components/dashboard/TopNav";
 import { ProfileBio } from "@/components/profile/ProfileBio";
 import { ProfileChips } from "@/components/profile/ProfileChips";
@@ -19,7 +18,9 @@ import { validateInfoField } from "@/lib/validateInfoField";
 import { validateSocialLink } from "@/lib/validateSocialLink";
 import { useMemberSince } from "@/lib/useMemberSince";
 
-function linksToValues(links: SocialLink[]): Record<SocialLink["platform"], string> {
+function linksToValues(
+  links: SocialLink[],
+): Record<SocialLink["platform"], string> {
   return Object.fromEntries(
     links.map((link) => [link.platform, link.value ?? ""]),
   ) as Record<SocialLink["platform"], string>;
@@ -52,10 +53,14 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
   const [infoDrafts, setInfoDrafts] = useState(() =>
     cardsToValues([personalInfo, academicInfo]),
   );
-  const [infoErrors, setInfoErrors] = useState<Record<string, string | null>>({});
+  const [infoErrors, setInfoErrors] = useState<Record<string, string | null>>(
+    {},
+  );
 
   const [links, setLinks] = useState<SocialLink[]>(socialLinks);
-  const [linkDrafts, setLinkDrafts] = useState(() => linksToValues(socialLinks));
+  const [linkDrafts, setLinkDrafts] = useState(() =>
+    linksToValues(socialLinks),
+  );
   const [linkErrors, setLinkErrors] = useState<
     Record<SocialLink["platform"], string | null>
   >(() =>
@@ -82,10 +87,14 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
   };
 
   const handleCancel = () => {
-    if (avatarDraft && avatarDraft !== avatarUrl) URL.revokeObjectURL(avatarDraft);
+    if (avatarDraft && avatarDraft !== avatarUrl) {
+      URL.revokeObjectURL(avatarDraft);
+    }
+
     if (headerImageDraft && headerImageDraft !== headerImageUrl) {
       URL.revokeObjectURL(headerImageDraft);
     }
+
     setIsEditing(false);
   };
 
@@ -101,10 +110,16 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
 
   const handleInfoChange = (key: string, value: string) => {
     setInfoDrafts((prev) => ({ ...prev, [key]: value }));
-    setInfoErrors((prev) => ({ ...prev, [key]: validateInfoField(key, value) }));
+    setInfoErrors((prev) => ({
+      ...prev,
+      [key]: validateInfoField(key, value),
+    }));
   };
 
-  const handleLinkChange = (platform: SocialLink["platform"], value: string) => {
+  const handleLinkChange = (
+    platform: SocialLink["platform"],
+    value: string,
+  ) => {
     setLinkDrafts((prev) => ({ ...prev, [platform]: value }));
     setLinkErrors((prev) => ({
       ...prev,
@@ -119,14 +134,17 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
         validateSocialLink(link.platform, linkDrafts[link.platform]),
       ]),
     ) as Record<SocialLink["platform"], string | null>;
+
     const nextInfoErrors = Object.fromEntries(
       Object.entries(infoDrafts).map(([key, value]) => [
         key,
         validateInfoField(key, value),
       ]),
     );
+
     setLinkErrors(nextLinkErrors);
     setInfoErrors(nextInfoErrors);
+
     if (
       Object.values(nextLinkErrors).some(Boolean) ||
       Object.values(nextInfoErrors).some(Boolean)
@@ -137,6 +155,7 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
     setBio(bioDraft);
     setAvatarUrl(avatarDraft);
     setHeaderImageUrl(headerImageDraft);
+
     setPersonalData((prev) => ({
       ...prev,
       rows: prev.rows.map((row) => ({
@@ -144,6 +163,7 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
         value: infoDrafts[row.key] ?? row.value,
       })),
     }));
+
     setAcademicData((prev) => ({
       ...prev,
       rows: prev.rows.map((row) => ({
@@ -151,25 +171,28 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
         value: infoDrafts[row.key] ?? row.value,
       })),
     }));
+
     setLinks((prev) =>
       prev.map((link) => ({
         ...link,
         value: linkDrafts[link.platform].trim() || null,
       })),
     );
+
     setIsEditing(false);
   };
 
   const major = findRowValue(academicData, "major");
   const studentId = findRowValue(personalData, "studentId");
-  const chips = [major, studentId && `ID: ${studentId}`].filter(Boolean) as string[];
+  const chips = [
+    major,
+    studentId && `ID: ${studentId}`,
+  ].filter(Boolean) as string[];
 
   return (
-    <div
-      className="flex flex-1 flex-col bg-white text-[#171717]"
-      style={{ "--background": "#ffffff", "--foreground": "#171717" } as CSSProperties}
-    >
+    <div className="flex flex-1 flex-col bg-background text-foreground">
       <TopNav />
+
       <ProfileHero
         initials={sampleProfile.initials}
         name={sampleProfile.name}
@@ -184,14 +207,17 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
         onAvatarSelect={handleAvatarSelect}
         onHeaderImageSelect={handleHeaderImageSelect}
       />
+
       <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-3 px-4 py-4 sm:px-6 sm:py-6 md:gap-4 md:px-10 md:py-8 lg:px-16">
         <ProfileChips chips={chips} />
+
         <ProfileBio
           bio={isEditing ? bioDraft : bio}
           placeholder={sampleProfile.bioPlaceholder}
           isEditing={isEditing}
           onChange={setBioDraft}
         />
+
         <ProfileTabs
           personalInfo={personalData}
           academicInfo={academicData}

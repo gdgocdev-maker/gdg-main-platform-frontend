@@ -21,10 +21,10 @@ export default function ResetPassword({ params }: PageProps<"/[locale]/reset-pas
   const t = useTranslations("auth.resetPassword")
 
   return (
-    <main className="flex min-h-screen min-w-0 flex-col bg-white text-primary-font lg:h-screen lg:min-h-0 lg:flex-row">
+    <main className="flex min-h-screen min-w-0 flex-col bg-background text-foreground lg:h-screen lg:min-h-0 lg:flex-row">
       <AuthVisualPanel side="start" />
 
-      <section className="flex flex-1 items-center justify-center bg-white lg:h-full">
+      <section className="flex flex-1 items-center justify-center bg-background lg:h-full">
         <AuthCard
           size="sm"
           title={t("title")}
@@ -34,5 +34,5 @@ export default function ResetPassword({ params }: PageProps<"/[locale]/reset-pas
         </AuthCard>
       </section>
     </main>
-  )
+  );
 }

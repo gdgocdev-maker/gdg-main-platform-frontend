@@ -1,18 +1,32 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* =========================================================
+   BRAND COLORS
+   Shared across the entire application.
+   These colors remain the same in Light and Dark Mode.
+   ========================================================= */
 
-  /* GDG brand palette (approved Figma) */
+:root {
+  /* ---------------------------------------------------------
+     Google / GDG Brand
+     --------------------------------------------------------- */
+
+  --white: #ffffff;
+  --black: #000000;
+  --footer-muted: #9aa0a6;
+  --linkedin-blue: #2867b2;
+
   --gdg-red: #ea4335;
   --gdg-yellow: #f9ab00;
   --gdg-green: #34a853;
   --gdg-blue: #4285f4;
   --gdg-dark: #1e1e1e;
-  --gdg-gray-light: #f0f0f0;
 
-  /* GDG secondary/pastel palette (approved Figma) */
+  /* ---------------------------------------------------------
+     GDG Secondary / Pastel Palette
+     --------------------------------------------------------- */
+
+  --gdg-gray-light: #f0f0f0;
   --gdg-pink-light: #f8d8d8;
   --gdg-yellow-light: #ffe7a5;
   --gdg-yellow-accent: #ffd427;
@@ -21,68 +35,297 @@
   --gdg-blue-light: #c3ecf6;
   --gdg-blue-accent: #57caff;
   --gdg-pink-accent: #ff7daf;
+
+  /* =========================================================
+     HOME PAGE COLORS
+
+     These colors belong specifically to the Home Page design.
+     They remain fixed in both Light and Dark Mode.
+
+     Do not move these into the Light/Dark Mode sections.
+     ========================================================= */
+
+  /* Committees / Leadership */
+  --committee-blue: #4967a4;
+  --committee-red: #b85d55;
+
+  --committee-gradient-blue: #2d5495;
+  --committee-gradient-red: #c44744;
+  --committee-gradient-yellow: #eabb4e;
+  --committee-gradient-green: #458b69;
+
+  /* Events */
+  --event-blue: #1c4486;
+
+  /* Hero */
+  --hero-overlay: rgb(0 0 0 / 50%);
+
+  /* Join Community */
+  --join-blue: #3562ac;
+  --join-orange: #d96a3d;
+  --join-green: #95a35b;
+
+  /* Join Community Glass Effect */
+  --glass-border: rgb(255 255 255 / 50%);
+  --glass-background: rgb(255 255 255 / 15%);
+  --glass-highlight: rgb(255 255 255 / 80%);
+  --glass-shadow: rgb(255 255 255 / 30%);
+  --glass-bottom: rgb(255 255 255 / 15%);
+  --glass-shine: rgb(255 255 255 / 30%);
+
+  /* Google Gradient used in Home Page */
+  --google-gradient: linear-gradient(
+    90deg,
+    var(--gdg-blue) 0%,
+    var(--gdg-green) 33%,
+    var(--gdg-yellow) 66%,
+    var(--gdg-red) 100%
+  );
+
+  /* Featured Projects */
+  --project-pink: #de8b8b;
+  --project-blue: #6d95c0;
+
+  /* =========================================================
+     LIGHT MODE
+     ========================================================= */
+
+  /* Main */
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /* Surfaces */
+  --surface: #ffffff;
+  --surface-muted: #f0f0f0;
+
+  /* Borders / Dividers */
+  --border: #e5e5e5;
+
+  /* Text */
+  --muted: #9ca3af;
+
+  /* =========================================================
+     PROFILE / DASHBOARD - LIGHT
+     ========================================================= */
+
+  --charcoal: #353131;
+  --cream: #c9e3ee;
+  --avatar-bg: #8ad4de;
+  --navy: #325fa6;
+  --accent-blue: #4e8df5;
+
+  --gray-500: #5f5959;
+  --gray-400: #8c8989;
+  --gray-350: #a1a1a1;
+  --gray-300: #bcbdbf;
+  --website-green: #6fcf97;
+
+  /* =========================================================
+     AUTH / DASHBOARD - LIGHT
+     ========================================================= */
+
+  --light-blue: #edf9fc;
+  --primary-font: #1e1e1e;
+  --auth-visual-background: #edf9fc;
+
+  /* Dashboard - Light */
+  --dashboard-yellow-bg: #fff3cd;
+  --dashboard-yellow-text: #9a6700;
+
+  --dashboard-blue-bg: #c3ecf6;
+  --dashboard-blue-text: #2563eb;
+
+  --dashboard-green-bg: #ccf6c5;
+  --dashboard-green-text: #167a3a;
 }
 
+/* =========================================================
+   SYSTEM DARK MODE
+
+   Used only when the user has not manually selected
+   Light or Dark mode.
+   ========================================================= */
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme]) {
+    --background: #121212;
+    --foreground: #f5f5f5;
+
+    --surface: #1e1e1e;
+    --surface-muted: #292929;
+
+    --border: #3a3a3a;
+    --muted: #a3a3a3;
+
+    /* PROFILE / DASHBOARD - DARK */
+
+    --charcoal: #242020;
+    --cream: #24343a;
+    --avatar-bg: #2f6870;
+    --navy: #31598f;
+    --accent-blue: #4e8df5;
+
+    --gray-500: #c4c0c0;
+    --gray-400: #aaa6a6;
+    --gray-350: #8f8f8f;
+    --gray-300: #686a6c;
+    --website-green: #6fcf97;
+
+    /* AUTH / DASHBOARD - DARK */
+
+    --light-blue: #16282d;
+    --primary-font: #f5f5f5;
+    --auth-visual-background: #edf9fc;
+
+    /* Dashboard - Dark */
+
+    --dashboard-yellow-bg: #3a321d;
+    --dashboard-yellow-text: #ffd166;
+
+    --dashboard-blue-bg: #1d2f45;
+    --dashboard-blue-text: #8ab4ff;
+
+    --dashboard-green-bg: #1d3625;
+    --dashboard-green-text: #8be28f;
+  }
+}
+
+/* =========================================================
+   MANUAL LIGHT MODE
+
+   Takes priority over the system preference.
+   ========================================================= */
+
+html[data-theme="light"] {
+  color-scheme: light;
+
+  --background: #ffffff;
+  --foreground: #171717;
+
+  --surface: #ffffff;
+  --surface-muted: #f0f0f0;
+
+  --border: #e5e5e5;
+  --muted: #9ca3af;
+
+  /* PROFILE / DASHBOARD - LIGHT */
+
+  --charcoal: #353131;
+  --cream: #c9e3ee;
+  --avatar-bg: #8ad4de;
+  --navy: #325fa6;
+  --accent-blue: #4e8df5;
+
+  --gray-500: #5f5959;
+  --gray-400: #8c8989;
+  --gray-350: #a1a1a1;
+  --gray-300: #bcbdbf;
+  --website-green: #6fcf97;
+
+  /* AUTH / DASHBOARD - LIGHT */
+
+  --light-blue: #edf9fc;
+  --primary-font: #1e1e1e;
+  --auth-visual-background: #edf9fc;
+
+  /* Dashboard - Light */
+
+  --dashboard-yellow-bg: #fff3cd;
+  --dashboard-yellow-text: #9a6700;
+
+  --dashboard-blue-bg: #c3ecf6;
+  --dashboard-blue-text: #2563eb;
+
+  --dashboard-green-bg: #ccf6c5;
+  --dashboard-green-text: #167a3a;
+}
+
+/* =========================================================
+   MANUAL DARK MODE
+
+   Takes priority over the system preference.
+   ========================================================= */
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --background: #121212;
+  --foreground: #f5f5f5;
+
+  --surface: #1e1e1e;
+  --surface-muted: #292929;
+
+  --border: #3a3a3a;
+  --muted: #a3a3a3;
+
+  /* PROFILE / DASHBOARD - DARK */
+
+  --charcoal: #242020;
+  --cream: #24343a;
+  --avatar-bg: #2f6870;
+  --navy: #31598f;
+  --accent-blue: #4e8df5;
+
+  --gray-500: #c4c0c0;
+  --gray-400: #aaa6a6;
+  --gray-350: #8f8f8f;
+  --gray-300: #686a6c;
+  --website-green: #6fcf97;
+
+  /* AUTH / DASHBOARD - DARK */
+
+  --light-blue: #16282d;
+  --primary-font: #f5f5f5;
+  --auth-visual-background: #edf9fc;
+
+  /* Dashboard - Dark */
+
+  --dashboard-yellow-bg: #3a321d;
+  --dashboard-yellow-text: #ffd166;
+
+  --dashboard-blue-bg: #1d2f45;
+  --dashboard-blue-text: #8ab4ff;
+
+  --dashboard-green-bg: #1d3625;
+  --dashboard-green-text: #8be28f;
+}
+
+/* =========================================================
+   TAILWIND THEME
+   ========================================================= */
+
 @theme inline {
+  /* ---------------------------------------------------------
+     Semantic Colors
+     --------------------------------------------------------- */
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-google-sans);
-  --font-mono: var(--font-google-sans);
-  /* Compact platform type scale from TYPOGRAPHY.md */
-  --text-5xl: 2.5rem;
-  --text-5xl--line-height: 1.1;
-  --text-4xl: 2rem;
-  --text-4xl--line-height: 1.1;
-  --text-3xl: 1.75rem;
-  --text-3xl--line-height: 1.25;
-  --text-2xl: 1.375rem;
-  --text-2xl--line-height: 1.25;
-  --text-xl: 1.125rem;
-  --text-xl--line-height: 1.5;
-  --text-lg: 1rem;
-  --text-lg--line-height: 1.5;
-  --text-base: 0.9375rem;
-  --text-base--line-height: 1.5;
-  --text-sm: 0.8125rem;
-  --text-sm--line-height: 1.5;
-  --text-xs: 0.6875rem;
-  --text-xs--line-height: 1.5;
-  /* Heading font: Google Sans isn't on Google Fonts, so this shares the Roboto substitute above. */
-  --font-heading: var(--font-google-sans);
 
-  /* Team breakpoint table: xs <480, sm 480-767, md 768-1023, lg 1024-1279, xl 1280-1535, 2xl 1536+.
-     Tailwind's md/lg/xl/2xl defaults already match; only sm moves from 640px to 480px. */
-  --breakpoint-sm: 30rem;
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
 
-  /* Profile page palette, pulled from the Figma export */
-  --color-charcoal: #353131; /* header / footer background */
-  --color-cream: #C9E3EE;
-  --color-avatar-bg: #8AD4DE;
-  --color-brand-red: #ea4335;
-  --color-navy: #325fa6;
-  --color-accent-blue: #4e8df5;
-  --color-gray-500: #5f5959;
-  --color-gray-400: #8c8989;
-  --color-gray-350: #a1a1a1;
-  --color-gray-300: #bcbdbf;
+  --color-border: var(--border);
+  --color-muted: var(--muted);
 
-  --radius-chip: 1.375rem;
-  --radius-card: 1.4375rem;
-  /* Keep the auth/dashboard color tokens used throughout the app */
-  --color-light-blue: #edf9fc;
-  --color-primary-font: #1e1e1e;
-  --color-green: #34a853;
-  --color-blue: #4285f4;
-  --color-yellow: #f9ab00;
-  --color-red: #ea4335;
+  --color-footer-muted: var(--footer-muted);
+  --color-linkedin-blue: var(--linkedin-blue);
+
+  /* ---------------------------------------------------------
+     GDG Brand Colors
+     --------------------------------------------------------- */
 
   --color-gdg-red: var(--gdg-red);
   --color-gdg-yellow: var(--gdg-yellow);
   --color-gdg-green: var(--gdg-green);
   --color-gdg-blue: var(--gdg-blue);
   --color-gdg-dark: var(--gdg-dark);
-  --color-gdg-gray-light: var(--gdg-gray-light);
 
+  /* ---------------------------------------------------------
+     GDG Secondary / Pastel Colors
+     --------------------------------------------------------- */
+
+  --color-gdg-gray-light: var(--gdg-gray-light);
   --color-gdg-pink-light: var(--gdg-pink-light);
   --color-gdg-yellow-light: var(--gdg-yellow-light);
   --color-gdg-yellow-accent: var(--gdg-yellow-accent);
@@ -92,9 +335,94 @@
   --color-gdg-blue-accent: var(--gdg-blue-accent);
   --color-gdg-pink-accent: var(--gdg-pink-accent);
 
-  /* Align Tailwind's "sm" breakpoint with the frontend team's shared
-     Small tier (480px-767px); md/lg/xl/2xl already match 768/1024/1280/1536. */
+  /* ---------------------------------------------------------
+     Profile / Dashboard
+     --------------------------------------------------------- */
+
+  --color-charcoal: var(--charcoal);
+  --color-cream: var(--cream);
+  --color-avatar-bg: var(--avatar-bg);
+  --color-navy: var(--navy);
+  --color-accent-blue: var(--accent-blue);
+
+  --color-gray-500: var(--gray-500);
+  --color-gray-400: var(--gray-400);
+  --color-gray-350: var(--gray-350);
+  --color-gray-300: var(--gray-300);
+  --color-website-green: var(--website-green);
+
+  /* ---------------------------------------------------------
+     Auth / Dashboard
+     --------------------------------------------------------- */
+
+  --color-light-blue: var(--light-blue);
+  --color-primary-font: var(--primary-font);
+  --color-auth-visual-background: var(--auth-visual-background);
+
+  /*
+   * Backward-compatible aliases.
+   * Existing auth/dashboard components can continue using:
+   * text-red, text-blue, text-green, text-yellow.
+   */
+
+  --color-red: var(--gdg-red);
+  --color-blue: var(--gdg-blue);
+  --color-green: var(--gdg-green);
+  --color-yellow: var(--gdg-yellow);
+  --color-brand-red: var(--gdg-red);
+
+  /* ---------------------------------------------------------
+     Typography
+     --------------------------------------------------------- */
+
+  --font-sans: var(--font-google-sans);
+  --font-mono: var(--font-google-sans);
+  --font-heading: var(--font-google-sans);
+
+  --text-5xl: 2.5rem;
+  --text-5xl--line-height: 1.1;
+
+  --text-4xl: 2rem;
+  --text-4xl--line-height: 1.1;
+
+  --text-3xl: 1.75rem;
+  --text-3xl--line-height: 1.25;
+
+  --text-2xl: 1.375rem;
+  --text-2xl--line-height: 1.25;
+
+  --text-xl: 1.125rem;
+  --text-xl--line-height: 1.5;
+
+  --text-lg: 1rem;
+  --text-lg--line-height: 1.5;
+
+  --text-base: 0.9375rem;
+  --text-base--line-height: 1.5;
+
+  --text-sm: 0.8125rem;
+  --text-sm--line-height: 1.5;
+
+  --text-xs: 0.6875rem;
+  --text-xs--line-height: 1.5;
+
+  /* ---------------------------------------------------------
+     Breakpoints
+     --------------------------------------------------------- */
+
+  --breakpoint-sm: 30rem;
+
+  /* ---------------------------------------------------------
+     Radius
+     --------------------------------------------------------- */
+
+  --radius-chip: 1.375rem;
+  --radius-card: 1.4375rem;
 }
+
+/* =========================================================
+   GLOBAL STYLES
+   ========================================================= */
 
 body {
   background: var(--background);
@@ -102,14 +430,21 @@ body {
   font-family: var(--font-google-sans), system-ui, sans-serif;
 }
 
-/* Unified platform-wide font swap: Arabic pages always render in IBM Plex Sans Arabic. */
+/* Arabic typography */
+
 html[lang="ar"] body {
   font-family: var(--font-ibm-plex-sans-arabic), Tahoma, sans-serif;
 }
 
+/* Smooth scrolling */
+
 html {
   scroll-behavior: smooth;
 }
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
 
 .scrollbar-hide {
   -ms-overflow-style: none;
@@ -119,6 +454,10 @@ html {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
 
 @keyframes sponsors-marquee {
   from {
@@ -133,6 +472,7 @@ html {
 .sponsors-marquee {
   animation: sponsors-marquee 30s linear infinite;
 }
+
 @media (prefers-reduced-motion: reduce) {
   .sponsors-marquee {
     animation: none;

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useTranslations } from "next-intl"
 import { type FormEvent, useState } from "react"
@@ -8,8 +8,8 @@ import {
   PASSWORD_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
   validateConfirmPassword,
-  validatePassword
-} from "@/app/lib/validation/password"
+  validatePassword,
+} from "@/app/lib/validation/password";
 
 type ResetPasswordFormProps = {
   // Already-translated label; defaults to "Reset Password" in the current language.
@@ -17,7 +17,7 @@ type ResetPasswordFormProps = {
 }
 
 function normalizeText(value: string) {
-  return value.trim()
+  return value.trim();
 }
 
 export default function ResetPasswordForm({
@@ -31,16 +31,16 @@ export default function ResetPasswordForm({
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handlePasswordChange = (value: string) => {
-    setPassword(value)
+    setPassword(value);
     if (passwordError) {
-      setPasswordError("")
+      setPasswordError("");
     }
-  }
+  };
 
   const handlePasswordBlur = () => {
     if (!normalizeText(password)) {
-      setPasswordError("")
-      return
+      setPasswordError("");
+      return;
     }
     setPasswordError(
       validatePassword(password, {
@@ -50,16 +50,16 @@ export default function ResetPasswordForm({
   }
 
   const handleConfirmPasswordChange = (value: string) => {
-    setConfirmPassword(value)
+    setConfirmPassword(value);
     if (confirmPasswordError) {
-      setConfirmPasswordError("")
+      setConfirmPasswordError("");
     }
-  }
+  };
 
   const handleConfirmPasswordBlur = () => {
     if (!confirmPassword) {
-      setConfirmPasswordError("")
-      return
+      setConfirmPasswordError("");
+      return;
     }
     setConfirmPasswordError(
       validateConfirmPassword(confirmPassword, password, {
@@ -69,10 +69,10 @@ export default function ResetPasswordForm({
   }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+    event.preventDefault();
 
     if (isSubmitting) {
-      return
+      return;
     }
 
     const nextPasswordError = validatePassword(password, {
@@ -84,21 +84,21 @@ export default function ResetPasswordForm({
       { emptyMessage: "newPasswordConfirmRequired" }
     )
 
-    setPasswordError(nextPasswordError)
-    setConfirmPasswordError(nextConfirmPasswordError)
+    setPasswordError(nextPasswordError);
+    setConfirmPasswordError(nextConfirmPasswordError);
 
     if (nextPasswordError || nextConfirmPasswordError) {
-      return
+      return;
     }
 
-    setIsSubmitting(true)
+    setIsSubmitting(true);
 
     // No password reset/activation API is documented/available yet;
     // simulate the request the same way the other auth flows do.
     window.setTimeout(() => {
-      setIsSubmitting(false)
-    }, 800)
-  }
+      setIsSubmitting(false);
+    }, 800);
+  };
 
   return (
     <form
@@ -110,7 +110,7 @@ export default function ResetPasswordForm({
         htmlFor="new-password"
         className="relative mb-6 block text-sm font-medium"
       >
-        {t("newPasswordLabel")} <span className="text-red">*</span>
+        {t("newPasswordLabel")} <span className="text-gdg-red">*</span>
         <PasswordInput
           id="new-password"
           name="new-password"
@@ -123,8 +123,9 @@ export default function ResetPasswordForm({
           maxLength={PASSWORD_MAX_LENGTH}
           aria-invalid={Boolean(passwordError)}
           aria-describedby={passwordError ? "new-password-error" : undefined}
-          className="mt-1.5 h-8.5 rounded-md border border-black/15 px-2.75 text-base font-normal outline-none placeholder:text-black/40"
+          className="mt-1.5 h-8.5 rounded-md border border-foreground/15 px-2.75 text-base font-normal outline-none placeholder:text-foreground/40"
         />
+
         <AuthErrorMessage
           id="new-password-error"
           message={passwordError}
@@ -136,12 +137,14 @@ export default function ResetPasswordForm({
         htmlFor="confirm-password"
         className="relative mt-3 block text-sm font-medium"
       >
-        {t("confirmPasswordLabel")} <span className="text-red">*</span>
+        {t("confirmPasswordLabel")} <span className="text-gdg-red">*</span>
         <PasswordInput
           id="confirm-password"
           name="confirm-password"
           value={confirmPassword}
-          onChange={(event) => handleConfirmPasswordChange(event.target.value)}
+          onChange={(event) =>
+            handleConfirmPasswordChange(event.target.value)
+          }
           onBlur={handleConfirmPasswordBlur}
           placeholder={t("confirmPasswordPlaceholder")}
           autoComplete="new-password"
@@ -151,8 +154,9 @@ export default function ResetPasswordForm({
           aria-describedby={
             confirmPasswordError ? "confirm-password-error" : undefined
           }
-          className="mt-1.5 h-8.5 rounded-md border border-black/15 px-2.75 text-base font-normal outline-none placeholder:text-black/40"
+          className="mt-1.5 h-8.5 rounded-md border border-foreground/15 px-2.75 text-base font-normal outline-none placeholder:text-foreground/40"
         />
+
         <AuthErrorMessage
           id="confirm-password-error"
           message={confirmPasswordError}
@@ -163,10 +167,10 @@ export default function ResetPasswordForm({
       <button
         type="submit"
         disabled={isSubmitting}
-        className="mt-9.5 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
+        className="mt-9.5 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-[var(--white)] transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
       >
         {isSubmitting ? t("submitting") : (submitLabel ?? t("submit"))}
       </button>
     </form>
-  )
+  );
 }

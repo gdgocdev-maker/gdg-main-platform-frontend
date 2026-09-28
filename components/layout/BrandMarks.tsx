@@ -10,8 +10,8 @@ type MarkProps = {
 export function LinkedInMark({ className = "" }: MarkProps) {
   return (
     <svg viewBox="0 0 24 24" className={className} aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="4" fill="white" />
-      <g transform="translate(6 5.14) scale(0.02679)" fill="#325FA6">
+      <rect x="2" y="2" width="20" height="20" rx="4" fill="var(--white)" />
+      <g transform="translate(6 5.14) scale(0.02679)" fill="var(--navy)">
         <path d="M100.28 448H7.4V148.9h92.88zm-46.44-341.7C24.09 106.3 0 82.1 0 52.3a53.79 53.79 0 0 1 107.58 0c0 29.8-24.1 54-53.74 54zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z" />
       </g>
     </svg>
