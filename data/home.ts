@@ -52,18 +52,19 @@ export const events = [
   ];
 
   export const teamMembers = [
-  {
+    {
     id: "1",
-    image: "/images/jumanah-coleader.png",
-    role: "Co-Lead",
-    name: "Jumanah Alshaibi",
-  },   
-  {
-    id: "2",
     image: "/images/abdullah-leader.png",
     role: "Lead",
     name: "Abdullah Misar",
   },
+  {
+    id: "2",
+    image: "/images/jumanah-coleader.png",
+    role: "Co-Lead",
+    name: "Jumanah Alshaibi",
+  },   
+
   {
     id: "3",
     image: "/images/Fahad-advisor.png",
