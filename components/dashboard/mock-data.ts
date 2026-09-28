@@ -13,8 +13,8 @@ export interface DashboardUser {
 }
 
 export interface SidebarItem {
+  /** Also the translation key under dashboard.nav.items. */
   id: string;
-  label: string;
   /**
    * Real route once implemented; "#" is the intentional placeholder for pages that don't
    * exist yet (Events, Tasks, Members, Achievements, Setting, Help). Swapping "#" for the
@@ -25,8 +25,8 @@ export interface SidebarItem {
 
 export interface MyEventTile {
   id: string;
-  title: string;
-  description: string;
+  /** Translation key under dashboard.tiles (title, description, action). */
+  key: "myEvents";
   /** Tailwind background utility for the card surface. */
   background: string;
   /** Tailwind text-color utility for the arrow icon inside the (white) corner action circle. */
@@ -73,44 +73,40 @@ export const currentUser: DashboardUser = {
 
 
 export const sidebarPrimaryItems: SidebarItem[] = [
-  { id: "dashboard", label: "Dashboard", href: "/dashboard" },
-  { id: "events", label: "Events", href: "#" },
-  { id: "tasks", label: "Tasks", href: "#" },
-  { id: "members", label: "Members", href: "#" },
-  { id: "achievements", label: "Achievements", href: "#" },
+  { id: "dashboard", href: "/dashboard" },
+  { id: "events", href: "#" },
+  { id: "tasks", href: "#" },
+  { id: "members", href: "#" },
+  { id: "achievements", href: "#" },
 ];
 
 export const sidebarSecondaryItems: SidebarItem[] = [
-  { id: "setting", label: "Setting", href: "#" },
-  { id: "help", label: "Help & Support", href: "#" },
+  { id: "setting", href: "#" },
+  { id: "help", href: "#" },
 ];
 
 export const myEventTiles: MyEventTile[] = [
   {
     id: "events-blue",
-    title: "My Events",
-    description: "Explore upcoming events and register",
+    key: "myEvents",
     background: "bg-gdg-blue-light",
     accent: "text-gdg-blue-accent",
   },
   {
     id: "events-green",
-    title: "My Events",
-    description: "Explore upcoming events and register",
+    key: "myEvents",
     background: "bg-gdg-green-light",
     accent: "text-gdg-green-accent",
   },
   {
     id: "events-pink",
-    title: "My Events",
-    description: "Explore upcoming events and register",
+    key: "myEvents",
     background: "bg-gdg-pink-light",
     accent: "text-gdg-pink-accent",
   },
   {
     id: "events-yellow",
-    title: "My Events",
-    description: "Explore upcoming events and register",
+    key: "myEvents",
     background: "bg-gdg-yellow-light",
     accent: "text-gdg-yellow-accent",
   },

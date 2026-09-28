@@ -1,0 +1,85 @@
+{
+  "nav": {
+    "sectionsLabel": "أقسام لوحة التحكم",
+    "accountLabel": "الحساب",
+    "compactLabel": "لوحة التحكم",
+    "items": {
+      "dashboard": "لوحة التحكم",
+      "events": "الفعاليات",
+      "tasks": "المهام",
+      "members": "الأعضاء",
+      "achievements": "الإنجازات",
+      "setting": "الإعدادات",
+      "help": "المساعدة والدعم"
+    }
+  },
+  "utility": {
+    "searchLabel": "ابحث في الفعاليات أو المهام",
+    "searchPlaceholder": "ابحث في الفعاليات أو المهام...",
+    "notifications": "الإشعارات",
+    "today": "اليوم",
+    "todayLabel": "اليوم، {weekday} {day} {month}"
+  },
+  "welcome": {
+    "title": "مرحبًا بعودتك، {name}!",
+    "subtitle": "لنبنِ ونتعلّم ونصنع الأثر معًا"
+  },
+  "tiles": {
+    "myEvents": {
+      "title": "فعالياتي",
+      "description": "استكشف الفعاليات القادمة وسجّل فيها",
+      "action": "عرض فعالياتي"
+    }
+  },
+  "upcoming": {
+    "title": "الفعاليات القادمة",
+    "viewAll": "عرض الفعاليات القادمة",
+    "featured": "مميزة",
+    "addToCalendar": "أضف إلى التقويم",
+    "empty": "ليس لديك أي فعاليات."
+  },
+  "calendar": {
+    "previousMonth": "الشهر السابق",
+    "nextMonth": "الشهر التالي",
+    "today": "اليوم",
+    "eventsScheduled": "{count, plural, =0 {لا توجد فعاليات مجدولة} one {فعالية واحدة مجدولة} two {فعاليتان مجدولتان} few {# فعاليات مجدولة} many {# فعالية مجدولة} other {# فعالية مجدولة}}",
+    "weekdays": {
+      "sun": "ح",
+      "mon": "ن",
+      "tue": "ث",
+      "wed": "ر",
+      "thu": "خ",
+      "fri": "ج",
+      "sat": "س"
+    }
+  },
+  "tasks": {
+    "title": "مهامي",
+    "filterLabel": "تصفية المهام حسب الحالة",
+    "viewAll": "عرض كل المهام",
+    "empty": "لا توجد مهام تطابق عوامل التصفية.",
+    "filterWithCount": "{label} ({count})",
+    "filters": {
+      "all": "الكل",
+      "inProgress": "قيد التنفيذ",
+      "toDo": "للتنفيذ",
+      "complete": "مكتملة"
+    },
+    "columns": {
+      "task": "المهمة",
+      "deadline": "الموعد النهائي",
+      "priority": "الأولوية",
+      "status": "الحالة"
+    },
+    "status": {
+      "inProgress": "قيد التنفيذ",
+      "toDo": "للتنفيذ",
+      "complete": "مكتملة"
+    },
+    "priority": {
+      "high": "عالية",
+      "medium": "متوسطة",
+      "low": "منخفضة"
+    }
+  }
+}
