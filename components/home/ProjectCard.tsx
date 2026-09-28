@@ -29,7 +29,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         duration: 0.35,
         ease: "easeOut",
       }}
-      className="flex h-[415px] w-[310px] shrink-0 flex-col overflow-hidden rounded-4xl bg-gradient-to-b from-[#DE8B8B] to-[#6D95C0] p-3 text-white md:h-[430px] md:w-[310px]"
+      className="flex h-[415px] w-[310px] shrink-0 flex-col overflow-hidden rounded-4xl bg-gradient-to-b from-[var(--project-pink)] to-[var(--project-blue)] p-3 text-[var(--white)] md:h-[430px] md:w-[310px]"
     >
       {/* Project Image */}
       <div className="h-[212px] w-full overflow-hidden rounded-4xl">
@@ -58,11 +58,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <div className="mt-auto flex justify-end">
           <button
             type="button"
-            className="flex h-9 w-[135px] cursor-pointer items-center justify-between rounded-full bg-white px-1 pl-4 text-sm font-medium leading-none text-black"
+            className="flex h-9 w-[135px] cursor-pointer items-center justify-between rounded-full bg-[var(--white)] px-1 pl-4 text-sm font-medium leading-none text-[var(--black)]"
           >
             <span dir={dir}>{t("viewProject")}</span>
 
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-black">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--black)]">
               <svg
                 className="h-4 w-4"
                 viewBox="0 0 24 24"
@@ -71,7 +71,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               >
                 <path
                   d="M5 12H19M19 12L12 5M19 12L12 19"
-                  stroke="white"
+                  stroke="var(--white)"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"

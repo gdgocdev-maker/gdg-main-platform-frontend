@@ -1,18 +1,18 @@
-import type { Metadata } from "next"
-import AuthVisualPanel from "@/app/components/auth/AuthVisualPanel"
-import AuthCard from "@/app/components/auth/AuthCard"
-import ResetPasswordForm from "./ResetPasswordForm"
+import type { Metadata } from "next";
+import AuthVisualPanel from "@/app/components/auth/AuthVisualPanel";
+import AuthCard from "@/app/components/auth/AuthCard";
+import ResetPasswordForm from "./ResetPasswordForm";
 
 export const metadata: Metadata = {
-  title: "Reset Password"
-}
+  title: "Reset Password",
+};
 
 export default function ResetPassword() {
   return (
-    <main className="flex min-h-screen min-w-0 flex-col bg-white text-primary-font lg:h-screen lg:min-h-0 lg:flex-row">
+    <main className="flex min-h-screen min-w-0 flex-col bg-background text-foreground lg:h-screen lg:min-h-0 lg:flex-row">
       <AuthVisualPanel side="left" />
 
-      <section className="flex flex-1 items-center justify-center bg-white lg:h-full">
+      <section className="flex flex-1 items-center justify-center bg-background lg:h-full">
         <AuthCard
           size="sm"
           title="Set New Password"
@@ -22,5 +22,5 @@ export default function ResetPassword() {
         </AuthCard>
       </section>
     </main>
-  )
+  );
 }

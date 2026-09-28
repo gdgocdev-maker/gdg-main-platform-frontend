@@ -32,7 +32,7 @@ export default function EventCard({ event }: EventCardProps) {
         duration: 0.4,
         ease: "easeOut",
       }}
-      className="flex h-[415px] w-[310px] shrink-0 flex-col overflow-hidden rounded-2xl bg-gradient-to-b from-[#1C4486] to-black p-3 text-white md:h-[430px] md:w-[310px]"
+      className="flex h-[415px] w-[310px] shrink-0 flex-col overflow-hidden rounded-2xl bg-gradient-to-b from-[var(--event-blue)] to-[var(--gdg-dark)] p-3 text-[var(--white)] md:h-[430px] md:w-[310px]"
     >
       {/* Event Image */}
       <div className="h-[212px] w-full overflow-hidden rounded-xl">
@@ -45,7 +45,9 @@ export default function EventCard({ event }: EventCardProps) {
 
       {/* Event Info */}
       <div className="flex flex-1 flex-col px-2 pt-4">
-        <h3 className="text-2xl font-semibold leading-snug">{event.name}</h3>
+        <h3 className="text-2xl font-semibold leading-snug">
+          {event.name}
+        </h3>
 
         <div className="mt-3 flex flex-col gap-1">
           <p className="flex items-center gap-2 text-sm font-normal leading-normal">
@@ -68,11 +70,11 @@ export default function EventCard({ event }: EventCardProps) {
         <div className="mt-auto flex justify-end">
           <button
             type="button"
-            className="flex h-9 w-[108px] cursor-pointer items-center justify-between rounded-full bg-white px-1 pl-4 text-sm font-medium leading-none text-black"
+            className="flex h-9 w-[108px] cursor-pointer items-center justify-between rounded-full bg-[var(--white)] px-1 pl-4 text-sm font-medium leading-none text-[var(--gdg-dark)]"
           >
             <span dir={dir}>{t("register")}</span>
 
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-black">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--gdg-dark)]">
               <svg
                 className="h-4 w-4"
                 viewBox="0 0 24 24"
@@ -81,7 +83,7 @@ export default function EventCard({ event }: EventCardProps) {
               >
                 <path
                   d="M5 12H19M19 12L12 5M19 12L12 19"
-                  stroke="white"
+                  stroke="var(--white)"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"

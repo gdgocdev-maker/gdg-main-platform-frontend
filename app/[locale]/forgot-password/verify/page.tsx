@@ -1,18 +1,18 @@
-import type { Metadata } from "next"
-import AuthVisualPanel from "@/app/components/auth/AuthVisualPanel"
-import AuthCard from "@/app/components/auth/AuthCard"
-import VerifyCodeForm from "@/app/components/auth/VerifyCodeForm"
+import type { Metadata } from "next";
+import AuthVisualPanel from "@/app/components/auth/AuthVisualPanel";
+import AuthCard from "@/app/components/auth/AuthCard";
+import VerifyCodeForm from "@/app/components/auth/VerifyCodeForm";
 
 export const metadata: Metadata = {
-  title: "Verify Code"
-}
+  title: "Verify Code",
+};
 
 export default async function VerifyCode() {
   return (
-    <main className="flex min-h-screen min-w-0 flex-col bg-white text-primary-font lg:h-screen lg:min-h-0 lg:flex-row">
+    <main className="flex min-h-screen min-w-0 flex-col bg-background text-foreground lg:h-screen lg:min-h-0 lg:flex-row">
       <AuthVisualPanel side="left" />
 
-      <section className="flex flex-1 items-center justify-center bg-white lg:h-full">
+      <section className="flex flex-1 items-center justify-center bg-background lg:h-full">
         <AuthCard
           size="sm"
           title="Verify Code"
@@ -22,5 +22,5 @@ export default async function VerifyCode() {
         </AuthCard>
       </section>
     </main>
-  )
+  );
 }

@@ -266,7 +266,7 @@ function Checkbox({ checked }: { checked: boolean }): ReactElement {
   return (
     <span
       className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border ${
-        checked ? "border-gdg-green bg-gdg-green text-white" : "border-gray-300 bg-white"
+        checked ? "border-gdg-green bg-gdg-green text-[var(--white)]" : "border-border bg-surface"
       }`}
       aria-hidden="true"
     >
@@ -354,8 +354,8 @@ function SidebarLink({
         active
           ? "border-s-4 border-gdg-red bg-gdg-pink-light ps-2.5 font-semibold text-gdg-red"
           : muted
-          ? "font-normal text-gray-500 hover:bg-gdg-gray-light hover:text-gdg-dark"
-          : "font-semibold text-gray-600 hover:bg-gdg-gray-light hover:text-gdg-dark"
+          ? "font-normal text-muted hover:bg-surface-muted hover:text-foreground"
+          : "font-semibold text-foreground/70 hover:bg-surface-muted hover:text-foreground"
       }`}
     >
       <Icon className="h-5 w-5 shrink-0" />
@@ -368,7 +368,7 @@ function Sidebar(): ReactElement {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden shrink-0 border-e border-gdg-gray-light bg-white px-3 py-6 lg:block lg:w-60 xl:w-64">
+    <aside className="hidden shrink-0 border-e border-border bg-surface px-3 py-6 lg:block lg:w-60 xl:w-64">
       <nav aria-label="Dashboard sections" className="flex flex-col gap-1">
         {sidebarPrimaryItems.map((item) => (
           <SidebarLink
@@ -381,7 +381,7 @@ function Sidebar(): ReactElement {
         ))}
       </nav>
 
-      <div className="my-4 border-t border-gdg-gray-light" />
+      <div className="my-4 border-t border-border" />
 
       <nav aria-label="Account" className="flex flex-col gap-1">
         {sidebarSecondaryItems.map((item) => (
@@ -414,7 +414,7 @@ function NavIconButton({
       title={label}
       aria-current={active ? "page" : undefined}
       className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-colors ${
-        active ? "bg-gdg-pink-light text-gdg-red" : "text-gray-500 hover:bg-gdg-gray-light hover:text-gdg-dark"
+        active ? "bg-gdg-pink-light text-gdg-red" : "text-muted hover:bg-surface-muted hover:text-foreground"
       }`}
     >
       <Icon className="h-5 w-5" />
@@ -463,14 +463,14 @@ function SearchField({
   return (
     <label className={`relative block w-full ${className}`}>
       <span className="sr-only">Search events, or tasks</span>
-      <IconSearch className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+      <IconSearch className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
       <input
         type="search"
         value={searchQuery}
         onChange={(event) => onSearchChange(event.target.value)}
         placeholder="Search events, or tasks..."
         maxLength={255}
-        className="w-full rounded-full border border-gdg-gray-light bg-gdg-gray-light/60 py-2 ps-9 pe-4 text-sm text-gdg-dark placeholder:text-gray-400 focus:border-gdg-blue focus:bg-white focus:outline-none focus:ring-2 focus:ring-gdg-blue/30"
+        className="w-full rounded-full border border-border bg-surface-muted/60 py-2 ps-9 pe-4 text-sm text-foreground placeholder:text-muted focus:border-gdg-blue focus:bg-surface focus:outline-none focus:ring-2 focus:ring-gdg-blue/30"
       />
     </label>
   );
@@ -497,12 +497,12 @@ function UtilityRow({
     <motion.div variants={itemVariants} className="flex items-center justify-between gap-3">
       <div className="order-1 flex w-full items-center gap-2 sm:w-auto lg:order-2">
         <div className="order-1 flex items-center gap-2.5 lg:order-3">
-          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gdg-blue-light text-sm font-semibold text-gdg-dark">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gdg-blue-light text-sm font-semibold text-foreground">
             {user.initials}
           </span>
           <div className="hidden leading-tight sm:block">
-            <p className="text-sm font-semibold text-gdg-dark">{user.name}</p>
-            <p className="text-xs text-gray-500">
+            <p className="text-sm font-semibold text-foreground">{user.name}</p>
+            <p className="text-xs text-muted">
               {user.role} &middot; {user.membership}
             </p>
           </div>
@@ -511,13 +511,13 @@ function UtilityRow({
         <button
           type="button"
           aria-label="Notifications"
-          className="relative order-2 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-gray-500 hover:bg-gdg-gray-light hover:text-gdg-dark"
+          className="relative order-2 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted hover:bg-surface-muted hover:text-foreground"
         >
           <IconBell className="h-5 w-5" />
           <span className="absolute end-2 top-2 h-1.5 w-1.5 rounded-full bg-gdg-red" aria-hidden="true" />
         </button>
 
-        <p className="order-3 ms-auto shrink-0 text-xs font-medium text-gray-500 sm:ms-0 sm:text-sm lg:order-1">
+        <p className="order-3 ms-auto shrink-0 text-xs font-medium text-muted sm:ms-0 sm:text-sm lg:order-1">
           {today}
         </p>
       </div>
@@ -534,10 +534,10 @@ function UtilityRow({
 function WelcomeSection({ firstName }: { firstName: string }): ReactElement {
   return (
     <motion.div variants={itemVariants}>
-      <h1 className="text-2xl font-semibold text-gdg-dark sm:text-3xl">
+      <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">
         Welcome back, {firstName}! <span aria-hidden="true">👋</span>
       </h1>
-      <p className="mt-1 text-sm text-gray-500 sm:text-base">Build, learn, and create impact together</p>
+      <p className="mt-1 text-sm text-muted sm:text-base">Build, learn, and create impact together</p>
     </motion.div>
   );
 }
@@ -553,7 +553,7 @@ function MyEventCard({ tile }: { tile: MyEventTile }): ReactElement {
         <p className="text-sm font-semibold text-gdg-dark">{tile.title}</p>
         <ArrowBadge
           label="View my events"
-          toneClassName="bg-white"
+          toneClassName="bg-surface"
           iconClassName={`h-3 w-3 sm:h-3.5 sm:w-3.5 ${tile.accent}`}
           sizeClassName="h-6 w-6 sm:h-7 sm:w-7"
         />
@@ -586,14 +586,14 @@ function UpcomingEventsCard({ events }: { events: UpcomingEvent[] }): ReactEleme
   return (
     <motion.div
       variants={itemVariants}
-      className="flex flex-col rounded-2xl bg-white p-3 shadow-sm ring-1 ring-gdg-gray-light sm:p-4"
+      className="flex flex-col rounded-2xl bg-surface p-3 shadow-sm ring-1 ring-gdg-gray-light sm:p-4"
     >
       <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-base font-semibold text-gdg-dark sm:text-lg">Upcoming Events</h2>
+        <h2 className="text-base font-semibold text-foreground sm:text-lg">Upcoming Events</h2>
         <ArrowBadge
           label="View upcoming events"
           toneClassName="bg-gdg-yellow-accent"
-          iconClassName="h-3.5 w-3.5 text-gdg-dark"
+          iconClassName="h-3.5 w-3.5 text-foreground"
           sizeClassName="h-7 w-7 sm:h-8 sm:w-8"
         />
       </div>
@@ -611,25 +611,25 @@ function UpcomingEventsCard({ events }: { events: UpcomingEvent[] }): ReactEleme
                 />
               </>
             ) : (
-              <IconCalendar className="pointer-events-none absolute end-3 top-3 h-16 w-16 text-white/10" />
+              <IconCalendar className="pointer-events-none absolute end-3 top-3 h-16 w-16 text-[var(--white)]/10" />
             )}
             <div className="relative flex aspect-[16/7] flex-col justify-between p-3 sm:p-4">
               <div className="flex items-start justify-between gap-3">
-                <div className="flex flex-col items-center justify-center rounded-lg bg-white px-2.5 py-1 leading-none text-gdg-dark shadow-sm">
+                <div className="flex flex-col items-center justify-center rounded-lg bg-surface px-2.5 py-1 leading-none text-foreground shadow-sm">
                   <span className="text-base font-bold">{event.day}</span>
                   <span className="text-xs font-medium uppercase tracking-wide">{event.month}</span>
                 </div>
                 {event.featured && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-gdg-yellow-accent px-2.5 py-1 text-xs font-medium text-gdg-dark">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-gdg-yellow-accent px-2.5 py-1 text-xs font-medium text-foreground">
                     <IconStar className="h-3 w-3" />
                     Featured
                   </span>
                 )}
               </div>
               <div>
-                <p className="text-base font-semibold text-white sm:text-lg">{event.title}</p>
+                <p className="text-base font-semibold text-[var(--white)] sm:text-lg">{event.title}</p>
                 <div className="mt-1 flex flex-wrap items-center justify-between gap-2">
-                  <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-white/70">
+                  <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[var(--white)]/70">
                     <span className="inline-flex items-center gap-1">
                       <IconPin className="h-3.5 w-3.5" />
                       {event.location}
@@ -644,7 +644,7 @@ function UpcomingEventsCard({ events }: { events: UpcomingEvent[] }): ReactEleme
                     type="button"
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
-                    className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-gdg-dark sm:text-sm"
+                    className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-surface px-3 py-1.5 text-xs font-semibold text-foreground sm:text-sm"
                   >
                     Add to Calendar
                     <IconArrowRight className="h-3.5 w-3.5" />
@@ -659,8 +659,8 @@ function UpcomingEventsCard({ events }: { events: UpcomingEvent[] }): ReactEleme
           </div>
         </>
       ) : (
-        <div className="flex flex-1 items-center justify-center rounded-xl bg-gdg-gray-light/40 px-4 py-10 text-center">
-          <p className="text-sm text-gray-400">You don&apos;t have any events.</p>
+        <div className="flex flex-1 items-center justify-center rounded-xl bg-surface-muted/40 px-4 py-10 text-center">
+          <p className="text-sm text-muted">You don&apos;t have any events.</p>
         </div>
       )}
     </motion.div>
@@ -720,29 +720,29 @@ function CalendarCard({ data }: { data: CalendarMockData }): ReactElement {
   return (
     <motion.div
       variants={itemVariants}
-      className="flex h-fit flex-col rounded-2xl bg-white p-3 shadow-sm ring-1 ring-gdg-gray-light sm:p-4"
+      className="flex h-fit flex-col rounded-2xl bg-surface p-3 shadow-sm ring-1 ring-gdg-gray-light sm:p-4"
     >
       <div className="mb-3 flex items-center justify-between">
         <button
           type="button"
           aria-label="Previous month"
           onClick={goToPreviousMonth}
-          className="inline-flex h-7 w-7 items-center justify-center rounded-full text-gray-500 hover:bg-gdg-gray-light hover:text-gdg-dark"
+          className="inline-flex h-7 w-7 items-center justify-center rounded-full text-muted hover:bg-surface-muted hover:text-foreground"
         >
           <IconChevronLeft className="h-4 w-4" />
         </button>
-        <p className="text-sm font-semibold text-gdg-dark">{monthLabel}</p>
+        <p className="text-sm font-semibold text-foreground">{monthLabel}</p>
         <button
           type="button"
           aria-label="Next month"
           onClick={goToNextMonth}
-          className="inline-flex h-7 w-7 items-center justify-center rounded-full text-gray-500 hover:bg-gdg-gray-light hover:text-gdg-dark"
+          className="inline-flex h-7 w-7 items-center justify-center rounded-full text-muted hover:bg-surface-muted hover:text-foreground"
         >
           <IconChevronRight className="h-4 w-4" />
         </button>
       </div>
 
-      <div className="grid grid-cols-7 text-center text-xs font-medium uppercase tracking-wide text-gray-400">
+      <div className="grid grid-cols-7 text-center text-xs font-medium uppercase tracking-wide text-muted">
         {WEEKDAY_LABELS.map((weekday) => (
           <span key={weekday}>{weekday}</span>
         ))}
@@ -759,7 +759,7 @@ function CalendarCard({ data }: { data: CalendarMockData }): ReactElement {
             <div key={index} className="flex items-center justify-center py-0.5">
               <span
                 className={`relative flex h-7 w-7 items-center justify-center rounded-full text-xs ${
-                  isSelected ? "bg-gdg-red font-semibold text-white" : "text-gdg-dark"
+                  isSelected ? "bg-gdg-red font-semibold text-[var(--white)]" : "text-foreground"
                 }`}
               >
                 {day}
@@ -772,10 +772,10 @@ function CalendarCard({ data }: { data: CalendarMockData }): ReactElement {
         })}
       </div>
 
-      <div className="mt-3 rounded-xl bg-gdg-gray-light/60 p-3">
-        <p className="text-xs font-medium uppercase tracking-wide text-gray-400">Today</p>
-        <p className="mt-0.5 text-sm font-semibold text-gdg-dark">{selectedDateLabel}</p>
-        <p className="mt-1 text-xs text-gray-500">{hasSelectedEvent ? "1 event scheduled" : "No events scheduled"}</p>
+      <div className="mt-3 rounded-xl bg-surface-muted/60 p-3">
+        <p className="text-xs font-medium uppercase tracking-wide text-muted">Today</p>
+        <p className="mt-0.5 text-sm font-semibold text-foreground">{selectedDateLabel}</p>
+        <p className="mt-1 text-xs text-muted">{hasSelectedEvent ? "1 event scheduled" : "No events scheduled"}</p>
       </div>
     </motion.div>
   );
@@ -795,9 +795,9 @@ const taskFilters: { id: FilterId; label: string }[] = [
 // all read the exact same class string for a given tone.
 const toneColors = {
   red: "bg-gdg-pink-light text-gdg-red",
-  yellow: "bg-gdg-yellow-accent/25 text-amber-800",
-  blue: "bg-gdg-blue-light text-blue-700",
-  green: "bg-gdg-green-light text-emerald-700",
+  yellow: "bg-[var(--dashboard-yellow-bg)] text-[var(--dashboard-yellow-text)]",
+  blue: "bg-[var(--dashboard-blue-bg)] text-[var(--dashboard-blue-text)]",
+  green: "bg-[var(--dashboard-green-bg)] text-[var(--dashboard-green-text)]",
 } as const;
 
 type Tone = keyof typeof toneColors;
@@ -863,10 +863,10 @@ function TasksPanel({ tasks, searchQuery }: { tasks: DashboardTask[]; searchQuer
     <motion.section
       variants={itemVariants}
       aria-labelledby="my-tasks-heading"
-      className="rounded-2xl bg-white p-3 shadow-sm ring-1 ring-gdg-gray-light sm:p-4 lg:p-5"
+      className="rounded-2xl bg-surface p-3 shadow-sm ring-1 ring-gdg-gray-light sm:p-4 lg:p-5"
     >
       <div className="mb-3 flex flex-col gap-3 sm:grid sm:grid-cols-[auto_1fr_auto] sm:items-center">
-        <h2 id="my-tasks-heading" className="flex items-center gap-2 text-lg font-semibold text-gdg-dark">
+        <h2 id="my-tasks-heading" className="flex items-center gap-2 text-lg font-semibold text-foreground">
           <IconChecklist className="h-5 w-5 shrink-0" />
           My Tasks
         </h2>
@@ -881,7 +881,7 @@ function TasksPanel({ tasks, searchQuery }: { tasks: DashboardTask[]; searchQuer
                 aria-pressed={isActive}
                 onClick={() => setActiveFilter(filter.id)}
                 className={`rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors sm:text-sm ${
-                  isActive ? `border-transparent ${toneColors[filterTones[filter.id]]}` : "border-gdg-gray-light bg-white text-gdg-dark"
+                  isActive ? `border-transparent ${toneColors[filterTones[filter.id]]}` : "border-border bg-surface text-foreground"
                 }`}
               >
                 {filter.label} ({counts[filter.id]})
@@ -903,7 +903,7 @@ function TasksPanel({ tasks, searchQuery }: { tasks: DashboardTask[]; searchQuer
       </div>
 
       {filteredTasks.length === 0 ? (
-        <p className="rounded-xl bg-gdg-gray-light/60 px-4 py-5 text-center text-sm text-gray-500">
+        <p className="rounded-xl bg-surface-muted/60 px-4 py-5 text-center text-sm text-muted">
           No tasks match your filters.
         </p>
       ) : (
@@ -918,7 +918,7 @@ function TasksPanel({ tasks, searchQuery }: { tasks: DashboardTask[]; searchQuer
                 <col className="w-[16%]" />
               </colgroup>
               <thead>
-                <tr className="bg-gdg-gray-light/60 text-start text-xs font-medium uppercase tracking-wide text-gray-400">
+                <tr className="bg-surface-muted/60 text-start text-xs font-medium uppercase tracking-wide text-muted">
                   <th scope="col" className="rounded-s-lg py-2 ps-3" />
                   <th scope="col" className="py-2 text-start">
                     Task
@@ -941,16 +941,16 @@ function TasksPanel({ tasks, searchQuery }: { tasks: DashboardTask[]; searchQuer
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: index * 0.05, duration: 0.3 }}
-                    className="border-b border-gdg-gray-light last:border-0"
+                    className="border-b border-border last:border-0"
                   >
                     <td className="py-2.5 ps-1">
                       <Checkbox checked={task.status === "Complete"} />
                     </td>
                     <td className="py-2.5 pe-4">
-                      <p className="truncate text-sm font-medium text-gdg-dark">{task.title}</p>
-                      <p className="truncate text-xs text-gray-500">{task.description}</p>
+                      <p className="truncate text-sm font-medium text-foreground">{task.title}</p>
+                      <p className="truncate text-xs text-muted">{task.description}</p>
                     </td>
-                    <td className="py-2.5 pe-4 text-gray-600">{task.deadline}</td>
+                    <td className="py-2.5 pe-4 text-foreground/70">{task.deadline}</td>
                     <td className="py-2.5 pe-4">
                       <TaskBadge className={priorityStyles[task.priority]}>{task.priority}</TaskBadge>
                     </td>
@@ -970,15 +970,15 @@ function TasksPanel({ tasks, searchQuery }: { tasks: DashboardTask[]; searchQuer
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05, duration: 0.3 }}
-                className="rounded-xl border border-gdg-gray-light p-2.5"
+                className="rounded-xl border border-border p-2.5"
               >
                 <div className="flex items-start gap-3">
                   <Checkbox checked={task.status === "Complete"} />
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium text-gdg-dark">{task.title}</p>
-                    <p className="mt-0.5 text-xs text-gray-500">{task.description}</p>
+                    <p className="truncate text-sm font-medium text-foreground">{task.title}</p>
+                    <p className="mt-0.5 text-xs text-muted">{task.description}</p>
                     <div className="mt-2 flex flex-wrap items-center gap-2">
-                      <span className="text-xs text-gray-500">{task.deadline}</span>
+                      <span className="text-xs text-muted">{task.deadline}</span>
                       <TaskBadge className={priorityStyles[task.priority]}>{task.priority}</TaskBadge>
                       <TaskBadge className={statusStyles[task.status]}>{task.status}</TaskBadge>
                     </div>
@@ -1007,7 +1007,7 @@ export default function DashboardPage(): ReactElement {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="flex min-h-full flex-1 flex-col bg-white text-gdg-dark">
+      <div className="flex min-h-full flex-1 flex-col bg-surface text-foreground">
         <TopNav />
         <div className="flex flex-1 flex-col lg:flex-row">
           <Sidebar />

@@ -121,8 +121,7 @@ export default function AboutSection() {
           <motion.img
             src="/images/about-community-3.png"
             alt="About Community Image 3"
-            className="absolute start-[-10px] top-[190px] h-[130px] w-[42%] rounded-xl border-t-10 border-r-10 border-white object-cover lg:start-[-30px] lg:top-[200px] lg:h-[170px] lg:w-[160px]"
-            initial={{ opacity: 0, x: -30 }}
+            className="absolute start-[-10px] top-[190px] h-[130px] w-[42%] rounded-xl border-t-10 border-r-10 border-background object-cover lg:start-[-30px] lg:top-[200px] lg:h-[170px] lg:w-[160px]"            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{
@@ -139,28 +138,26 @@ export default function AboutSection() {
         className="mt-10 grid grid-cols-2 gap-4 text-center lg:grid-cols-4"
       >
         <div>
-          <h3 className="text-2xl font-bold text-[#EA4335] lg:text-4xl">
-            +{counts.members}
+          <h3 className="text-2xl font-bold text-gdg-red lg:text-4xl">            +{counts.members}
           </h3>
           <p dir={dir} className="mt-1 text-lg font-medium leading-normal">{t("stats.members")}</p>
         </div>
 
         <div>
-          <h3 className="text-2xl font-bold text-[#FFD327] lg:text-4xl">
-            +{counts.events}
+          <h3 className="text-2xl font-bold text-gdg-yellow lg:text-4xl">            +{counts.events}
           </h3>
           <p dir={dir} className="mt-1 text-lg font-medium leading-normal">{t("stats.events")}</p>
         </div>
 
         <div>
-          <h3 className="text-2xl font-bold text-[#4285F4] lg:text-4xl">
+          <h3 className="text-2xl font-bold text-gdg-blue lg:text-4xl">
             +{counts.projects}
           </h3>
           <p dir={dir} className="mt-1 text-lg font-medium leading-normal">{t("stats.projects")}</p>
         </div>
 
         <div>
-          <h3 className="text-2xl font-bold text-[#34A852] lg:text-4xl">
+          <h3 className="text-2xl font-bold text-gdg-green lg:text-4xl">
             +{counts.communities}
           </h3>
           <p dir={dir} className="mt-1 text-lg font-medium leading-normal">{t("stats.communities")}</p>

@@ -19,7 +19,7 @@ export function Avatar({
 }: AvatarProps) {
   return (
     <div
-      className={`flex shrink-0 items-center justify-center overflow-hidden rounded-full border-white bg-avatar-bg font-semibold text-white ${sizeClasses[size]} ${className}`}
+      className={`flex shrink-0 items-center justify-center overflow-hidden rounded-full border-[var(--white)] bg-avatar-bg font-semibold text-[var(--white)] ${sizeClasses[size]} ${className}`}
     >
       {imageUrl ? (
         // eslint-disable-next-line @next/next/no-img-element
