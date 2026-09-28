@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { SquarePen } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Avatar } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
 import { ImageUploadButton } from "@/components/ui/ImageUploadButton";
@@ -35,6 +36,7 @@ export function ProfileHero({
   onAvatarSelect,
   onHeaderImageSelect,
 }: ProfileHeroProps) {
+  const t = useTranslations("profile.hero");
   const editControls = isEditing ? (
     <div className="flex shrink-0 items-center gap-3">
       <button
@@ -42,15 +44,15 @@ export function ProfileHero({
         onClick={onCancel}
         className="text-sm font-medium text-foreground/70 transition-colors hover:text-foreground sm:text-base"
       >
-        Cancel
+        {t("cancel")}
       </button>
       <Button variant="solid" onClick={onSave}>
-        Save changes
+        {t("save")}
       </Button>
     </div>
   ) : (
     <Button icon={<SquarePen className="size-4 sm:size-5" />} onClick={onEdit}>
-      Edit profile
+      {t("edit")}
     </Button>
   );
 
@@ -60,8 +62,8 @@ export function ProfileHero({
       {isEditing && (
         <ImageUploadButton
           onSelect={onAvatarSelect}
-          label="Change profile photo"
-          className="absolute bottom-1 right-1 size-9 sm:size-10"
+          label={t("changePhoto")}
+          className="absolute bottom-1 end-1 size-9 sm:size-10"
           iconClassName="size-4 sm:size-5"
         />
       )}
@@ -81,8 +83,8 @@ export function ProfileHero({
         {isEditing && (
           <ImageUploadButton
             onSelect={onHeaderImageSelect}
-            label="Change cover photo"
-            className="absolute right-4 top-4 size-10 sm:right-6 sm:top-6"
+            label={t("changeCover")}
+            className="absolute end-4 top-4 size-10 sm:end-6 sm:top-6"
             iconClassName="size-5"
           />
         )}
@@ -98,24 +100,24 @@ export function ProfileHero({
                 {name}
               </h1>
               <p className="text-sm text-foreground/80 sm:text-base">
-                {email} · Member since {memberSince}
+                {email} · {t("memberSince", { date: memberSince })}
               </p>
             </div>
             {editControls}
           </div>
 
-          {/* Desktop: avatar + button share a row, name/meta left-aligned below */}
+          {/* Desktop: avatar + button share a row, name/meta start-aligned below */}
           <div className="hidden md:flex md:flex-col md:gap-3">
             <div className="flex items-end justify-between">
               {avatarWithUpload}
               {editControls}
             </div>
-            <div className="flex flex-col items-start gap-1 text-left">
+            <div className="flex flex-col items-start gap-1 text-start">
               <h1 className="text-4xl font-bold leading-tight">
                 {name}
               </h1>
               <p className="text-lg text-foreground/80">
-                {email} · Member since {memberSince}
+                {email} · {t("memberSince", { date: memberSince })}
               </p>
             </div>
           </div>

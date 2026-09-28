@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Select } from "@/components/ui/Select";
 import type { InfoCardData } from "@/lib/constants/profile";
 import { SAUDI_UNIVERSITIES } from "@/lib/constants/universities";
@@ -21,10 +22,13 @@ export function InfoCard({
   errors,
   onChange,
 }: InfoCardProps) {
+  const t = useTranslations("profile");
+  const tv = useTranslations("validation");
+
   return (
     <div className="flex-1 rounded-card border border-gray-350 bg-surface p-4 sm:p-6">
       <h3 className="mb-3 text-base font-semibold text-gray-500 sm:text-lg">
-        {data.heading}
+        {t(`cards.${data.id}`)}
       </h3>
       <dl className="flex flex-col gap-3">
         {data.rows.map((row) => {
@@ -42,7 +46,7 @@ export function InfoCard({
               }`}
             >
               <dt className="shrink-0 text-xs text-gray-500 sm:text-sm">
-                {row.label}
+                {t(`fields.${row.key}`)}
               </dt>
               {isEditing ? (
                 <div className="flex min-w-0 flex-1 flex-col sm:items-end">
@@ -51,11 +55,13 @@ export function InfoCard({
                       value={values[row.key] ?? ""}
                       options={SAUDI_UNIVERSITIES}
                       onChange={(value) => onChange(row.key, value)}
-                      placeholder="Select a university"
+                      placeholder={t("universityPlaceholder")}
                       error={Boolean(error)}
                     />
                   ) : (
                     <div
+                      // Phone numbers read left to right in every language, so this box never mirrors.
+                      dir={isPhone ? "ltr" : undefined}
                       className={`flex min-w-0 items-baseline gap-1.5 border-0 border-b border-dashed py-0.5 ${
                         error ? "border-gdg-red" : "border-gray-350"
                       }`}
@@ -76,17 +82,21 @@ export function InfoCard({
                           onChange(row.key, raw);
                         }}
                         aria-invalid={Boolean(error)}
-                        className="min-w-0 border-0 bg-transparent text-left text-xs font-semibold text-foreground outline-none sm:text-right sm:text-sm"
+                        className="min-w-0 border-0 bg-transparent text-start text-xs font-semibold text-foreground outline-none sm:text-end sm:text-sm"
                       />
                     </div>
                   )}
                   {error && (
-                    <span className="mt-1 text-xs text-gdg-red">{error}</span>
+                    <span className="mt-1 text-xs text-gdg-red">{tv(error)}</span>
                   )}
                 </div>
               ) : (
-                <dd className="text-right text-xs font-semibold text-foreground sm:text-sm">
-                  {isPhone ? `+966 ${formatPhone(row.value)}` : row.value}
+                <dd className="text-end text-xs font-semibold text-foreground sm:text-sm">
+                  {isPhone ? (
+                    <span dir="ltr">{`+966 ${formatPhone(row.value)}`}</span>
+                  ) : (
+                    row.value
+                  )}
                 </dd>
               )}
             </div>

@@ -10,12 +10,26 @@
   "language": {
     "label": "Language",
     "en": "English",
-    "ar": "Arabic"
+    "ar": "Arabic",
+    "switchTo": "Switch to {language}"
   },
   "footer": {
     "tagline": "Connect. Learn. Build. Grow. — a student developer community at the University of Jeddah.",
     "linksTitle": "Links",
     "contactTitle": "Contact Us",
     "copyright": "© 2026 GDG on Campus — University of Jeddah"
+  },
+  "topNav": {
+    "brandFull": "Google Developer Group on Campus",
+    "university": "University of Jeddah",
+    "navLabel": "Primary",
+    "toggleMenu": "Toggle navigation menu"
+  },
+  "select": {
+    "placeholder": "Select…"
+  },
+  "upload": {
+    "notImage": "Please choose an image file",
+    "tooLarge": "Image must be under {max}MB"
   }
 }

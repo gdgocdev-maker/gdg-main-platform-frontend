@@ -71,7 +71,6 @@ export const currentUser: DashboardUser = {
   membership: "Member",
 };
 
-export const topNavLinks = ["Home", "About Us", "Projects", "Events", "Community"];
 
 export const sidebarPrimaryItems: SidebarItem[] = [
   { id: "dashboard", label: "Dashboard", href: "/dashboard" },

@@ -1,16 +1,15 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { PersonalAcademicPanel } from "@/components/profile/PersonalAcademicPanel";
 import { SocialLinksPanel } from "@/components/profile/SocialLinksPanel";
 import { Tabs } from "@/components/ui/Tabs";
+import { useTextDirection } from "@/i18n/useTextDirection";
 import type { InfoCardData, SocialLink } from "@/lib/constants/profile";
 
-const tabs = [
-  { id: "personal", label: "Personal & Academic" },
-  { id: "social", label: "Social Links" },
-];
+const tabIds = ["personal", "social"] as const;
 
 type ProfileTabsProps = {
   personalInfo: InfoCardData;
@@ -37,7 +36,11 @@ export function ProfileTabs({
   socialLinkErrors,
   onSocialLinkChange,
 }: ProfileTabsProps) {
-  const [activeId, setActiveId] = useState(tabs[0].id);
+  const t = useTranslations("profile.tabs");
+  const tabs = tabIds.map((id) => ({ id, label: t(id) }));
+  const [activeId, setActiveId] = useState<string>(tabIds[0]);
+  // x is physical, so flip it in RTL to keep the slide moving in reading direction.
+  const offset = useTextDirection() === "rtl" ? -8 : 8;
 
   return (
     <div className="w-full">
@@ -46,9 +49,9 @@ export function ProfileTabs({
         <AnimatePresence mode="wait">
           <motion.div
             key={activeId}
-            initial={{ opacity: 0, x: 8 }}
+            initial={{ opacity: 0, x: offset }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -8 }}
+            exit={{ opacity: 0, x: -offset }}
             transition={{ duration: 0.2, ease: "easeOut" }}
           >
             {activeId === "personal" ? (

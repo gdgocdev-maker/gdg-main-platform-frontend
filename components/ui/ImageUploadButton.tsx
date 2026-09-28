@@ -1,6 +1,7 @@
 "use client";
 
 import { Camera } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
 const MAX_SIZE_MB = 5;
@@ -20,8 +21,10 @@ export function ImageUploadButton({
   iconClassName = "size-4",
   maxSizeMB = MAX_SIZE_MB,
 }: ImageUploadButtonProps) {
+  const t = useTranslations("common.upload");
   const inputRef = useRef<HTMLInputElement>(null);
-  const [error, setError] = useState<string | null>(null);
+  // Holds a common.upload message key so the text follows language switches.
+  const [error, setError] = useState<"notImage" | "tooLarge" | null>(null);
 
   useEffect(() => {
     if (!error) return;
@@ -50,11 +53,11 @@ export function ImageUploadButton({
           if (!file) return;
 
           if (!file.type.startsWith("image/")) {
-            setError("Please choose an image file");
+            setError("notImage");
             return;
           }
           if (file.size > maxSizeMB * 1024 * 1024) {
-            setError(`Image must be under ${maxSizeMB}MB`);
+            setError("tooLarge");
             return;
           }
           setError(null);
@@ -62,8 +65,8 @@ export function ImageUploadButton({
         }}
       />
       {error && (
-        <span className="absolute right-0 top-full z-10 mt-2 w-max max-w-44 rounded-md bg-gdg-red px-2.5 py-1.5 text-center text-xs font-medium text-[var(--white)] shadow-lg">
-          {error}
+        <span className="absolute end-0 top-full z-10 mt-2 w-max max-w-44 rounded-md bg-gdg-red px-2.5 py-1.5 text-center text-xs font-medium text-[var(--white)] shadow-lg">
+          {t(error, { max: maxSizeMB })}
         </span>
       )}
     </div>

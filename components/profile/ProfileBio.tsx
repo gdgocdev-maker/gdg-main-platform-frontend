@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 type ProfileBioProps = {
   bio: string;
   placeholder: string;
@@ -11,10 +13,12 @@ export function ProfileBio({
   isEditing,
   onChange,
 }: ProfileBioProps) {
+  const t = useTranslations("profile.bio");
+
   return (
     <div className="w-full rounded-card border border-gray-400 bg-surface px-4 py-4 sm:px-6">
       <p className="mb-1 text-xs font-semibold text-gray-500 sm:text-sm">
-        Short Bio
+        {t("title")}
       </p>
       {isEditing ? (
         <textarea

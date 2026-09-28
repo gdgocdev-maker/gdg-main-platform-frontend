@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ExternalLink, Globe } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { GithubMark, LinkedInGlyph } from "@/components/layout/BrandMarks";
 import type { SocialLink } from "@/lib/constants/profile";
 
@@ -35,6 +36,8 @@ export function SocialLinkRow({
   error,
   onChange,
 }: SocialLinkRowProps) {
+  const t = useTranslations("profile.social");
+  const tv = useTranslations("validation");
   const { icon: Icon, className: badgeClassName } =
     iconBadgeByPlatform[link.platform];
 
@@ -56,12 +59,14 @@ export function SocialLinkRow({
 
       <div className="flex min-w-0 flex-1 flex-col">
         <span className="text-xs font-semibold text-foreground sm:text-sm">
-          {link.label}
+          {t(`platforms.${link.platform}`)}
         </span>
         {isEditing ? (
           <>
             <input
               type="url"
+              // URLs read left to right in every language.
+              dir="ltr"
               value={value}
               onChange={(event) => onChange(event.target.value)}
               placeholder={placeholderByPlatform[link.platform]}
@@ -69,21 +74,22 @@ export function SocialLinkRow({
               className="w-full min-w-0 border-0 border-b border-dashed border-gray-350 bg-transparent py-0.5 text-xs text-foreground outline-none placeholder:text-gray-300 focus:border-accent-blue sm:text-sm"
             />
             {error && (
-              <span className="mt-1 text-xs text-gdg-red">{error}</span>
+              <span className="mt-1 text-xs text-gdg-red">{tv(error)}</span>
             )}
           </>
         ) : link.value ? (
           <a
             href={link.value}
             target="_blank"
+            dir="ltr"
             rel="noopener noreferrer"
-            className="truncate text-xs text-accent-blue hover:underline sm:text-sm"
+            className="max-w-full self-start truncate text-xs text-accent-blue hover:underline sm:text-sm"
           >
             {link.value}
           </a>
         ) : (
           <span className="text-xs italic text-gray-300 sm:text-sm">
-            Not added yet
+            {t("notAdded")}
           </span>
         )}
       </div>
