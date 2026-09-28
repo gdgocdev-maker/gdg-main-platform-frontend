@@ -59,8 +59,8 @@
     "title": "Our Leadership Team",
     "team": {
       
-      "1": { "name": "Jumanah Alshaibi", "role": "Co-Lead" },
-      "2": { "name": "Abdullah Misar", "role": "Lead" },
+      "1": { "name": "Abdullah Misar", "role": "Lead" },
+      "2": { "name": "Jumanah Alshaibi", "role": "Co-Lead" },
       "3": { "name": "Fahad Aljudaibi", "role": "Advisor" },
       "4": { "name": "Ahmed Bawazeer", "role": "Advisor" }
     }
