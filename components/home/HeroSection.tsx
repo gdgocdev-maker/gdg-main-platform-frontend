@@ -4,6 +4,7 @@ import Navbar from "@/components/home/Navbar";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useTextDirection } from "@/i18n/useTextDirection";
+import Link from "next/link";
 
 export default function HeroSection() {
   const t = useTranslations("home.hero");
@@ -26,12 +27,15 @@ export default function HeroSection() {
         playsInline
       />
 
-      <div className="absolute inset-0 z-10 bg-black/50"></div>
+      <div
+        className="absolute inset-0 z-10"
+        style={{ backgroundColor: "var(--hero-overlay)" }}
+      />
 
       <div className="relative z-30 flex w-full flex-col items-center gap-[6rem] px-4">
         <motion.h1
           dir={dir}
-          className="flex max-w-[1200px] flex-wrap justify-center gap-x-2 text-center text-4xl font-bold leading-tight text-white lg:text-5xl"
+          className="flex max-w-[1200px] flex-wrap justify-center gap-x-2 text-center text-4xl font-bold leading-tight text-[var(--white)] lg:text-5xl"
         >
           {words.map((word, index) => (
             <motion.span
@@ -54,39 +58,42 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
+<motion.a
+  href="#events"
+  className="relative flex h-[38px] w-[180px] items-center justify-start rounded-[40px] bg-gdg-dark pl-5 text-base font-medium leading-none text-[var(--white)] lg:h-[50px] lg:w-[230px] lg:pl-[32px] lg:text-xl]"
+  whileHover={{ scale: 1.03 }}
+  whileTap={{ scale: 0.98 }}
+>
+  <span dir={dir}>{t("exploreEvents")}</span>
+
+  <span className="absolute end-0.5 top-1/2 flex h-[34px] w-[34px] -translate-y-1/2 items-center justify-center rounded-full bg-[var(--white)] lg:end-1 lg:h-[44px] lg:w-[44px]">
+    <svg
+      className="h-5 w-5 lg:h-7 lg:w-7"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M5 12H19M19 12L12 5M19 12L12 19"
+        stroke="var(--gdg-dark)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  </span>
+</motion.a>
+
           <motion.button
-            className="relative flex h-[38px] w-[180px] items-center justify-start rounded-[40px] bg-[#1E1E1E] pl-5 text-base font-medium leading-none text-white lg:h-[50px] lg:w-[230px] lg:pl-[32px] lg:text-xl"
+            className="relative flex h-[38px] w-[120px] items-center justify-start rounded-[40px] bg-[var(--white)] pl-5 text-base font-medium leading-none text-[var(--gdg-dark)] lg:h-[50px] lg:w-[160px] lg:pl-[32px] lg:text-xl"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
           >
-            <span dir={dir}>{t("exploreEvents")}</span>
-
-            <span className="absolute end-0.5 top-1/2 flex h-[34px] w-[34px] -translate-y-1/2 items-center justify-center rounded-full bg-white lg:end-1 lg:h-[44px] lg:w-[44px]">
-              <svg
-                className="h-5 w-5 lg:h-7 lg:w-7"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M5 12H19M19 12L12 5M19 12L12 19"
-                  stroke="black"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-          </motion.button>
-
-          <motion.button
-            className="relative flex h-[38px] w-[120px] items-center justify-start rounded-[40px] bg-white pl-5 text-base font-medium leading-none text-black lg:h-[50px] lg:w-[160px] lg:pl-[32px] lg:text-xl"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-          >
+           <Link href="signup">
             <span dir={dir}>{t("joinUs")}</span>
+           </Link> 
 
-            <span className="absolute end-0.5 top-1/2 flex h-[34px] w-[34px] -translate-y-1/2 items-center justify-center rounded-full bg-black lg:end-1 lg:h-[44px] lg:w-[44px]">
+            <span className="absolute end-0.5 top-1/2 flex h-[34px] w-[34px] -translate-y-1/2 items-center justify-center rounded-full bg-gdg-dark lg:end-1 lg:h-[44px] lg:w-[44px]">
               <svg
                 className="h-5 w-5 lg:h-7 lg:w-7"
                 viewBox="0 0 24 24"
@@ -95,7 +102,7 @@ export default function HeroSection() {
               >
                 <path
                   d="M5 12H19M19 12L12 5M19 12L12 19"
-                  stroke="white"
+                  stroke="var(--white)"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"

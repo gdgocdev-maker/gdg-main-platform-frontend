@@ -29,7 +29,7 @@ export default function SponsorsSection() {
                 ease: "easeOut",
                 delay: (index % sponsors.length) * 0.05,
               }}
-              className="h-[80px] w-[80px] shrink-0 overflow-hidden rounded-full border border-gray-300 sm:h-[90px] sm:w-[90px] lg:h-[150px] lg:w-[150px]"
+              className="h-[80px] w-[80px] shrink-0 overflow-hidden rounded-full border border-border sm:h-[90px] sm:w-[90px] lg:h-[150px] lg:w-[150px]"
             >
               <img
                 src={sponsor.image}

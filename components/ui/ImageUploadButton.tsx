@@ -35,7 +35,7 @@ export function ImageUploadButton({
         type="button"
         onClick={() => inputRef.current?.click()}
         aria-label={label}
-        className="flex size-full items-center justify-center rounded-full bg-black/55 text-white backdrop-blur-sm transition-colors hover:bg-black/70"
+        className="flex size-full items-center justify-center rounded-full bg-[var(--black)]/55 text-[var(--white)] backdrop-blur-sm transition-colors hover:bg-[var(--black)]/70"
       >
         <Camera className={iconClassName} />
       </button>
@@ -62,7 +62,7 @@ export function ImageUploadButton({
         }}
       />
       {error && (
-        <span className="absolute right-0 top-full z-10 mt-2 w-max max-w-44 rounded-md bg-brand-red px-2.5 py-1.5 text-center text-xs font-medium text-white shadow-lg">
+        <span className="absolute right-0 top-full z-10 mt-2 w-max max-w-44 rounded-md bg-gdg-red px-2.5 py-1.5 text-center text-xs font-medium text-[var(--white)] shadow-lg">
           {error}
         </span>
       )}

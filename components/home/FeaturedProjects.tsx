@@ -10,6 +10,7 @@ import ProjectCard from "./ProjectCard";
 export default function FeaturedProjects() {
   const t = useTranslations("home.projects");
   const dir = useTextDirection();
+
   // Mobile / Tablet
   const [activeProject, setActiveProject] = useState(0);
 
@@ -21,7 +22,7 @@ export default function FeaturedProjects() {
   // Desktop: show 4 projects without repeating
   const visibleProjects = projects.slice(
     desktopStart,
-    desktopStart + 4
+    desktopStart + 4,
   );
 
   // Mobile / Tablet
@@ -67,8 +68,14 @@ export default function FeaturedProjects() {
   };
 
   return (
-    <section id="projects" className="px-6 py-16 lg:px-10 lg:py-20">
-      <h2 dir={dir} className="text-3xl font-bold leading-snug">
+    <section
+      id="projects"
+      className="px-6 py-16 lg:px-10 lg:py-20"
+    >
+      <h2
+        dir={dir}
+        className="text-3xl font-bold leading-snug"
+      >
         {t("title")}
       </h2>
 
@@ -96,7 +103,7 @@ export default function FeaturedProjects() {
               aria-label={t("previous")}
               onClick={handleMobilePrevious}
               disabled={activeProject === 0}
-              className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-gray-300 text-white disabled:cursor-default disabled:opacity-50"
+              className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-muted text-[var(--white)] disabled:cursor-default disabled:opacity-50"
             >
               <GrPrevious />
             </button>
@@ -106,7 +113,7 @@ export default function FeaturedProjects() {
               aria-label={t("next")}
               onClick={handleMobileNext}
               disabled={activeProject === projects.length - 1}
-              className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-black text-white disabled:cursor-default disabled:opacity-50"
+              className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-gdg-dark text-[var(--white)] disabled:cursor-default disabled:opacity-50"
             >
               <GrNext />
             </button>
@@ -133,7 +140,7 @@ export default function FeaturedProjects() {
               aria-label={t("previous")}
               onClick={handleDesktopPrevious}
               disabled={desktopStart === 0}
-              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gray-300 text-white disabled:cursor-default disabled:opacity-50"
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-muted text-[var(--white)] disabled:cursor-default disabled:opacity-50"
             >
               <GrPrevious />
             </button>
@@ -143,7 +150,7 @@ export default function FeaturedProjects() {
               aria-label={t("next")}
               onClick={handleDesktopNext}
               disabled={desktopStart >= projects.length - 4}
-              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-black text-white disabled:cursor-default disabled:opacity-50"
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-gdg-dark text-[var(--white)] disabled:cursor-default disabled:opacity-50"
             >
               <GrNext />
             </button>

@@ -10,10 +10,16 @@ export default function Committees() {
   const dir = useTextDirection();
 
   return (
-    <section id="committees" className="px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20">
+    <section
+      id="committees"
+      className="px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20"
+    >
       {/* Section Title */}
-      <div className="sticky top-0 z-[100] bg-white py-4 sm:py-6">
-        <h2 dir={dir} className="text-start text-3xl font-bold leading-snug text-black">
+      <div className="sticky top-0 z-[100] bg-background py-4 sm:py-6">
+        <h2
+          dir={dir}
+          className="text-start text-3xl font-bold leading-snug text-foreground"
+        >
           {t("title")}
         </h2>
       </div>

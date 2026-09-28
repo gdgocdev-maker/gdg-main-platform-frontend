@@ -54,7 +54,7 @@ export default function AuthVisualPanel({
       layoutId={isDesktop ? "auth-visual-panel" : undefined}
       transition={isDesktop ? { duration: 0.6, ease: "easeInOut" } : undefined}
       className={`
-        relative z-20 hidden h-full w-full flex-col overflow-hidden bg-light-blue px-8.5 pt-8.75 shadow-[0_0_15px_rgba(0,0,0,0.15)] lg:flex lg:w-[48%]
+        relative z-20 hidden h-full w-full flex-col overflow-hidden bg-auth-visual-background text-gdg-dark px-8.5 pt-8.75 shadow-[0_0_15px_rgba(0,0,0,0.15)] lg:flex lg:w-[48%]
         ${isLeft ? "rounded-tr-[30px]" : "rounded-tl-[30px]"}`}
     >
       <motion.div
@@ -71,12 +71,12 @@ export default function AuthVisualPanel({
         />
 
         <div className="mt-26">
-          <p className="text-base font-bold tracking-[2px] text-blue">
+          <p className="text-base font-bold tracking-[2px] text-gdg-blue">
             GDG ON CAMPUS · UJ
           </p>
           <h1 className="mt-2.25 text-5xl font-bold leading-tight">
             Learn together.
-            <span className="block text-blue">Build what’s next.</span>
+            <span className="block text-gdg-blue">Build what’s next.</span>
           </h1>
           <p className="mt-4.25 max-w-95 text-sm leading-normal">
             Connect with the community, manage your membership,
@@ -94,19 +94,19 @@ export default function AuthVisualPanel({
       >
         <motion.div
           variants={barVariants}
-          className={`absolute bottom-0 h-6 w-full bg-yellow ${barPosition}`}
+          className={`absolute bottom-0 h-6 w-full bg-gdg-yellow ${barPosition}`}
         />
         <motion.div
           variants={barVariants}
-          className={`absolute bottom-6 h-6 w-[80%] bg-red ${barPosition}`}
+          className={`absolute bottom-6 h-6 w-[80%] bg-gdg-red ${barPosition}`}
         />
         <motion.div
           variants={barVariants}
-          className={`absolute bottom-12 h-6 w-[60%] bg-blue ${barPosition}`}
+          className={`absolute bottom-12 h-6 w-[60%] bg-gdg-blue ${barPosition}`}
         />
         <motion.div
           variants={barVariants}
-          className={`absolute bottom-18 h-6 w-[40%] bg-green ${barPosition}`}
+          className={`absolute bottom-18 h-6 w-[40%] bg-gdg-green ${barPosition}`}
         />
       </motion.div>
     </motion.section>

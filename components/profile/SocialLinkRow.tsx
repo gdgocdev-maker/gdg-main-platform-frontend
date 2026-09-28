@@ -6,9 +6,12 @@ import { GithubMark, LinkedInGlyph } from "@/components/layout/BrandMarks";
 import type { SocialLink } from "@/lib/constants/profile";
 
 const iconBadgeByPlatform = {
-  github: { icon: GithubMark, className: "bg-black text-white" },
-  linkedin: { icon: LinkedInGlyph, className: "bg-navy text-white p-2" },
-  website: { icon: Globe, className: "bg-white text-[#6FCF97] ring-1 ring-gray-350" },
+  github: { icon: GithubMark, className: "bg-[var(--black)] text-[var(--white)]" },
+  linkedin: { icon: LinkedInGlyph, className: "bg-navy text-[var(--white)] p-2" },
+  website: {
+    icon: Globe,
+    className: "bg-surface text-website-green ring-1 ring-gray-350",
+  },
 } as const;
 
 const placeholderByPlatform = {
@@ -32,7 +35,8 @@ export function SocialLinkRow({
   error,
   onChange,
 }: SocialLinkRowProps) {
-  const { icon: Icon, className: badgeClassName } = iconBadgeByPlatform[link.platform];
+  const { icon: Icon, className: badgeClassName } =
+    iconBadgeByPlatform[link.platform];
 
   return (
     <motion.li
@@ -40,8 +44,8 @@ export function SocialLinkRow({
         hidden: { opacity: 0, y: 8 },
         visible: { opacity: 1, y: 0 },
       }}
-      className={`flex items-center gap-3 rounded-card border bg-white px-4 py-3 sm:px-5 ${
-        error ? "border-brand-red" : "border-gray-350"
+      className={`flex items-center gap-3 rounded-card border bg-surface px-4 py-3 sm:px-5 ${
+        error ? "border-gdg-red" : "border-gray-350"
       }`}
     >
       <span
@@ -64,7 +68,9 @@ export function SocialLinkRow({
               aria-invalid={Boolean(error)}
               className="w-full min-w-0 border-0 border-b border-dashed border-gray-350 bg-transparent py-0.5 text-xs text-foreground outline-none placeholder:text-gray-300 focus:border-accent-blue sm:text-sm"
             />
-            {error && <span className="mt-1 text-xs text-brand-red">{error}</span>}
+            {error && (
+              <span className="mt-1 text-xs text-gdg-red">{error}</span>
+            )}
           </>
         ) : link.value ? (
           <a

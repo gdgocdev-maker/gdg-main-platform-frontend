@@ -71,7 +71,7 @@ export default function UpcomingEvents() {
             aria-label={t("previous")}
             onClick={handlePrevious}
             disabled={activeEvent === 0}
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-gray-300 text-white disabled:cursor-default disabled:opacity-50"
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-muted text-[var(--white)] disabled:cursor-default disabled:opacity-50"
           >
             <GrPrevious />
           </button>
@@ -81,7 +81,7 @@ export default function UpcomingEvents() {
             aria-label={t("next")}
             onClick={handleNext}
             disabled={activeEvent === events.length - 1}
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-black text-white disabled:cursor-default disabled:opacity-50"
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-gdg-dark text-[var(--white)] disabled:cursor-default disabled:opacity-50"
           >
             <GrNext />
           </button>

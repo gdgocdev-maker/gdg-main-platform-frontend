@@ -1,19 +1,19 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import AuthVisualPanel from "@/app/components/auth/AuthVisualPanel"
-import AuthCard from "@/app/components/auth/AuthCard"
-import ForgotPasswordForm from "./ForgotPasswordForm"
+import type { Metadata } from "next";
+import Link from "next/link";
+import AuthVisualPanel from "@/app/components/auth/AuthVisualPanel";
+import AuthCard from "@/app/components/auth/AuthCard";
+import ForgotPasswordForm from "./ForgotPasswordForm";
 
 export const metadata: Metadata = {
-  title: "Forgot Password"
-}
+  title: "Forgot Password",
+};
 
 export default function ForgotPassword() {
   return (
-    <main className="flex min-h-screen min-w-0 flex-col bg-white text-primary-font lg:h-screen lg:min-h-0 lg:flex-row">
+    <main className="flex min-h-screen min-w-0 flex-col bg-background text-foreground lg:h-screen lg:min-h-0 lg:flex-row">
       <AuthVisualPanel side="left" />
 
-      <section className="flex h-auto flex-1 items-center justify-center bg-white lg:h-full">
+      <section className="flex h-auto flex-1 items-center justify-center bg-background lg:h-full">
         <AuthCard
           size="sm"
           title="Forgot Password?"
@@ -30,5 +30,5 @@ export default function ForgotPassword() {
         </AuthCard>
       </section>
     </main>
-  )
+  );
 }

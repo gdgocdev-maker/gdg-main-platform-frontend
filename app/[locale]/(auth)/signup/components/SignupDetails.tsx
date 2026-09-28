@@ -1,28 +1,28 @@
-import AuthErrorMessage from "@/app/components/auth/AuthErrorMessage"
-import SelectField from "./SelectField"
+import AuthErrorMessage from "@/app/components/auth/AuthErrorMessage";
+import SelectField from "./SelectField";
 
 const collegeOptions = [
   { value: "Computer Science", label: "Computer Science" },
   { value: "Information Technology", label: "Information Technology" },
   { value: "Engineering", label: "Engineering" },
-]
+];
 
 const majorOptions = [
   { value: "Software Engineering", label: "Software Engineering" },
   { value: "Information Systems", label: "Information Systems" },
   { value: "Cybersecurity", label: "Cybersecurity" },
   { value: "Data Science", label: "Data Science" },
-]
+];
 
 type SignupDetailsProps = {
-  values: Record<string, string>
-  errors: Record<string, string>
-  onChange: (field: string, value: string) => void
-  onBlur: (field: string) => void
-  onBack: () => void
-  formError: string
-  isSubmitting: boolean
-}
+  values: Record<string, string>;
+  errors: Record<string, string>;
+  onChange: (field: string, value: string) => void;
+  onBlur: (field: string) => void;
+  onBack: () => void;
+  formError: string;
+  isSubmitting: boolean;
+};
 
 export default function SignupDetails({
   values,
@@ -31,7 +31,7 @@ export default function SignupDetails({
   onBlur,
   onBack,
   formError,
-  isSubmitting
+  isSubmitting,
 }: SignupDetailsProps) {
   return (
     <>
@@ -39,7 +39,8 @@ export default function SignupDetails({
         htmlFor="university"
         className="relative block text-sm font-medium"
       >
-        University <span className="text-red">*</span>
+        University <span className="text-gdg-red">*</span>
+
         <input
           id="university"
           name="university"
@@ -50,22 +51,29 @@ export default function SignupDetails({
           placeholder="Enter your university"
           maxLength={255}
           aria-invalid={Boolean(errors.university)}
-          aria-describedby={errors.university ? "university-error" : undefined}
-          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
-            errors.university ? "border-red" : "border-black/15"
+          aria-describedby={
+            errors.university ? "university-error" : undefined
+          }
+          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-foreground/40 ${
+            errors.university
+              ? "border-gdg-red"
+              : "border-foreground/15"
           }`}
         />
+
         <AuthErrorMessage
           id="university-error"
           message={errors.university ?? ""}
           className="absolute left-0 top-full mt-1"
         />
       </label>
+
       <label
         htmlFor="university-id"
         className="relative block text-sm font-medium"
       >
-        University ID <span className="text-red">*</span>
+        University ID <span className="text-gdg-red">*</span>
+
         <input
           id="university-id"
           name="universityId"
@@ -79,16 +87,20 @@ export default function SignupDetails({
           aria-describedby={
             errors.universityId ? "university-id-error" : undefined
           }
-          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-black/40 ${
-            errors.universityId ? "border-red" : "border-black/15"
+          className={`mt-1.5 h-8 w-full rounded-md border px-2.75 text-base font-normal outline-none placeholder:text-foreground/40 ${
+            errors.universityId
+              ? "border-gdg-red"
+              : "border-foreground/15"
           }`}
         />
+
         <AuthErrorMessage
           id="university-id-error"
           message={errors.universityId ?? ""}
           className="absolute left-0 top-full mt-1"
         />
       </label>
+
       <SelectField
         id="college"
         label="College"
@@ -99,6 +111,7 @@ export default function SignupDetails({
         onChange={(value) => onChange("college", value)}
         onBlur={() => onBlur("college")}
       />
+
       <SelectField
         id="major"
         label="Major"
@@ -125,14 +138,15 @@ export default function SignupDetails({
         >
           Back
         </button>
+
         <button
           type="submit"
           disabled={isSubmitting}
-          className="h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
+          className="h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-[var(--white)] transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
         >
           {isSubmitting ? "Creating account..." : "Create account"}
         </button>
       </div>
     </>
-  )
+  );
 }

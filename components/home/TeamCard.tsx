@@ -22,7 +22,9 @@ export default function TeamCard({ member }: TeamCardProps) {
     <div className="relative w-[172px] shrink-0 pt-[195px]">
       
       {/* Gradient background */}
-      <div className="absolute left-0 top-0 h-[195px] w-[172px] rounded-[8px] bg-gradient-to-r from-[#4967A4] to-[#B85D55]" />
+      <div
+        className="absolute left-0 top-0 h-[195px] w-[172px] rounded-[8px] bg-gradient-to-r from-[var(--committee-blue)] to-[var(--committee-red)]"
+      />
 
       {/* Image */}
       <img
@@ -36,22 +38,27 @@ export default function TeamCard({ member }: TeamCardProps) {
         
         {/* Google Developer Group */}
         <p className="text-sm font-normal leading-normal">
-          <span className="text-[#4285F4]">G</span>
-          <span className="text-[#EA4335]">o</span>
-          <span className="text-[#FBBC05]">o</span>
-          <span className="text-[#4285F4]">g</span>
-          <span className="text-[#34A853]">l</span>
-          <span className="text-[#EA4335]">e</span>{" "}
-          <span className="text-black">Developer Group</span>
+          <span className="text-gdg-blue">G</span>
+          <span className="text-gdg-red">o</span>
+          <span className="text-gdg-yellow">o</span>
+          <span className="text-gdg-blue">g</span>
+          <span className="text-gdg-green">l</span>
+          <span className="text-gdg-red">e</span>{" "}
+          <span className="text-foreground">Developer Group</span>
         </p>
 
         {/* Role */}
-        <p dir={dir} className="text-sm font-normal leading-normal text-black">
+        <p
+          dir={dir}
+          className="text-sm font-normal leading-normal text-foreground"
+        >
           {t(`team.${member.id}.role`)}
         </p>
 
         {/* Name */}
-        <h4 dir={dir} className="mt-[10px] text-xl font-semibold leading-normal text-black"
+        <h4
+          dir={dir}
+          className="mt-[10px] text-xl font-semibold leading-normal text-foreground"
         >
           {t(`team.${member.id}.name`)}
         </h4>

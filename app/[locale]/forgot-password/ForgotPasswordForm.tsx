@@ -1,56 +1,56 @@
-"use client"
+"use client";
 
-import { type FormEvent, useState } from "react"
-import AuthErrorMessage from "@/app/components/auth/AuthErrorMessage"
-import { EMAIL_MAX_LENGTH, validateEmail } from "@/app/lib/validation/email"
+import { type FormEvent, useState } from "react";
+import AuthErrorMessage from "@/app/components/auth/AuthErrorMessage";
+import { EMAIL_MAX_LENGTH, validateEmail } from "@/app/lib/validation/email";
 
 function normalizeText(value: string) {
-  return value.trim()
+  return value.trim();
 }
 
 export default function ForgotPasswordForm() {
-  const [email, setEmail] = useState("")
-  const [emailError, setEmailError] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (value: string) => {
-    setEmail(value.trimStart())
+    setEmail(value.trimStart());
     if (emailError) {
-      setEmailError("")
+      setEmailError("");
     }
-  }
+  };
 
   const handleBlur = () => {
     if (!normalizeText(email)) {
-      setEmailError("")
-      return
+      setEmailError("");
+      return;
     }
-    setEmailError(validateEmail(email))
-  }
+    setEmailError(validateEmail(email));
+  };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+    event.preventDefault();
 
     if (isSubmitting) {
-      return
+      return;
     }
 
-    const nextEmailError = validateEmail(email)
-    setEmailError(nextEmailError)
+    const nextEmailError = validateEmail(email);
+    setEmailError(nextEmailError);
 
     if (nextEmailError) {
-      return
+      return;
     }
 
-    setEmail(normalizeText(email))
-    setIsSubmitting(true)
+    setEmail(normalizeText(email));
+    setIsSubmitting(true);
 
     // No password-reset request API is documented/available yet;
     // simulate the request the same way the other auth flows do.
     window.setTimeout(() => {
-      setIsSubmitting(false)
-    }, 800)
-  }
+      setIsSubmitting(false);
+    }, 800);
+  };
 
   return (
     <form
@@ -62,7 +62,8 @@ export default function ForgotPasswordForm() {
         htmlFor="email"
         className="relative block text-sm font-medium"
       >
-        Email address <span className="text-red">*</span>
+        Email address <span className="text-gdg-red">*</span>
+
         <input
           id="email"
           name="email"
@@ -75,8 +76,9 @@ export default function ForgotPasswordForm() {
           maxLength={EMAIL_MAX_LENGTH}
           aria-invalid={Boolean(emailError)}
           aria-describedby={emailError ? "email-error" : undefined}
-          className="mt-1.5 h-9 w-full rounded-md border border-black/15 px-2.75 text-base outline-none placeholder:text-black/40"
+          className="mt-1.5 h-9 w-full rounded-md border border-foreground/15 px-2.75 text-base outline-none placeholder:text-foreground/40"
         />
+
         <AuthErrorMessage
           id="email-error"
           message={emailError}
@@ -87,10 +89,10 @@ export default function ForgotPasswordForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="mt-7 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
+        className="mt-7 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-[var(--white)] transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
       >
         {isSubmitting ? "Sending..." : "Send Code"}
       </button>
     </form>
-  )
+  );
 }

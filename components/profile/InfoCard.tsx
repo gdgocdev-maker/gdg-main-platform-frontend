@@ -22,7 +22,7 @@ export function InfoCard({
   onChange,
 }: InfoCardProps) {
   return (
-    <div className="flex-1 rounded-card border border-gray-350 bg-white p-4 sm:p-6">
+    <div className="flex-1 rounded-card border border-gray-350 bg-surface p-4 sm:p-6">
       <h3 className="mb-3 text-base font-semibold text-gray-500 sm:text-lg">
         {data.heading}
       </h3>
@@ -57,7 +57,7 @@ export function InfoCard({
                   ) : (
                     <div
                       className={`flex min-w-0 items-baseline gap-1.5 border-0 border-b border-dashed py-0.5 ${
-                        error ? "border-brand-red" : "border-gray-350"
+                        error ? "border-gdg-red" : "border-gray-350"
                       }`}
                     >
                       {isPhone && (
@@ -81,7 +81,7 @@ export function InfoCard({
                     </div>
                   )}
                   {error && (
-                    <span className="mt-1 text-xs text-brand-red">{error}</span>
+                    <span className="mt-1 text-xs text-gdg-red">{error}</span>
                   )}
                 </div>
               ) : (

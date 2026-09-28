@@ -22,7 +22,7 @@ export default function PasswordInput({
         type="button"
         aria-label={isVisible ? "Hide password" : "Show password"}
         onClick={() => setIsVisible((visible) => !visible)}
-        className="absolute inset-e-1 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center text-black/50"
+        className="absolute inset-e-1 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center text-foreground/50"
       >
         {isVisible ? (
           <EyeOff

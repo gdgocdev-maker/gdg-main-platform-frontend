@@ -256,33 +256,33 @@ export const sponsors = [
 export const offers = [
   {
     number: 1,
-    color: "#D00000",
+    color: "var(--gdg-red)",
     title: "Learn & Grow",
     description: "Access workshops, talks, and learning opportunities.",
   },
   {
     number: 2,
-    color: "#017FCB",
+    color: "var(--gdg-blue)",
     title: "Connect",
     description:
       "Meet developers, members, and people who share your interests.",
   },
   {
     number: 3,
-    color: "#34A852",
+    color: "var(--gdg-green)",
     title: "Build Together",
     description: "Collaborate on projects and turn ideas into reality.",
   },
   {
     number: 4,
-    color: "#FFD327",
+    color: "var(--gdg-yellow)",
     title: "Join Events",
     description:
       "Discover upcoming events and register to participate.",
   },
   {
     number: 5,
-    color: "#017FCB",
+    color: "var(--gdg-blue)",
     title: "Show Your Work",
     description:
       "Share your projects and achievements with the community.",
