@@ -1,11 +1,12 @@
+import { useTranslations } from "next-intl"
 import AuthErrorMessage from "@/app/components/auth/AuthErrorMessage"
 import PasswordInput from "@/app/components/auth/PasswordInput"
 import SelectField from "./SelectField"
 
 const countryCodeOptions = [{ country: "Saudi Arabia", code: "+966" }]
 const genderOptions = [
-  { value: "female", label: "Female" },
-  { value: "male", label: "Male" },
+  { value: "female", labelKey: "female" },
+  { value: "male", labelKey: "male" },
 ]
 
 type SignupCredentialsProps = {
@@ -23,6 +24,7 @@ export default function SignupCredentials({
   onBlur,
   formError
 }: SignupCredentialsProps) {
+  const t = useTranslations("auth.signup")
   const fullNameError = errors.fullName ?? ""
   const emailError = errors.email ?? ""
   const passwordError = errors.password ?? ""
@@ -36,7 +38,7 @@ export default function SignupCredentials({
         htmlFor="full-name"
         className="relative order-1 block text-sm font-medium"
       >
-        Full name <span className="text-red">*</span>
+        {t("fields.fullName.label")} <span className="text-red">*</span>
         <input
           id="full-name"
           name="fullName"
@@ -44,7 +46,7 @@ export default function SignupCredentials({
           value={values.fullName}
           onChange={(event) => onChange("fullName", event.target.value)}
           onBlur={() => onBlur("fullName")}
-          placeholder="Enter your full name"
+          placeholder={t("fields.fullName.placeholder")}
           autoComplete="name"
           maxLength={255}
           aria-invalid={Boolean(fullNameError)}
@@ -56,14 +58,17 @@ export default function SignupCredentials({
         <AuthErrorMessage
           id="full-name-error"
           message={fullNameError}
-          className="absolute left-0 top-full mt-1"
+          className="absolute start-0 top-full mt-1"
         />
       </label>
       <SelectField
         id="gender"
-        label="Gender"
-        placeholder="Select your gender"
-        options={genderOptions}
+        label={t("fields.gender.label")}
+        placeholder={t("fields.gender.placeholder")}
+        options={genderOptions.map(({ value, labelKey }) => ({
+          value,
+          label: t(`options.gender.${labelKey}`)
+        }))}
         className="order-2"
         value={values.gender}
         error={errors.gender}
@@ -74,7 +79,7 @@ export default function SignupCredentials({
         htmlFor="email"
         className="relative order-3 block text-sm font-medium"
       >
-        Email address <span className="text-red">*</span>
+        {t("fields.email.label")} <span className="text-red">*</span>
         <input
           id="email"
           name="email"
@@ -82,7 +87,7 @@ export default function SignupCredentials({
           value={values.email}
           onChange={(event) => onChange("email", event.target.value)}
           onBlur={() => onBlur("email")}
-          placeholder="you@example.com"
+          placeholder={t("fields.email.placeholder")}
           autoComplete="email"
           maxLength={254}
           aria-invalid={Boolean(emailError)}
@@ -94,14 +99,14 @@ export default function SignupCredentials({
         <AuthErrorMessage
           id="email-error"
           message={emailError}
-          className="absolute left-0 top-full mt-1"
+          className="absolute start-0 top-full mt-1"
         />
       </label>
       <label
         htmlFor="password"
         className="relative order-5 block text-sm font-medium"
       >
-        Password <span className="text-red">*</span>
+        {t("fields.password.label")} <span className="text-red">*</span>
         <PasswordInput
           id="password"
           name="password"
@@ -109,7 +114,7 @@ export default function SignupCredentials({
           value={values.password}
           onChange={(event) => onChange("password", event.target.value)}
           onBlur={() => onBlur("password")}
-          placeholder="Enter your password"
+          placeholder={t("fields.password.placeholder")}
           autoComplete="new-password"
           minLength={8}
           maxLength={128}
@@ -122,14 +127,14 @@ export default function SignupCredentials({
         <AuthErrorMessage
           id="password-error"
           message={passwordError}
-          className="absolute left-0 top-full mt-1"
+          className="absolute start-0 top-full mt-1"
         />
       </label>
       <label
         htmlFor="confirm-email"
         className="relative order-4 block text-sm font-medium"
       >
-        Confirm email <span className="text-red">*</span>
+        {t("fields.confirmEmail.label")} <span className="text-red">*</span>
         <input
           id="confirm-email"
           name="confirmEmail"
@@ -137,7 +142,7 @@ export default function SignupCredentials({
           value={values.confirmEmail}
           onChange={(event) => onChange("confirmEmail", event.target.value)}
           onBlur={() => onBlur("confirmEmail")}
-          placeholder="Confirm your email"
+          placeholder={t("fields.confirmEmail.placeholder")}
           autoComplete="email"
           maxLength={254}
           aria-invalid={Boolean(confirmEmailError)}
@@ -151,14 +156,14 @@ export default function SignupCredentials({
         <AuthErrorMessage
           id="confirm-email-error"
           message={confirmEmailError}
-          className="absolute left-0 top-full mt-1"
+          className="absolute start-0 top-full mt-1"
         />
       </label>
       <label
         htmlFor="confirm-password"
         className="relative order-6 block text-sm font-medium"
       >
-        Confirm Password <span className="text-red">*</span>
+        {t("fields.confirmPassword.label")} <span className="text-red">*</span>
         <PasswordInput
           id="confirm-password"
           name="confirmPassword"
@@ -166,7 +171,7 @@ export default function SignupCredentials({
           value={values.confirmPassword}
           onChange={(event) => onChange("confirmPassword", event.target.value)}
           onBlur={() => onBlur("confirmPassword")}
-          placeholder="Confirm your password"
+          placeholder={t("fields.confirmPassword.placeholder")}
           autoComplete="new-password"
           minLength={8}
           maxLength={128}
@@ -181,15 +186,17 @@ export default function SignupCredentials({
         <AuthErrorMessage
           id="confirm-password-error"
           message={confirmPasswordError}
-          className="absolute left-0 top-full mt-1"
+          className="absolute start-0 top-full mt-1"
         />
       </label>
       <label
         htmlFor="phone"
         className="relative order-7 block text-sm font-medium"
       >
-        Phone number
+        {t("fields.phone.label")}
+        {/* Phone numbers read left to right in every language, so this box never mirrors. */}
         <span
+          dir="ltr"
           className={`mt-1.5 flex h-8 items-center rounded-md border text-base font-normal ${
             phoneError ? "border-red" : "border-black/15"
           }`}
@@ -200,7 +207,7 @@ export default function SignupCredentials({
               name="countryCode"
               value={values.countryCode}
               onChange={(event) => onChange("countryCode", event.target.value)}
-              aria-label="Country code"
+              aria-label={t("fields.phone.countryCode")}
               className="h-full appearance-none rounded-s-md bg-white px-2.75 pe-6 text-base font-normal outline-none"
             >
               {countryCodeOptions.map(({ code }) => (
@@ -223,7 +230,7 @@ export default function SignupCredentials({
             value={values.phone}
             onChange={(event) => onChange("phone", event.target.value)}
             onBlur={() => onBlur("phone")}
-            placeholder="Enter your phone number"
+            placeholder={t("fields.phone.placeholder")}
             maxLength={15}
             aria-invalid={Boolean(phoneError)}
             aria-describedby={phoneError ? "phone-error" : undefined}
@@ -233,7 +240,7 @@ export default function SignupCredentials({
         <AuthErrorMessage
           id="phone-error"
           message={phoneError}
-          className="absolute left-0 top-full mt-1"
+          className="absolute start-0 top-full mt-1"
         />
       </label>
 
@@ -248,7 +255,7 @@ export default function SignupCredentials({
         type="submit"
         className="order-9 col-span-full -mt-5 mb-1 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
       >
-        Continue
+        {t("continue")}
       </button>
     </>
   )

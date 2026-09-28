@@ -5,6 +5,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { localeMetadata } from "@/i18n/locale-metadata";
 import "../globals.css";
 
 // Google Sans isn't published on Google Fonts (Google keeps it proprietary); Roboto is the closest available match.
@@ -47,8 +48,8 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      // Layout stays LTR for every locale on purpose; only text nodes flip direction.
-      dir="ltr"
+      // Arabic mirrors the whole layout; use logical classes (ms-/pe-/start-/end-) so components flip with it.
+      dir={localeMetadata[locale].dir}
       className={`${googleSans.variable} ${ibmPlexSansArabic.variable} h-full antialiased`}
     >
       <body className="min-h-screen w-full flex flex-col items-stretch">

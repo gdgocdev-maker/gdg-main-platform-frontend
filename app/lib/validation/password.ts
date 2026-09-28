@@ -6,10 +6,10 @@ type ValidatePasswordOptions = {
 }
 
 // Shared across Login, Signup, and Reset Password; callers may override the
-// empty-field message since the existing forms word it differently.
+// empty-field message key since the existing forms word it differently.
 export function validatePassword(
   value: string,
-  { emptyMessage = "Please enter your password." }: ValidatePasswordOptions = {}
+  { emptyMessage = "passwordRequired" }: ValidatePasswordOptions = {}
 ) {
   const trimmed = value.trim()
 
@@ -18,11 +18,11 @@ export function validatePassword(
   }
 
   if (trimmed.length < PASSWORD_MIN_LENGTH) {
-    return "Password must be at least 8 characters."
+    return "passwordTooShort"
   }
 
   if (trimmed.length > PASSWORD_MAX_LENGTH) {
-    return "Password must be 128 characters or fewer."
+    return "passwordTooLong"
   }
 
   return ""
@@ -33,12 +33,12 @@ type ValidateConfirmPasswordOptions = {
 }
 
 // Shared across Signup and Reset Password; callers may override the
-// empty-field message since the existing forms word it differently.
+// empty-field message key since the existing forms word it differently.
 export function validateConfirmPassword(
   value: string,
   password: string,
   {
-    emptyMessage = "Please confirm your password."
+    emptyMessage = "passwordConfirmRequired"
   }: ValidateConfirmPasswordOptions = {}
 ) {
   if (!value) {
@@ -46,8 +46,8 @@ export function validateConfirmPassword(
   }
 
   if (value.length < PASSWORD_MIN_LENGTH) {
-    return "Password must be at least 8 characters."
+    return "passwordTooShort"
   }
 
-  return value === password ? "" : "Passwords do not match."
+  return value === password ? "" : "passwordMismatch"
 }

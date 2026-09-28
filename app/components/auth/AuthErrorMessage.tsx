@@ -1,11 +1,13 @@
 "use client"
 
 import { AnimatePresence, motion } from "framer-motion"
+import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 
 const AUTO_HIDE_DELAY = 3000
 
 type AuthErrorMessageProps = {
+  // A key from messages/*/validation.json, or "" for no error.
   message: string
   id?: string
   className?: string
@@ -17,6 +19,8 @@ export default function AuthErrorMessage({
   id,
   className = ""
 }: AuthErrorMessageProps) {
+  const t = useTranslations("validation")
+  const text = message ? t(message) : ""
   const [prevMessage, setPrevMessage] = useState(message)
   const [visible, setVisible] = useState(Boolean(message))
 
@@ -46,7 +50,7 @@ export default function AuthErrorMessage({
           transition={{ duration: 0.2, ease: "easeOut" }}
           className={`pointer-events-none text-xs font-normal text-red ${className}`}
         >
-          {message}
+          {text}
         </motion.p>
       ) : null}
     </AnimatePresence>

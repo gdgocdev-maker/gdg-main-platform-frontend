@@ -1,6 +1,7 @@
 "use client"
 
 import { type ClipboardEvent, type FormEvent, useRef, useState } from "react"
+import { useTranslations } from "next-intl"
 import AuthErrorMessage from "./AuthErrorMessage"
 
 const CODE_LENGTH = 6
@@ -9,17 +10,18 @@ function validateCode(code: string[]) {
   const joined = code.join("")
 
   if (!joined) {
-    return "Please enter the verification code."
+    return "codeRequired"
   }
 
   if (!/^\d{6}$/.test(joined)) {
-    return "Please enter all 6 digits of the verification code."
+    return "codeIncomplete"
   }
 
   return ""
 }
 
 export default function VerifyCodeForm() {
+  const t = useTranslations("auth.verifyCode")
   const [code, setCode] = useState<string[]>(() =>
     Array.from({ length: CODE_LENGTH }, () => "")
   )
@@ -108,8 +110,10 @@ export default function VerifyCodeForm() {
       <div className="relative">
         <div
           className="flex w-full justify-between gap-2.5"
+          // Digits always read left to right, even on Arabic pages.
+          dir="ltr"
           role="group"
-          aria-label="Verification code"
+          aria-label={t("groupLabel")}
         >
           {code.map((digit, index) => (
             <input
@@ -117,7 +121,7 @@ export default function VerifyCodeForm() {
               ref={(element) => {
                 inputRefs.current[index] = element
               }}
-              aria-label={`Verification code digit ${index + 1}`}
+              aria-label={t("digitLabel", { number: index + 1 })}
               aria-invalid={Boolean(error)}
               aria-describedby={error ? "verify-code-error" : undefined}
               inputMode="numeric"
@@ -146,16 +150,16 @@ export default function VerifyCodeForm() {
         disabled={isSubmitting}
         className="mt-10.25 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
       >
-        {isSubmitting ? "Verifying..." : "Verify Code"}
+        {isSubmitting ? t("verifying") : t("verify")}
       </button>
 
       <p className="mt-7.5 text-center text-sm text-black/45">
-        Didn&apos;t get the code?{" "}
+        {t("noCode")}{" "}
         <button
           type="button"
           className="cursor-pointer text-sm font-medium text-blue hover:text-blue/90 active:text-blue/80"
         >
-          Resend Code
+          {t("resend")}
         </button>
       </p>
     </form>

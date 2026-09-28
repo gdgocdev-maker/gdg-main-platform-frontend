@@ -1,24 +1,36 @@
 import type { Metadata } from "next"
+import { useTranslations } from "next-intl"
+import { getTranslations, setRequestLocale } from "next-intl/server"
+import { use } from "react"
 import AuthVisualPanel from "@/app/components/auth/AuthVisualPanel"
 import AuthCard from "@/app/components/auth/AuthCard"
 import ResetPasswordForm from "@/app/[locale]/reset-password/ResetPasswordForm"
 
-export const metadata: Metadata = {
-  title: "Activate Account"
+export async function generateMetadata({
+  params
+}: PageProps<"/[locale]/activate">): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "auth.activate" })
+
+  return { title: t("metaTitle") }
 }
 
-export default function Activate() {
+export default function Activate({ params }: PageProps<"/[locale]/activate">) {
+  // Tells next-intl the locale so this page can still be pre-rendered as static HTML.
+  setRequestLocale(use(params).locale)
+  const t = useTranslations("auth.activate")
+
   return (
     <main className="flex min-h-screen min-w-0 flex-col bg-white text-primary-font lg:h-screen lg:min-h-0 lg:flex-row">
-      <AuthVisualPanel side="left" />
+      <AuthVisualPanel side="start" />
 
       <section className="flex flex-1 items-center justify-center bg-white lg:h-full">
         <AuthCard
           size="sm"
-          title="Create your password"
-          description="Set your password to activate your account"
+          title={t("title")}
+          description={t("description")}
         >
-          <ResetPasswordForm submitLabel="Create password" />
+          <ResetPasswordForm submitLabel={t("submit")} />
         </AuthCard>
       </section>
     </main>

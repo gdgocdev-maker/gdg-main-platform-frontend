@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import { useState } from "react"
 import AuthCard from "@/app/components/auth/AuthCard"
 import AuthStepTransition from "@/app/components/auth/AuthStepTransition"
@@ -13,6 +14,7 @@ function normalizeText(value: string) {
 }
 
 export default function LoginFlow() {
+  const t = useTranslations("auth.login")
   const [step, setStep] = useState<1 | 2>(1)
   const [email, setEmail] = useState("")
   const [emailError, setEmailError] = useState("")
@@ -92,11 +94,11 @@ export default function LoginFlow() {
   return (
     <AuthCard
       size="md"
-      title={isEmailStep ? "Continue with your email" : "Enter your password"}
+      title={isEmailStep ? t("emailStep.title") : t("passwordStep.title")}
       description={
         isEmailStep
-          ? "Welcome back! Please enter your details."
-          : "Enter your password to continue."
+          ? t("emailStep.description")
+          : t("passwordStep.description")
       }
     >
       <AuthStepTransition

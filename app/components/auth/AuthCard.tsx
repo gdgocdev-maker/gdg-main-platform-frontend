@@ -38,7 +38,7 @@ export default function AuthCard({
         priority
       />
 
-      <h1 className="mt-3 text-center text-4xl font-bold leading-tight md:text-5xl">
+      <h1 className="mt-3 text-center text-3xl font-bold leading-tight md:text-4xl">
         {title}
       </h1>
       {description && (

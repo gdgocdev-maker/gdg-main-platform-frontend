@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import { type FormEvent, useState } from "react"
 import AuthErrorMessage from "@/app/components/auth/AuthErrorMessage"
 import { EMAIL_MAX_LENGTH, validateEmail } from "@/app/lib/validation/email"
@@ -9,6 +10,7 @@ function normalizeText(value: string) {
 }
 
 export default function ForgotPasswordForm() {
+  const t = useTranslations("auth.forgotPassword")
   const [email, setEmail] = useState("")
   const [emailError, setEmailError] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -62,7 +64,7 @@ export default function ForgotPasswordForm() {
         htmlFor="email"
         className="relative block text-sm font-medium"
       >
-        Email address <span className="text-red">*</span>
+        {t("emailLabel")} <span className="text-red">*</span>
         <input
           id="email"
           name="email"
@@ -70,7 +72,7 @@ export default function ForgotPasswordForm() {
           value={email}
           onChange={(event) => handleChange(event.target.value)}
           onBlur={handleBlur}
-          placeholder="Enter your email"
+          placeholder={t("emailPlaceholder")}
           autoComplete="email"
           maxLength={EMAIL_MAX_LENGTH}
           aria-invalid={Boolean(emailError)}
@@ -80,7 +82,7 @@ export default function ForgotPasswordForm() {
         <AuthErrorMessage
           id="email-error"
           message={emailError}
-          className="absolute left-0 top-full mt-1"
+          className="absolute start-0 top-full mt-1"
         />
       </label>
 
@@ -89,7 +91,7 @@ export default function ForgotPasswordForm() {
         disabled={isSubmitting}
         className="mt-7 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
       >
-        {isSubmitting ? "Sending..." : "Send Code"}
+        {isSubmitting ? t("sending") : t("sendCode")}
       </button>
     </form>
   )

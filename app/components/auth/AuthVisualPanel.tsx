@@ -2,10 +2,13 @@
 
 import { motion, type Variants } from "framer-motion"
 import Image from "next/image"
+import { useTranslations } from "next-intl"
 import useDesktopMediaQuery from "@/app/lib/useDesktopMediaQuery"
+import { useTextDirection } from "@/i18n/useTextDirection"
 
 type AuthVisualPanelProps = {
-  side: "left" | "right"
+  // Logical side: "start" is left in English and right in Arabic.
+  side: "start" | "end"
   animateOnMount?: boolean
 }
 
@@ -29,9 +32,10 @@ const barsGroupVariants: Variants = {
   }
 }
 
-function getBarVariants(side: "left" | "right"): Variants {
+// Framer Motion's x is physical, so work out which screen edge the bars slide in from.
+function getBarVariants(fromLeft: boolean): Variants {
   return {
-    hidden: { x: side === "left" ? "-100%" : "100%" },
+    hidden: { x: fromLeft ? "-100%" : "100%" },
     visible: {
       x: 0,
       transition: { duration: 0.5, ease: "easeOut" }
@@ -43,11 +47,13 @@ export default function AuthVisualPanel({
   side,
   animateOnMount = false
 }: AuthVisualPanelProps) {
-  const isLeft = side === "left"
+  const t = useTranslations("auth.visualPanel")
+  const dir = useTextDirection()
+  const isStart = side === "start"
   const isDesktop = useDesktopMediaQuery()
-  const barPosition = isLeft ? "left-0" : "right-0"
+  const barPosition = isStart ? "start-0" : "end-0"
   const shouldAnimate = animateOnMount && isDesktop
-  const barVariants = getBarVariants(side)
+  const barVariants = getBarVariants(isStart === (dir === "ltr"))
 
   return (
     <motion.section
@@ -55,7 +61,7 @@ export default function AuthVisualPanel({
       transition={isDesktop ? { duration: 0.6, ease: "easeInOut" } : undefined}
       className={`
         relative z-20 hidden h-full w-full flex-col overflow-hidden bg-light-blue px-8.5 pt-8.75 shadow-[0_0_15px_rgba(0,0,0,0.15)] lg:flex lg:w-[48%]
-        ${isLeft ? "rounded-tr-[30px]" : "rounded-tl-[30px]"}`}
+        ${isStart ? "rounded-se-[30px]" : "rounded-ss-[30px]"}`}
     >
       <motion.div
         variants={contentGroupVariants}
@@ -64,7 +70,7 @@ export default function AuthVisualPanel({
       >
         <Image
           src="/black-logo-with-colors.svg"
-          alt="Google Developer Group on Campus, University of Jeddah"
+          alt={t("logoAlt")}
           width={350}
           height={30}
           priority
@@ -72,16 +78,16 @@ export default function AuthVisualPanel({
 
         <div className="mt-26">
           <p className="text-base font-bold tracking-[2px] text-blue">
-            GDG ON CAMPUS · UJ
+            {t("eyebrow")}
           </p>
           <h1 className="mt-2.25 text-5xl font-bold leading-tight">
-            Learn together.
-            <span className="block text-blue">Build what’s next.</span>
+            {t("headline")}
+            <span className="block text-blue">{t("headlineAccent")}</span>
           </h1>
           <p className="mt-4.25 max-w-95 text-sm leading-normal">
-            Connect with the community, manage your membership,
+            {t("descriptionLine1")}
             <br />
-            and take part in GDG UJ activities
+            {t("descriptionLine2")}
           </p>
         </div>
       </motion.div>

@@ -14,7 +14,15 @@ Where applicable, every API-backed view should define:
 - recoverable error state;
 - unauthorized or forbidden state when access is restricted.
 
-The exact visual system, component library, tokens, brand assets, RTL/LTR policy, accessibility target, supported browsers, and responsive breakpoints are **TBD**. Do not create a parallel design system before they are approved.
+The exact visual system, component library, tokens, brand assets, accessibility target, supported browsers, and responsive breakpoints are **TBD**. Do not create a parallel design system before they are approved.
+
+## Internationalization and direction
+
+- All user-facing text comes from `messages/{en,ar}/<namespace>.json` via `next-intl` (`useTranslations` in components, `getTranslations` on the server). Register new namespaces in `i18n/request.ts`.
+- Arabic uses a full RTL layout: the locale layout sets `dir` on `<html>` (see `docs/decision-governance.md`).
+- Use logical Tailwind utilities (`ms-`/`me-`, `ps-`/`pe-`, `start-`/`end-`, `text-start`, `rounded-s-`/`rounded-e-`) instead of `ml-`/`pl-`/`left-`/`text-left` so components mirror automatically.
+- Framer Motion/GSAP `x` offsets are physical; flip them with `useTextDirection()` where direction matters.
+- Use `Link`/`useRouter` from `@/i18n/navigation` so navigation keeps the current locale.
 
 ## Accessibility baseline
 

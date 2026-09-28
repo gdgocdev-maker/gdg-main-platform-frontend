@@ -54,7 +54,7 @@ function normalizeText(value: string) {
 }
 
 function validateName(value: string) {
-  const requiredTextError = validateRequiredText(value, "Full name")
+  const requiredTextError = validateRequiredText(value, "fullName")
   if (requiredTextError) {
     return requiredTextError
   }
@@ -62,7 +62,7 @@ function validateName(value: string) {
   const trimmed = normalizeText(value)
 
   if (!/^[\p{L}\p{M}\s.'-]+$/u.test(trimmed)) {
-    return "Name can only include letters, spaces, and common punctuation."
+    return "nameInvalid"
   }
 
   return ""
@@ -76,19 +76,20 @@ function validatePhone(value: string) {
   }
 
   if (!/^[\d\s().+-]+$/.test(trimmed)) {
-    return "Please enter a valid phone number."
+    return "phoneInvalid"
   }
 
 if (!/^05\d{8}$/.test(trimmed)) {
-  return "Must be 10 digits and start with 05"
+  return "phoneFormat"
 }
 
 return ""
 }
 
-function validateSelect(value: string, fieldLabel: string) {
+// Returns a validation.json key such as "genderRequired".
+function validateSelect(value: string, field: "gender" | "college" | "major") {
   if (!normalizeText(value)) {
-    return `Please select your ${fieldLabel.toLowerCase()}.`
+    return `${field}Required`
   }
 
   return ""
@@ -130,12 +131,12 @@ function validateCredentials(values: FormValues) {
 function validateAcademicDetails(values: FormValues) {
   const nextErrors: FieldErrors = {}
 
-  const universityError = validateRequiredText(values.university, "University")
+  const universityError = validateRequiredText(values.university, "university")
   if (universityError) nextErrors.university = universityError
 
   const universityIdError = validateRequiredText(
     values.universityId,
-    "University ID"
+    "universityId"
   )
   if (universityIdError) nextErrors.universityId = universityIdError
 
@@ -226,7 +227,7 @@ export default function SignupFlow() {
 
   const showFormError = () => {
     clearFormError()
-    setFormError("Please complete all required fields.")
+    setFormError("formIncomplete")
     formTimerRef.current = window.setTimeout(() => {
       setFormError("")
     }, FIELD_ERROR_TIMEOUT)
@@ -274,9 +275,9 @@ export default function SignupFlow() {
       case "phone":
         return validatePhone(value)
       case "university":
-        return validateRequiredText(value, "University")
+        return validateRequiredText(value, "university")
       case "universityId":
-        return validateRequiredText(value, "University ID")
+        return validateRequiredText(value, "universityId")
       case "college":
         return validateSelect(value, "college")
       case "major":
@@ -364,11 +365,11 @@ export default function SignupFlow() {
           )
         }}
         noValidate
-        className="mt-20 flex w-full flex-col"
+        className="mt-5 flex w-full flex-col"
       >
         <AuthStepTransition
           stepKey={step}
-          className="grid w-full grid-cols-1 gap-x-4.5 gap-y-4 md:grid-cols-2"
+          className="grid w-full grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-2"
         >
           {step === 1 ? (
             <SignupCredentials

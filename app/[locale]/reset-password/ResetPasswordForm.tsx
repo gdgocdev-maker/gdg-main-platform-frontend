@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import { type FormEvent, useState } from "react"
 import AuthErrorMessage from "@/app/components/auth/AuthErrorMessage"
 import PasswordInput from "@/app/components/auth/PasswordInput"
@@ -11,6 +12,7 @@ import {
 } from "@/app/lib/validation/password"
 
 type ResetPasswordFormProps = {
+  // Already-translated label; defaults to "Reset Password" in the current language.
   submitLabel?: string
 }
 
@@ -19,8 +21,9 @@ function normalizeText(value: string) {
 }
 
 export default function ResetPasswordForm({
-  submitLabel = "Reset Password"
+  submitLabel
 }: ResetPasswordFormProps) {
+  const t = useTranslations("auth.resetPassword")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [passwordError, setPasswordError] = useState("")
@@ -41,7 +44,7 @@ export default function ResetPasswordForm({
     }
     setPasswordError(
       validatePassword(password, {
-        emptyMessage: "Please enter your new password."
+        emptyMessage: "newPasswordRequired"
       })
     )
   }
@@ -60,7 +63,7 @@ export default function ResetPasswordForm({
     }
     setConfirmPasswordError(
       validateConfirmPassword(confirmPassword, password, {
-        emptyMessage: "Please confirm your new password."
+        emptyMessage: "newPasswordConfirmRequired"
       })
     )
   }
@@ -73,12 +76,12 @@ export default function ResetPasswordForm({
     }
 
     const nextPasswordError = validatePassword(password, {
-      emptyMessage: "Please enter your new password."
+      emptyMessage: "newPasswordRequired"
     })
     const nextConfirmPasswordError = validateConfirmPassword(
       confirmPassword,
       password,
-      { emptyMessage: "Please confirm your new password." }
+      { emptyMessage: "newPasswordConfirmRequired" }
     )
 
     setPasswordError(nextPasswordError)
@@ -107,14 +110,14 @@ export default function ResetPasswordForm({
         htmlFor="new-password"
         className="relative mb-6 block text-sm font-medium"
       >
-        New Password <span className="text-red">*</span>
+        {t("newPasswordLabel")} <span className="text-red">*</span>
         <PasswordInput
           id="new-password"
           name="new-password"
           value={password}
           onChange={(event) => handlePasswordChange(event.target.value)}
           onBlur={handlePasswordBlur}
-          placeholder="Enter new password"
+          placeholder={t("newPasswordPlaceholder")}
           autoComplete="new-password"
           minLength={PASSWORD_MIN_LENGTH}
           maxLength={PASSWORD_MAX_LENGTH}
@@ -125,7 +128,7 @@ export default function ResetPasswordForm({
         <AuthErrorMessage
           id="new-password-error"
           message={passwordError}
-          className="absolute left-0 top-full mt-1"
+          className="absolute start-0 top-full mt-1"
         />
       </label>
 
@@ -133,14 +136,14 @@ export default function ResetPasswordForm({
         htmlFor="confirm-password"
         className="relative mt-3 block text-sm font-medium"
       >
-        Confirm Password <span className="text-red">*</span>
+        {t("confirmPasswordLabel")} <span className="text-red">*</span>
         <PasswordInput
           id="confirm-password"
           name="confirm-password"
           value={confirmPassword}
           onChange={(event) => handleConfirmPasswordChange(event.target.value)}
           onBlur={handleConfirmPasswordBlur}
-          placeholder="Confirm new password"
+          placeholder={t("confirmPasswordPlaceholder")}
           autoComplete="new-password"
           minLength={PASSWORD_MIN_LENGTH}
           maxLength={PASSWORD_MAX_LENGTH}
@@ -153,7 +156,7 @@ export default function ResetPasswordForm({
         <AuthErrorMessage
           id="confirm-password-error"
           message={confirmPasswordError}
-          className="absolute left-0 top-full mt-1"
+          className="absolute start-0 top-full mt-1"
         />
       </label>
 
@@ -162,7 +165,7 @@ export default function ResetPasswordForm({
         disabled={isSubmitting}
         className="mt-9.5 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
       >
-        {isSubmitting ? "Please wait..." : submitLabel}
+        {isSubmitting ? t("submitting") : (submitLabel ?? t("submit"))}
       </button>
     </form>
   )

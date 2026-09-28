@@ -1,4 +1,5 @@
-import Link from "next/link"
+import { useTranslations } from "next-intl"
+import { Link } from "@/i18n/navigation"
 import AuthErrorMessage from "@/app/components/auth/AuthErrorMessage"
 import PasswordInput from "@/app/components/auth/PasswordInput"
 
@@ -21,11 +22,13 @@ export default function LoginPassword({
   onSubmit,
   isSubmitting
 }: LoginPasswordProps) {
+  const t = useTranslations("auth.login.passwordStep")
+
   return (
     <>
       <form className="mt-12 w-full" onSubmit={onSubmit} noValidate>
         <label htmlFor="login-password" className="block text-sm font-medium">
-          Password <span className="text-red">*</span>
+          {t("passwordLabel")} <span className="text-red">*</span>
           <div className="relative">
             <PasswordInput
               id="login-password"
@@ -33,7 +36,7 @@ export default function LoginPassword({
               value={value}
               onChange={(event) => onChange(event.target.value)}
               onBlur={onBlur}
-              placeholder="Enter your password"
+              placeholder={t("passwordPlaceholder")}
               autoComplete="current-password"
               minLength={8}
               maxLength={128}
@@ -51,7 +54,7 @@ export default function LoginPassword({
         </label>
         <div className="mt-2 flex justify-end">
           <Link href="/forgot-password" className="text-sm font-medium text-blue hover:text-blue/90 active:text-blue/80">
-            Forgot Password?
+            {t("forgotPassword")}
           </Link>
         </div>
         <button
@@ -59,7 +62,7 @@ export default function LoginPassword({
           disabled={isSubmitting}
           className="mt-5 h-8.75 w-full cursor-pointer rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
         >
-          {isSubmitting ? "Signing in..." : "Sign in"}
+          {isSubmitting ? t("signingIn") : t("signIn")}
         </button>
       </form>
       <button
@@ -67,7 +70,7 @@ export default function LoginPassword({
         onClick={onBack}
         className="mt-16 mb-8 h-8.75 w-26.5 self-start rounded-[5px] bg-blue/65 text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/75 active:bg-blue/85"
       >
-        Back
+        {t("back")}
       </button>
     </>
   )

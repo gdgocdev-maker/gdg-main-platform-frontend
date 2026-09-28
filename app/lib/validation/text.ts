@@ -1,16 +1,18 @@
+export const TEXT_MAX_LENGTH = 255
+
+// Returns "<field>Required" / "<field>TooLong" keys from messages/*/validation.json, or "" when valid.
 export function validateRequiredText(
   value: string,
-  fieldLabel: string,
-  maxLength = 255
+  field: "fullName" | "university" | "universityId"
 ) {
   const trimmed = value.trim()
 
   if (!trimmed) {
-    return `Please enter your ${fieldLabel.toLowerCase()}.`
+    return `${field}Required`
   }
 
-  if (trimmed.length > maxLength) {
-    return `${fieldLabel} must be ${maxLength} characters or fewer.`
+  if (trimmed.length > TEXT_MAX_LENGTH) {
+    return `${field}TooLong`
   }
 
   return ""

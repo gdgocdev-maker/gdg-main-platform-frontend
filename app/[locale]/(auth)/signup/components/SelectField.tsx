@@ -61,7 +61,7 @@ export default function SelectField({
       <AuthErrorMessage
         id={`${id}-error`}
         message={error ?? ""}
-        className="absolute left-0 top-full mt-1"
+        className="absolute start-0 top-full mt-1"
       />
     </label>
   )

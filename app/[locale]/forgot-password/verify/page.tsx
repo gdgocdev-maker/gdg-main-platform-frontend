@@ -1,22 +1,34 @@
 import type { Metadata } from "next"
+import { useTranslations } from "next-intl"
+import { getTranslations, setRequestLocale } from "next-intl/server"
+import { use } from "react"
 import AuthVisualPanel from "@/app/components/auth/AuthVisualPanel"
 import AuthCard from "@/app/components/auth/AuthCard"
 import VerifyCodeForm from "@/app/components/auth/VerifyCodeForm"
 
-export const metadata: Metadata = {
-  title: "Verify Code"
+export async function generateMetadata({
+  params
+}: PageProps<"/[locale]/forgot-password/verify">): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: "auth.verifyCode" })
+
+  return { title: t("metaTitle") }
 }
 
-export default async function VerifyCode() {
+export default function VerifyCode({ params }: PageProps<"/[locale]/forgot-password/verify">) {
+  // Tells next-intl the locale so this page can still be pre-rendered as static HTML.
+  setRequestLocale(use(params).locale)
+  const t = useTranslations("auth.verifyCode")
+
   return (
     <main className="flex min-h-screen min-w-0 flex-col bg-white text-primary-font lg:h-screen lg:min-h-0 lg:flex-row">
-      <AuthVisualPanel side="left" />
+      <AuthVisualPanel side="start" />
 
       <section className="flex flex-1 items-center justify-center bg-white lg:h-full">
         <AuthCard
           size="sm"
-          title="Verify Code"
-          description="we sent code to your email"
+          title={t("title")}
+          description={t("description")}
         >
           <VerifyCodeForm />
         </AuthCard>

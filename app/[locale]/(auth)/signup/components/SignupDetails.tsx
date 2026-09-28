@@ -1,17 +1,19 @@
+import { useTranslations } from "next-intl"
 import AuthErrorMessage from "@/app/components/auth/AuthErrorMessage"
 import SelectField from "./SelectField"
 
+// `value` is what gets submitted, so it stays in English; only the label is translated.
 const collegeOptions = [
-  { value: "Computer Science", label: "Computer Science" },
-  { value: "Information Technology", label: "Information Technology" },
-  { value: "Engineering", label: "Engineering" },
+  { value: "Computer Science", labelKey: "computerScience" },
+  { value: "Information Technology", labelKey: "informationTechnology" },
+  { value: "Engineering", labelKey: "engineering" },
 ]
 
 const majorOptions = [
-  { value: "Software Engineering", label: "Software Engineering" },
-  { value: "Information Systems", label: "Information Systems" },
-  { value: "Cybersecurity", label: "Cybersecurity" },
-  { value: "Data Science", label: "Data Science" },
+  { value: "Software Engineering", labelKey: "softwareEngineering" },
+  { value: "Information Systems", labelKey: "informationSystems" },
+  { value: "Cybersecurity", labelKey: "cybersecurity" },
+  { value: "Data Science", labelKey: "dataScience" },
 ]
 
 type SignupDetailsProps = {
@@ -33,13 +35,15 @@ export default function SignupDetails({
   formError,
   isSubmitting
 }: SignupDetailsProps) {
+  const t = useTranslations("auth.signup")
+
   return (
     <>
       <label
         htmlFor="university"
         className="relative block text-sm font-medium"
       >
-        University <span className="text-red">*</span>
+        {t("fields.university.label")} <span className="text-red">*</span>
         <input
           id="university"
           name="university"
@@ -47,7 +51,7 @@ export default function SignupDetails({
           value={values.university}
           onChange={(event) => onChange("university", event.target.value)}
           onBlur={() => onBlur("university")}
-          placeholder="Enter your university"
+          placeholder={t("fields.university.placeholder")}
           maxLength={255}
           aria-invalid={Boolean(errors.university)}
           aria-describedby={errors.university ? "university-error" : undefined}
@@ -58,14 +62,14 @@ export default function SignupDetails({
         <AuthErrorMessage
           id="university-error"
           message={errors.university ?? ""}
-          className="absolute left-0 top-full mt-1"
+          className="absolute start-0 top-full mt-1"
         />
       </label>
       <label
         htmlFor="university-id"
         className="relative block text-sm font-medium"
       >
-        University ID <span className="text-red">*</span>
+        {t("fields.universityId.label")} <span className="text-red">*</span>
         <input
           id="university-id"
           name="universityId"
@@ -73,7 +77,7 @@ export default function SignupDetails({
           value={values.universityId}
           onChange={(event) => onChange("universityId", event.target.value)}
           onBlur={() => onBlur("universityId")}
-          placeholder="Enter your university ID"
+          placeholder={t("fields.universityId.placeholder")}
           maxLength={255}
           aria-invalid={Boolean(errors.universityId)}
           aria-describedby={
@@ -86,14 +90,17 @@ export default function SignupDetails({
         <AuthErrorMessage
           id="university-id-error"
           message={errors.universityId ?? ""}
-          className="absolute left-0 top-full mt-1"
+          className="absolute start-0 top-full mt-1"
         />
       </label>
       <SelectField
         id="college"
-        label="College"
-        placeholder="Select your college"
-        options={collegeOptions}
+        label={t("fields.college.label")}
+        placeholder={t("fields.college.placeholder")}
+        options={collegeOptions.map(({ value, labelKey }) => ({
+          value,
+          label: t(`options.college.${labelKey}`)
+        }))}
         value={values.college}
         error={errors.college}
         onChange={(value) => onChange("college", value)}
@@ -101,9 +108,12 @@ export default function SignupDetails({
       />
       <SelectField
         id="major"
-        label="Major"
-        placeholder="Select your major"
-        options={majorOptions}
+        label={t("fields.major.label")}
+        placeholder={t("fields.major.placeholder")}
+        options={majorOptions.map(({ value, labelKey }) => ({
+          value,
+          label: t(`options.major.${labelKey}`)
+        }))}
         value={values.major}
         error={errors.major}
         onChange={(value) => onChange("major", value)}
@@ -123,14 +133,14 @@ export default function SignupDetails({
           onClick={onBack}
           className="h-8.75 w-full rounded-[5px] border border-blue text-sm font-medium text-blue transition-colors duration-200 hover:bg-blue/10 active:bg-blue/20"
         >
-          Back
+          {t("back")}
         </button>
         <button
           type="submit"
           disabled={isSubmitting}
           className="h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-white transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80 disabled:cursor-not-allowed disabled:bg-blue/70"
         >
-          {isSubmitting ? "Creating account..." : "Create account"}
+          {isSubmitting ? t("creatingAccount") : t("createAccount")}
         </button>
       </div>
     </>
