@@ -11,10 +11,12 @@ type AuthCardProps = {
   children: ReactNode;
 };
 
+// `lg` is the tall signup card: it grows with its content but never taller than
+// the panel, so the page itself stays scroll-free.
 const sizeClasses = {
   sm: "md:w-109.5 md:h-120!",
   md: "md:w-109.5 md:h-130!",
-  lg: "md:w-full md:max-w-135 md:min-h-145! md:pt-8.5",
+  lg: "md:w-full md:max-w-135 md:min-h-0 md:max-h-full md:pt-6",
 } as const;
 
 export default function AuthCard({

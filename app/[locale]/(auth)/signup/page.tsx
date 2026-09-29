@@ -23,7 +23,10 @@ export default function SignUp({ params }: PageProps<"/[locale]/signup">) {
   const t = useTranslations("auth.signup")
 
   return (
-    <main className="flex min-h-screen min-w-0 flex-col bg-background text-foreground lg:h-screen lg:min-h-0 lg:flex-row">
+    // Desktop is a fixed one-screen layout: `h-dvh` + `overflow-hidden` keeps the
+    // signup card inside the viewport instead of letting the page grow a scrollbar.
+    // Small screens keep the natural page scroll, the form cannot fit there.
+    <main className="flex min-h-screen min-w-0 flex-col bg-background text-foreground lg:h-dvh lg:min-h-0 lg:flex-row lg:overflow-hidden">
       <AuthFormPanel>
         <AuthCard
           size="lg"
@@ -32,7 +35,7 @@ export default function SignUp({ params }: PageProps<"/[locale]/signup">) {
         >
           <SignupFlow />
 
-          <p className="mt-2 pb-8 text-center text-sm text-foreground/55">
+          <p className="mt-2 pb-4 text-center text-sm text-foreground/55 lg:pb-2">
             {t("haveAccount")}
             <Link
               href="/login"
