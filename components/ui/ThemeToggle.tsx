@@ -1,10 +1,12 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
 export default function ThemeToggle() {
+  const t = useTranslations("common.theme");
   const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {
@@ -39,8 +41,8 @@ export default function ThemeToggle() {
       onClick={toggleTheme}
       aria-label={
         theme === "light"
-          ? "Switch to dark mode"
-          : "Switch to light mode"
+          ? t("toDark")
+          : t("toLight")
       }
       className="flex h-10 w-10 items-center justify-center rounded-full text-foreground transition hover:bg-surface-muted"
     >

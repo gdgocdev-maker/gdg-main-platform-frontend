@@ -20,8 +20,6 @@
     "copyright": "© 2026 GDG on Campus — University of Jeddah"
   },
   "topNav": {
-    "brandFull": "Google Developer Group on Campus",
-    "university": "University of Jeddah",
     "navLabel": "Primary",
     "toggleMenu": "Toggle navigation menu"
   },
@@ -31,5 +29,14 @@
   "upload": {
     "notImage": "Please choose an image file",
     "tooLarge": "Image must be under {max}MB"
+  },
+  "logoAlt": "GDG on Campus University of Jeddah logo",
+  "menu": {
+    "open": "Open menu",
+    "close": "Close menu"
+  },
+  "theme": {
+    "toDark": "Switch to dark mode",
+    "toLight": "Switch to light mode"
   }
 }

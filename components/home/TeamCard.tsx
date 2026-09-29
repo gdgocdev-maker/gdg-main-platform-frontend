@@ -30,7 +30,7 @@ export default function TeamCard({ member }: TeamCardProps) {
       <img
         src={member.image}
         alt={t(`team.${member.id}.name`)}
-        className="absolute start-1/2 top-[-25px] z-10 h-[220px] w-[220px] -translate-x-1/2 object-cover"
+        className="absolute left-1/2 top-[-25px] z-10 h-[220px] w-[220px] -translate-x-1/2 object-cover"
       />
 
       {/* Info */}

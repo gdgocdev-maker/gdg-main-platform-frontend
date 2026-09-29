@@ -43,7 +43,7 @@ export default function AuthCard({
       </h1>
 
       {description && (
-        <p className="mt-1 text-center text-sm text-foreground/45">
+        <p className="mt-2 text-center text-sm text-foreground/45">
           {description}
         </p>
       )}

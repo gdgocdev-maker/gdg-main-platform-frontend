@@ -2,13 +2,14 @@
 
 import Navbar from "@/components/home/Navbar";
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useTextDirection } from "@/i18n/useTextDirection";
-import Link from "next/link";
+import { getPathname } from "@/i18n/navigation";
 
 export default function HeroSection() {
   const t = useTranslations("home.hero");
   const dir = useTextDirection();
+  const locale = useLocale();
   const words = t("tagline").split(" ");
 
   return (
@@ -60,7 +61,7 @@ export default function HeroSection() {
         >
 <motion.a
   href="#events"
-  className="relative flex h-[38px] w-[180px] items-center justify-start rounded-[40px] bg-gdg-dark pl-5 text-base font-medium leading-none text-[var(--white)] lg:h-[50px] lg:w-[230px] lg:pl-[32px] lg:text-xl]"
+  className="relative flex h-[38px] w-[180px] items-center justify-start rounded-[40px] bg-gdg-dark ps-5 text-base font-medium leading-none text-[var(--white)] lg:h-[50px] lg:w-[230px] lg:ps-[32px] lg:text-xl"
   whileHover={{ scale: 1.03 }}
   whileTap={{ scale: 0.98 }}
 >
@@ -68,7 +69,7 @@ export default function HeroSection() {
 
   <span className="absolute end-0.5 top-1/2 flex h-[34px] w-[34px] -translate-y-1/2 items-center justify-center rounded-full bg-[var(--white)] lg:end-1 lg:h-[44px] lg:w-[44px]">
     <svg
-      className="h-5 w-5 lg:h-7 lg:w-7"
+      className="h-5 w-5 lg:h-7 lg:w-7 rtl:-scale-x-100"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -84,18 +85,17 @@ export default function HeroSection() {
   </span>
 </motion.a>
 
-          <motion.button
-            className="relative flex h-[38px] w-[120px] items-center justify-start rounded-[40px] bg-[var(--white)] pl-5 text-base font-medium leading-none text-[var(--gdg-dark)] lg:h-[50px] lg:w-[160px] lg:pl-[32px] lg:text-xl"
+          <motion.a
+            href={getPathname({ href: "/signup", locale })}
+            className="relative flex h-[38px] w-[120px] items-center justify-start rounded-[40px] bg-[var(--white)] ps-5 text-base font-medium leading-none text-[var(--gdg-dark)] lg:h-[50px] lg:w-[160px] lg:ps-[32px] lg:text-xl"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
           >
-           <Link href="signup">
             <span dir={dir}>{t("joinUs")}</span>
-           </Link> 
 
             <span className="absolute end-0.5 top-1/2 flex h-[34px] w-[34px] -translate-y-1/2 items-center justify-center rounded-full bg-gdg-dark lg:end-1 lg:h-[44px] lg:w-[44px]">
               <svg
-                className="h-5 w-5 lg:h-7 lg:w-7"
+                className="h-5 w-5 lg:h-7 lg:w-7 rtl:-scale-x-100"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -109,7 +109,7 @@ export default function HeroSection() {
                 />
               </svg>
             </span>
-          </motion.button>
+          </motion.a>
         </motion.div>
       </div>
     </section>

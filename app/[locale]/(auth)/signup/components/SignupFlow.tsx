@@ -365,11 +365,11 @@ export default function SignupFlow() {
           )
         }}
         noValidate
-        className="mt-5 flex w-full flex-col"
+        className="mt-4 flex w-full flex-col"
       >
         <AuthStepTransition
           stepKey={step}
-          className="grid w-full grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-2"
+          className="grid w-full grid-cols-1 gap-x-6 gap-y-3.5 md:grid-cols-2"
         >
           {step === 1 ? (
             <SignupCredentials

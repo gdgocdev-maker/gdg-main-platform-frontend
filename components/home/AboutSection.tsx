@@ -8,6 +8,8 @@ import { useEffect, useRef, useState } from "react";
 export default function AboutSection() {
   const t = useTranslations("home.about");
   const dir = useTextDirection();
+  // Framer Motion x is physical: flip slide-ins so text/images enter from their own side in RTL.
+  const sign = dir === "rtl" ? -1 : 1;
   const [counts, setCounts] = useState({
     members: 0,
     events: 0,
@@ -63,7 +65,7 @@ export default function AboutSection() {
           <motion.h2
             dir={dir}
             className="text-3xl font-bold leading-snug"
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -30 * sign }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{
@@ -77,7 +79,7 @@ export default function AboutSection() {
           <motion.p
             dir={dir}
             className="mt-6 text-justify text-lg font-normal leading-normal"
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -30 * sign }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{
@@ -93,9 +95,9 @@ export default function AboutSection() {
         <div className="relative h-[360px] w-full lg:h-[400px]">
           <motion.img
             src="/images/about-community-1.png"
-            alt="About Community Image 1"
+            alt={t("imageAlt", { number: 1 })}
             className="absolute top-0 end-0 h-[100px] w-full rounded-xl object-cover lg:h-1/3"
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 30 * sign }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{
@@ -106,9 +108,9 @@ export default function AboutSection() {
 
           <motion.img
             src="/images/about-community-2.png"
-            alt="About Community Image 2"
+            alt={t("imageAlt", { number: 2 })}
             className="absolute top-[110px] end-0 h-[170px] w-full rounded-xl object-cover lg:top-[140px] lg:h-[200px]"
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 30 * sign }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{
@@ -120,8 +122,8 @@ export default function AboutSection() {
 
           <motion.img
             src="/images/about-community-3.png"
-            alt="About Community Image 3"
-            className="absolute start-[-10px] top-[190px] h-[130px] w-[42%] rounded-xl border-t-10 border-r-10 border-background object-cover lg:start-[-30px] lg:top-[200px] lg:h-[170px] lg:w-[160px]"            initial={{ opacity: 0, x: -30 }}
+            alt={t("imageAlt", { number: 3 })}
+            className="absolute start-[-10px] top-[190px] h-[130px] w-[42%] rounded-xl border-t-10 border-e-10 border-background object-cover lg:start-[-30px] lg:top-[200px] lg:h-[170px] lg:w-[160px]"            initial={{ opacity: 0, x: -30 * sign }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{

@@ -70,13 +70,13 @@ export default function EventCard({ event }: EventCardProps) {
         <div className="mt-auto flex justify-end">
           <button
             type="button"
-            className="flex h-9 w-[108px] cursor-pointer items-center justify-between rounded-full bg-[var(--white)] px-1 pl-4 text-sm font-medium leading-none text-[var(--gdg-dark)]"
+            className="flex h-9 w-[108px] cursor-pointer items-center justify-between rounded-full bg-[var(--white)] ps-4 pe-1 text-sm font-medium leading-none text-[var(--gdg-dark)]"
           >
             <span dir={dir}>{t("register")}</span>
 
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--gdg-dark)]">
               <svg
-                className="h-4 w-4"
+                className="h-4 w-4 rtl:-scale-x-100"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"

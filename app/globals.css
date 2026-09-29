@@ -455,7 +455,12 @@ html[lang="ar"] body {
 /* Smooth scrolling */
 
 html {
+  /* Space taken by the floating homepage navbar (components/home/Navbar.tsx):
+     16px top offset + 56px pill + 16px gap. */
+  --home-nav-height: 5.5rem;
   scroll-behavior: smooth;
+  /* Anchor links (#about, #events, ...) stop below the fixed navbar. */
+  scroll-padding-top: var(--home-nav-height);
 }
 
 /* =========================================================
@@ -489,8 +494,25 @@ html {
   animation: sponsors-marquee 30s linear infinite;
 }
 
+/* In RTL the row is anchored to the right edge, so it scrolls the other way
+   (scrolling left would leave an empty gap on the right). */
+@keyframes sponsors-marquee-rtl {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(50%);
+  }
+}
+
+[dir="rtl"] .sponsors-marquee {
+  animation-name: sponsors-marquee-rtl;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .sponsors-marquee {
+  .sponsors-marquee,
+  [dir="rtl"] .sponsors-marquee {
     animation: none;
   }
 }

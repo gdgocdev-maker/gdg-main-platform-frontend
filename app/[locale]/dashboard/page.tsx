@@ -613,7 +613,7 @@ function UpcomingEventsCard({ events }: { events: UpcomingEvent[] }): ReactEleme
         <ArrowBadge
           label={t("viewAll")}
           toneClassName="bg-gdg-yellow-accent"
-          iconClassName="h-3.5 w-3.5 text-foreground"
+          iconClassName="h-3.5 w-3.5 text-gdg-dark"
           sizeClassName="h-7 w-7 sm:h-8 sm:w-8"
         />
       </div>
@@ -640,7 +640,7 @@ function UpcomingEventsCard({ events }: { events: UpcomingEvent[] }): ReactEleme
                   <span className="text-xs font-medium uppercase tracking-wide">{event.month}</span>
                 </div>
                 {event.featured && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-gdg-yellow-accent px-2.5 py-1 text-xs font-medium text-foreground">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-gdg-yellow-accent px-2.5 py-1 text-xs font-medium text-gdg-dark">
                     <IconStar className="h-3 w-3" />
                     {t("featured")}
                   </span>

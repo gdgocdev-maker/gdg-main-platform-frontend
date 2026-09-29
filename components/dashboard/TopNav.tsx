@@ -35,19 +35,15 @@ export function TopNav() {
   return (
     <header className="sticky top-0 z-30 bg-gdg-dark text-white">
       <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-        <div className="flex min-w-0 items-center gap-3">
-          <Image
-            src="/gdg-logo.png"
-            alt=""
-            width={4000}
-            height={2250}
-            className="h-8 w-auto shrink-0 object-contain sm:h-9 lg:h-10"
-          />
-          <div className="min-w-0 leading-tight">
-            <p className="truncate text-sm font-semibold">{t("topNav.brandFull")}</p>
-            <p className="truncate text-xs text-white/70">{t("topNav.university")}</p>
-          </div>
-        </div>
+        {/* The logo image already includes the group name, so no separate text is needed. */}
+        <Image
+          src="/logo.png"
+          alt={t("logoAlt")}
+          width={3612}
+          height={347}
+          priority
+          className="h-6 w-auto min-w-0 max-w-full object-contain object-left sm:h-7 lg:h-8 rtl:object-right"
+        />
 
         <div className="flex shrink-0 items-center gap-3 lg:gap-6">
           <nav aria-label={t("topNav.navLabel")} className="hidden items-center gap-6 text-sm font-semibold lg:flex">
