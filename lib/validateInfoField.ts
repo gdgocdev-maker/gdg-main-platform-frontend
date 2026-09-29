@@ -4,23 +4,20 @@ const PHONE_PATTERN = /^5\d{8}$/;
 const NUMERIC_PATTERN = /^\d+$/;
 const NAME_PATTERN = /^[\p{L}][\p{L}\s.'-]{1,}$/u;
 
+// Returns a key from messages/*/validation.json, or null when valid.
 export function validateInfoField(key: string, value: string): string | null {
   const trimmed = value.trim();
-  if (!trimmed) return "This field is required";
+  if (!trimmed) return "fieldRequired";
 
   switch (key) {
     case "fullName":
-      return NAME_PATTERN.test(trimmed)
-        ? null
-        : "Enter a valid name (letters only)";
+      return NAME_PATTERN.test(trimmed) ? null : "profileNameInvalid";
     case "email":
-      return EMAIL_PATTERN.test(trimmed) ? null : "Enter a valid email address";
+      return EMAIL_PATTERN.test(trimmed) ? null : "profileEmailInvalid";
     case "phone":
-      return PHONE_PATTERN.test(trimmed)
-        ? null
-        : "Enter a 9-digit Saudi mobile number starting with 5, e.g. 540505484";
+      return PHONE_PATTERN.test(trimmed) ? null : "profilePhoneInvalid";
     case "studentId":
-      return NUMERIC_PATTERN.test(trimmed) ? null : "Student ID must be numeric";
+      return NUMERIC_PATTERN.test(trimmed) ? null : "studentIdNumeric";
     default:
       return null;
   }

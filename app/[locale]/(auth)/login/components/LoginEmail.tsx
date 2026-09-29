@@ -1,6 +1,7 @@
-import Image from "next/image";
-import Link from "next/link";
-import AuthErrorMessage from "@/app/components/auth/AuthErrorMessage";
+import Image from "next/image"
+import { useTranslations } from "next-intl"
+import { Link } from "@/i18n/navigation"
+import AuthErrorMessage from "@/app/components/auth/AuthErrorMessage"
 
 type LoginEmailProps = {
   value: string;
@@ -17,6 +18,8 @@ export default function LoginEmail({
   onBlur,
   onContinue,
 }: LoginEmailProps) {
+  const t = useTranslations("auth.login.emailStep")
+
   return (
     <>
       <form
@@ -28,7 +31,7 @@ export default function LoginEmail({
         noValidate
       >
         <label htmlFor="email" className="block text-sm font-medium">
-          Email address <span className="text-gdg-red">*</span>
+          {t("emailLabel")} <span className="text-gdg-red">*</span>
         </label>
 
         <div className="relative">
@@ -39,7 +42,7 @@ export default function LoginEmail({
             value={value}
             onChange={(event) => onChange(event.target.value)}
             onBlur={onBlur}
-            placeholder="Enter your email"
+            placeholder={t("emailPlaceholder")}
             autoComplete="email"
             maxLength={254}
             aria-invalid={Boolean(error)}
@@ -58,12 +61,11 @@ export default function LoginEmail({
           type="submit"
           className="mt-6 h-8.75 w-full cursor-pointer rounded-[5px] bg-blue text-sm font-medium text-[var(--white)] transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
         >
-          Continue
+          {t("continue")}
         </button>
-
         <div className="my-5 flex items-center gap-3.25 text-xs text-foreground/35">
           <span className="h-px flex-1 bg-foreground/15" />
-          <span>OR</span>
+          <span>{t("or")}</span>
           <span className="h-px flex-1 bg-foreground/15" />
         </div>
 
@@ -71,25 +73,19 @@ export default function LoginEmail({
           type="button"
           className="flex h-8.75 w-full cursor-pointer items-center justify-center gap-2 rounded-[5px] border border-foreground/15 text-sm font-medium text-foreground/65 transition-colors duration-200 hover:bg-blue/10 active:bg-blue/20"
         >
-          <Image
-            src="/google-logo.svg"
-            alt="google-logo"
-            width={15}
-            height={15}
-          />
-          Sign in with Google
+          <Image src="/google-logo.svg" alt={t("googleLogoAlt")} width={15} height={15} />
+          {t("google")}
         </button>
       </form>
-
-      <p className="mt-2 pb-8 text-center text-sm text-foreground/55">
-        Don’t have an account?
-        <Link
-          href="/signup"
-          className="ms-1 text-sm font-medium text-blue hover:text-blue/90 active:text-blue/80"
-        >
-          Create an account
-        </Link>
-      </p>
+<p className="mt-2 pb-8 text-center text-sm text-foreground/55">
+  {t("noAccount")}
+  <Link
+    href="/signup"
+    className="ms-1 text-sm font-medium text-blue hover:text-blue/90 active:text-blue/80"
+  >
+    {t("createAccount")}
+  </Link>
+</p>
     </>
   );
 }

@@ -45,6 +45,8 @@ export default function CommitteeCard({
 }: CommitteeCardProps) {
   const t = useTranslations("home.committees");
   const dir = useTextDirection();
+  // Framer Motion x is physical: flip the switch animation in RTL.
+  const sign = dir === "rtl" ? -1 : 1;
   const [activeSubCommittee, setActiveSubCommittee] =
     useState<SubCommittee | null>(null);
 
@@ -72,16 +74,16 @@ export default function CommitteeCard({
       <AnimatePresence mode="wait">
         <motion.div
           key={activeCommittee.id}
-          initial={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 0, x: 20 * sign }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
+          exit={{ opacity: 0, x: -20 * sign }}
           transition={{
             duration: 0.35,
             ease: "easeInOut",
           }}
           className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between"
         >
-          {/* Left Side */}
+          {/* Start Side */}
           <div className="flex-1">
             {/* Back Button */}
             {isSubCommittee && (
@@ -90,7 +92,7 @@ export default function CommitteeCard({
                 onClick={() => setActiveSubCommittee(null)}
                 className="mb-3 flex items-center gap-2 text-sm font-medium leading-normal text-foreground transition-opacity hover:opacity-60"
               >
-                <GrPrevious />
+                <GrPrevious className="rtl:-scale-x-100" />
                 <span dir={dir}>{t("backToDevelopers")}</span>
               </button>
             )}
@@ -140,7 +142,7 @@ export default function CommitteeCard({
             </div>
           </div>
 
-          {/* Right / Bottom Side */}
+          {/* End / Bottom Side */}
           <div
             className={`flex shrink-0 flex-col items-center ${
               activeCommittee.coLeader

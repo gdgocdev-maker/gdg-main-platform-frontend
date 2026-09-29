@@ -1,0 +1,43 @@
+{
+  "hero": {
+    "edit": "Edit profile",
+    "save": "Save changes",
+    "cancel": "Cancel",
+    "changePhoto": "Change profile photo",
+    "changeCover": "Change cover photo",
+    "memberSince": "Member since {date}"
+  },
+  "chips": {
+    "studentId": "ID: {id}"
+  },
+  "bio": {
+    "title": "Short Bio",
+    "placeholder": "Tell the GDG Community about yourself, your interests, your projects, or what you're learning"
+  },
+  "tabs": {
+    "personal": "Personal & Academic",
+    "social": "Social Links"
+  },
+  "cards": {
+    "personal": "Personal Information",
+    "academic": "Academic information"
+  },
+  "fields": {
+    "fullName": "Full name",
+    "email": "Email",
+    "phone": "Phone",
+    "studentId": "Student ID",
+    "university": "University",
+    "major": "Major",
+    "academicYear": "Academic year"
+  },
+  "universityPlaceholder": "Select a university",
+  "social": {
+    "platforms": {
+      "github": "GitHub",
+      "linkedin": "Linkedin",
+      "website": "Personal Website"
+    },
+    "notAdded": "Not added yet"
+  }
+}

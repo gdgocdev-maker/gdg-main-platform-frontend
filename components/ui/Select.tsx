@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, ChevronDown } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
 type SelectProps = {
@@ -16,9 +17,10 @@ export function Select({
   value,
   options,
   onChange,
-  placeholder = "Select…",
+  placeholder,
   error,
 }: SelectProps) {
+  const t = useTranslations("common.select");
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -46,8 +48,8 @@ export function Select({
           error ? "border-gdg-red" : "border-gray-350"
         } ${value ? "text-foreground" : "font-normal text-gray-300"}`}
       >
-        <span className="max-w-56 truncate text-left sm:max-w-64">
-          {value || placeholder}
+        <span className="max-w-56 truncate text-start sm:max-w-64">
+          {value || placeholder || t("placeholder")}
         </span>
         <ChevronDown
           className={`size-4 shrink-0 text-gray-500 transition-transform ${
@@ -64,7 +66,7 @@ export function Select({
             exit={{ opacity: 0, y: -4, scale: 0.98 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
             role="listbox"
-            className="absolute right-0 z-20 mt-2 max-h-64 w-72 overflow-y-auto rounded-xl border border-gray-350 bg-surface p-1.5 shadow-lg"
+            className="absolute end-0 z-20 mt-2 max-h-64 w-72 overflow-y-auto rounded-xl border border-gray-350 bg-surface p-1.5 shadow-lg"
           >
             {options.map((option) => {
               const isSelected = option === value;
@@ -78,7 +80,7 @@ export function Select({
                       onChange(option);
                       setOpen(false);
                     }}
-                    className={`flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors hover:bg-cream/60 ${
+                    className={`flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2 text-start text-sm transition-colors hover:bg-cream/60 ${
                       isSelected
                         ? "font-semibold text-accent-blue"
                         : "text-foreground"

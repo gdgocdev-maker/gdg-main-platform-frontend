@@ -73,7 +73,7 @@ export default function UpcomingEvents() {
             disabled={activeEvent === 0}
             className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-muted text-[var(--white)] disabled:cursor-default disabled:opacity-50"
           >
-            <GrPrevious />
+            <GrPrevious className="rtl:-scale-x-100" />
           </button>
 
           <button
@@ -83,7 +83,7 @@ export default function UpcomingEvents() {
             disabled={activeEvent === events.length - 1}
             className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-gdg-dark text-[var(--white)] disabled:cursor-default disabled:opacity-50"
           >
-            <GrNext />
+            <GrNext className="rtl:-scale-x-100" />
           </button>
         </div>
       )}

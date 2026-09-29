@@ -1,15 +1,17 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion"
+import { useTranslations } from "next-intl"
+import { useEffect, useState } from "react"
 
 const AUTO_HIDE_DELAY = 3000;
 
 type AuthErrorMessageProps = {
-  message: string;
-  id?: string;
-  className?: string;
-};
+  // A key from messages/*/validation.json, or "" for no error.
+  message: string
+  id?: string
+  className?: string
+}
 
 // Presentational only: caller controls positioning via `className` and must set `relative` on its container.
 export default function AuthErrorMessage({
@@ -17,8 +19,10 @@ export default function AuthErrorMessage({
   id,
   className = "",
 }: AuthErrorMessageProps) {
-  const [prevMessage, setPrevMessage] = useState(message);
-  const [visible, setVisible] = useState(Boolean(message));
+  const t = useTranslations("validation")
+  const text = message ? t(message) : ""
+  const [prevMessage, setPrevMessage] = useState(message)
+  const [visible, setVisible] = useState(Boolean(message))
 
   if (message !== prevMessage) {
     setPrevMessage(message);
@@ -46,7 +50,7 @@ export default function AuthErrorMessage({
           transition={{ duration: 0.2, ease: "easeOut" }}
           className={`pointer-events-none text-xs font-normal text-gdg-red ${className}`}
         >
-          {message}
+          {text}
         </motion.p>
       ) : null}
     </AnimatePresence>

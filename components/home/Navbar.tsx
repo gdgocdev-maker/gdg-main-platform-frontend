@@ -11,6 +11,7 @@ import ThemeToggle from "@/components/ui/ThemeToggle";
 
 export default function Navbar() {
   const t = useTranslations("common.nav");
+  const tCommon = useTranslations("common");
   const dir = useTextDirection();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -39,17 +40,20 @@ export default function Navbar() {
     },
   };
 
+  // Floating frosted-glass pill (Apple-style), centred with equal insets + auto margins
+  // (left-1/2 + translate would squeeze a fit-content fixed box to half the screen).
+  // --home-nav-height (globals.css) is the space it takes at the top; sticky sections offset by it.
   return (
-    <nav className="absolute top-0 left-0 z-40 flex w-full justify-between p-6 text-[var(--white)]">
+    <nav className="fixed inset-x-4 top-4 z-[200] mx-auto flex h-14 items-center justify-between gap-8 rounded-full border border-white/15 bg-gdg-dark/20 ps-5 pe-3 text-[var(--white)] shadow-lg shadow-black/20 backdrop-blur-xl backdrop-saturate-150 lg:w-fit lg:pe-4">
       <div>
         <img
           src="/images/gdg-white-logo.png"
-          alt="GDG on Campus University of Jeddah logo"
-          className="h-auto w-[350px]"
+          alt={tCommon("logoAlt")}
+          className="h-14 w-auto"
         />
       </div>
 
-      <div className="hidden items-center gap-6 pt-4 lg:flex">
+      <div className="hidden items-center gap-6 lg:flex">
         <motion.a
           href="#home"
           whileHover={{ scale: 1.05 }}
@@ -105,16 +109,14 @@ export default function Navbar() {
           <span className="mt-1 h-[2px] w-0 rounded-full bg-[var(--google-gradient)] transition-all duration-300 group-hover:w-full" />
         </motion.a>
         <ThemeToggle />
-        <LanguageSwitcher className="-mt-2" />
+        <LanguageSwitcher />
       </div>
 
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`relative z-50 text-3xl ${
-          isOpen ? "text-foreground" : "text-[var(--white)]"
-        } lg:hidden`}
-        aria-label={isOpen ? "Close menu" : "Open menu"}
+        className="relative z-50 text-3xl text-[var(--white)] lg:hidden"
+        aria-label={isOpen ? tCommon("menu.close") : tCommon("menu.open")}
         aria-expanded={isOpen}
       >
         {isOpen ? <IoIosClose /> : <IoMenu />}
@@ -124,7 +126,7 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="absolute top-8 right-4 z-40 flex w-56 flex-col gap-5 rounded-2xl bg-surface px-6 pb-6 pt-16 text-foreground shadow-lg backdrop-blur-md lg:hidden"
+            className="absolute end-0 top-full z-40 mt-2 flex w-56 flex-col gap-5 rounded-2xl bg-surface px-6 py-6 text-foreground shadow-lg backdrop-blur-md lg:hidden"
             initial="closed"
             animate="open"
             exit="closed"

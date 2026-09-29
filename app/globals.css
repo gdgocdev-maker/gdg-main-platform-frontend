@@ -137,6 +137,10 @@
 
   --dashboard-green-bg: #ccf6c5;
   --dashboard-green-text: #167a3a;
+
+  /* Identity palette: Pink Light bg + brand Red text. */
+  --dashboard-red-bg: #f8d8d8;
+  --dashboard-red-text: #ea4335;
 }
 
 /* =========================================================
@@ -187,6 +191,10 @@
 
     --dashboard-green-bg: #1d3625;
     --dashboard-green-text: #8be28f;
+
+    /* Identity palette: brand Red at 20% as a tint + Pink Accent text (5.66:1 on the dark surface). */
+    --dashboard-red-bg: color-mix(in srgb, #ea4335 20%, transparent);
+    --dashboard-red-text: #ff7daf;
   }
 }
 
@@ -238,6 +246,10 @@ html[data-theme="light"] {
 
   --dashboard-green-bg: #ccf6c5;
   --dashboard-green-text: #167a3a;
+
+  /* Identity palette: Pink Light bg + brand Red text. */
+  --dashboard-red-bg: #f8d8d8;
+  --dashboard-red-text: #ea4335;
 }
 
 /* =========================================================
@@ -288,6 +300,10 @@ html[data-theme="dark"] {
 
   --dashboard-green-bg: #1d3625;
   --dashboard-green-text: #8be28f;
+
+  /* Identity palette: brand Red at 20% as a tint + Pink Accent text (5.66:1 on the dark surface). */
+  --dashboard-red-bg: color-mix(in srgb, #ea4335 20%, transparent);
+  --dashboard-red-text: #ff7daf;
 }
 
 /* =========================================================
@@ -439,7 +455,12 @@ html[lang="ar"] body {
 /* Smooth scrolling */
 
 html {
+  /* Space taken by the floating homepage navbar (components/home/Navbar.tsx):
+     16px top offset + 56px pill + 16px gap. */
+  --home-nav-height: 5.5rem;
   scroll-behavior: smooth;
+  /* Anchor links (#about, #events, ...) stop below the fixed navbar. */
+  scroll-padding-top: var(--home-nav-height);
 }
 
 /* =========================================================
@@ -473,8 +494,25 @@ html {
   animation: sponsors-marquee 30s linear infinite;
 }
 
+/* In RTL the row is anchored to the right edge, so it scrolls the other way
+   (scrolling left would leave an empty gap on the right). */
+@keyframes sponsors-marquee-rtl {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(50%);
+  }
+}
+
+[dir="rtl"] .sponsors-marquee {
+  animation-name: sponsors-marquee-rtl;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .sponsors-marquee {
+  .sponsors-marquee,
+  [dir="rtl"] .sponsors-marquee {
     animation: none;
   }
 }

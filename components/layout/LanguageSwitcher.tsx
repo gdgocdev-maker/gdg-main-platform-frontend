@@ -1,6 +1,6 @@
 "use client";
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { localeMetadata } from "@/i18n/locale-metadata";
@@ -11,6 +11,7 @@ type LanguageSwitcherProps = {
 };
 
 export default function LanguageSwitcher({ className = "" }: LanguageSwitcherProps) {
+  const t = useTranslations("common.language");
   const locale = useLocale() as Locale;
   const router = useRouter();
   const pathname = usePathname();
@@ -29,7 +30,7 @@ export default function LanguageSwitcher({ className = "" }: LanguageSwitcherPro
     <button
       type="button"
       onClick={handleClick}
-      aria-label={`Switch to ${localeMetadata[nextLocale].label}`}
+      aria-label={t("switchTo", { language: localeMetadata[nextLocale].label })}
       className={`flex h-9 w-[70px] shrink-0 items-center justify-center rounded-full border-2 border-current px-2 text-xs font-bold uppercase leading-none tracking-tight transition-colors hover:bg-current/10 ${className}`}
     >
       EN / AR

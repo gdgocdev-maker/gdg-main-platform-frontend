@@ -12,7 +12,8 @@
       "events": "Events",
       "projects": "Projects",
       "communities": "Communities"
-    }
+    },
+    "imageAlt": "GDG community photo {number}"
   },
   "offers": {
     "title": "What We Offer",
@@ -137,6 +138,7 @@
   "joinCommunity": {
     "title": "Ready to Be Part of the Community?",
     "description": "Join our community, discover new opportunities, and build something meaningful with us",
-    "cta": "Join Our Community!"
+    "cta": "Join Our Community!",
+    "phoneAlt": "GDG on Campus mobile application"
   }
 }

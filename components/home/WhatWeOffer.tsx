@@ -14,6 +14,8 @@ import { useRef, useState } from "react";
 export default function WhatWeOffer() {
   const t = useTranslations("home.offers");
   const dir = useTextDirection();
+  // Framer Motion x is physical: flip the slide-in direction in RTL.
+  const sign = dir === "rtl" ? -1 : 1;
   const [activeStep, setActiveStep] = useState(1);
   const mobileSectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -91,7 +93,7 @@ export default function WhatWeOffer() {
                       key={offer.number}
                       initial={{
                         opacity: 0,
-                        x: 8,
+                        x: 8 * sign,
                       }}
                       animate={{
                         opacity: 1,
@@ -99,7 +101,7 @@ export default function WhatWeOffer() {
                       }}
                       exit={{
                         opacity: 0,
-                        x: -15,
+                        x: -15 * sign,
                         transition: { duration: 0 },
                       }}
                       transition={{
@@ -144,7 +146,7 @@ export default function WhatWeOffer() {
               <div
                 className="sticky"
                 style={{
-                  top: `${80 + index * 42}px`,
+                  top: `calc(var(--home-nav-height) + ${16 + index * 42}px)`,
                   zIndex: index + 1,
                 }}
               >

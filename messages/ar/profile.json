@@ -1,0 +1,43 @@
+{
+  "hero": {
+    "edit": "تعديل الملف الشخصي",
+    "save": "حفظ التغييرات",
+    "cancel": "إلغاء",
+    "changePhoto": "تغيير صورة الملف الشخصي",
+    "changeCover": "تغيير صورة الغلاف",
+    "memberSince": "عضو منذ {date}"
+  },
+  "chips": {
+    "studentId": "الرقم الجامعي: {id}"
+  },
+  "bio": {
+    "title": "نبذة مختصرة",
+    "placeholder": "عرّف مجتمع GDG بنفسك واهتماماتك ومشاريعك أو ما تتعلمه حاليًا"
+  },
+  "tabs": {
+    "personal": "المعلومات الشخصية والأكاديمية",
+    "social": "روابط التواصل"
+  },
+  "cards": {
+    "personal": "المعلومات الشخصية",
+    "academic": "المعلومات الأكاديمية"
+  },
+  "fields": {
+    "fullName": "الاسم الكامل",
+    "email": "البريد الإلكتروني",
+    "phone": "الجوال",
+    "studentId": "الرقم الجامعي",
+    "university": "الجامعة",
+    "major": "التخصص",
+    "academicYear": "السنة الدراسية"
+  },
+  "universityPlaceholder": "اختر الجامعة",
+  "social": {
+    "platforms": {
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "website": "الموقع الشخصي"
+    },
+    "notAdded": "لم يُضف بعد"
+  }
+}

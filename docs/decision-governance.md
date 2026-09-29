@@ -27,6 +27,15 @@ Do not silently choose one source when sources conflict. First identify the conf
 | Persistence uses MySQL and Prisma | Approved |
 | Authentication uses NestJS Auth, JWT, Google OAuth, and backend-enforced RBAC | Approved direction |
 | Swagger/OpenAPI is the authoritative frontend-backend contract | Approved |
+| Arabic uses a full RTL layout (`dir="rtl"` on `<html>`), not text-only direction | Proposed (2026-09-28) |
+
+### 2026-09-28: Full RTL layout for Arabic
+
+- **Owner:** Reman (i18n task); approver: team lead, pending PR review.
+- **Context:** The i18n foundation (PR #12) kept `dir="ltr"` on `<html>` for every locale and flipped only text nodes. The i18n Notion task requires "RTL (Right-to-Left) layout for Arabic" and checking navigation, icons and alignment in both directions.
+- **Decision:** The locale layout sets `dir` from `i18n/locale-metadata.ts`, so Arabic pages mirror entirely. Components use logical utilities and flip physical animation offsets via `useTextDirection()`.
+- **Affected:** frontend only.
+- **Migration:** Pages built with physical classes (`left-`, `pl-`, `text-left`, …) must be reviewed in Arabic. Rollback is restoring `dir="ltr"` in `app/[locale]/layout.tsx`.
 
 ## Decision record minimum
 

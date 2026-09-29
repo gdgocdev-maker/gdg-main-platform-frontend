@@ -19,10 +19,11 @@ type ProjectCardProps = {
 export default function ProjectCard({ project }: ProjectCardProps) {
   const t = useTranslations("home.projects");
   const dir = useTextDirection();
+  const sign = dir === "rtl" ? -1 : 1;
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 15 }}
+      initial={{ opacity: 0, x: 15 * sign }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{
@@ -58,13 +59,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <div className="mt-auto flex justify-end">
           <button
             type="button"
-            className="flex h-9 w-[135px] cursor-pointer items-center justify-between rounded-full bg-[var(--white)] px-1 pl-4 text-sm font-medium leading-none text-[var(--black)]"
+            className="flex h-9 w-[135px] cursor-pointer items-center justify-between rounded-full bg-[var(--white)] ps-4 pe-1 text-sm font-medium leading-none text-[var(--black)]"
           >
             <span dir={dir}>{t("viewProject")}</span>
 
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--black)]">
               <svg
-                className="h-4 w-4"
+                className="h-4 w-4 rtl:-scale-x-100"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"

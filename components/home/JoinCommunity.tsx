@@ -60,7 +60,7 @@ export default function JoinCommunity() {
         <div className="absolute -end-4 -top-30 hidden w-[280px] lg:block">
           <img
             src="/images/phone-image.png"
-            alt="GDG on Campus mobile application"
+            alt={t("phoneAlt")}
             className="w-full"
           />
         </div>

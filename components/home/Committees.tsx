@@ -15,7 +15,7 @@ export default function Committees() {
       className="px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20"
     >
       {/* Section Title */}
-      <div className="sticky top-0 z-[100] bg-background py-4 sm:py-6">
+      <div className="sticky top-[var(--home-nav-height)] z-[100] bg-background py-4 sm:py-6">
         <h2
           dir={dir}
           className="text-start text-3xl font-bold leading-snug text-foreground"
@@ -31,7 +31,7 @@ export default function Committees() {
             key={committee.id}
             className="sticky mb-6 sm:mb-8"
             style={{
-              top: `calc(clamp(92px, 10vw, 130px) + ${index * 28}px)`,
+              top: `calc(var(--home-nav-height) + clamp(92px, 10vw, 130px) + ${index * 28}px)`,
               zIndex: index + 1,
             }}
           >

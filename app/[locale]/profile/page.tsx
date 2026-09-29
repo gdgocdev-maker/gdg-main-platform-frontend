@@ -1,5 +1,6 @@
 "use client";
 
+import { useFormatter, useTranslations } from "next-intl";
 import { useState } from "react";
 import { TopNav } from "@/components/dashboard/TopNav";
 import { ProfileBio } from "@/components/profile/ProfileBio";
@@ -37,7 +38,17 @@ function findRowValue(card: InfoCardData, key: string): string {
 }
 
 export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
-  const memberSince = useMemberSince();
+  const t = useTranslations("profile");
+  const format = useFormatter();
+  const memberSinceIso = useMemberSince();
+  // Western digits keep dates consistent with the other numbers on the page.
+  const memberSince = memberSinceIso
+    ? format.dateTime(new Date(memberSinceIso), {
+        month: "long",
+        year: "numeric",
+        numberingSystem: "latn",
+      })
+    : "";
   const [isEditing, setIsEditing] = useState(false);
 
   const [bio, setBio] = useState("");
@@ -186,7 +197,7 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
   const studentId = findRowValue(personalData, "studentId");
   const chips = [
     major,
-    studentId && `ID: ${studentId}`,
+    studentId && t("chips.studentId", { id: studentId }),
   ].filter(Boolean) as string[];
 
   return (
@@ -213,7 +224,7 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
 
         <ProfileBio
           bio={isEditing ? bioDraft : bio}
-          placeholder={sampleProfile.bioPlaceholder}
+          placeholder={t("bio.placeholder")}
           isEditing={isEditing}
           onChange={setBioDraft}
         />

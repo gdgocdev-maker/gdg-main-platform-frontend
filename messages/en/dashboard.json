@@ -1,0 +1,85 @@
+{
+  "nav": {
+    "sectionsLabel": "Dashboard sections",
+    "accountLabel": "Account",
+    "compactLabel": "Dashboard",
+    "items": {
+      "dashboard": "Dashboard",
+      "events": "Events",
+      "tasks": "Tasks",
+      "members": "Members",
+      "achievements": "Achievements",
+      "setting": "Setting",
+      "help": "Help & Support"
+    }
+  },
+  "utility": {
+    "searchLabel": "Search events, or tasks",
+    "searchPlaceholder": "Search events, or tasks...",
+    "notifications": "Notifications",
+    "today": "Today",
+    "todayLabel": "Today, {weekday} {day} {month}"
+  },
+  "welcome": {
+    "title": "Welcome back, {name}!",
+    "subtitle": "Build, learn, and create impact together"
+  },
+  "tiles": {
+    "myEvents": {
+      "title": "My Events",
+      "description": "Explore upcoming events and register",
+      "action": "View my events"
+    }
+  },
+  "upcoming": {
+    "title": "Upcoming Events",
+    "viewAll": "View upcoming events",
+    "featured": "Featured",
+    "addToCalendar": "Add to Calendar",
+    "empty": "You don’t have any events."
+  },
+  "calendar": {
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "today": "Today",
+    "eventsScheduled": "{count, plural, =0 {No events scheduled} one {# event scheduled} other {# events scheduled}}",
+    "weekdays": {
+      "sun": "Su",
+      "mon": "Mo",
+      "tue": "Tu",
+      "wed": "We",
+      "thu": "Th",
+      "fri": "Fr",
+      "sat": "Sa"
+    }
+  },
+  "tasks": {
+    "title": "My Tasks",
+    "filterLabel": "Filter tasks by status",
+    "viewAll": "View all tasks",
+    "empty": "No tasks match your filters.",
+    "filterWithCount": "{label} ({count})",
+    "filters": {
+      "all": "All",
+      "inProgress": "In progress",
+      "toDo": "To Do",
+      "complete": "Complete"
+    },
+    "columns": {
+      "task": "Task",
+      "deadline": "Deadline",
+      "priority": "Priority",
+      "status": "Status"
+    },
+    "status": {
+      "inProgress": "In Progress",
+      "toDo": "To Do",
+      "complete": "Complete"
+    },
+    "priority": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    }
+  }
+}

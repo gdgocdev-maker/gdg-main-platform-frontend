@@ -2,11 +2,12 @@
 
 import { useState, useSyncExternalStore } from "react";
 import type { ReactElement, ReactNode } from "react";
-import { usePathname } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { MotionConfig, motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 
 import { TopNav } from "@/components/dashboard/TopNav";
+import { getPathname, usePathname } from "@/i18n/navigation";
 
 import {
   calendarMock,
@@ -43,22 +44,10 @@ const itemVariants: Variants = {
 type IconProps = { className?: string };
 type IconComponent = (props: IconProps) => ReactElement;
 
-// Arabic/English i18n is planned but not implemented yet — English is the current default.
-// Every date is formatted with this fixed locale rather than `undefined` (which resolves to
-// the *runtime's* default locale: Node's ICU default during SSR, the browser's language
-// during hydration). Those two defaults can differ, so `undefined` produces different text
-// on the server and the client and React flags it as a hydration mismatch. A fixed locale
-// keeps server and client output identical regardless of either environment's language
-// settings. When Arabic support is added, replace this constant with the real language
-// state (kept in sync across server/client instead of read from the browser at render time).
-const APP_LOCALE = "en-US";
-
-// Formats the utility-row "Today" label from the browser's local date, e.g. "Today, Wed 16 Sep".
-function formatTodayLabel(date: Date): string {
-  const weekday = date.toLocaleDateString(APP_LOCALE, { weekday: "short" });
-  const month = date.toLocaleDateString(APP_LOCALE, { month: "short" });
-  return `Today, ${weekday} ${date.getDate()} ${month}`;
-}
+// Dates are formatted with the locale from the URL (never `undefined`, which resolves to
+// the runtime's default and differs between server and browser, causing hydration
+// mismatches). Western digits keep dates consistent with the other numbers on the page.
+const DATE_OPTIONS = { numberingSystem: "latn" } as const;
 
 // The real date is only known once we're running in the browser, so `getServerSnapshot`
 // returns a fixed "Today" fallback for the server-rendered/first-hydration pass (matching
@@ -67,11 +56,22 @@ function formatTodayLabel(date: Date): string {
 // this value never changes without a full page reload.
 const subscribeToNothing = () => () => {};
 
+// Builds the utility-row label from the browser's local date, e.g. "Today, Wed 16 Sep".
 function useTodayLabel(): string {
+  const locale = useLocale();
+  const t = useTranslations("dashboard.utility");
+
+  const formatTodayLabel = (date: Date) =>
+    t("todayLabel", {
+      weekday: date.toLocaleDateString(locale, { ...DATE_OPTIONS, weekday: "short" }),
+      day: date.toLocaleDateString(locale, { ...DATE_OPTIONS, day: "numeric" }),
+      month: date.toLocaleDateString(locale, { ...DATE_OPTIONS, month: "short" }),
+    });
+
   return useSyncExternalStore(
     subscribeToNothing,
     () => formatTodayLabel(new Date()),
-    () => "Today",
+    () => t("today"),
   );
 }
 
@@ -294,7 +294,7 @@ function ArrowBadge({
       whileTap={{ scale: 0.92 }}
       className={`inline-flex shrink-0 items-center justify-center rounded-full transition-shadow hover:shadow-md ${sizeClassName} ${toneClassName}`}
     >
-      <IconArrowUpRight className={iconClassName ?? "h-4 w-4"} />
+      <IconArrowUpRight className={`rtl:-scale-x-100 ${iconClassName ?? "h-4 w-4"}`} />
     </motion.button>
   );
 }
@@ -326,6 +326,7 @@ function PaginationDots({ count, activeIndex = 0 }: { count: number; activeIndex
 // correct regardless of whether Events/Tasks/Members/Achievements end up as top-level routes
 // or nested under "/dashboard" — only their `href` in mock-data.ts needs to change from the
 // current placeholder ("#") to the real path once those pages exist; no logic change needed.
+// `pathname` comes from @/i18n/navigation, so it has no locale prefix ("/dashboard", not "/ar/dashboard").
 function isNavItemActive(pathname: string, href: string): boolean {
   if (href === "/dashboard") {
     return pathname === "/dashboard";
@@ -352,7 +353,7 @@ function SidebarLink({
       aria-current={active ? "page" : undefined}
       className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors ${
         active
-          ? "border-s-4 border-gdg-red bg-gdg-pink-light ps-2.5 font-semibold text-gdg-red"
+          ? "border-s-4 border-gdg-red bg-[var(--dashboard-red-bg)] ps-2.5 font-semibold text-[var(--dashboard-red-text)]"
           : muted
           ? "font-normal text-muted hover:bg-surface-muted hover:text-foreground"
           : "font-semibold text-foreground/70 hover:bg-surface-muted hover:text-foreground"
@@ -364,17 +365,25 @@ function SidebarLink({
   );
 }
 
+// Adds the current locale to real routes ("/dashboard" -> "/ar/dashboard"); "#" placeholders pass through.
+function useLocalizedHref(): (href: string) => string {
+  const locale = useLocale();
+  return (href) => (href.startsWith("/") ? getPathname({ href, locale }) : href);
+}
+
 function Sidebar(): ReactElement {
   const pathname = usePathname();
+  const t = useTranslations("dashboard.nav");
+  const localize = useLocalizedHref();
 
   return (
     <aside className="hidden shrink-0 border-e border-border bg-surface px-3 py-6 lg:block lg:w-60 xl:w-64">
-      <nav aria-label="Dashboard sections" className="flex flex-col gap-1">
+      <nav aria-label={t("sectionsLabel")} className="flex flex-col gap-1">
         {sidebarPrimaryItems.map((item) => (
           <SidebarLink
             key={item.id}
-            href={item.href}
-            label={item.label}
+            href={localize(item.href)}
+            label={t(`items.${item.id}`)}
             Icon={sidebarIcons[item.id]}
             active={isNavItemActive(pathname, item.href)}
           />
@@ -383,17 +392,17 @@ function Sidebar(): ReactElement {
 
       <div className="my-4 border-t border-border" />
 
-      <nav aria-label="Account" className="flex flex-col gap-1">
+      <nav aria-label={t("accountLabel")} className="flex flex-col gap-1">
         {sidebarSecondaryItems.map((item) => (
-          <SidebarLink key={item.id} href="#" label={item.label} Icon={sidebarIcons[item.id]} muted />
+          <SidebarLink key={item.id} href="#" label={t(`items.${item.id}`)} Icon={sidebarIcons[item.id]} muted />
         ))}
       </nav>
     </aside>
   );
 }
 
-// Below lg: a single-row, icons-only nav (primary items on the left, Setting/Help on the
-// right) rendered inside `main`, after the account/welcome sections. `justify-between` on
+// Below lg: a single-row, icons-only nav (primary items at the start, Setting/Help at the
+// end) rendered inside `main`, after the account/welcome sections. `justify-between` on
 // the row splits the two groups; neither group ever wraps (no `flex-wrap` is used), so all
 // seven icons stay on one line even at narrow phone widths.
 function NavIconButton({
@@ -414,7 +423,7 @@ function NavIconButton({
       title={label}
       aria-current={active ? "page" : undefined}
       className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-colors ${
-        active ? "bg-gdg-pink-light text-gdg-red" : "text-muted hover:bg-surface-muted hover:text-foreground"
+        active ? "bg-[var(--dashboard-red-bg)] text-[var(--dashboard-red-text)]" : "text-muted hover:bg-surface-muted hover:text-foreground"
       }`}
     >
       <Icon className="h-5 w-5" />
@@ -424,23 +433,25 @@ function NavIconButton({
 
 function CompactDashboardNav(): ReactElement {
   const pathname = usePathname();
+  const t = useTranslations("dashboard.nav");
+  const localize = useLocalizedHref();
 
   return (
-    <nav aria-label="Dashboard" className="flex items-center justify-between gap-2 lg:hidden">
-      <div className="flex items-center gap-1" role="group" aria-label="Dashboard sections">
+    <nav aria-label={t("compactLabel")} className="flex items-center justify-between gap-2 lg:hidden">
+      <div className="flex items-center gap-1" role="group" aria-label={t("sectionsLabel")}>
         {sidebarPrimaryItems.map((item) => (
           <NavIconButton
             key={item.id}
-            href={item.href}
-            label={item.label}
+            href={localize(item.href)}
+            label={t(`items.${item.id}`)}
             Icon={sidebarIcons[item.id]}
             active={isNavItemActive(pathname, item.href)}
           />
         ))}
       </div>
-      <div className="flex shrink-0 items-center gap-1" role="group" aria-label="Account">
+      <div className="flex shrink-0 items-center gap-1" role="group" aria-label={t("accountLabel")}>
         {sidebarSecondaryItems.map((item) => (
-          <NavIconButton key={item.id} href="#" label={item.label} Icon={sidebarIcons[item.id]} />
+          <NavIconButton key={item.id} href="#" label={t(`items.${item.id}`)} Icon={sidebarIcons[item.id]} />
         ))}
       </div>
     </nav>
@@ -460,15 +471,17 @@ function SearchField({
   onSearchChange: (value: string) => void;
   className?: string;
 }): ReactElement {
+  const t = useTranslations("dashboard.utility");
+
   return (
     <label className={`relative block w-full ${className}`}>
-      <span className="sr-only">Search events, or tasks</span>
+      <span className="sr-only">{t("searchLabel")}</span>
       <IconSearch className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
       <input
         type="search"
         value={searchQuery}
         onChange={(event) => onSearchChange(event.target.value)}
-        placeholder="Search events, or tasks..."
+        placeholder={t("searchPlaceholder")}
         maxLength={255}
         className="w-full rounded-full border border-border bg-surface-muted/60 py-2 ps-9 pe-4 text-sm text-foreground placeholder:text-muted focus:border-gdg-blue focus:bg-surface focus:outline-none focus:ring-2 focus:ring-gdg-blue/30"
       />
@@ -493,6 +506,8 @@ function UtilityRow({
   searchQuery: string;
   onSearchChange: (value: string) => void;
 }): ReactElement {
+  const t = useTranslations("dashboard.utility");
+
   return (
     <motion.div variants={itemVariants} className="flex items-center justify-between gap-3">
       <div className="order-1 flex w-full items-center gap-2 sm:w-auto lg:order-2">
@@ -510,7 +525,7 @@ function UtilityRow({
 
         <button
           type="button"
-          aria-label="Notifications"
+          aria-label={t("notifications")}
           className="relative order-2 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted hover:bg-surface-muted hover:text-foreground"
         >
           <IconBell className="h-5 w-5" />
@@ -532,17 +547,21 @@ function UtilityRow({
 }
 
 function WelcomeSection({ firstName }: { firstName: string }): ReactElement {
+  const t = useTranslations("dashboard.welcome");
+
   return (
     <motion.div variants={itemVariants}>
       <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">
-        Welcome back, {firstName}! <span aria-hidden="true">👋</span>
+        {t("title", { name: firstName })} <span aria-hidden="true">👋</span>
       </h1>
-      <p className="mt-1 text-sm text-muted sm:text-base">Build, learn, and create impact together</p>
+      <p className="mt-1 text-sm text-muted sm:text-base">{t("subtitle")}</p>
     </motion.div>
   );
 }
 
 function MyEventCard({ tile }: { tile: MyEventTile }): ReactElement {
+  const t = useTranslations(`dashboard.tiles.${tile.key}`);
+
   return (
     <motion.div
       variants={itemVariants}
@@ -550,15 +569,15 @@ function MyEventCard({ tile }: { tile: MyEventTile }): ReactElement {
       className={`relative flex min-w-0 flex-col justify-between gap-1.5 rounded-xl p-2.5 sm:gap-2 sm:p-3 ${tile.background}`}
     >
       <div className="flex items-start justify-between gap-2">
-        <p className="text-sm font-semibold text-gdg-dark">{tile.title}</p>
+        <p className="text-sm font-semibold text-gdg-dark">{t("title")}</p>
         <ArrowBadge
-          label="View my events"
+          label={t("action")}
           toneClassName="bg-surface"
           iconClassName={`h-3 w-3 sm:h-3.5 sm:w-3.5 ${tile.accent}`}
           sizeClassName="h-6 w-6 sm:h-7 sm:w-7"
         />
       </div>
-      <p className="text-xs text-gdg-dark/70">{tile.description}</p>
+      <p className="text-xs text-gdg-dark/70">{t("description")}</p>
     </motion.div>
   );
 }
@@ -580,6 +599,7 @@ function MyEventsGrid({ tiles }: { tiles: MyEventTile[] }): ReactElement {
 }
 
 function UpcomingEventsCard({ events }: { events: UpcomingEvent[] }): ReactElement {
+  const t = useTranslations("dashboard.upcoming");
   const hasEvents = events.length > 0;
   const event = events[0];
 
@@ -589,11 +609,11 @@ function UpcomingEventsCard({ events }: { events: UpcomingEvent[] }): ReactEleme
       className="flex flex-col rounded-2xl bg-surface p-3 shadow-sm ring-1 ring-gdg-gray-light sm:p-4"
     >
       <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-base font-semibold text-foreground sm:text-lg">Upcoming Events</h2>
+        <h2 className="text-base font-semibold text-foreground sm:text-lg">{t("title")}</h2>
         <ArrowBadge
-          label="View upcoming events"
+          label={t("viewAll")}
           toneClassName="bg-gdg-yellow-accent"
-          iconClassName="h-3.5 w-3.5 text-foreground"
+          iconClassName="h-3.5 w-3.5 text-gdg-dark"
           sizeClassName="h-7 w-7 sm:h-8 sm:w-8"
         />
       </div>
@@ -620,9 +640,9 @@ function UpcomingEventsCard({ events }: { events: UpcomingEvent[] }): ReactEleme
                   <span className="text-xs font-medium uppercase tracking-wide">{event.month}</span>
                 </div>
                 {event.featured && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-gdg-yellow-accent px-2.5 py-1 text-xs font-medium text-foreground">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-gdg-yellow-accent px-2.5 py-1 text-xs font-medium text-gdg-dark">
                     <IconStar className="h-3 w-3" />
-                    Featured
+                    {t("featured")}
                   </span>
                 )}
               </div>
@@ -646,8 +666,8 @@ function UpcomingEventsCard({ events }: { events: UpcomingEvent[] }): ReactEleme
                     whileTap={{ scale: 0.97 }}
                     className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-surface px-3 py-1.5 text-xs font-semibold text-foreground sm:text-sm"
                   >
-                    Add to Calendar
-                    <IconArrowRight className="h-3.5 w-3.5" />
+                    {t("addToCalendar")}
+                    <IconArrowRight className="h-3.5 w-3.5 rtl:-scale-x-100" />
                   </motion.button>
                 </div>
               </div>
@@ -660,7 +680,7 @@ function UpcomingEventsCard({ events }: { events: UpcomingEvent[] }): ReactEleme
         </>
       ) : (
         <div className="flex flex-1 items-center justify-center rounded-xl bg-surface-muted/40 px-4 py-10 text-center">
-          <p className="text-sm text-muted">You don&apos;t have any events.</p>
+          <p className="text-sm text-muted">{t("empty")}</p>
         </div>
       )}
     </motion.div>
@@ -685,9 +705,12 @@ function getMonthGridDays(year: number, month: number): (number | null)[] {
   return cells;
 }
 
-const WEEKDAY_LABELS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+// Sunday-first, matching getMonthGridDays(); labels live in dashboard.calendar.weekdays.
+const WEEKDAY_KEYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] as const;
 
 function CalendarCard({ data }: { data: CalendarMockData }): ReactElement {
+  const t = useTranslations("dashboard.calendar");
+  const locale = useLocale();
   const [view, setView] = useState({ year: data.year, month: data.month });
 
   const goToPreviousMonth = () => {
@@ -702,14 +725,16 @@ function CalendarCard({ data }: { data: CalendarMockData }): ReactElement {
     );
   };
 
-  const monthLabel = new Date(view.year, view.month, 1).toLocaleDateString(APP_LOCALE, {
+  const monthLabel = new Date(view.year, view.month, 1).toLocaleDateString(locale, {
+    ...DATE_OPTIONS,
     month: "long",
     year: "numeric",
   });
   const cells = getMonthGridDays(view.year, view.month);
   const isSelectedMonthInView = view.year === data.year && view.month === data.month;
 
-  const selectedDateLabel = new Date(data.year, data.month, data.selectedDay).toLocaleDateString(APP_LOCALE, {
+  const selectedDateLabel = new Date(data.year, data.month, data.selectedDay).toLocaleDateString(locale, {
+    ...DATE_OPTIONS,
     weekday: "long",
     month: "long",
     day: "numeric",
@@ -725,26 +750,26 @@ function CalendarCard({ data }: { data: CalendarMockData }): ReactElement {
       <div className="mb-3 flex items-center justify-between">
         <button
           type="button"
-          aria-label="Previous month"
+          aria-label={t("previousMonth")}
           onClick={goToPreviousMonth}
           className="inline-flex h-7 w-7 items-center justify-center rounded-full text-muted hover:bg-surface-muted hover:text-foreground"
         >
-          <IconChevronLeft className="h-4 w-4" />
+          <IconChevronLeft className="h-4 w-4 rtl:-scale-x-100" />
         </button>
         <p className="text-sm font-semibold text-foreground">{monthLabel}</p>
         <button
           type="button"
-          aria-label="Next month"
+          aria-label={t("nextMonth")}
           onClick={goToNextMonth}
           className="inline-flex h-7 w-7 items-center justify-center rounded-full text-muted hover:bg-surface-muted hover:text-foreground"
         >
-          <IconChevronRight className="h-4 w-4" />
+          <IconChevronRight className="h-4 w-4 rtl:-scale-x-100" />
         </button>
       </div>
 
       <div className="grid grid-cols-7 text-center text-xs font-medium uppercase tracking-wide text-muted">
-        {WEEKDAY_LABELS.map((weekday) => (
-          <span key={weekday}>{weekday}</span>
+        {WEEKDAY_KEYS.map((weekday) => (
+          <span key={weekday}>{t(`weekdays.${weekday}`)}</span>
         ))}
       </div>
 
@@ -773,9 +798,9 @@ function CalendarCard({ data }: { data: CalendarMockData }): ReactElement {
       </div>
 
       <div className="mt-3 rounded-xl bg-surface-muted/60 p-3">
-        <p className="text-xs font-medium uppercase tracking-wide text-muted">Today</p>
+        <p className="text-xs font-medium uppercase tracking-wide text-muted">{t("today")}</p>
         <p className="mt-0.5 text-sm font-semibold text-foreground">{selectedDateLabel}</p>
-        <p className="mt-1 text-xs text-muted">{hasSelectedEvent ? "1 event scheduled" : "No events scheduled"}</p>
+        <p className="mt-1 text-xs text-muted">{t("eventsScheduled", { count: hasSelectedEvent ? 1 : 0 })}</p>
       </div>
     </motion.div>
   );
@@ -783,18 +808,32 @@ function CalendarCard({ data }: { data: CalendarMockData }): ReactElement {
 
 type FilterId = "all" | TaskStatus;
 
-const taskFilters: { id: FilterId; label: string }[] = [
-  { id: "all", label: "All" },
-  { id: "In Progress", label: "In progress" },
-  { id: "To Do", label: "To Do" },
-  { id: "Complete", label: "Complete" },
-];
+const taskFilters: FilterId[] = ["all", "In Progress", "To Do", "Complete"];
+
+// Status/priority values are data (and will come from the backend), so only their display
+// text is translated: these map each value to its key under dashboard.tasks.
+const statusKeys: Record<TaskStatus, "inProgress" | "toDo" | "complete"> = {
+  "In Progress": "inProgress",
+  "To Do": "toDo",
+  Complete: "complete",
+};
+
+const filterKeys: Record<FilterId, "all" | "inProgress" | "toDo" | "complete"> = {
+  all: "all",
+  ...statusKeys,
+};
+
+const priorityKeys: Record<TaskPriority, "high" | "medium" | "low"> = {
+  High: "high",
+  Medium: "medium",
+  Low: "low",
+};
 
 // Single source of truth for each semantic tone's light background + text color, so
 // status badges, priority badges, and task filters can never drift out of sync — they
 // all read the exact same class string for a given tone.
 const toneColors = {
-  red: "bg-gdg-pink-light text-gdg-red",
+  red: "bg-[var(--dashboard-red-bg)] text-[var(--dashboard-red-text)]",
   yellow: "bg-[var(--dashboard-yellow-bg)] text-[var(--dashboard-yellow-text)]",
   blue: "bg-[var(--dashboard-blue-bg)] text-[var(--dashboard-blue-text)]",
   green: "bg-[var(--dashboard-green-bg)] text-[var(--dashboard-green-text)]",
@@ -843,6 +882,7 @@ const filterTones: Record<FilterId, Tone> = {
 };
 
 function TasksPanel({ tasks, searchQuery }: { tasks: DashboardTask[]; searchQuery: string }): ReactElement {
+  const t = useTranslations("dashboard.tasks");
   const [activeFilter, setActiveFilter] = useState<FilterId>("all");
 
   const counts: Record<FilterId, number> = {
@@ -868,23 +908,23 @@ function TasksPanel({ tasks, searchQuery }: { tasks: DashboardTask[]; searchQuer
       <div className="mb-3 flex flex-col gap-3 sm:grid sm:grid-cols-[auto_1fr_auto] sm:items-center">
         <h2 id="my-tasks-heading" className="flex items-center gap-2 text-lg font-semibold text-foreground">
           <IconChecklist className="h-5 w-5 shrink-0" />
-          My Tasks
+          {t("title")}
         </h2>
 
-        <div className="flex flex-wrap items-center gap-2 sm:justify-center" role="group" aria-label="Filter tasks by status">
+        <div className="flex flex-wrap items-center gap-2 sm:justify-center" role="group" aria-label={t("filterLabel")}>
           {taskFilters.map((filter) => {
-            const isActive = filter.id === activeFilter;
+            const isActive = filter === activeFilter;
             return (
               <button
-                key={filter.id}
+                key={filter}
                 type="button"
                 aria-pressed={isActive}
-                onClick={() => setActiveFilter(filter.id)}
+                onClick={() => setActiveFilter(filter)}
                 className={`rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors sm:text-sm ${
-                  isActive ? `border-transparent ${toneColors[filterTones[filter.id]]}` : "border-border bg-surface text-foreground"
+                  isActive ? `border-transparent ${toneColors[filterTones[filter]]}` : "border-border bg-surface text-foreground"
                 }`}
               >
-                {filter.label} ({counts[filter.id]})
+                {t("filterWithCount", { label: t(`filters.${filterKeys[filter]}`), count: counts[filter] })}
               </button>
             );
           })}
@@ -893,18 +933,18 @@ function TasksPanel({ tasks, searchQuery }: { tasks: DashboardTask[]; searchQuer
               end, on whichever line the last filter pill wraps onto. Replaced by the
               separate right-aligned copy below from `sm:` up. */}
           <div className="ms-auto sm:hidden">
-            <ArrowBadge label="View all tasks" toneClassName="bg-gdg-blue-light" iconClassName="h-4 w-4 text-gdg-blue" />
+            <ArrowBadge label={t("viewAll")} toneClassName="bg-gdg-blue-light" iconClassName="h-4 w-4 text-gdg-blue" />
           </div>
         </div>
 
         <div className="hidden sm:flex sm:justify-end">
-          <ArrowBadge label="View all tasks" toneClassName="bg-gdg-blue-light" iconClassName="h-4 w-4 text-gdg-blue" />
+          <ArrowBadge label={t("viewAll")} toneClassName="bg-gdg-blue-light" iconClassName="h-4 w-4 text-gdg-blue" />
         </div>
       </div>
 
       {filteredTasks.length === 0 ? (
         <p className="rounded-xl bg-surface-muted/60 px-4 py-5 text-center text-sm text-muted">
-          No tasks match your filters.
+          {t("empty")}
         </p>
       ) : (
         <>
@@ -921,16 +961,16 @@ function TasksPanel({ tasks, searchQuery }: { tasks: DashboardTask[]; searchQuer
                 <tr className="bg-surface-muted/60 text-start text-xs font-medium uppercase tracking-wide text-muted">
                   <th scope="col" className="rounded-s-lg py-2 ps-3" />
                   <th scope="col" className="py-2 text-start">
-                    Task
+                    {t("columns.task")}
                   </th>
                   <th scope="col" className="py-2 text-start">
-                    Deadline
+                    {t("columns.deadline")}
                   </th>
                   <th scope="col" className="py-2 text-start">
-                    Priority
+                    {t("columns.priority")}
                   </th>
                   <th scope="col" className="rounded-e-lg py-2 pe-3 text-start">
-                    Status
+                    {t("columns.status")}
                   </th>
                 </tr>
               </thead>
@@ -952,10 +992,10 @@ function TasksPanel({ tasks, searchQuery }: { tasks: DashboardTask[]; searchQuer
                     </td>
                     <td className="py-2.5 pe-4 text-foreground/70">{task.deadline}</td>
                     <td className="py-2.5 pe-4">
-                      <TaskBadge className={priorityStyles[task.priority]}>{task.priority}</TaskBadge>
+                      <TaskBadge className={priorityStyles[task.priority]}>{t(`priority.${priorityKeys[task.priority]}`)}</TaskBadge>
                     </td>
                     <td className="py-2.5">
-                      <TaskBadge className={statusStyles[task.status]}>{task.status}</TaskBadge>
+                      <TaskBadge className={statusStyles[task.status]}>{t(`status.${statusKeys[task.status]}`)}</TaskBadge>
                     </td>
                   </motion.tr>
                 ))}
@@ -979,8 +1019,8 @@ function TasksPanel({ tasks, searchQuery }: { tasks: DashboardTask[]; searchQuer
                     <p className="mt-0.5 text-xs text-muted">{task.description}</p>
                     <div className="mt-2 flex flex-wrap items-center gap-2">
                       <span className="text-xs text-muted">{task.deadline}</span>
-                      <TaskBadge className={priorityStyles[task.priority]}>{task.priority}</TaskBadge>
-                      <TaskBadge className={statusStyles[task.status]}>{task.status}</TaskBadge>
+                      <TaskBadge className={priorityStyles[task.priority]}>{t(`priority.${priorityKeys[task.priority]}`)}</TaskBadge>
+                      <TaskBadge className={statusStyles[task.status]}>{t(`status.${statusKeys[task.status]}`)}</TaskBadge>
                     </div>
                   </div>
                 </div>
