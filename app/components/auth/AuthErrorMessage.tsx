@@ -13,7 +13,7 @@ type AuthErrorMessageProps = {
   className?: string
 }
 
-// Presentational only: caller controls positioning via `className` and must set `relative` on its container.
+// Presentational only: caller controls positioning via `className`.
 export default function AuthErrorMessage({
   message,
   id,
@@ -48,11 +48,11 @@ export default function AuthErrorMessage({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -4 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
-          className={`pointer-events-none text-xs font-normal text-gdg-red ${className}`}
+          className={`text-xs font-normal leading-normal text-gdg-red ${className}`}
         >
           {text}
         </motion.p>
       ) : null}
     </AnimatePresence>
-  );
+  )
 }

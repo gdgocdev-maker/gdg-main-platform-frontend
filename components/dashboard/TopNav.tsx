@@ -5,9 +5,16 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 // Same links as the homepage navbar, so they reuse its common.nav translations.
 const navKeys = ["home", "about", "projects", "events", "community"] as const;
+
+// The homepage hover underline: a 2px Google-gradient bar that grows to the
+// link's width. `image:` is required, otherwise Tailwind 4 infers
+// background-color and a gradient value paints nothing.
+const linkUnderline =
+  "mt-1 h-[2px] w-0 rounded-full bg-[image:var(--google-gradient)] transition-all duration-300 group-hover:w-full";
 
 type IconProps = { className?: string };
 
@@ -48,11 +55,18 @@ export function TopNav() {
         <div className="flex shrink-0 items-center gap-3 lg:gap-6">
           <nav aria-label={t("topNav.navLabel")} className="hidden items-center gap-6 text-sm font-semibold lg:flex">
             {navKeys.map((key) => (
-              <a key={key} href="#" className="text-white/80 transition-colors hover:text-white">
+              <a
+                key={key}
+                href="#"
+                className="group flex flex-col items-center text-white/80 transition-colors hover:text-white"
+              >
                 {t(`nav.${key}`)}
+                <span className={linkUnderline} />
               </a>
             ))}
           </nav>
+
+          <ThemeToggle onDark />
 
           <LanguageSwitcher />
 
@@ -82,8 +96,13 @@ export function TopNav() {
           >
             <div className="flex flex-col gap-1 px-4 py-3 text-sm font-semibold sm:px-6">
               {navKeys.map((key) => (
-                <a key={key} href="#" className="rounded-lg px-2 py-2 text-white/80 hover:bg-white/10 hover:text-white">
+                <a
+                  key={key}
+                  href="#"
+                  className="group flex flex-col px-2 py-2 text-white/80 transition-colors hover:text-white"
+                >
                   {t(`nav.${key}`)}
+                  <span className={linkUnderline} />
                 </a>
               ))}
             </div>

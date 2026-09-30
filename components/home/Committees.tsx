@@ -14,8 +14,9 @@ export default function Committees() {
       id="committees"
       className="px-4 py-12 sm:px-6 sm:py-16 lg:px-10 lg:py-20"
     >
-      {/* Section Title */}
-      <div className="sticky top-[var(--home-nav-height)] z-[100] bg-background py-4 sm:py-6">
+      {/* Section Title — scrolls with the section. Pinning it would drop an
+          opaque band over every card that stacks up into that offset. */}
+      <div className="pb-6 sm:pb-8">
         <h2
           dir={dir}
           className="text-start text-3xl font-bold leading-snug text-foreground"
@@ -31,7 +32,9 @@ export default function Committees() {
             key={committee.id}
             className="sticky mb-6 sm:mb-8"
             style={{
-              top: `calc(var(--home-nav-height) + clamp(92px, 10vw, 130px) + ${index * 28}px)`,
+              // Each card parks a little lower than the one above, building the
+              // deck. 24px clears the floating navbar; nothing else is pinned.
+              top: `calc(var(--home-nav-height) + ${24 + index * 28}px)`,
               zIndex: index + 1,
             }}
           >
