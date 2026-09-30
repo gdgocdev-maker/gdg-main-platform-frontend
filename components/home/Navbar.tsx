@@ -44,7 +44,7 @@ export default function Navbar() {
   // (left-1/2 + translate would squeeze a fit-content fixed box to half the screen).
   // --home-nav-height (globals.css) is the space it takes at the top; sticky sections offset by it.
   return (
-    <nav className="fixed inset-x-4 top-4 z-[200] mx-auto flex h-14 items-center justify-between gap-8 rounded-full border border-white/15 bg-gdg-dark/20 ps-5 pe-3 text-[var(--white)] shadow-lg shadow-black/20 backdrop-blur-xl backdrop-saturate-150 lg:w-fit lg:pe-4">
+    <nav className="fixed inset-x-4 top-4 z-[200] mx-auto flex h-14 items-center justify-between gap-8 rounded-full border border-white/15 bg-gdg-dark/20 ps-5 pe-3 text-[var(--white)] shadow-lg shadow-black/20 backdrop-blur-xl backdrop-saturate-150 lg:w-fit lg:gap-10 lg:ps-12 lg:pe-8">
       <div>
         <img
           src="/images/gdg-white-logo.png"
@@ -53,7 +53,7 @@ export default function Navbar() {
         />
       </div>
 
-      <div className="hidden items-center gap-6 lg:flex">
+      <div className="hidden items-center gap-8 lg:flex">
         <motion.a
           href="#home"
           whileHover={{ scale: 1.05 }}
@@ -62,7 +62,7 @@ export default function Navbar() {
         >
           <span dir={dir}>{t("home")}</span>
 
-          <span className="mt-1 h-[2px] w-0 rounded-full bg-[var(--google-gradient)] transition-all duration-300 group-hover:w-full" />
+          <span className="mt-1 h-[2px] w-0 rounded-full bg-[image:var(--google-gradient)] transition-all duration-300 group-hover:w-full" />
         </motion.a>
 
         <motion.a
@@ -73,7 +73,7 @@ export default function Navbar() {
         >
           <span dir={dir}>{t("about")}</span>
 
-          <span className="mt-1 h-[2px] w-0 rounded-full bg-[var(--google-gradient)] transition-all duration-300 group-hover:w-full" />
+          <span className="mt-1 h-[2px] w-0 rounded-full bg-[image:var(--google-gradient)] transition-all duration-300 group-hover:w-full" />
         </motion.a>
 
         <motion.a
@@ -84,7 +84,7 @@ export default function Navbar() {
         >
           <span dir={dir}>{t("projects")}</span>
 
-          <span className="mt-1 h-[2px] w-0 rounded-full bg-[var(--google-gradient)] transition-all duration-300 group-hover:w-full" />
+          <span className="mt-1 h-[2px] w-0 rounded-full bg-[image:var(--google-gradient)] transition-all duration-300 group-hover:w-full" />
         </motion.a>
 
         <motion.a
@@ -95,7 +95,7 @@ export default function Navbar() {
         >
           <span dir={dir}>{t("events")}</span>
 
-          <span className="mt-1 h-[2px] w-0 rounded-full bg-[var(--google-gradient)] transition-all duration-300 group-hover:w-full" />
+          <span className="mt-1 h-[2px] w-0 rounded-full bg-[image:var(--google-gradient)] transition-all duration-300 group-hover:w-full" />
         </motion.a>
 
         <motion.a
@@ -106,7 +106,7 @@ export default function Navbar() {
         >
           <span dir={dir}>{t("community")}</span>
 
-          <span className="mt-1 h-[2px] w-0 rounded-full bg-[var(--google-gradient)] transition-all duration-300 group-hover:w-full" />
+          <span className="mt-1 h-[2px] w-0 rounded-full bg-[image:var(--google-gradient)] transition-all duration-300 group-hover:w-full" />
         </motion.a>
         <ThemeToggle />
         <LanguageSwitcher />

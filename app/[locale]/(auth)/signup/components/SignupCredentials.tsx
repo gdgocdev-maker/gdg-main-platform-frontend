@@ -62,7 +62,7 @@ export default function SignupCredentials({
         <AuthErrorMessage
           id="full-name-error"
           message={fullNameError}
-          className="absolute start-0 top-full mt-1"
+          className="absolute start-0 top-full mt-0.5"
         />
       </label>
 
@@ -108,7 +108,7 @@ export default function SignupCredentials({
         <AuthErrorMessage
           id="email-error"
           message={emailError}
-          className="absolute start-0 top-full mt-1"
+          className="absolute start-0 top-full mt-0.5"
         />
       </label>
 
@@ -140,7 +140,7 @@ export default function SignupCredentials({
         <AuthErrorMessage
           id="password-error"
           message={passwordError}
-          className="absolute start-0 top-full mt-1"
+          className="absolute start-0 top-full mt-0.5"
         />
       </label>
 
@@ -173,7 +173,7 @@ export default function SignupCredentials({
         <AuthErrorMessage
           id="confirm-email-error"
           message={confirmEmailError}
-          className="absolute start-0 top-full mt-1"
+          className="absolute start-0 top-full mt-0.5"
         />
       </label>
 
@@ -209,7 +209,7 @@ export default function SignupCredentials({
         <AuthErrorMessage
           id="confirm-password-error"
           message={confirmPasswordError}
-          className="absolute start-0 top-full mt-1"
+          className="absolute start-0 top-full mt-0.5"
         />
       </label>
 
@@ -266,20 +266,21 @@ export default function SignupCredentials({
         <AuthErrorMessage
           id="phone-error"
           message={phoneError}
-          className="absolute start-0 top-full mt-1"
+          className="absolute start-0 top-full mt-0.5"
         />
       </label>
 
-      <div className="relative order-8 col-span-full min-h-4 text-center">
+      {/* Fixed slot so the submit button doesn't jump when the message animates. */}
+      <div className="order-8 col-span-full -mt-2 flex min-h-5 items-center justify-center px-2 text-center">
         <AuthErrorMessage
           message={formError}
-          className="-translate-y-1 text-center"
+          className="text-center"
         />
       </div>
 
       <button
         type="submit"
-        className="order-9 col-span-full -mt-5 mb-1 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-[var(--white)] transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
+        className="order-9 col-span-full -mt-1 mb-1 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-[var(--white)] transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
       >
         {t("continue")}
       </button>

@@ -67,7 +67,7 @@ export default function SignupDetails({
         <AuthErrorMessage
           id="university-error"
           message={errors.university ?? ""}
-          className="absolute start-0 top-full mt-1"
+          className="absolute start-0 top-full mt-0.5"
         />
       </label>
 
@@ -99,7 +99,7 @@ export default function SignupDetails({
         <AuthErrorMessage
           id="university-id-error"
           message={errors.universityId ?? ""}
-          className="absolute start-0 top-full mt-1"
+          className="absolute start-0 top-full mt-0.5"
         />
       </label>
 
@@ -131,14 +131,15 @@ export default function SignupDetails({
         onBlur={() => onBlur("major")}
       />
 
-      <div className="relative col-span-full min-h-4 text-center">
+      {/* Fixed slot so the buttons below don't jump when the message animates. */}
+      <div className="col-span-full -mt-2 flex min-h-5 items-center justify-center px-2 text-center">
         <AuthErrorMessage
           message={formError}
           className="text-center"
         />
       </div>
 
-      <div className="col-span-full mt-4 mb-3 flex w-full flex-col gap-3 lg:flex-row">
+      <div className="col-span-full mt-1 mb-3 flex w-full flex-col gap-3 lg:flex-row">
         <button
           type="button"
           onClick={onBack}

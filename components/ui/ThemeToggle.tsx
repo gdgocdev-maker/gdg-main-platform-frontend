@@ -5,7 +5,13 @@ import { useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
-export default function ThemeToggle() {
+type ThemeToggleProps = {
+  // For headers with a permanently dark background (dashboard/profile TopNav).
+  // `text-foreground` is near-black in light mode, so the icon would vanish there.
+  onDark?: boolean;
+};
+
+export default function ThemeToggle({ onDark = false }: ThemeToggleProps = {}) {
   const t = useTranslations("common.theme");
   const [theme, setTheme] = useState<Theme>("light");
 
@@ -44,7 +50,9 @@ export default function ThemeToggle() {
           ? t("toDark")
           : t("toLight")
       }
-      className="flex h-10 w-10 items-center justify-center rounded-full text-foreground transition hover:bg-surface-muted"
+      className={`flex h-10 w-10 items-center justify-center rounded-full transition ${
+        onDark ? "text-white hover:bg-white/10" : "text-foreground hover:bg-surface-muted"
+      }`}
     >
       {theme === "light" ? (
         <svg
