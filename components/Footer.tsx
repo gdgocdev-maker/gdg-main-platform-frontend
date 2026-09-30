@@ -3,16 +3,21 @@
 import { FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
 import { useTextDirection } from "@/i18n/useTextDirection";
+import { Link } from "@/i18n/navigation";
+import { useHomeSectionHref } from "@/components/layout/useHomeSectionHref";
 
 export default function Footer() {
   const t = useTranslations("common");
   const dir = useTextDirection();
+  const sectionHref = useHomeSectionHref();
+  // `route` links are real pages (locale-aware Link); the rest are homepage sections.
   const links = [
-    { label: t("nav.home"), href: "#home" },
-    { label: t("nav.about"), href: "#about" },
-    { label: t("nav.events"), href: "#events" },
-    { label: t("nav.projects"), href: "#projects" },
-    { label: t("nav.community"), href: "#committees" },
+    { label: t("nav.home"), href: sectionHref("#home") },
+    { label: t("nav.about"), href: sectionHref("#about") },
+    { label: t("nav.events"), href: sectionHref("#events") },
+    { label: t("nav.announcements"), href: "/announcements", route: true },
+    { label: t("nav.projects"), href: sectionHref("#projects") },
+    { label: t("nav.community"), href: sectionHref("#committees") },
   ];
 
   return (
@@ -45,16 +50,20 @@ export default function Footer() {
           <div className="mt-2 h-[3px] w-[76px] rounded-full bg-[var(--white)]" />
 
           <nav className="mt-3 flex flex-col gap-3">
-            {links.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                dir={dir}
-                className="w-fit cursor-pointer text-sm font-medium leading-none hover:underline"
-              >
-                {link.label}
-              </a>
-            ))}
+            {links.map((link) => {
+              const className =
+                "w-fit cursor-pointer text-sm font-medium leading-none hover:underline";
+
+              return link.route ? (
+                <Link key={link.label} href={link.href} dir={dir} className={className}>
+                  {link.label}
+                </Link>
+              ) : (
+                <a key={link.label} href={link.href} dir={dir} className={className}>
+                  {link.label}
+                </a>
+              );
+            })}
           </nav>
         </div>
 
