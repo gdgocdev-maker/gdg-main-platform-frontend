@@ -79,11 +79,11 @@ function validatePhone(value: string) {
     return "phoneInvalid"
   }
 
-if (!/^05\d{8}$/.test(trimmed)) {
-  return "phoneFormat"
-}
+  if (!/^5\d{8}$/.test(trimmed)) {
+    return "phoneFormat"
+  }
 
-return ""
+  return ""
 }
 
 // Returns a validation.json key such as "genderRequired".
@@ -365,11 +365,11 @@ export default function SignupFlow() {
           )
         }}
         noValidate
-        className="mt-4 flex w-full flex-col lg:mt-2"
+        className="mt-4 flex w-full flex-col lg:mt-1"
       >
         <AuthStepTransition
           stepKey={step}
-          className="grid w-full grid-cols-1 gap-x-6 gap-y-5 md:grid-cols-2 lg:gap-y-4"
+          className="grid w-full grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-2 lg:gap-y-3.5"
         >
           {step === 1 ? (
             <SignupCredentials

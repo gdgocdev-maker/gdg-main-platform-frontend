@@ -17,7 +17,7 @@ type AuthCardProps = {
 const sizeClasses = {
   sm: "md:w-109.5 md:h-120!",
   md: "md:w-109.5 md:h-130!",
-  lg: "md:w-full md:max-w-135 md:pt-6",
+  lg: "md:w-full md:max-w-135 md:pt-4",
 } as const;
 
 export default function AuthCard({
@@ -39,6 +39,7 @@ export default function AuthCard({
         width={82}
         height={82}
         priority
+        className="md:h-16 md:w-16"
       />
 
       <h1 className="mt-3 text-center text-3xl font-bold leading-tight md:text-4xl">

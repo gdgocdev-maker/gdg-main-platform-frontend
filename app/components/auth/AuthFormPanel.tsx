@@ -18,7 +18,10 @@ export default function AuthFormPanel({ children }: AuthFormPanelProps) {
       transition={
         isDesktop ? { duration: 0.6, ease: "easeInOut" } : undefined
       }
-      className="relative z-10 flex h-full min-h-0 flex-1 items-center justify-center overflow-y-auto bg-background"
+      // On desktop the signup card is sized to fit its content, so the panel
+      // hides overflow. Small screens keep scrolling, since the form cannot
+      // realistically fit there.
+      className="relative z-10 flex h-full min-h-0 flex-1 items-center justify-center overflow-y-auto bg-background lg:overflow-hidden"
     >
       {children}
     </motion.section>

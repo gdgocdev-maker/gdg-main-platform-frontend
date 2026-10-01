@@ -16,7 +16,7 @@
   "nameInvalid": "Name can only include letters, spaces, and common punctuation.",
   "genderRequired": "Please select your gender.",
   "phoneInvalid": "Please enter a valid phone number.",
-  "phoneFormat": "Must be 10 digits and start with 05",
+  "phoneFormat": "Must be 9 digits and start with 5",
   "universityRequired": "Please enter your university.",
   "universityTooLong": "University must be 255 characters or fewer.",
   "universityIdRequired": "Please enter your university ID.",
