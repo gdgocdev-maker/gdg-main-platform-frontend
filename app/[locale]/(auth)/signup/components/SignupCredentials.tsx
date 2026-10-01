@@ -271,16 +271,18 @@ export default function SignupCredentials({
       </label>
 
       {/* Fixed slot so the submit button doesn't jump when the message animates. */}
-      <div className="order-8 col-span-full -mt-2 flex min-h-5 items-center justify-center px-2 text-center">
+      {/* Absolutely positioned so the slot costs no height: the message sits in the
+          gap under the last row instead of reserving a line. */}
+      <div className="relative order-8 col-span-full h-0">
         <AuthErrorMessage
           message={formError}
-          className="text-center"
+          className="absolute inset-x-0 top-1 text-center"
         />
       </div>
 
       <button
         type="submit"
-        className="order-9 col-span-full -mt-1 mb-1 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-[var(--white)] transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
+        className="order-9 col-span-full mt-2 mb-1 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-[var(--white)] transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
       >
         {t("continue")}
       </button>

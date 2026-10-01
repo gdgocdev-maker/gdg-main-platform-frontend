@@ -131,15 +131,15 @@ export default function SignupDetails({
         onBlur={() => onBlur("major")}
       />
 
-      {/* Fixed slot so the buttons below don't jump when the message animates. */}
-      <div className="col-span-full -mt-2 flex min-h-5 items-center justify-center px-2 text-center">
+      {/* Absolutely positioned, matching step 1: no reserved height. */}
+      <div className="relative col-span-full h-0">
         <AuthErrorMessage
           message={formError}
-          className="text-center"
+          className="absolute inset-x-0 top-1 text-center"
         />
       </div>
 
-      <div className="col-span-full mt-1 mb-3 flex w-full flex-col gap-3 lg:flex-row">
+      <div className="col-span-full mt-3 mb-3 flex w-full flex-col gap-3 lg:flex-row">
         <button
           type="button"
           onClick={onBack}

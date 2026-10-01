@@ -35,7 +35,7 @@ export default function SignUp({ params }: PageProps<"/[locale]/signup">) {
         >
           <SignupFlow />
 
-          <p className="mt-2 pb-4 text-center text-sm text-foreground/55 lg:pb-2">
+          <p className="mt-2 pb-4 text-center text-sm text-foreground/55 lg:mt-0 lg:pb-1">
             {t("haveAccount")}
             <Link
               href="/login"

@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "title": "Announcements | GDG on Campus — University of Jeddah",
+    "description": "Every official update from GDG on Campus — University of Jeddah, in one place."
+  },
+  "hero": {
+    "eyebrow": "GDG on Campus · UJ",
+    "title": "Announcements",
+    "description": "Every official update from GDG on Campus — University of Jeddah, in one place. Event openings, recruitment calls, results and community news, published and dated by the committee.",
+    "sourcePill": "Official source of truth — published by authorized committee members only"
+  },
+  "categories": {
+    "all": "All",
+    "events": "Events",
+    "recruitment": "Recruitment",
+    "workshops": "Workshops",
+    "results": "Results",
+    "community": "Community"
+  },
+  "controls": {
+    "searchLabel": "Search announcements",
+    "searchPlaceholder": "Search announcements",
+    "filterLabel": "Filter by category",
+    "sortLabel": "Sort announcements",
+    "sort": {
+      "newest": "Newest first",
+      "oldest": "Oldest first"
+    },
+    "publishedCount": "{count} published"
+  },
+  "pinned": {
+    "heading": "Pinned announcement",
+    "badge": "Pinned",
+    "viewDetails": "View Details"
+  },
+  "list": {
+    "heading": "All announcements",
+    "showing": "Showing {shown} of {total} published announcements",
+    "count": "{total} published announcements"
+  },
+  "card": {
+    "published": "Published {date}",
+    "readTime": "{minutes} min read",
+    "readMore": "Read More"
+  },
+  "carousel": {
+    "label": "Announcements",
+    "previous": "Previous announcement",
+    "next": "Next announcement"
+  },
+  "pagination": {
+    "label": "Announcements pages",
+    "previous": "Previous page",
+    "next": "Next page",
+    "page": "Page {page}"
+  },
+  "empty": {
+    "title": "No announcements published yet",
+    "inCategory": "There is nothing under <strong>{category}</strong> right now. Once the committee publishes an announcement, it appears here first — before it goes out on social media.",
+    "all": "There is nothing here right now. Once the committee publishes an announcement, it appears here first — before it goes out on social media.",
+    "browseAll": "Browse all announcements",
+    "goToEvents": "Go to Events",
+    "hint": "Try clearing the filters, or <link>follow us on LinkedIn</link> to get notified when something new is published."
+  },
+  "noResults": {
+    "title": "No matching announcements",
+    "description": "Nothing matches <strong>“{query}”</strong>. Try a different keyword, pick another category, or browse all announcements.",
+    "clearSearch": "Clear search"
+  },
+  "error": {
+    "title": "We couldn’t load announcements",
+    "description": "Something went wrong while loading the latest announcements. Check your connection and try again.",
+    "retry": "Try again",
+    "browseAll": "Back to announcements"
+  },
+  "loading": {
+    "label": "Loading announcements"
+  },
+  "details": {
+    "breadcrumb": "Breadcrumb",
+    "home": "Home",
+    "announcements": "Announcements",
+    "share": "Share",
+    "shareOnX": "Share on X",
+    "shareOnLinkedIn": "Share on LinkedIn",
+    "shareLink": "Share link",
+    "linkCopied": "Link copied",
+    "info": {
+      "title": "Announcement info",
+      "published": "Published",
+      "category": "Category",
+      "publishedBy": "Published by",
+      "status": "Status"
+    },
+    "status": {
+      "open": "Open",
+      "closed": "Closed"
+    },
+    "addToCalendar": "Add to calendar",
+    "more": {
+      "title": "More announcements",
+      "viewAll": "View all"
+    }
+  },
+  "cta": {
+    "title": "Never miss an official announcement",
+    "description": "Follow us on social media for the highlights — but everything published here is verified, dated and maintained by the GDG on Campus UJ committee.",
+    "button": "Join Our Community"
+  }
+}
