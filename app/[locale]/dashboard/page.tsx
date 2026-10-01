@@ -1,13 +1,14 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useState, useEffect, useSyncExternalStore } from "react";
 import type { ReactElement, ReactNode } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { MotionConfig, motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 
 import { TopNav } from "@/components/dashboard/TopNav";
-import { getPathname, usePathname } from "@/i18n/navigation";
+import { getPathname, usePathname, Link } from "@/i18n/navigation";
+import { getElevatedAccess } from "@/components/dashboard/leader/accessStore";
 
 import {
   calendarMock,
@@ -1043,7 +1044,23 @@ function TasksPanel({ tasks, searchQuery }: { tasks: DashboardTask[]; searchQuer
 
 export default function DashboardPage(): ReactElement {
   const [searchQuery, setSearchQuery] = useState("");
+  const [hasLeaderAccess, setHasLeaderAccess] = useState(false);
   const today = useTodayLabel();
+
+  useEffect(() => {
+    const checkAccess = () => {
+      const access = getElevatedAccess();
+      setHasLeaderAccess(Boolean(access));
+    };
+
+    checkAccess();
+    window.addEventListener("storage", checkAccess);
+    const interval = setInterval(checkAccess, 5000);
+    return () => {
+      window.removeEventListener("storage", checkAccess);
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <MotionConfig reducedMotion="user">
@@ -1059,6 +1076,35 @@ export default function DashboardPage(): ReactElement {
           >
             <UtilityRow user={currentUser} today={today} searchQuery={searchQuery} onSearchChange={setSearchQuery} />
             <WelcomeSection firstName={currentUser.name.split(" ")[0]} />
+
+            {/* Leader Workspace Banner: Only shown when Leader explicitly granted elevated access */}
+            {hasLeaderAccess && (
+              <motion.div
+                variants={itemVariants}
+                className="flex flex-col gap-3 rounded-2xl border border-blue-500/30 bg-blue-50/50 p-4 sm:flex-row sm:items-center sm:justify-between dark:bg-blue-950/20"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white font-bold text-xs">
+                    DA
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">
+                      Leader Access Granted
+                    </span>
+                    <p className="text-sm font-semibold text-foreground">
+                      Data Analysis Committee Leader Workspace
+                    </p>
+                  </div>
+                </div>
+                <Link
+                  href="/dashboard/leader"
+                  className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-95"
+                >
+                  Enter Leader Workspace →
+                </Link>
+              </motion.div>
+            )}
+
             <CompactDashboardNav />
             <SearchField searchQuery={searchQuery} onSearchChange={setSearchQuery} className="sm:hidden" />
             <MyEventsGrid tiles={myEventTiles} />

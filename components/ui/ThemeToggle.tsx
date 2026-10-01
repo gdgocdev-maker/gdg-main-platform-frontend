@@ -20,7 +20,9 @@ export default function ThemeToggle({ onDark = false }: ThemeToggleProps = {}) {
 
     if (savedTheme === "light" || savedTheme === "dark") {
       document.documentElement.dataset.theme = savedTheme;
-      setTheme(savedTheme);
+      window.requestAnimationFrame(() => {
+        setTheme(savedTheme);
+      });
       return;
     }
 
@@ -30,7 +32,9 @@ export default function ThemeToggle({ onDark = false }: ThemeToggleProps = {}) {
 
     const systemTheme: Theme = prefersDark ? "dark" : "light";
 
-    setTheme(systemTheme);
+    window.requestAnimationFrame(() => {
+      setTheme(systemTheme);
+    });
   }, []);
 
   const toggleTheme = () => {
