@@ -48,6 +48,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
+      data-scroll-behavior="smooth"
       // Arabic mirrors the whole layout; use logical classes (ms-/pe-/start-/end-) so components flip with it.
       dir={localeMetadata[locale].dir}
       className={`${googleSans.variable} ${ibmPlexSansArabic.variable} h-full antialiased`}

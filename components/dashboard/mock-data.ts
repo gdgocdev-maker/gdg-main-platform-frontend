@@ -1,4 +1,4 @@
-// Mock data for the User Dashboard (app/dashboard/page.tsx).
+// Mock data for the Members Dashboard (app/[locale]/dashboard/members-dashboard/page.tsx).
 // There is no approved dashboard API contract yet (see docs/api-integration.md),
 // so this module is the single, typed swap point for real backend data later.
 
@@ -73,7 +73,7 @@ export const currentUser: DashboardUser = {
 
 
 export const sidebarPrimaryItems: SidebarItem[] = [
-  { id: "dashboard", href: "/dashboard" },
+  { id: "dashboard", href: "/dashboard/members-dashboard" },
   { id: "events", href: "#" },
   { id: "tasks", href: "#" },
   { id: "members", href: "#" },

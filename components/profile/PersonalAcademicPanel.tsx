@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { InfoCard } from "@/components/profile/InfoCard";
-import type { InfoCardData } from "@/lib/constants/profile";
+import type { InfoCardData } from "@/data/profile";
 
 type PersonalAcademicPanelProps = {
   personalInfo: InfoCardData;

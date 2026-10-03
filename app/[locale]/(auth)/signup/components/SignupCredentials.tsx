@@ -1,14 +1,8 @@
 import { useTranslations } from "next-intl"
 import AuthErrorMessage from "@/app/components/auth/AuthErrorMessage"
 import PasswordInput from "@/app/components/auth/PasswordInput"
+import { genderOptions, phoneCountryCodeOptions } from "@/data/signup"
 import SelectField from "./SelectField"
-
-const countryCodeOptions = [{ country: "Saudi Arabia", code: "+966" }]
-
-const genderOptions = [
-  { value: "female", labelKey: "female" },
-  { value: "male", labelKey: "male" },
-]
 
 type SignupCredentialsProps = {
   values: Record<string, string>;
@@ -236,7 +230,7 @@ export default function SignupCredentials({
               aria-label={t("fields.phone.countryCode")}
               className="h-full appearance-none rounded-s-md bg-surface px-2.75 pe-6 text-base font-normal outline-none"
             >
-              {countryCodeOptions.map(({ code }) => (
+              {phoneCountryCodeOptions.map(({ code }) => (
                 <option key={code} value={code}>
                   {code}
                 </option>

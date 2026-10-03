@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ExternalLink, Globe } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { GithubMark, LinkedInGlyph } from "@/components/layout/BrandMarks";
-import type { SocialLink } from "@/lib/constants/profile";
+import type { SocialLink } from "@/data/profile";
 
 const iconBadgeByPlatform = {
   github: { icon: GithubMark, className: "bg-[var(--black)] text-[var(--white)]" },

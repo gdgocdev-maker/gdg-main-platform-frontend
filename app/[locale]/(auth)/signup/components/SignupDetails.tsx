@@ -1,20 +1,7 @@
 import { useTranslations } from "next-intl"
 import AuthErrorMessage from "@/app/components/auth/AuthErrorMessage"
+import { collegeOptions, majorOptions } from "@/data/signup"
 import SelectField from "./SelectField"
-
-// `value` is what gets submitted, so it stays in English; only the label is translated.
-const collegeOptions = [
-  { value: "Computer Science", labelKey: "computerScience" },
-  { value: "Information Technology", labelKey: "informationTechnology" },
-  { value: "Engineering", labelKey: "engineering" },
-]
-
-const majorOptions = [
-  { value: "Software Engineering", labelKey: "softwareEngineering" },
-  { value: "Information Systems", labelKey: "informationSystems" },
-  { value: "Cybersecurity", labelKey: "cybersecurity" },
-  { value: "Data Science", labelKey: "dataScience" },
-]
 
 type SignupDetailsProps = {
   values: Record<string, string>;

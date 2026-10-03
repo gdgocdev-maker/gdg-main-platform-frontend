@@ -9,12 +9,15 @@ import { ProfileHero } from "@/components/profile/ProfileHero";
 import { ProfileTabs } from "@/components/profile/ProfileTabs";
 import {
   academicInfo,
+  initialProfileAvatarUrl,
+  initialProfileBio,
+  initialProfileHeaderImageUrl,
   personalInfo,
   sampleProfile,
   socialLinks,
   type InfoCardData,
   type SocialLink,
-} from "@/lib/constants/profile";
+} from "@/data/profile";
 import { validateInfoField } from "@/lib/validateInfoField";
 import { validateSocialLink } from "@/lib/validateSocialLink";
 import { useMemberSince } from "@/lib/useMemberSince";
@@ -51,12 +54,12 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
     : "";
   const [isEditing, setIsEditing] = useState(false);
 
-  const [bio, setBio] = useState("");
+  const [bio, setBio] = useState(initialProfileBio);
   const [bioDraft, setBioDraft] = useState("");
 
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(initialProfileAvatarUrl);
   const [avatarDraft, setAvatarDraft] = useState<string | null>(null);
-  const [headerImageUrl, setHeaderImageUrl] = useState<string | null>(null);
+  const [headerImageUrl, setHeaderImageUrl] = useState<string | null>(initialProfileHeaderImageUrl);
   const [headerImageDraft, setHeaderImageDraft] = useState<string | null>(null);
 
   const [personalData, setPersonalData] = useState(personalInfo);

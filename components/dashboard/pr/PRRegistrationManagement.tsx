@@ -1,0 +1,556 @@
+"use client";
+
+import { useState } from "react";
+import { Link } from "@/i18n/navigation";
+import { useLeaderDashboard } from "../shared/LeaderDashboardContext";
+import type {
+  EventRegistration,
+  RegistrationConfirmationStatus,
+  RegistrationStatus,
+} from "../shared/types";
+import {
+  prEventStatusFilterOptions,
+  prRegistrationStatusFilterOptions,
+} from "./mock-data";
+import { ConfirmModal } from "../shared/ConfirmModal";
+import {
+  ArrowLeft,
+  Calendar,
+  Clock,
+  MapPin,
+  Search,
+  Users,
+  ClipboardList,
+  CircleCheck,
+  CircleX,
+  Eye,
+} from "lucide-react";
+
+function RegistrationStatusBadge({
+  status,
+  confirmationStatus,
+  waitlistPosition,
+}: {
+  status: RegistrationStatus;
+  confirmationStatus?: RegistrationConfirmationStatus;
+  waitlistPosition?: number;
+}) {
+  const label = status === "Waitlisted"
+    ? waitlistPosition ? `Waitlist #${waitlistPosition}` : "Waitlisted"
+    : status === "Accepted" && confirmationStatus === "NotSent"
+      ? "Confirmation needed"
+      : status === "Accepted" && confirmationStatus === "Pending"
+        ? "Awaiting confirmation"
+        : status === "Accepted" && confirmationStatus === "Confirmed"
+          ? "Confirmed"
+          : status === "Accepted" && confirmationStatus === "Declined"
+            ? "Confirmation declined"
+            : status === "Accepted" && confirmationStatus === "Expired"
+              ? "Confirmation expired"
+              : status;
+  const style = status === "Pending"
+    ? "bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300"
+    : status === "Waitlisted"
+      ? "bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300"
+      : status === "Rejected" || confirmationStatus === "Declined" || confirmationStatus === "Expired"
+        ? "bg-rose-50 text-rose-700 dark:bg-rose-950/50 dark:text-rose-300"
+        : confirmationStatus === "NotSent" || confirmationStatus === "Pending"
+          ? "bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300"
+          : "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300";
+  const dotStyle = status === "Pending"
+    ? "bg-amber-500"
+    : status === "Waitlisted" || (status === "Accepted" && (confirmationStatus === "NotSent" || confirmationStatus === "Pending"))
+      ? "bg-blue-500"
+      : status === "Rejected" || confirmationStatus === "Declined" || confirmationStatus === "Expired"
+        ? "bg-rose-500"
+        : "bg-emerald-500";
+
+  return (
+    <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${style}`}>
+      <span className={`size-1.5 rounded-full ${dotStyle}`} />
+      {label}
+    </span>
+  );
+}
+
+function RegistrationCounts({ eventId }: { eventId: string }) {
+  const { registrations } = useLeaderDashboard();
+  const eventRegistrations = registrations.filter((item) => item.eventId === eventId);
+  const pending = eventRegistrations.filter((item) => item.status === "Pending").length;
+  const accepted = eventRegistrations.filter((item) => item.status === "Accepted").length;
+  const rejected = eventRegistrations.filter((item) => item.status === "Rejected").length;
+  const waitlisted = eventRegistrations.filter((item) => item.status === "Waitlisted").length;
+  const awaitingConfirmation = eventRegistrations.filter(
+    (item) => item.status === "Accepted" &&
+      (item.confirmationStatus === "NotSent" || item.confirmationStatus === "Pending")
+  ).length;
+
+  return (
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
+      <span className="font-semibold text-foreground">{eventRegistrations.length} total</span>
+      <span className="text-amber-700 dark:text-amber-300">{pending} pending</span>
+      <span className="text-emerald-700 dark:text-emerald-300">{accepted} accepted</span>
+      <span className="text-rose-700 dark:text-rose-300">{rejected} rejected</span>
+      <span className="text-blue-700 dark:text-blue-300">{waitlisted} waitlisted</span>
+      <span className="text-muted">{awaitingConfirmation} confirmations outstanding</span>
+    </div>
+  );
+}
+
+export function PROverviewRegistrations() {
+  const { events, registrations } = useLeaderDashboard();
+  const pending = registrations
+    .filter((registration) => registration.status === "Pending")
+    .slice(0, 5);
+  const upcomingEvents = events.filter((event) => event.status === "Upcoming").slice(0, 4);
+
+  return (
+    <div className="space-y-6">
+      <section className="overflow-hidden rounded-2xl border border-border bg-surface shadow-2xs">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/80 p-5">
+          <div>
+            <h2 className="text-base font-bold text-foreground">Pending registrations</h2>
+            <p className="text-xs text-muted">Applicants waiting for a PR review.</p>
+          </div>
+          <Link
+            href="/dashboard/pr-dashboard/events"
+            className="rounded-xl border border-border px-3 py-2 text-xs font-semibold text-foreground transition hover:bg-surface-muted"
+          >
+            View all registrations
+          </Link>
+        </div>
+        {pending.length === 0 ? (
+          <p className="p-5 text-sm text-muted">No pending registrations to review.</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-start text-xs">
+              <thead>
+                <tr className="border-b border-border text-[11px] font-semibold uppercase tracking-wider text-muted">
+                  <th className="px-5 py-3 text-start">Applicant</th>
+                  <th className="px-4 py-3 text-start">Event</th>
+                  <th className="px-4 py-3 text-start">Registration date</th>
+                  <th className="px-4 py-3 text-start">Status</th>
+                  <th className="px-5 py-3 text-end">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border/60">
+                {pending.map((registration) => {
+                  const event = events.find((item) => item.id === registration.eventId);
+                  return (
+                    <tr key={registration.id} className="hover:bg-surface-muted/30">
+                      <td className="px-5 py-3">
+                        <span className="block font-semibold text-foreground">{registration.applicantName}</span>
+                        <span className="text-muted">{registration.email}</span>
+                      </td>
+                      <td className="px-4 py-3 text-foreground">{event?.title ?? "Event"}</td>
+                      <td className="px-4 py-3 text-muted">{registration.registeredAt}</td>
+                      <td className="px-4 py-3"><RegistrationStatusBadge status={registration.status} /></td>
+                      <td className="px-5 py-3 text-end">
+                        {event && (
+                          <Link
+                            href={`/dashboard/pr-dashboard/events/${event.id}`}
+                            className="inline-flex items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5 font-semibold text-foreground hover:bg-surface-muted"
+                          >
+                            <Eye className="size-3.5" /> Review
+                          </Link>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+
+      <section className="overflow-hidden rounded-2xl border border-border bg-surface shadow-2xs">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/80 p-5">
+          <div>
+            <h2 className="text-base font-bold text-foreground">Upcoming events</h2>
+            <p className="text-xs text-muted">Monitor registration activity for upcoming events.</p>
+          </div>
+          <Link
+            href="/dashboard/pr-dashboard/events"
+            className="text-xs font-semibold text-blue-600 hover:underline dark:text-blue-400"
+          >
+            View all events
+          </Link>
+        </div>
+        {upcomingEvents.length === 0 ? (
+          <p className="p-5 text-sm text-muted">No upcoming events are available.</p>
+        ) : (
+          <div className="divide-y divide-border/60">
+            {upcomingEvents.map((event) => (
+              <div key={event.id} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="min-w-0">
+                  <h3 className="truncate text-sm font-semibold text-foreground">{event.title}</h3>
+                  <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted">
+                    <span className="inline-flex items-center gap-1"><Calendar className="size-3.5" />{event.date}</span>
+                    <span className="inline-flex items-center gap-1"><Clock className="size-3.5" />{event.time}</span>
+                    <span className="inline-flex items-center gap-1"><MapPin className="size-3.5" />{event.location}</span>
+                  </p>
+                  <div className="mt-2"><RegistrationCounts eventId={event.id} /></div>
+                </div>
+                <Link
+                  href={`/dashboard/pr-dashboard/events/${event.id}`}
+                  className="inline-flex shrink-0 items-center justify-center rounded-xl border border-border px-3 py-2 text-xs font-semibold text-foreground transition hover:bg-surface-muted"
+                >
+                  View registrations
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+    </div>
+  );
+}
+
+export function PREventsList() {
+  const { events } = useLeaderDashboard();
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("all");
+  const availableEvents = events.filter((event) => event.status !== "Draft");
+  const filteredEvents = availableEvents.filter((event) => {
+    const query = search.trim().toLowerCase();
+    const matchesQuery = !query || event.title.toLowerCase().includes(query) || event.location.toLowerCase().includes(query);
+    const matchesStatus = filter === "all" || event.status.toLowerCase().replaceAll(" ", "-") === filter;
+    return matchesQuery && matchesStatus;
+  });
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-xl font-bold text-foreground sm:text-2xl">Events</h2>
+        <p className="mt-1 text-sm text-muted">Review registrations for events across the platform.</p>
+      </div>
+
+      <div className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-3 shadow-2xs sm:flex-row sm:items-center">
+        <div className="relative min-w-0 flex-1">
+          <Search className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted" />
+          <input
+            type="search"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Search events by name or location"
+            className="h-10 w-full rounded-xl border border-border bg-surface-muted/40 ps-9 pe-3 text-sm text-foreground outline-none focus:border-blue-500"
+          />
+        </div>
+        <select
+          value={filter}
+          onChange={(event) => setFilter(event.target.value)}
+          className="h-10 rounded-xl border border-border bg-surface px-3 text-sm text-foreground outline-none focus:border-blue-500"
+          aria-label="Filter events"
+        >
+          {prEventStatusFilterOptions.map((option) => (
+            <option key={option.value} value={option.value}>{option.label}</option>
+          ))}
+        </select>
+      </div>
+
+      <div className="overflow-hidden rounded-2xl border border-border bg-surface shadow-2xs">
+        <div className="border-b border-border/80 p-5">
+          <h3 className="text-base font-bold text-foreground">Event registrations</h3>
+          <p className="text-xs text-muted">PR can review applicants but cannot create, edit, publish, or delete events.</p>
+        </div>
+        {filteredEvents.length === 0 ? (
+          <p className="p-5 text-sm text-muted">No events match this search or filter.</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-start text-xs">
+              <thead>
+                <tr className="border-b border-border text-[11px] font-semibold uppercase tracking-wider text-muted">
+                  <th className="px-5 py-3.5 text-start">Event</th>
+                  <th className="px-4 py-3.5 text-start">Date</th>
+                  <th className="px-4 py-3.5 text-start">Location</th>
+                  <th className="px-4 py-3.5 text-start">Registration status</th>
+                  <th className="px-4 py-3.5 text-start">Registrations</th>
+                  <th className="px-5 py-3.5 text-end">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border/60">
+                {filteredEvents.map((event) => (
+                  <tr key={event.id} className="hover:bg-surface-muted/30">
+                    <td className="px-5 py-3.5">
+                      <span className="block font-semibold text-foreground">{event.title}</span>
+                      <span className="text-[11px] text-muted">{event.type}</span>
+                    </td>
+                    <td className="px-4 py-3.5 text-foreground/80">{event.date} · {event.time}</td>
+                    <td className="px-4 py-3.5 text-foreground/80">{event.location}</td>
+                    <td className="px-4 py-3.5">
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-surface-muted px-2.5 py-1 text-[11px] font-medium text-muted">
+                        Registration status unavailable
+                      </span>
+                    </td>
+                    <td className="px-4 py-3.5"><RegistrationCounts eventId={event.id} /></td>
+                    <td className="px-5 py-3.5 text-end">
+                      <Link
+                        href={`/dashboard/pr-dashboard/events/${event.id}`}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5 font-semibold text-foreground transition hover:bg-surface-muted"
+                      >
+                        <ClipboardList className="size-3.5" /> View registrations
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export function PREventRegistrations({ eventId }: { eventId: string }) {
+  const { events, registrations, updateRegistrationStatus, canManageRegistrations } = useLeaderDashboard();
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [selectedRegistration, setSelectedRegistration] = useState<EventRegistration | null>(null);
+  const [decision, setDecision] = useState<RegistrationStatus | null>(null);
+
+  const event = events.find((item) => item.id === eventId && item.status !== "Draft");
+  const eventRegistrations = registrations.filter((item) => item.eventId === eventId);
+  const query = search.trim().toLowerCase();
+  const filteredRegistrations = eventRegistrations.filter((registration) => {
+    const matchesSearch = !query || registration.applicantName.toLowerCase().includes(query) || registration.email.toLowerCase().includes(query);
+    const awaitingConfirmation = registration.status === "Accepted" &&
+      (registration.confirmationStatus === "NotSent" || registration.confirmationStatus === "Pending");
+    const matchesStatus = statusFilter === "all" || registration.status.toLowerCase() === statusFilter ||
+      (statusFilter === "awaiting-confirmation" && awaitingConfirmation);
+    return matchesSearch && matchesStatus;
+  });
+
+  if (!event) {
+    return (
+      <div className="rounded-2xl border border-border bg-surface p-6">
+        <p className="text-sm font-semibold text-foreground">Event not found.</p>
+        <Link href="/dashboard/pr-dashboard/events" className="mt-3 inline-flex items-center gap-2 text-sm text-blue-600 hover:underline dark:text-blue-400">
+          <ArrowLeft className="size-4" /> Back to events
+        </Link>
+      </div>
+    );
+  }
+
+  const countByStatus = (status: RegistrationStatus) => eventRegistrations.filter((item) => item.status === status).length;
+  const awaitingConfirmationCount = eventRegistrations.filter(
+    (item) => item.status === "Accepted" &&
+      (item.confirmationStatus === "NotSent" || item.confirmationStatus === "Pending")
+  ).length;
+
+  return (
+    <div className="space-y-6">
+      <Link href="/dashboard/pr-dashboard/events" className="inline-flex items-center gap-2 text-sm font-medium text-muted hover:text-foreground">
+        <ArrowLeft className="size-4" /> Events
+      </Link>
+
+      <section className="rounded-2xl border border-border bg-surface p-5 shadow-2xs sm:p-6">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="min-w-0">
+            <h2 className="text-xl font-bold text-foreground sm:text-2xl">{event.title}</h2>
+            <p className="mt-2 text-sm text-muted">{event.description || "No event description is available."}</p>
+          </div>
+          <span className="rounded-full bg-surface-muted px-3 py-1 text-xs font-semibold text-muted">Registration status unavailable</span>
+        </div>
+        <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-xs text-muted">
+          <span className="inline-flex items-center gap-1.5"><Calendar className="size-4" />{event.date}</span>
+          <span className="inline-flex items-center gap-1.5"><Clock className="size-4" />{event.time}</span>
+          <span className="inline-flex items-center gap-1.5"><MapPin className="size-4" />{event.location}</span>
+        </div>
+        <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          {[
+            { label: "Total", value: eventRegistrations.length, icon: Users },
+            { label: "Pending", value: countByStatus("Pending"), icon: ClipboardList },
+            { label: "Accepted", value: countByStatus("Accepted"), icon: CircleCheck },
+            { label: "Rejected", value: countByStatus("Rejected"), icon: CircleX },
+            { label: "Waitlist", value: countByStatus("Waitlisted"), icon: ClipboardList },
+            { label: "Confirmation outstanding", value: awaitingConfirmationCount, icon: Clock },
+          ].map(({ label, value, icon: Icon }) => (
+            <div key={label} className="rounded-xl border border-border bg-surface-muted/40 p-3">
+              <div className="flex items-center gap-2 text-muted"><Icon className="size-4" /><span className="text-xs">{label}</span></div>
+              <p className="mt-1 text-xl font-bold text-foreground">{value}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="overflow-hidden rounded-2xl border border-border bg-surface shadow-2xs">
+        <div className="flex flex-col gap-3 border-b border-border/80 p-5 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="text-base font-bold text-foreground">Applicants</h3>
+            <p className="text-xs text-muted">Review submitted information and event-specific answers.</p>
+          </div>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <div className="relative">
+              <Search className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted" />
+              <input
+                type="search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search name or email"
+                className="h-9 w-full rounded-xl border border-border bg-surface-muted/40 ps-9 pe-3 text-xs text-foreground outline-none focus:border-blue-500 sm:w-56"
+              />
+            </div>
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              aria-label="Filter registrations by status"
+              className="h-9 rounded-xl border border-border bg-surface px-3 text-xs text-foreground outline-none focus:border-blue-500"
+            >
+              {prRegistrationStatusFilterOptions.map((option) => (
+                <option key={option.value} value={option.value}>{option.label}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {filteredRegistrations.length === 0 ? (
+          <div className="p-8 text-center">
+            <ClipboardList className="mx-auto size-8 text-muted" />
+            <p className="mt-3 text-sm font-semibold text-foreground">
+              {eventRegistrations.length === 0 ? "No registrations yet" : "No registrations match these filters"}
+            </p>
+            <p className="mt-1 text-xs text-muted">
+              Registration records and submitted answers will appear here when provided by the platform.
+            </p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-start text-xs">
+              <thead>
+                <tr className="border-b border-border text-[11px] font-semibold uppercase tracking-wider text-muted">
+                  <th className="px-5 py-3.5 text-start">Applicant</th>
+                  <th className="px-4 py-3.5 text-start">Registration date</th>
+                  <th className="px-4 py-3.5 text-start">Status</th>
+                  <th className="px-5 py-3.5 text-end">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border/60">
+                {filteredRegistrations.map((registration) => (
+                  <tr key={registration.id} className="hover:bg-surface-muted/30">
+                    <td className="px-5 py-3.5">
+                      <span className="block font-semibold text-foreground">{registration.applicantName}</span>
+                      <span className="text-muted">{registration.email}</span>
+                    </td>
+                    <td className="px-4 py-3.5 text-muted">{registration.registeredAt}</td>
+                    <td className="px-4 py-3.5">
+                      <RegistrationStatusBadge
+                        status={registration.status}
+                        confirmationStatus={registration.confirmationStatus}
+                        waitlistPosition={registration.waitlistPosition}
+                      />
+                    </td>
+                    <td className="px-5 py-3.5 text-end">
+                      <button type="button" onClick={() => setSelectedRegistration(registration)} className="inline-flex items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5 font-semibold text-foreground hover:bg-surface-muted">
+                        <Eye className="size-3.5" /> Review
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+
+      {selectedRegistration && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <button type="button" aria-label="Close applicant details" className="fixed inset-0 bg-black/60 backdrop-blur-xs" onClick={() => setSelectedRegistration(null)} />
+          <section className="relative z-10 max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-border bg-surface p-5 shadow-2xl sm:p-6">
+            <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border pb-4">
+              <div>
+                <h3 className="text-lg font-bold text-foreground">{selectedRegistration.applicantName}</h3>
+                <p className="mt-1 text-xs text-muted">{selectedRegistration.email} · Registered {selectedRegistration.registeredAt}</p>
+              </div>
+              <RegistrationStatusBadge
+                status={selectedRegistration.status}
+                confirmationStatus={selectedRegistration.confirmationStatus}
+                waitlistPosition={selectedRegistration.waitlistPosition}
+              />
+            </div>
+
+            <div className="mt-5">
+              <h4 className="text-sm font-semibold text-foreground">Applicant information</h4>
+              {Object.keys(selectedRegistration.profile).length === 0 ? (
+                <p className="mt-2 text-xs text-muted">No additional profile information was included with this registration.</p>
+              ) : (
+                <dl className="mt-2 grid gap-3 sm:grid-cols-2">
+                  {Object.entries(selectedRegistration.profile).map(([label, value]) => (
+                    <div key={label} className="rounded-xl border border-border bg-surface-muted/30 p-3">
+                      <dt className="text-[11px] text-muted">{label}</dt>
+                      <dd className="mt-1 text-xs font-medium text-foreground">{value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+            </div>
+
+            {selectedRegistration.status === "Accepted" && (
+              <div className="mt-5 rounded-xl border border-blue-200 bg-blue-50/70 p-3 text-xs text-blue-900 dark:border-blue-800/50 dark:bg-blue-950/30 dark:text-blue-200">
+                <p className="font-semibold">Confirmation: {selectedRegistration.confirmationStatus ?? "NotSent"}</p>
+                <p className="mt-1">Confirmation messages and response deadlines require backend support; this dashboard does not send email.</p>
+              </div>
+            )}
+            {selectedRegistration.status === "Accepted" &&
+              (selectedRegistration.confirmationStatus === "Declined" || selectedRegistration.confirmationStatus === "Expired") && (
+                <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50/70 p-3 text-xs text-amber-900 dark:border-amber-800/50 dark:bg-amber-950/30 dark:text-amber-200">
+                  The backend should promote the first eligible waitlisted applicant after a decline or expired confirmation. Automatic promotion is not performed in the frontend.
+                </div>
+              )}
+
+            <div className="mt-5 border-t border-border pt-4">
+              <h4 className="text-sm font-semibold text-foreground">Registration questions & answers</h4>
+              {selectedRegistration.answers.length === 0 ? (
+                <p className="mt-2 text-xs text-muted">No event-specific questions or answers are available in the current registration data.</p>
+              ) : (
+                <dl className="mt-2 space-y-3">
+                  {selectedRegistration.answers.map((answer) => (
+                    <div key={answer.questionId} className="rounded-xl border border-border bg-surface-muted/30 p-3">
+                      <dt className="text-xs font-semibold text-foreground">{answer.question}</dt>
+                      <dd className="mt-1 whitespace-pre-wrap text-xs leading-relaxed text-muted">{answer.answer}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+            </div>
+
+            <div className="mt-6 flex flex-wrap justify-end gap-2 border-t border-border pt-4">
+              {selectedRegistration.status === "Pending" && canManageRegistrations && (
+                <>
+                  <button type="button" onClick={() => setDecision("Waitlisted")} className="rounded-xl border border-blue-500/40 px-4 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-50 dark:text-blue-300 dark:hover:bg-blue-950/40">Add to waitlist</button>
+                  <button type="button" onClick={() => setDecision("Rejected")} className="rounded-xl border border-rose-500/40 px-4 py-2 text-xs font-semibold text-rose-700 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-950/40">Reject</button>
+                  <button type="button" onClick={() => setDecision("Accepted")} className="rounded-xl bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700">Accept</button>
+                </>
+              )}
+              {selectedRegistration.status === "Accepted" && canManageRegistrations && (
+                <button type="button" disabled className="cursor-not-allowed rounded-xl border border-border px-4 py-2 text-xs font-semibold text-muted opacity-70" title="Available when backend confirmation delivery is implemented">
+                  Send confirmation request (unavailable)
+                </button>
+              )}
+              <button type="button" onClick={() => setSelectedRegistration(null)} className="rounded-xl border border-border px-4 py-2 text-xs font-medium text-foreground hover:bg-surface-muted">Close</button>
+            </div>
+          </section>
+        </div>
+      )}
+
+      <ConfirmModal
+        isOpen={Boolean(decision && selectedRegistration)}
+        onClose={() => setDecision(null)}
+        onConfirm={() => {
+          if (decision && selectedRegistration) {
+            updateRegistrationStatus(selectedRegistration.id, decision);
+            setSelectedRegistration(null);
+          }
+        }}
+        title={decision === "Accepted" ? "Accept registration" : decision === "Waitlisted" ? "Add to waitlist" : "Reject registration"}
+        message={decision === "Waitlisted"
+          ? <>Place <strong className="text-foreground">{selectedRegistration?.applicantName}</strong> on the waitlist?</>
+          : <>Confirm {decision?.toLowerCase()} for <strong className="text-foreground">{selectedRegistration?.applicantName}</strong>?</>}
+        confirmText={decision === "Waitlisted" ? "Add to waitlist" : decision ?? "Confirm"}
+        cancelText="Cancel"
+        danger={decision === "Rejected"}
+      />
+    </div>
+  );
+}

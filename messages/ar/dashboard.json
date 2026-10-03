@@ -2,9 +2,9 @@
   "nav": {
     "sectionsLabel": "أقسام لوحة التحكم",
     "accountLabel": "الحساب",
-    "compactLabel": "لوحة التحكم",
+    "compactLabel": "لوحة تحكم الأعضاء",
     "items": {
-      "dashboard": "لوحة التحكم",
+      "dashboard": "لوحة تحكم الأعضاء",
       "events": "الفعاليات",
       "tasks": "المهام",
       "members": "الأعضاء",

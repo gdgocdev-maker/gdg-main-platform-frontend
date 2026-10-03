@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { SocialLinkRow } from "@/components/profile/SocialLinkRow";
-import type { SocialLink } from "@/lib/constants/profile";
+import type { SocialLink } from "@/data/profile";
 
 type SocialLinksPanelProps = {
   links: SocialLink[];

@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Select } from "@/components/ui/Select";
-import type { InfoCardData } from "@/lib/constants/profile";
+import type { InfoCardData } from "@/data/profile";
 import { SAUDI_UNIVERSITIES } from "@/lib/constants/universities";
 
 type InfoCardProps = {

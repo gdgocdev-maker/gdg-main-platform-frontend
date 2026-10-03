@@ -1,4 +1,4 @@
-import type { SocialLink } from "@/lib/constants/profile";
+import type { SocialLink } from "@/data/profile";
 
 const requiredDomain: Partial<Record<SocialLink["platform"], string>> = {
   github: "github.com",
