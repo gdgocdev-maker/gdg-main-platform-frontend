@@ -7,7 +7,7 @@ import { PersonalAcademicPanel } from "@/components/profile/PersonalAcademicPane
 import { SocialLinksPanel } from "@/components/profile/SocialLinksPanel";
 import { Tabs } from "@/components/ui/Tabs";
 import { useTextDirection } from "@/i18n/useTextDirection";
-import type { InfoCardData, SocialLink } from "@/lib/constants/profile";
+import type { InfoCardData, SocialLink } from "@/data/profile";
 
 const tabIds = ["personal", "social"] as const;
 

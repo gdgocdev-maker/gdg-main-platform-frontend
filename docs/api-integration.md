@@ -34,3 +34,16 @@ The technical guide shows the frontend running at `http://localhost:3000` and th
 ## Security boundary
 
 Do not put secrets in `NEXT_PUBLIC_*` variables. The browser must not be trusted to enforce roles or protect data. The frontend may use backend-provided identity/permission information to shape the interface, while the backend remains the enforcement point.
+
+## PR registration dashboard status
+
+The current backend schema contains no event or registration models, and the available NestJS controller exposes no registration operations. The PR dashboard therefore renders an honest empty registration state and does not invent applicant records, event questions, API routes, registration-open permissions, or backend authorization rules.
+
+Before connecting this dashboard to production, the backend contract must define event listing/detail access, registration records and custom question answers, accept/reject/waitlist operations, and the applicable PR permissions. It must also define:
+
+- confirmation message delivery and its authorization, plus confirmation status values;
+- confirmation deadlines and expiry processing;
+- how an applicant declines an accepted spot;
+- ordered waitlist positions and server-side promotion of the first eligible applicant after a decline or expiry.
+
+The frontend must not report a message as sent or promote waitlisted applicants itself. Registration open/close behavior remains **TBD** until an approved contract confirms it.

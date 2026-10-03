@@ -2,9 +2,9 @@
   "nav": {
     "sectionsLabel": "Dashboard sections",
     "accountLabel": "Account",
-    "compactLabel": "Dashboard",
+    "compactLabel": "Members Dashboard",
     "items": {
-      "dashboard": "Dashboard",
+      "dashboard": "Members Dashboard",
       "events": "Events",
       "tasks": "Tasks",
       "members": "Members",

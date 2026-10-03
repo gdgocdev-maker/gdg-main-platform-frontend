@@ -1,21 +1,6 @@
 import Image from "next/image";
 import { SpeakerCard } from "./SpeakerCard";
-
-export type EventInfoData = {
-  name: string;
-  description: string;
-  date: string;
-  time: string;
-  location: string;
-  imageSrc: string;
-  imageAlt: string;
-  speaker: {
-    name: string;
-    title: string;
-    bio: string;
-    imageSrc: string;
-  };
-};
+import type { EventInfoData } from "@/data/event-registration";
 
 type EventInfoProps = {
   event: EventInfoData;

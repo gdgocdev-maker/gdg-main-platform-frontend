@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type FormEvent } from "react"
 import AuthStepTransition from "@/app/components/auth/AuthStepTransition"
+import { defaultPhoneCountryCode } from "@/data/signup"
 import {
   validateEmail,
   validateEmailConfirmation
@@ -42,7 +43,7 @@ const defaultValues: FormValues = {
   confirmEmail: "",
   confirmPassword: "",
   phone: "",
-  countryCode: "+966",
+  countryCode: defaultPhoneCountryCode,
   university: "",
   universityId: "",
   college: "",

@@ -2,6 +2,10 @@
 
 import { FormEvent, useState } from "react";
 import { useTranslations } from "next-intl";
+import {
+    defaultPhoneCountryCode,
+    eventRegistrationMembershipValues,
+} from "@/data/signup";
 import { validateEmail } from "@/app/lib/validation/email";
 import { validateRequiredText } from "@/app/lib/validation/text";
 import { validatePhone } from "@/app/lib/validation/phone";
@@ -13,7 +17,7 @@ type FormData = {
     major: string;
     phone: string;
     email: string;
-    membership: "" | "yes" | "no";
+    membership: "" | (typeof eventRegistrationMembershipValues)[number];
 };
 
 type FormErrors = Partial<Record<keyof FormData, string>>;
@@ -27,6 +31,11 @@ const initialFormData: FormData = {
     email: "",
     membership: "",
 };
+
+const membershipLabels = {
+    yes: "Yes , I am a member",
+    no: "No , I am not a member",
+} satisfies Record<(typeof eventRegistrationMembershipValues)[number], string>;
 
 export function RegistrationForm() {
     const tValidation = useTranslations("validation");
@@ -349,7 +358,7 @@ export function RegistrationForm() {
                                 }
                             >
                                 <span className="flex items-center border-e border-border px-3 text-sm font-semibold text-foreground">
-                                    +966
+                                    {defaultPhoneCountryCode}
                                 </span>
 
                                 <input
@@ -449,29 +458,19 @@ export function RegistrationForm() {
                         </legend>
 
                         <div className="mt-3 flex flex-wrap gap-x-16 gap-y-3">
-                            <label className="flex cursor-pointer items-center gap-2 text-xs text-foreground">
-                                <input
-                                    type="radio"
-                                    name="membership"
-                                    value="yes"
-                                    checked={formData.membership === "yes"}
-                                    onChange={() => updateField("membership", "yes")}
-                                    className="h-4 w-4 accent-[var(--gdg-dark)]"
-                                />
-                                Yes , I am a member
-                            </label>
-
-                            <label className="flex cursor-pointer items-center gap-2 text-xs text-foreground">
-                                <input
-                                    type="radio"
-                                    name="membership"
-                                    value="no"
-                                    checked={formData.membership === "no"}
-                                    onChange={() => updateField("membership", "no")}
-                                    className="h-4 w-4 accent-[var(--gdg-dark)]"
-                                />
-                                No , I am not a member
-                            </label>
+                            {eventRegistrationMembershipValues.map((membership) => (
+                                <label key={membership} className="flex cursor-pointer items-center gap-2 text-xs text-foreground">
+                                    <input
+                                        type="radio"
+                                        name="membership"
+                                        value={membership}
+                                        checked={formData.membership === membership}
+                                        onChange={() => updateField("membership", membership)}
+                                        className="h-4 w-4 accent-[var(--gdg-dark)]"
+                                    />
+                                    {membershipLabels[membership]}
+                                </label>
+                            ))}
                         </div>
 
                         {errors.membership && (
