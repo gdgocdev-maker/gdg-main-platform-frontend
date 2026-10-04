@@ -1,11 +1,13 @@
 "use client";
 
 import { useLeaderDashboard } from "@/components/dashboard/shared/LeaderDashboardContext";
+import { useTranslations } from "next-intl";
 import { EventsFilterBar } from "@/components/dashboard/data-analysis/EventsFilterBar";
 import { EventManagementTable } from "@/components/dashboard/data-analysis/EventManagementTable";
 import { Plus, Sparkles, Send } from "lucide-react";
 
 export default function LeaderEventsPage() {
+  const t = useTranslations("dashboard.leader");
   const { events, publishDraft, canManageEvents, committeeName } = useLeaderDashboard();
 
   const draftEvents = events.filter((e) => e.isDraft);
@@ -21,10 +23,10 @@ export default function LeaderEventsPage() {
       <div className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-6 sm:flex-row sm:items-center sm:justify-between shadow-2xs">
         <div>
           <h2 className="text-xl font-bold text-foreground sm:text-2xl">
-            Committee Events Management
+            {t("eventManagement.pageTitle")}
           </h2>
           <p className="mt-1 text-xs text-muted sm:text-sm">
-            Publish workshops, conferences, and talks managed by the {committeeName}.
+            {t("eventManagement.pageDescription", { committee: committeeName })}
           </p>
         </div>
 
@@ -35,7 +37,7 @@ export default function LeaderEventsPage() {
             className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-95"
           >
             <Plus className="size-4" />
-            <span>Create New Event</span>
+            <span>{t("eventForm.create")}</span>
           </button>
         )}
       </div>
@@ -46,11 +48,11 @@ export default function LeaderEventsPage() {
           <div className="flex items-center gap-2 text-foreground">
             <Sparkles className="size-4 text-blue-500" />
             <h3 className="font-bold text-sm">
-              Unpublished Drafts ({draftEvents.length})
+              {t("eventManagement.unpublished", { count: draftEvents.length })}
             </h3>
           </div>
           <p className="mt-1 text-muted">
-            These events are saved locally and are NOT visible on the public platform until published.
+            {t("eventManagement.draftsDescription")}
           </p>
 
           <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -64,7 +66,7 @@ export default function LeaderEventsPage() {
                     {draft.title}
                   </span>
                   <span className="text-[11px] text-muted">
-                    {draft.date} · {draft.location}
+                    {draft.date} آ· {draft.location}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -75,7 +77,7 @@ export default function LeaderEventsPage() {
                       className="inline-flex items-center gap-1 rounded-lg bg-blue-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-blue-700"
                     >
                       <Send className="size-3" />
-                      <span>Publish</span>
+                      <span>{t("eventForm.publish")}</span>
                     </button>
                   )}
                 </div>

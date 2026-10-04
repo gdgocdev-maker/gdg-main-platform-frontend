@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useLeaderDashboard } from "../shared/LeaderDashboardContext";
 import type {
@@ -35,19 +36,17 @@ function RegistrationStatusBadge({
   confirmationStatus?: RegistrationConfirmationStatus;
   waitlistPosition?: number;
 }) {
+  const t = useTranslations("dashboard.leader");
   const label = status === "Waitlisted"
-    ? waitlistPosition ? `Waitlist #${waitlistPosition}` : "Waitlisted"
-    : status === "Accepted" && confirmationStatus === "NotSent"
-      ? "Confirmation needed"
-      : status === "Accepted" && confirmationStatus === "Pending"
-        ? "Awaiting confirmation"
-        : status === "Accepted" && confirmationStatus === "Confirmed"
-          ? "Confirmed"
-          : status === "Accepted" && confirmationStatus === "Declined"
-            ? "Confirmation declined"
-            : status === "Accepted" && confirmationStatus === "Expired"
-              ? "Confirmation expired"
-              : status;
+    ? waitlistPosition ? t("registrations.statuses.waitlistPosition", { position: waitlistPosition }) : t("registrations.statuses.waitlisted")
+    : status === "Accepted" && confirmationStatus === "NotSent" ? t("registrations.statuses.confirmationNeeded")
+    : status === "Accepted" && confirmationStatus === "Pending" ? t("registrations.statuses.awaitingConfirmation")
+    : status === "Accepted" && confirmationStatus === "Confirmed" ? t("registrations.statuses.confirmed")
+    : status === "Accepted" && confirmationStatus === "Declined" ? t("registrations.statuses.confirmationDeclined")
+    : status === "Accepted" && confirmationStatus === "Expired" ? t("registrations.statuses.confirmationExpired")
+    : status === "Pending" ? t("registrations.statuses.pending")
+    : status === "Accepted" ? t("registrations.statuses.accepted")
+    : t("registrations.statuses.rejected");
   const style = status === "Pending"
     ? "bg-amber-50 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300"
     : status === "Waitlisted"
@@ -75,6 +74,7 @@ function RegistrationStatusBadge({
 
 function RegistrationCounts({ eventId }: { eventId: string }) {
   const { registrations } = useLeaderDashboard();
+  const t = useTranslations("dashboard.leader");
   const eventRegistrations = registrations.filter((item) => item.eventId === eventId);
   const pending = eventRegistrations.filter((item) => item.status === "Pending").length;
   const accepted = eventRegistrations.filter((item) => item.status === "Accepted").length;
@@ -87,18 +87,19 @@ function RegistrationCounts({ eventId }: { eventId: string }) {
 
   return (
     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
-      <span className="font-semibold text-foreground">{eventRegistrations.length} total</span>
-      <span className="text-amber-700 dark:text-amber-300">{pending} pending</span>
-      <span className="text-emerald-700 dark:text-emerald-300">{accepted} accepted</span>
-      <span className="text-rose-700 dark:text-rose-300">{rejected} rejected</span>
-      <span className="text-blue-700 dark:text-blue-300">{waitlisted} waitlisted</span>
-      <span className="text-muted">{awaitingConfirmation} confirmations outstanding</span>
+      <span className="font-semibold text-foreground">{t("registrations.total", { count: eventRegistrations.length })}</span>
+      <span className="text-amber-700 dark:text-amber-300">{t("registrations.pendingCount", { count: pending })}</span>
+      <span className="text-emerald-700 dark:text-emerald-300">{t("registrations.acceptedCount", { count: accepted })}</span>
+      <span className="text-rose-700 dark:text-rose-300">{t("registrations.rejectedCount", { count: rejected })}</span>
+      <span className="text-blue-700 dark:text-blue-300">{t("registrations.waitlistedCount", { count: waitlisted })}</span>
+      <span className="text-muted">{t("registrations.confirmationOutstandingCount", { count: awaitingConfirmation })}</span>
     </div>
   );
 }
 
 export function PROverviewRegistrations() {
   const { events, registrations } = useLeaderDashboard();
+  const t = useTranslations("dashboard.leader");
   const pending = registrations
     .filter((registration) => registration.status === "Pending")
     .slice(0, 5);
@@ -109,28 +110,28 @@ export function PROverviewRegistrations() {
       <section className="overflow-hidden rounded-2xl border border-border bg-surface shadow-2xs">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/80 p-5">
           <div>
-            <h2 className="text-base font-bold text-foreground">Pending registrations</h2>
-            <p className="text-xs text-muted">Applicants waiting for a PR review.</p>
+            <h2 className="text-base font-bold text-foreground">{t("registrations.pendingTitle")}</h2>
+            <p className="text-xs text-muted">{t("registrations.pendingDescription")}</p>
           </div>
           <Link
             href="/dashboard/pr-dashboard/events"
             className="rounded-xl border border-border px-3 py-2 text-xs font-semibold text-foreground transition hover:bg-surface-muted"
           >
-            View all registrations
+            {t("registrations.viewAllRegistrations")}
           </Link>
         </div>
         {pending.length === 0 ? (
-          <p className="p-5 text-sm text-muted">No pending registrations to review.</p>
+          <p className="p-5 text-sm text-muted">{t("registrations.emptyPending")}</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-start text-xs">
               <thead>
                 <tr className="border-b border-border text-[11px] font-semibold uppercase tracking-wider text-muted">
-                  <th className="px-5 py-3 text-start">Applicant</th>
-                  <th className="px-4 py-3 text-start">Event</th>
-                  <th className="px-4 py-3 text-start">Registration date</th>
-                  <th className="px-4 py-3 text-start">Status</th>
-                  <th className="px-5 py-3 text-end">Action</th>
+                  <th className="px-5 py-3 text-start">{t("registrations.applicant")}</th>
+                  <th className="px-4 py-3 text-start">{t("registrations.event")}</th>
+                  <th className="px-4 py-3 text-start">{t("registrations.registrationDate")}</th>
+                  <th className="px-4 py-3 text-start">{t("registrations.status")}</th>
+                  <th className="px-5 py-3 text-end">{t("registrations.action")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/60">
@@ -142,7 +143,7 @@ export function PROverviewRegistrations() {
                         <span className="block font-semibold text-foreground">{registration.applicantName}</span>
                         <span className="text-muted">{registration.email}</span>
                       </td>
-                      <td className="px-4 py-3 text-foreground">{event?.title ?? "Event"}</td>
+                      <td className="px-4 py-3 text-foreground">{event?.title ?? t("registrations.eventFallback")}</td>
                       <td className="px-4 py-3 text-muted">{registration.registeredAt}</td>
                       <td className="px-4 py-3"><RegistrationStatusBadge status={registration.status} /></td>
                       <td className="px-5 py-3 text-end">
@@ -151,7 +152,7 @@ export function PROverviewRegistrations() {
                             href={`/dashboard/pr-dashboard/events/${event.id}`}
                             className="inline-flex items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5 font-semibold text-foreground hover:bg-surface-muted"
                           >
-                            <Eye className="size-3.5" /> Review
+                            <Eye className="size-3.5" /> {t("registrations.review")}
                           </Link>
                         )}
                       </td>
@@ -167,18 +168,18 @@ export function PROverviewRegistrations() {
       <section className="overflow-hidden rounded-2xl border border-border bg-surface shadow-2xs">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/80 p-5">
           <div>
-            <h2 className="text-base font-bold text-foreground">Upcoming events</h2>
-            <p className="text-xs text-muted">Monitor registration activity for upcoming events.</p>
+            <h2 className="text-base font-bold text-foreground">{t("registrations.upcomingTitle")}</h2>
+            <p className="text-xs text-muted">{t("registrations.upcomingDescription")}</p>
           </div>
           <Link
             href="/dashboard/pr-dashboard/events"
             className="text-xs font-semibold text-blue-600 hover:underline dark:text-blue-400"
           >
-            View all events
+            {t("registrations.viewAllEvents")}
           </Link>
         </div>
         {upcomingEvents.length === 0 ? (
-          <p className="p-5 text-sm text-muted">No upcoming events are available.</p>
+          <p className="p-5 text-sm text-muted">{t("registrations.emptyEvents")}</p>
         ) : (
           <div className="divide-y divide-border/60">
             {upcomingEvents.map((event) => (
@@ -196,7 +197,7 @@ export function PROverviewRegistrations() {
                   href={`/dashboard/pr-dashboard/events/${event.id}`}
                   className="inline-flex shrink-0 items-center justify-center rounded-xl border border-border px-3 py-2 text-xs font-semibold text-foreground transition hover:bg-surface-muted"
                 >
-                  View registrations
+                  {t("registrations.viewAllRegistrations")}
                 </Link>
               </div>
             ))}
@@ -209,6 +210,7 @@ export function PROverviewRegistrations() {
 
 export function PREventsList() {
   const { events } = useLeaderDashboard();
+  const t = useTranslations("dashboard.leader");
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all");
   const availableEvents = events.filter((event) => event.status !== "Draft");
@@ -222,8 +224,8 @@ export function PREventsList() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-bold text-foreground sm:text-2xl">Events</h2>
-        <p className="mt-1 text-sm text-muted">Review registrations for events across the platform.</p>
+        <h2 className="text-xl font-bold text-foreground sm:text-2xl">{t("registrations.title")}</h2>
+        <p className="mt-1 text-sm text-muted">{t("registrations.description")}</p>
       </div>
 
       <div className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-3 shadow-2xs sm:flex-row sm:items-center">
@@ -233,7 +235,7 @@ export function PREventsList() {
             type="search"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Search events by name or location"
+            placeholder={t("registrations.searchEvents")}
             className="h-10 w-full rounded-xl border border-border bg-surface-muted/40 ps-9 pe-3 text-sm text-foreground outline-none focus:border-blue-500"
           />
         </div>
@@ -241,32 +243,32 @@ export function PREventsList() {
           value={filter}
           onChange={(event) => setFilter(event.target.value)}
           className="h-10 rounded-xl border border-border bg-surface px-3 text-sm text-foreground outline-none focus:border-blue-500"
-          aria-label="Filter events"
+          aria-label={t("registrations.filterEvents")}
         >
           {prEventStatusFilterOptions.map((option) => (
-            <option key={option.value} value={option.value}>{option.label}</option>
+            <option key={option.value} value={option.value}>{option.value === "all" ? t("registrations.filters.allEvents") : option.value === "upcoming" ? t("registrations.filters.upcoming") : option.value === "completed" ? t("registrations.filters.completed") : t("registrations.filters.needsUpdate")}</option>
           ))}
         </select>
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-border bg-surface shadow-2xs">
         <div className="border-b border-border/80 p-5">
-          <h3 className="text-base font-bold text-foreground">Event registrations</h3>
-          <p className="text-xs text-muted">PR can review applicants but cannot create, edit, publish, or delete events.</p>
+          <h3 className="text-base font-bold text-foreground">{t("registrations.tableTitle")}</h3>
+          <p className="text-xs text-muted">{t("registrations.permissions")}</p>
         </div>
         {filteredEvents.length === 0 ? (
-          <p className="p-5 text-sm text-muted">No events match this search or filter.</p>
+          <p className="p-5 text-sm text-muted">{t("registrations.emptyFilter")}</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-start text-xs">
               <thead>
                 <tr className="border-b border-border text-[11px] font-semibold uppercase tracking-wider text-muted">
-                  <th className="px-5 py-3.5 text-start">Event</th>
-                  <th className="px-4 py-3.5 text-start">Date</th>
-                  <th className="px-4 py-3.5 text-start">Location</th>
-                  <th className="px-4 py-3.5 text-start">Registration status</th>
-                  <th className="px-4 py-3.5 text-start">Registrations</th>
-                  <th className="px-5 py-3.5 text-end">Action</th>
+                  <th className="px-5 py-3.5 text-start">{t("registrations.event")}</th>
+                  <th className="px-4 py-3.5 text-start">{t("registrations.date")}</th>
+                  <th className="px-4 py-3.5 text-start">{t("registrations.location")}</th>
+                  <th className="px-4 py-3.5 text-start">{t("registrations.registrationStatus")}</th>
+                  <th className="px-4 py-3.5 text-start">{t("registrations.registrations")}</th>
+                  <th className="px-5 py-3.5 text-end">{t("registrations.action")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/60">
@@ -280,7 +282,7 @@ export function PREventsList() {
                     <td className="px-4 py-3.5 text-foreground/80">{event.location}</td>
                     <td className="px-4 py-3.5">
                       <span className="inline-flex items-center gap-1.5 rounded-full bg-surface-muted px-2.5 py-1 text-[11px] font-medium text-muted">
-                        Registration status unavailable
+                        {t("registrations.statusUnavailable")}
                       </span>
                     </td>
                     <td className="px-4 py-3.5"><RegistrationCounts eventId={event.id} /></td>
@@ -289,7 +291,7 @@ export function PREventsList() {
                         href={`/dashboard/pr-dashboard/events/${event.id}`}
                         className="inline-flex items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5 font-semibold text-foreground transition hover:bg-surface-muted"
                       >
-                        <ClipboardList className="size-3.5" /> View registrations
+                        <ClipboardList className="size-3.5" /> {t("registrations.viewAllRegistrations")}
                       </Link>
                     </td>
                   </tr>
@@ -305,6 +307,7 @@ export function PREventsList() {
 
 export function PREventRegistrations({ eventId }: { eventId: string }) {
   const { events, registrations, updateRegistrationStatus, canManageRegistrations } = useLeaderDashboard();
+  const t = useTranslations("dashboard.leader");
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedRegistration, setSelectedRegistration] = useState<EventRegistration | null>(null);
@@ -325,9 +328,9 @@ export function PREventRegistrations({ eventId }: { eventId: string }) {
   if (!event) {
     return (
       <div className="rounded-2xl border border-border bg-surface p-6">
-        <p className="text-sm font-semibold text-foreground">Event not found.</p>
+        <p className="text-sm font-semibold text-foreground">{t("registrations.notFound")}</p>
         <Link href="/dashboard/pr-dashboard/events" className="mt-3 inline-flex items-center gap-2 text-sm text-blue-600 hover:underline dark:text-blue-400">
-          <ArrowLeft className="size-4" /> Back to events
+          <ArrowLeft className="size-4" /> {t("registrations.backToEvents")}
         </Link>
       </div>
     );
@@ -342,16 +345,16 @@ export function PREventRegistrations({ eventId }: { eventId: string }) {
   return (
     <div className="space-y-6">
       <Link href="/dashboard/pr-dashboard/events" className="inline-flex items-center gap-2 text-sm font-medium text-muted hover:text-foreground">
-        <ArrowLeft className="size-4" /> Events
+        <ArrowLeft className="size-4" /> {t("registrations.title")}
       </Link>
 
       <section className="rounded-2xl border border-border bg-surface p-5 shadow-2xs sm:p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
             <h2 className="text-xl font-bold text-foreground sm:text-2xl">{event.title}</h2>
-            <p className="mt-2 text-sm text-muted">{event.description || "No event description is available."}</p>
+            <p className="mt-2 text-sm text-muted">{event.description || t("registrations.noDescription")}</p>
           </div>
-          <span className="rounded-full bg-surface-muted px-3 py-1 text-xs font-semibold text-muted">Registration status unavailable</span>
+          <span className="rounded-full bg-surface-muted px-3 py-1 text-xs font-semibold text-muted">{t("registrations.statusUnavailable")}</span>
         </div>
         <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-xs text-muted">
           <span className="inline-flex items-center gap-1.5"><Calendar className="size-4" />{event.date}</span>
@@ -360,12 +363,12 @@ export function PREventRegistrations({ eventId }: { eventId: string }) {
         </div>
         <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           {[
-            { label: "Total", value: eventRegistrations.length, icon: Users },
-            { label: "Pending", value: countByStatus("Pending"), icon: ClipboardList },
-            { label: "Accepted", value: countByStatus("Accepted"), icon: CircleCheck },
-            { label: "Rejected", value: countByStatus("Rejected"), icon: CircleX },
-            { label: "Waitlist", value: countByStatus("Waitlisted"), icon: ClipboardList },
-            { label: "Confirmation outstanding", value: awaitingConfirmationCount, icon: Clock },
+            { label: t("registrations.totalLabel"), value: eventRegistrations.length, icon: Users },
+            { label: t("registrations.pendingLabel"), value: countByStatus("Pending"), icon: ClipboardList },
+            { label: t("registrations.acceptedLabel"), value: countByStatus("Accepted"), icon: CircleCheck },
+            { label: t("registrations.rejectedLabel"), value: countByStatus("Rejected"), icon: CircleX },
+            { label: t("registrations.waitlistLabel"), value: countByStatus("Waitlisted"), icon: ClipboardList },
+            { label: t("registrations.confirmationOutstanding"), value: awaitingConfirmationCount, icon: Clock },
           ].map(({ label, value, icon: Icon }) => (
             <div key={label} className="rounded-xl border border-border bg-surface-muted/40 p-3">
               <div className="flex items-center gap-2 text-muted"><Icon className="size-4" /><span className="text-xs">{label}</span></div>
@@ -378,8 +381,8 @@ export function PREventRegistrations({ eventId }: { eventId: string }) {
       <section className="overflow-hidden rounded-2xl border border-border bg-surface shadow-2xs">
         <div className="flex flex-col gap-3 border-b border-border/80 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h3 className="text-base font-bold text-foreground">Applicants</h3>
-            <p className="text-xs text-muted">Review submitted information and event-specific answers.</p>
+            <h3 className="text-base font-bold text-foreground">{t("registrations.applicants")}</h3>
+            <p className="text-xs text-muted">{t("registrations.reviewDescription")}</p>
           </div>
           <div className="flex flex-col gap-2 sm:flex-row">
             <div className="relative">
@@ -388,18 +391,18 @@ export function PREventRegistrations({ eventId }: { eventId: string }) {
                 type="search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search name or email"
+                placeholder={t("registrations.searchApplicant")}
                 className="h-9 w-full rounded-xl border border-border bg-surface-muted/40 ps-9 pe-3 text-xs text-foreground outline-none focus:border-blue-500 sm:w-56"
               />
             </div>
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              aria-label="Filter registrations by status"
+              aria-label={t("registrations.filterRegistrations")}
               className="h-9 rounded-xl border border-border bg-surface px-3 text-xs text-foreground outline-none focus:border-blue-500"
             >
               {prRegistrationStatusFilterOptions.map((option) => (
-                <option key={option.value} value={option.value}>{option.label}</option>
+                <option key={option.value} value={option.value}>{option.value === "all" ? t("registrations.filters.allStatuses") : option.value === "pending" ? t("registrations.statuses.pending") : option.value === "accepted" ? t("registrations.statuses.accepted") : option.value === "rejected" ? t("registrations.statuses.rejected") : option.value === "waitlisted" ? t("registrations.statuses.waitlisted") : t("registrations.filters.confirmationOutstanding")}</option>
               ))}
             </select>
           </div>
@@ -409,10 +412,10 @@ export function PREventRegistrations({ eventId }: { eventId: string }) {
           <div className="p-8 text-center">
             <ClipboardList className="mx-auto size-8 text-muted" />
             <p className="mt-3 text-sm font-semibold text-foreground">
-              {eventRegistrations.length === 0 ? "No registrations yet" : "No registrations match these filters"}
+              {eventRegistrations.length === 0 ? t("registrations.noRegistrations") : t("registrations.noMatchingRegistrations")}
             </p>
             <p className="mt-1 text-xs text-muted">
-              Registration records and submitted answers will appear here when provided by the platform.
+              {t("registrations.recordsNotice")}
             </p>
           </div>
         ) : (
@@ -420,10 +423,10 @@ export function PREventRegistrations({ eventId }: { eventId: string }) {
             <table className="w-full text-start text-xs">
               <thead>
                 <tr className="border-b border-border text-[11px] font-semibold uppercase tracking-wider text-muted">
-                  <th className="px-5 py-3.5 text-start">Applicant</th>
-                  <th className="px-4 py-3.5 text-start">Registration date</th>
-                  <th className="px-4 py-3.5 text-start">Status</th>
-                  <th className="px-5 py-3.5 text-end">Action</th>
+                  <th className="px-5 py-3.5 text-start">{t("registrations.applicant")}</th>
+                  <th className="px-4 py-3.5 text-start">{t("registrations.registrationDate")}</th>
+                  <th className="px-4 py-3.5 text-start">{t("registrations.status")}</th>
+                  <th className="px-5 py-3.5 text-end">{t("registrations.action")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/60">
@@ -443,7 +446,7 @@ export function PREventRegistrations({ eventId }: { eventId: string }) {
                     </td>
                     <td className="px-5 py-3.5 text-end">
                       <button type="button" onClick={() => setSelectedRegistration(registration)} className="inline-flex items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5 font-semibold text-foreground hover:bg-surface-muted">
-                        <Eye className="size-3.5" /> Review
+                        <Eye className="size-3.5" /> {t("registrations.review")}
                       </button>
                     </td>
                   </tr>
@@ -456,12 +459,12 @@ export function PREventRegistrations({ eventId }: { eventId: string }) {
 
       {selectedRegistration && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <button type="button" aria-label="Close applicant details" className="fixed inset-0 bg-black/60 backdrop-blur-xs" onClick={() => setSelectedRegistration(null)} />
+          <button type="button" aria-label={t("registrations.closeApplicant")} className="fixed inset-0 bg-black/60 backdrop-blur-xs" onClick={() => setSelectedRegistration(null)} />
           <section className="relative z-10 max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-border bg-surface p-5 shadow-2xl sm:p-6">
             <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border pb-4">
               <div>
                 <h3 className="text-lg font-bold text-foreground">{selectedRegistration.applicantName}</h3>
-                <p className="mt-1 text-xs text-muted">{selectedRegistration.email} · Registered {selectedRegistration.registeredAt}</p>
+                <p className="mt-1 text-xs text-muted">{selectedRegistration.email} · {t("registrations.registeredAt")} {selectedRegistration.registeredAt}</p>
               </div>
               <RegistrationStatusBadge
                 status={selectedRegistration.status}
@@ -471,9 +474,9 @@ export function PREventRegistrations({ eventId }: { eventId: string }) {
             </div>
 
             <div className="mt-5">
-              <h4 className="text-sm font-semibold text-foreground">Applicant information</h4>
+              <h4 className="text-sm font-semibold text-foreground">{t("registrations.applicantInfo")}</h4>
               {Object.keys(selectedRegistration.profile).length === 0 ? (
-                <p className="mt-2 text-xs text-muted">No additional profile information was included with this registration.</p>
+                <p className="mt-2 text-xs text-muted">{t("registrations.emptyProfile")}</p>
               ) : (
                 <dl className="mt-2 grid gap-3 sm:grid-cols-2">
                   {Object.entries(selectedRegistration.profile).map(([label, value]) => (
@@ -488,21 +491,21 @@ export function PREventRegistrations({ eventId }: { eventId: string }) {
 
             {selectedRegistration.status === "Accepted" && (
               <div className="mt-5 rounded-xl border border-blue-200 bg-blue-50/70 p-3 text-xs text-blue-900 dark:border-blue-800/50 dark:bg-blue-950/30 dark:text-blue-200">
-                <p className="font-semibold">Confirmation: {selectedRegistration.confirmationStatus ?? "NotSent"}</p>
-                <p className="mt-1">Confirmation messages and response deadlines require backend support; this dashboard does not send email.</p>
+                <p className="font-semibold">{t("registrations.confirmation", { status: selectedRegistration.confirmationStatus === "Confirmed" ? t("registrations.statuses.confirmed") : selectedRegistration.confirmationStatus === "Pending" ? t("registrations.statuses.awaitingConfirmation") : selectedRegistration.confirmationStatus === "Declined" ? t("registrations.statuses.confirmationDeclined") : selectedRegistration.confirmationStatus === "Expired" ? t("registrations.statuses.confirmationExpired") : t("registrations.statuses.confirmationNeeded") })}</p>
+                <p className="mt-1">{t("registrations.emailNotice")}</p>
               </div>
             )}
             {selectedRegistration.status === "Accepted" &&
               (selectedRegistration.confirmationStatus === "Declined" || selectedRegistration.confirmationStatus === "Expired") && (
                 <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50/70 p-3 text-xs text-amber-900 dark:border-amber-800/50 dark:bg-amber-950/30 dark:text-amber-200">
-                  The backend should promote the first eligible waitlisted applicant after a decline or expired confirmation. Automatic promotion is not performed in the frontend.
+                  {t("registrations.automaticPromotionNotice")}
                 </div>
               )}
 
             <div className="mt-5 border-t border-border pt-4">
-              <h4 className="text-sm font-semibold text-foreground">Registration questions & answers</h4>
+              <h4 className="text-sm font-semibold text-foreground">{t("registrations.questionsAnswers")}</h4>
               {selectedRegistration.answers.length === 0 ? (
-                <p className="mt-2 text-xs text-muted">No event-specific questions or answers are available in the current registration data.</p>
+                <p className="mt-2 text-xs text-muted">{t("registrations.emptyAnswers")}</p>
               ) : (
                 <dl className="mt-2 space-y-3">
                   {selectedRegistration.answers.map((answer) => (
@@ -518,17 +521,17 @@ export function PREventRegistrations({ eventId }: { eventId: string }) {
             <div className="mt-6 flex flex-wrap justify-end gap-2 border-t border-border pt-4">
               {selectedRegistration.status === "Pending" && canManageRegistrations && (
                 <>
-                  <button type="button" onClick={() => setDecision("Waitlisted")} className="rounded-xl border border-blue-500/40 px-4 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-50 dark:text-blue-300 dark:hover:bg-blue-950/40">Add to waitlist</button>
-                  <button type="button" onClick={() => setDecision("Rejected")} className="rounded-xl border border-rose-500/40 px-4 py-2 text-xs font-semibold text-rose-700 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-950/40">Reject</button>
-                  <button type="button" onClick={() => setDecision("Accepted")} className="rounded-xl bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700">Accept</button>
+                  <button type="button" onClick={() => setDecision("Waitlisted")} className="rounded-xl border border-blue-500/40 px-4 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-50 dark:text-blue-300 dark:hover:bg-blue-950/40">{t("registrations.waitlist")}</button>
+                  <button type="button" onClick={() => setDecision("Rejected")} className="rounded-xl border border-rose-500/40 px-4 py-2 text-xs font-semibold text-rose-700 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-950/40">{t("registrations.reject")}</button>
+                  <button type="button" onClick={() => setDecision("Accepted")} className="rounded-xl bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700">{t("registrations.accept")}</button>
                 </>
               )}
               {selectedRegistration.status === "Accepted" && canManageRegistrations && (
-                <button type="button" disabled className="cursor-not-allowed rounded-xl border border-border px-4 py-2 text-xs font-semibold text-muted opacity-70" title="Available when backend confirmation delivery is implemented">
-                  Send confirmation request (unavailable)
+                <button type="button" disabled className="cursor-not-allowed rounded-xl border border-border px-4 py-2 text-xs font-semibold text-muted opacity-70" title={t("registrations.sendConfirmationTitle")}>
+                  {t("registrations.sendConfirmationUnavailable")}
                 </button>
               )}
-              <button type="button" onClick={() => setSelectedRegistration(null)} className="rounded-xl border border-border px-4 py-2 text-xs font-medium text-foreground hover:bg-surface-muted">Close</button>
+              <button type="button" onClick={() => setSelectedRegistration(null)} className="rounded-xl border border-border px-4 py-2 text-xs font-medium text-foreground hover:bg-surface-muted">{t("registrations.close")}</button>
             </div>
           </section>
         </div>
@@ -543,12 +546,12 @@ export function PREventRegistrations({ eventId }: { eventId: string }) {
             setSelectedRegistration(null);
           }
         }}
-        title={decision === "Accepted" ? "Accept registration" : decision === "Waitlisted" ? "Add to waitlist" : "Reject registration"}
+        title={decision === "Accepted" ? t("registrations.acceptRegistration") : decision === "Waitlisted" ? t("registrations.waitlist") : t("registrations.rejectRegistration")}
         message={decision === "Waitlisted"
-          ? <>Place <strong className="text-foreground">{selectedRegistration?.applicantName}</strong> on the waitlist?</>
-          : <>Confirm {decision?.toLowerCase()} for <strong className="text-foreground">{selectedRegistration?.applicantName}</strong>?</>}
-        confirmText={decision === "Waitlisted" ? "Add to waitlist" : decision ?? "Confirm"}
-        cancelText="Cancel"
+          ? <>{t("registrations.placeWaitlist", { name: selectedRegistration?.applicantName ?? "" })}</>
+          : <>{t("registrations.confirmDecision", { decision: decision === "Accepted" ? t("registrations.statuses.accepted") : t("registrations.statuses.rejected"), name: selectedRegistration?.applicantName ?? "" })}</>}
+        confirmText={decision === "Waitlisted" ? t("registrations.waitlist") : decision === "Accepted" ? t("registrations.accept") : decision === "Rejected" ? t("registrations.reject") : t("registrations.confirm")}
+        cancelText={t("registrations.cancel")}
         danger={decision === "Rejected"}
       />
     </div>

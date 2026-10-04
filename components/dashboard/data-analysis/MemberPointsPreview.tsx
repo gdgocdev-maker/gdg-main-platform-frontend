@@ -1,6 +1,7 @@
 "use client";
 
 import { useLeaderDashboard } from "../shared/LeaderDashboardContext";
+import { useTranslations } from "next-intl";
 import type { CommitteeMember } from "../shared/types";
 import { Link } from "@/i18n/navigation";
 
@@ -10,6 +11,7 @@ interface MemberPointsPreviewProps {
 
 export function MemberPointsPreview({ onUpdatePoints }: MemberPointsPreviewProps) {
   const { members, canManagePoints } = useLeaderDashboard();
+  const t = useTranslations("dashboard.leader");
 
   const previewMembers = members.slice(0, 4);
 
@@ -18,17 +20,17 @@ export function MemberPointsPreview({ onUpdatePoints }: MemberPointsPreviewProps
       <div className="flex items-center justify-between border-b border-border/80 pb-4">
         <div>
           <h2 className="text-base font-bold text-foreground">
-            Member points
+            {t("points.previewTitle")}
           </h2>
           <p className="text-xs text-muted">
-            Track contribution and recognize consistent delivery.
+            {t("points.previewDescription")}
           </p>
         </div>
         <Link
           href="/dashboard/data-dashboard/points"
           className="text-xs font-semibold text-blue-600 hover:underline dark:text-blue-400"
         >
-          Points history
+          {t("points.historyLink")}
         </Link>
       </div>
 
@@ -36,11 +38,11 @@ export function MemberPointsPreview({ onUpdatePoints }: MemberPointsPreviewProps
         <table className="w-full text-start text-xs">
           <thead>
             <tr className="border-b border-border text-[11px] font-semibold uppercase tracking-wider text-muted">
-              <th className="py-3 text-start">Member</th>
-              <th className="py-3 text-start">Points</th>
-              <th className="py-3 text-start">Tasks</th>
-              <th className="py-3 text-start">Last Activity</th>
-              <th className="py-3 text-start">Status</th>
+              <th className="py-3 text-start">{t("points.member")}</th>
+              <th className="py-3 text-start">{t("points.points")}</th>
+              <th className="py-3 text-start">{t("points.tasks")}</th>
+              <th className="py-3 text-start">{t("points.lastActivity")}</th>
+              <th className="py-3 text-start">{t("members.status")}</th>
               <th className="py-3 text-end"></th>
             </tr>
           </thead>
@@ -77,12 +79,12 @@ export function MemberPointsPreview({ onUpdatePoints }: MemberPointsPreviewProps
                   {member.status === "Active" ? (
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] font-semibold text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300">
                       <span className="size-1.5 rounded-full bg-emerald-600" />
-                      Active
+                      {t("members.active")}
                     </span>
                   ) : (
                     <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2 py-0.5 text-[11px] font-semibold text-amber-700 dark:bg-amber-950/60 dark:text-amber-300">
                       <span className="size-1.5 rounded-full bg-amber-600" />
-                      Away
+                      {t("members.away")}
                     </span>
                   )}
                 </td>
@@ -93,7 +95,7 @@ export function MemberPointsPreview({ onUpdatePoints }: MemberPointsPreviewProps
                       onClick={() => onUpdatePoints(member)}
                       className="rounded-xl border border-border px-2.5 py-1 text-xs font-semibold text-foreground transition hover:bg-surface-muted"
                     >
-                      Update points
+                      {t("points.updatePoints")}
                     </button>
                   )}
                 </td>

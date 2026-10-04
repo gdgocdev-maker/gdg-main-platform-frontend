@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useLeaderDashboard } from "../shared/LeaderDashboardContext";
 import type { CommitteeEvent, EventStatus, EventType } from "../shared/types";
 import { X, Calendar, MapPin, Clock, Users } from "lucide-react";
@@ -17,6 +18,7 @@ interface EditEventFormProps {
 }
 
 function EditEventForm({ event, onClose }: EditEventFormProps) {
+  const t = useTranslations("dashboard.leader");
   const { updateEvent, canManageEvents } = useLeaderDashboard();
 
   const [title, setTitle] = useState(event.title);
@@ -39,44 +41,44 @@ function EditEventForm({ event, onClose }: EditEventFormProps) {
 
   const validateTitle = (val: string) => {
     const trimmed = val.trim();
-    if (!trimmed) return "Event title is required.";
-    if (trimmed.length < 3) return "Title must be at least 3 characters.";
-    if (trimmed.length > 150) return "Title cannot exceed 150 characters.";
+    if (!trimmed) return t("eventForm.errors.eventTitleRequired");
+    if (trimmed.length < 3) return t("eventForm.errors.titleMin");
+    if (trimmed.length > 150) return t("eventForm.errors.titleMax");
     return "";
   };
 
   const validateLocation = (val: string) => {
     const trimmed = val.trim();
-    if (!trimmed) return "Event location is required.";
-    if (trimmed.length < 3) return "Location must be at least 3 characters.";
-    if (trimmed.length > 120) return "Location cannot exceed 120 characters.";
+    if (!trimmed) return t("eventForm.errors.locationRequired");
+    if (trimmed.length < 3) return t("eventForm.errors.locationMin");
+    if (trimmed.length > 120) return t("eventForm.errors.locationMax");
     return "";
   };
 
   const validateCapacity = (val: number | string) => {
     if (val === "" || val === undefined || isNaN(Number(val))) {
-      return "Capacity must be a valid number.";
+      return t("eventForm.errors.capacityNumber");
     }
     const num = Number(val);
-    if (!Number.isInteger(num)) return "Capacity must be a whole integer.";
-    if (num < 1) return "Capacity must be at least 1 attendee.";
-    if (num > 5000) return "Capacity cannot exceed 5,000 attendees.";
+    if (!Number.isInteger(num)) return t("eventForm.errors.capacityInteger");
+    if (num < 1) return t("eventForm.errors.capacityMin");
+    if (num > 5000) return t("eventForm.errors.capacityMax");
     if (num < event.registered) {
-      return `Capacity cannot be lower than existing registrations (${event.registered}).`;
+      return t("eventForm.errors.capacityBelowRegistrations", { count: event.registered });
     }
     return "";
   };
 
   const validateDate = (val: string) => {
     const trimmed = val.trim();
-    if (!trimmed) return "Date is required.";
-    if (trimmed.length < 4) return "Please enter a descriptive date (e.g. Oct 28, 2026).";
+    if (!trimmed) return t("eventForm.errors.dateRequired");
+    if (trimmed.length < 4) return t("eventForm.errors.dateFormat");
     return "";
   };
 
   const validateTime = (val: string) => {
     const trimmed = val.trim();
-    if (!trimmed) return "Time is required.";
+    if (!trimmed) return t("eventForm.errors.timeRequired");
     return "";
   };
 
@@ -103,7 +105,7 @@ function EditEventForm({ event, onClose }: EditEventFormProps) {
     const tmErr = validateTime(time);
 
     if (tErr || lErr || cErr || dErr || tmErr) {
-      setGeneralError("Please correct all highlighted errors before saving.");
+      setGeneralError(t("eventForm.errors.fixErrors"));
       return;
     }
 
@@ -127,10 +129,10 @@ function EditEventForm({ event, onClose }: EditEventFormProps) {
       <div className="flex items-center justify-between border-b border-border pb-4">
         <div>
           <h2 className="text-lg font-bold text-foreground">
-            Edit Event
+            {t("eventForm.edit")}
           </h2>
           <p className="text-xs text-muted">
-            Update event details and publishing status.
+            {t("eventForm.description")}
           </p>
         </div>
         <button
@@ -153,7 +155,7 @@ function EditEventForm({ event, onClose }: EditEventFormProps) {
         <div>
           <div className="flex items-center justify-between">
             <label className="block text-xs font-semibold text-foreground">
-              Event Title *
+              {t("eventForm.title")}
             </label>
             <span className="text-[10px] text-muted">
               {title.length}/150
@@ -185,33 +187,33 @@ function EditEventForm({ event, onClose }: EditEventFormProps) {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-semibold text-foreground">
-              Event Type
+              {t("eventForm.type")}
             </label>
             <select
               value={type}
               onChange={(e) => setType(e.target.value as EventType)}
               className="mt-1 h-10 w-full rounded-xl border border-border bg-surface-muted/30 px-3 text-sm text-foreground outline-none focus:border-blue-500"
             >
-              <option value="Workshop">Workshop</option>
-              <option value="Conference">Conference</option>
-              <option value="Talk">Talk</option>
-              <option value="Panel">Panel</option>
-              <option value="Hackathon">Hackathon</option>
+              <option value="Workshop">{t("eventForm.types.workshop")}</option>
+              <option value="Conference">{t("eventForm.types.conference")}</option>
+              <option value="Talk">{t("eventForm.types.talk")}</option>
+              <option value="Panel">{t("eventForm.types.panel")}</option>
+              <option value="Hackathon">{t("eventForm.types.hackathon")}</option>
             </select>
           </div>
           <div>
             <label className="block text-xs font-semibold text-foreground">
-              Status
+              {t("eventForm.status")}
             </label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value as EventStatus)}
               className="mt-1 h-10 w-full rounded-xl border border-border bg-surface-muted/30 px-3 text-sm text-foreground outline-none focus:border-blue-500"
             >
-              <option value="Upcoming">Upcoming (Published)</option>
-              <option value="Completed">Completed</option>
-              <option value="Needs Update">Needs Update</option>
-              <option value="Draft">Draft</option>
+              <option value="Upcoming">{t("eventForm.statuses.upcoming")}</option>
+              <option value="Completed">{t("eventForm.statuses.completed")}</option>
+              <option value="Needs Update">{t("eventForm.statuses.needsUpdate")}</option>
+              <option value="Draft">{t("eventForm.statuses.draft")}</option>
             </select>
           </div>
         </div>
@@ -220,7 +222,7 @@ function EditEventForm({ event, onClose }: EditEventFormProps) {
         <div className="grid grid-cols-3 gap-3">
           <div>
             <label className="block text-xs font-semibold text-foreground">
-              Date *
+              {t("eventForm.date")}
             </label>
             <div className="relative mt-1">
               <Calendar className="pointer-events-none absolute start-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted" />
@@ -248,7 +250,7 @@ function EditEventForm({ event, onClose }: EditEventFormProps) {
           </div>
           <div>
             <label className="block text-xs font-semibold text-foreground">
-              Time *
+              {t("eventForm.time")}
             </label>
             <div className="relative mt-1">
               <Clock className="pointer-events-none absolute start-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted" />
@@ -276,7 +278,7 @@ function EditEventForm({ event, onClose }: EditEventFormProps) {
           </div>
           <div>
             <label className="block text-xs font-semibold text-foreground">
-              Capacity *
+              {t("eventForm.capacity")}
             </label>
             <div className="relative mt-1">
               <Users className="pointer-events-none absolute start-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted" />
@@ -309,7 +311,7 @@ function EditEventForm({ event, onClose }: EditEventFormProps) {
         <div>
           <div className="flex items-center justify-between">
             <label className="block text-xs font-semibold text-foreground">
-              Location *
+              {t("eventForm.location")}
             </label>
             <span className="text-[10px] text-muted">
               {location.length}/120
@@ -344,7 +346,7 @@ function EditEventForm({ event, onClose }: EditEventFormProps) {
         <div>
           <div className="flex items-center justify-between">
             <label className="block text-xs font-semibold text-foreground">
-              Description (Optional)
+              {t("eventForm.optionalDescription")}
             </label>
             <span className="text-[10px] text-muted">
               {description.length}/1000
@@ -366,14 +368,14 @@ function EditEventForm({ event, onClose }: EditEventFormProps) {
           onClick={onClose}
           className="rounded-xl border border-border px-4 py-2 text-xs font-medium text-foreground hover:bg-surface-muted transition"
         >
-          Cancel
+          {t("eventForm.cancel")}
         </button>
         <button
           type="submit"
           disabled={!canManageEvents}
           className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-blue-700 active:scale-95 disabled:opacity-50 transition"
         >
-          Save Changes
+          {t("eventForm.saveChanges")}
         </button>
       </div>
     </form>

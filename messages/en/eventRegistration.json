@@ -1,0 +1,29 @@
+{
+  "eyebrow": "Event Registration",
+  "title": "Join the Event",
+  "subtitle": "Fill in your information to secure your spot",
+  "close": "Close registration page",
+  "fullName": "Full Name",
+  "fullNamePlaceholder": "Enter your full name",
+  "universityId": "University ID",
+  "universityIdPlaceholder": "e.g. 2286291",
+  "college": "College",
+  "collegePlaceholder": "e.g. Computer Science and Engineering",
+  "major": "Major",
+  "majorPlaceholder": "e.g. Software Engineering",
+  "phone": "Phone Number",
+  "phonePlaceholder": "5xxxxxxxx",
+  "email": "Email Address",
+  "emailPlaceholder": "Enter your email address",
+  "membershipQuestion": "Are you a GDG on Campus member?",
+  "membership": {
+    "yes": "Yes, I am a member",
+    "no": "No, I am not a member"
+  },
+  "submit": "Register Now",
+  "submitting": "Registering...",
+  "date": "Date",
+  "time": "Time",
+  "location": "Location",
+  "speaker": "Speaker"
+}

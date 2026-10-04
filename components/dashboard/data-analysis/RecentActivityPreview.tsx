@@ -3,9 +3,11 @@
 import { useLeaderDashboard } from "../shared/LeaderDashboardContext";
 import { Calendar, Pencil, Trophy, AlertTriangle } from "lucide-react";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export function RecentActivityPreview() {
   const { recentActivities } = useLeaderDashboard();
+  const t = useTranslations("dashboard.leader");
   const [showAllModal, setShowAllModal] = useState(false);
 
   const getActivityIcon = (type: string) => {
@@ -42,10 +44,10 @@ export function RecentActivityPreview() {
       <div>
         <div className="border-b border-border/80 pb-4">
           <h2 className="text-base font-bold text-foreground">
-            Recent activity
+            {t("recentActivity.title")}
           </h2>
           <p className="text-xs text-muted">
-            Committee changes and publishing activity.
+            {t("recentActivity.description")}
           </p>
         </div>
 
@@ -77,7 +79,7 @@ export function RecentActivityPreview() {
           onClick={() => setShowAllModal(true)}
           className="w-full rounded-xl border border-border py-2 text-center text-xs font-semibold text-foreground transition hover:bg-surface-muted"
         >
-          View all activity
+          {t("recentActivity.viewAll")}
         </button>
       </div>
 
@@ -89,7 +91,7 @@ export function RecentActivityPreview() {
           />
           <div className="relative z-10 w-full max-w-md rounded-2xl border border-border bg-surface p-6 shadow-2xl">
             <h3 className="text-base font-bold text-foreground mb-4">
-              All Committee Activity
+              {t("recentActivity.allTitle")}
             </h3>
             <div className="space-y-3 max-h-80 overflow-y-auto pe-1">
               {recentActivities.map((item) => (
@@ -111,7 +113,7 @@ export function RecentActivityPreview() {
                 onClick={() => setShowAllModal(false)}
                 className="rounded-xl border border-border px-4 py-1.5 text-xs font-medium text-foreground hover:bg-surface-muted"
               >
-                Close
+                {t("recentActivity.close")}
               </button>
             </div>
           </div>

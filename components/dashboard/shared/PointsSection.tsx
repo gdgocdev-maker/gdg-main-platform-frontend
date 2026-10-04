@@ -1,6 +1,7 @@
 "use client";
 
 import { useLeaderDashboard } from "./LeaderDashboardContext";
+import { useTranslations } from "next-intl";
 import type { CommitteeMember } from "./types";
 import { Trophy, ArrowUpRight, ArrowDownRight, History } from "lucide-react";
 
@@ -10,6 +11,7 @@ interface PointsSectionProps {
 
 export function PointsSection({ onOpenUpdatePoints }: PointsSectionProps) {
   const { members, pointHistory, canManagePoints } = useLeaderDashboard();
+  const t = useTranslations("dashboard.leader");
 
   const totalPoints = members.reduce((sum, m) => sum + m.points, 0);
 
@@ -23,10 +25,10 @@ export function PointsSection({ onOpenUpdatePoints }: PointsSectionProps) {
           </div>
           <div>
             <h2 className="text-xl font-bold text-blue-950 dark:text-blue-100 sm:text-2xl">
-              {totalPoints.toLocaleString()} Total Committee Points
+              {t("points.totalBanner", { points: totalPoints.toLocaleString() })}
             </h2>
             <p className="text-xs text-blue-800/80 dark:text-blue-300/80">
-              Cumulative score recognized for attendance, tasks completed, and event leadership.
+              {t("points.description")}
             </p>
           </div>
         </div>
@@ -37,10 +39,10 @@ export function PointsSection({ onOpenUpdatePoints }: PointsSectionProps) {
         <div className="flex items-center justify-between border-b border-border/80 p-5">
           <div>
             <h3 className="text-base font-bold text-foreground">
-              Member Point Standings
+              {t("points.standings")}
             </h3>
             <p className="text-xs text-muted">
-              Reward member delivery and keep points up to date.
+              {t("points.manageDescription")}
             </p>
           </div>
         </div>
@@ -49,19 +51,19 @@ export function PointsSection({ onOpenUpdatePoints }: PointsSectionProps) {
           <table className="w-full text-start text-xs">
             <thead>
               <tr className="border-b border-border text-[11px] font-semibold uppercase tracking-wider text-muted">
-                <th className="px-5 py-3.5 text-start">Member</th>
-                <th className="px-4 py-3.5 text-start">Role</th>
-                <th className="px-4 py-3.5 text-start">Current Points</th>
-                <th className="px-4 py-3.5 text-start">Tasks Completed</th>
-                <th className="px-4 py-3.5 text-start">Last Updated</th>
-                <th className="px-5 py-3.5 text-end">Actions</th>
+                <th className="px-5 py-3.5 text-start">{t("points.member")}</th>
+                <th className="px-4 py-3.5 text-start">{t("points.role")}</th>
+                <th className="px-4 py-3.5 text-start">{t("points.currentPoints")}</th>
+                <th className="px-4 py-3.5 text-start">{t("points.tasksCompleted")}</th>
+                <th className="px-4 py-3.5 text-start">{t("points.lastUpdated")}</th>
+                <th className="px-5 py-3.5 text-end">{t("points.actions")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/60">
               {members.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="px-5 py-10 text-center text-sm text-muted">
-                    No committee members are available yet.
+                    {t("points.emptyMembers")}
                   </td>
                 </tr>
               ) : members.map((member) => (
@@ -91,7 +93,7 @@ export function PointsSection({ onOpenUpdatePoints }: PointsSectionProps) {
                         onClick={() => onOpenUpdatePoints(member)}
                         className="rounded-xl border border-border px-3 py-1.5 text-xs font-semibold text-foreground transition hover:bg-surface-muted"
                       >
-                        Update points
+                        {t("points.updatePoints")}
                       </button>
                     )}
                   </td>
@@ -102,18 +104,17 @@ export function PointsSection({ onOpenUpdatePoints }: PointsSectionProps) {
         </div>
       </div>
 
-      {/* Point History Log */}
       <div className="rounded-2xl border border-border bg-surface p-5 shadow-2xs">
         <div className="flex items-center gap-2 border-b border-border/80 pb-3">
           <History className="size-4 text-blue-500" />
           <h3 className="text-sm font-bold text-foreground">
-            Point History Log
+            {t("points.history")}
           </h3>
         </div>
 
         <div className="mt-3 divide-y divide-border/60 text-xs">
           {pointHistory.length === 0 ? (
-            <p className="py-4 text-sm text-muted">No point history is available yet.</p>
+            <p className="py-4 text-sm text-muted">{t("points.emptyHistory")}</p>
           ) : pointHistory.map((item) => (
             <div
               key={item.id}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useLeaderDashboard } from "./LeaderDashboardContext";
 import type { CommitteeMember } from "./types";
 import { X, Trophy, PlusCircle, MinusCircle } from "lucide-react";
@@ -12,6 +13,7 @@ interface PointsModalProps {
 }
 
 export function PointsModal({ isOpen, onClose, member }: PointsModalProps) {
+  const t = useTranslations("dashboard.leader");
   const { updateMemberPoints, canManagePoints } = useLeaderDashboard();
 
   const [mode, setMode] = useState<"add" | "deduct">("add");
@@ -24,23 +26,23 @@ export function PointsModal({ isOpen, onClose, member }: PointsModalProps) {
 
   const validatePoints = (val: number | string) => {
     if (val === "" || isNaN(Number(val))) {
-      return "Points amount is required.";
+      return t("points.required");
     }
     const num = Number(val);
-    if (!Number.isInteger(num)) return "Points must be a whole integer.";
-    if (num <= 0) return "Points amount must be greater than 0.";
-    if (num > 2000) return "Points cannot exceed 2,000 in a single adjustment.";
+    if (!Number.isInteger(num)) return t("points.integer");
+    if (num <= 0) return t("points.positive");
+    if (num > 2000) return t("points.max");
     if (mode === "deduct" && num > member.points) {
-      return `Cannot deduct ${num} pts: member only has ${member.points} pts.`;
+      return t("points.tooMany", { requested: num, available: member.points });
     }
     return "";
   };
 
   const validateReason = (val: string) => {
     const trimmed = val.trim();
-    if (!trimmed) return "Reason or activity description is required.";
-    if (trimmed.length < 5) return "Reason must be at least 5 characters.";
-    if (trimmed.length > 150) return "Reason cannot exceed 150 characters.";
+    if (!trimmed) return t("points.reasonRequired");
+    if (trimmed.length < 5) return t("points.reasonMin");
+    if (trimmed.length > 150) return t("points.reasonMax");
     return "";
   };
 
@@ -55,7 +57,7 @@ export function PointsModal({ isOpen, onClose, member }: PointsModalProps) {
     const rErr = validateReason(reason);
 
     if (pErr || rErr) {
-      setGeneralError("Please resolve the highlighted errors before saving.");
+      setGeneralError(t("points.fixErrors"));
       return;
     }
 
@@ -85,10 +87,8 @@ export function PointsModal({ isOpen, onClose, member }: PointsModalProps) {
               <Trophy className="size-5" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-foreground">Update Points</h2>
-              <p className="text-xs text-muted">
-                {member.name} · Current: <strong>{member.points.toLocaleString()} pts</strong>
-              </p>
+              <h2 className="text-lg font-bold text-foreground">{t("points.modalTitle")}</h2>
+              <p className="text-xs text-muted">{member.name} ? {t("points.current", { count: member.points.toLocaleString() })}</p>
             </div>
           </div>
           <button
@@ -102,7 +102,7 @@ export function PointsModal({ isOpen, onClose, member }: PointsModalProps) {
 
         {!canManagePoints && (
           <div className="mt-4 rounded-xl border border-amber-500/20 bg-amber-500/10 p-3 text-xs text-amber-700 dark:text-amber-300">
-            You must be a Leader or Co-Leader to adjust committee points.
+            {t("points.permission")}
           </div>
         )}
 
@@ -128,7 +128,7 @@ export function PointsModal({ isOpen, onClose, member }: PointsModalProps) {
               }`}
             >
               <PlusCircle className="size-4" />
-              <span>Award Points</span>
+              <span>{t("points.award")}</span>
             </button>
             <button
               type="button"
@@ -143,7 +143,7 @@ export function PointsModal({ isOpen, onClose, member }: PointsModalProps) {
               }`}
             >
               <MinusCircle className="size-4" />
-              <span>Deduct Points</span>
+              <span>{t("points.deduct")}</span>
             </button>
           </div>
 
@@ -151,10 +151,10 @@ export function PointsModal({ isOpen, onClose, member }: PointsModalProps) {
           <div>
             <div className="flex items-center justify-between">
               <label className="block text-xs font-semibold text-foreground">
-                Points Amount (1 - 2,000) *
+                {t("points.amount")}
               </label>
               <span className="text-[10px] text-muted">
-                Whole numbers
+                {t("points.wholeNumbers")}
               </span>
             </div>
             <div className="mt-1 flex items-center gap-2">
@@ -203,7 +203,7 @@ export function PointsModal({ isOpen, onClose, member }: PointsModalProps) {
           <div>
             <div className="flex items-center justify-between">
               <label className="block text-xs font-semibold text-foreground">
-                Reason / Activity *
+                {t("points.reason")}
               </label>
               <span className="text-[10px] text-muted">
                 {reason.length}/150
@@ -218,7 +218,7 @@ export function PointsModal({ isOpen, onClose, member }: PointsModalProps) {
                 if (generalError) setGeneralError("");
               }}
               onBlur={() => setTouched((p) => ({ ...p, reason: true }))}
-              placeholder="e.g. Study Jam attendee registration cleanup"
+              placeholder={t("points.reasonPlaceholder")}
               className={`mt-1 h-10 w-full rounded-xl border px-3 text-sm text-foreground outline-none transition ${
                 reasonError
                   ? "border-rose-500 bg-rose-50/20 dark:bg-rose-950/20 focus:border-rose-600"
@@ -239,14 +239,14 @@ export function PointsModal({ isOpen, onClose, member }: PointsModalProps) {
               onClick={onClose}
               className="rounded-xl border border-border px-4 py-2 text-xs font-medium text-foreground hover:bg-surface-muted transition"
             >
-              Cancel
+              {t("points.cancel")}
             </button>
             <button
               type="submit"
               disabled={!canManagePoints}
               className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-95 disabled:opacity-50"
             >
-              {mode === "add" ? "Award Points" : "Deduct Points"}
+              {mode === "add" ? t("points.award") : t("points.deduct")}
             </button>
           </div>
         </form>

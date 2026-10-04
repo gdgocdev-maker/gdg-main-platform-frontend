@@ -7,6 +7,7 @@ import { MotionConfig, motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 
 import { TopNav } from "@/components/dashboard/TopNav";
+import Footer from "@/components/Footer";
 import { getPathname, usePathname, Link } from "@/i18n/navigation";
 import { getElevatedAccess } from "@/components/dashboard/shared/accessStore";
 import { leaderCommitteeConfig } from "@/components/dashboard/shared/committee-config";
@@ -1074,7 +1075,8 @@ export default function DashboardPage(): ReactElement {
   }, []);
 
   return (
-    <MotionConfig reducedMotion="user">
+    <div className="flex min-h-screen flex-col bg-surface text-foreground">
+      <MotionConfig reducedMotion="user">
       <div className="flex min-h-full flex-1 flex-col bg-surface text-foreground">
         <TopNav />
         <div className="flex flex-1 flex-col lg:flex-row">
@@ -1127,6 +1129,8 @@ export default function DashboardPage(): ReactElement {
           </motion.main>
         </div>
       </div>
-    </MotionConfig>
+      </MotionConfig>
+      <Footer />
+    </div>
   );
 }

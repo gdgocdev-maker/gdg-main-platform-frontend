@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { useLeaderDashboard } from "./LeaderDashboardContext";
 import type { CommitteeMember } from "./types";
 import { ConfirmModal } from "./ConfirmModal";
@@ -26,6 +27,7 @@ export function MembersSection({
   onOpenTemporaryAccess,
   onOpenUpdatePoints,
 }: MembersSectionProps) {
+  const t = useTranslations("dashboard.leader");
   const { members, removeMember, canManageMembers, committeeName, committee } = useLeaderDashboard();
   const showTemporaryAccess = leaderCommitteeConfig[committee].canGrantTemporaryAccess;
   const [searchTerm, setSearchTerm] = useState("");
@@ -52,12 +54,12 @@ export function MembersSection({
           <ShieldAlert className="mt-0.5 size-5 shrink-0 text-blue-600 dark:text-blue-400" />
           <div className="space-y-1">
             <h3 className="font-bold text-sm text-blue-950 dark:text-blue-100">
-              Temporary Elevated Permissions System
+              {t("members.temporaryTitle")}
             </h3>
             <p className="leading-relaxed text-blue-800/80 dark:text-blue-300/80">
               {canManageMembers
-                ? "Committee leaders can temporarily elevate members for approved committee work. Elevated permissions expire automatically after the selected duration without making permanent role changes."
-                : "Temporary committee permissions expire automatically after the selected duration without making permanent role changes."}
+                ? t("members.temporaryLeaders")
+                : t("members.temporaryMembers")}
             </p>
           </div>
         </div>
@@ -69,12 +71,12 @@ export function MembersSection({
         <div className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between border-b border-border/80">
           <div>
             <h2 className="text-base font-bold text-foreground">
-              Committee members ({members.length})
+              {t("members.title", { count: members.length })}
             </h2>
             <p className="text-xs text-muted">
               {showTemporaryAccess
-                ? "Manage member roles, points, and temporary administrative permissions."
-                : `Manage ${committeeName} members and points.`}
+                ? t("members.manageTemporary")
+                : t("members.manageMembers", { committee: committeeName })}
             </p>
           </div>
 
@@ -85,7 +87,7 @@ export function MembersSection({
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search members..."
+                placeholder={t("members.search")}
                 className="h-9 rounded-xl border border-border bg-surface-muted/40 ps-8 pe-3 text-xs text-foreground outline-none focus:border-blue-500"
               />
             </div>
@@ -97,7 +99,7 @@ export function MembersSection({
                 className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-3 py-2 text-xs font-semibold text-white shadow-sm hover:bg-blue-700 transition"
               >
                 <Plus className="size-3.5" />
-                <span>Add Member</span>
+                <span>{t("members.add")}</span>
               </button>
             )}
           </div>
@@ -108,19 +110,19 @@ export function MembersSection({
           <table className="w-full text-start text-xs">
             <thead>
               <tr className="border-b border-border text-[11px] font-semibold uppercase tracking-wider text-muted">
-                <th className="px-5 py-3.5 text-start">Member</th>
-                <th className="px-4 py-3.5 text-start">Role</th>
-                <th className="px-4 py-3.5 text-start">Status</th>
-                {showTemporaryAccess && <th className="px-4 py-3.5 text-start">Access Level</th>}
-                <th className="px-4 py-3.5 text-start">Points</th>
-                <th className="px-5 py-3.5 text-end">Actions</th>
+                <th className="px-5 py-3.5 text-start">{t("members.member")}</th>
+                <th className="px-4 py-3.5 text-start">{t("members.role")}</th>
+                <th className="px-4 py-3.5 text-start">{t("members.status")}</th>
+                {showTemporaryAccess && <th className="px-4 py-3.5 text-start">{t("members.accessLevel")}</th>}
+                <th className="px-4 py-3.5 text-start">{t("members.points")}</th>
+                <th className="px-5 py-3.5 text-end">{t("members.actions")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/60">
               {filteredMembers.length === 0 ? (
                 <tr>
                   <td colSpan={showTemporaryAccess ? 6 : 5} className="px-5 py-10 text-center text-sm text-muted">
-                    {searchTerm ? "No members match this search." : "No committee members have been added yet."}
+                    {searchTerm ? t("members.noSearch") : t("members.empty")}
                   </td>
                 </tr>
               ) : filteredMembers.map((member) => {
@@ -183,17 +185,17 @@ export function MembersSection({
                             Elevated ({remainingMins}m left)
                           </span>
                           <span className="text-[10px] text-muted">
-                            Expires at {new Date(member.accessExpiresAt!).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            {t("members.expiresAt", { time: new Date(member.accessExpiresAt!).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) })}
                           </span>
                         </div>
                       ) : (
-                        <span className="text-muted">Standard Member</span>
+                        <span className="text-muted">{t("members.standard")}</span>
                       )}
                     </td>}
 
                     {/* POINTS */}
                     <td className="px-4 py-3.5 font-bold text-blue-600 dark:text-blue-400 whitespace-nowrap">
-                      {member.points.toLocaleString()} pts
+                      {t("members.pointsUnit", { count: member.points.toLocaleString() })}
                     </td>
 
                     {/* ACTIONS */}
@@ -219,7 +221,7 @@ export function MembersSection({
                         {canManageMembers && (
                           <button
                             type="button"
-                            title="Update Points"
+                            title={t("members.updatePoints")}
                             onClick={() => onOpenUpdatePoints(member)}
                             className="rounded-lg p-1.5 text-muted hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950/50"
                           >
@@ -231,7 +233,7 @@ export function MembersSection({
                         {canManageMembers && (
                           <button
                             type="button"
-                            title="Remove Member"
+                            title={t("members.remove")}
                             onClick={() => setMemberToRemove(member)}
                             className="rounded-lg p-1.5 text-muted hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/50"
                           >
@@ -257,7 +259,7 @@ export function MembersSection({
             removeMember(memberToRemove.id);
           }
         }}
-        title="Remove Member"
+        title={t("members.remove")}
         message={
           <>
             Are you sure you want to remove{" "}
@@ -265,8 +267,8 @@ export function MembersSection({
             committee? They will lose access to committee tasks and permissions.
           </>
         }
-        confirmText="Remove Member"
-        cancelText="Cancel"
+        confirmText={t("members.remove")}
+        cancelText={t("members.cancel")}
         danger
       />
     </div>

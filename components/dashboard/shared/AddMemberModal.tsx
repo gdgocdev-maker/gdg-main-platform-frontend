@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useLeaderDashboard } from "./LeaderDashboardContext";
 import { leaderCommitteeConfig } from "./committee-config";
 import type { MemberRole, MemberStatus } from "./types";
@@ -12,9 +13,24 @@ interface AddMemberModalProps {
 }
 
 export function AddMemberModal({ isOpen, onClose }: AddMemberModalProps) {
+  const t = useTranslations("dashboard.leader");
   const { addMember, members, canManageMembers, committee } = useLeaderDashboard();
   const committeeConfig = leaderCommitteeConfig[committee];
   const roleOptions = committeeConfig.memberRoleOptions;
+  const roleLabels: Record<MemberRole, string> = {
+    Leader: t("members.roles.leader"),
+    "Data Analyst": t("members.roles.dataAnalyst"),
+    "Data Coordinator": t("members.roles.dataCoordinator"),
+    "Event Data Member": t("members.roles.eventDataMember"),
+    "Database Member": t("members.roles.databaseMember"),
+    "Research Member": t("members.roles.researchMember"),
+    "Database Co-Lead": t("members.roles.databaseCoLead"),
+    "Public Relations Co-Lead": t("members.roles.publicRelationsCoLead"),
+    "Outreach Coordinator": t("members.roles.outreachCoordinator"),
+    "Communications Member": t("members.roles.communicationsMember"),
+    "Partnerships Member": t("members.roles.partnershipsMember"),
+    Member: t("members.roles.member"),
+  };
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,27 +42,27 @@ export function AddMemberModal({ isOpen, onClose }: AddMemberModalProps) {
 
   const validateNameField = (val: string): string => {
     const trimmed = val.trim();
-    if (!trimmed) return "Member full name is required.";
-    if (trimmed.length < 3) return "Name must be at least 3 characters.";
-    if (trimmed.length > 100) return "Name cannot exceed 100 characters.";
+    if (!trimmed) return t("members.requiredName");
+    if (trimmed.length < 3) return t("members.nameMin");
+    if (trimmed.length > 100) return t("members.nameMax");
     if (!/^[\p{L}\s.'-]+$/u.test(trimmed)) {
-      return "Name can only include letters, spaces, and hyphens.";
+      return t("members.nameFormat");
     }
     return "";
   };
 
   const validateEmailField = (val: string): string => {
     const trimmed = val.trim();
-    if (!trimmed) return "University email is required.";
-    if (trimmed.length > 254) return "Email cannot exceed 254 characters.";
+    if (!trimmed) return t("members.requiredEmail");
+    if (trimmed.length > 254) return t("members.emailMax");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
-      return "Please enter a valid email address (e.g. user@uj.edu.sa).";
+      return t("members.emailInvalid");
     }
     const isDuplicate = members.some(
       (m) => m.email.toLowerCase() === trimmed.toLowerCase()
     );
     if (isDuplicate) {
-      return "A committee member with this email already exists.";
+      return t("members.duplicateEmail");
     }
     return "";
   };
@@ -64,7 +80,7 @@ export function AddMemberModal({ isOpen, onClose }: AddMemberModalProps) {
     const eErr = validateEmailField(email);
 
     if (nErr || eErr) {
-      setGeneralError("Please correct the errors in the form before submitting.");
+      setGeneralError(t("members.formError"));
       return;
     }
 
@@ -98,9 +114,9 @@ export function AddMemberModal({ isOpen, onClose }: AddMemberModalProps) {
               <UserPlus className="size-5" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-foreground">Add Committee Member</h2>
+              <h2 className="text-lg font-bold text-foreground">{t("members.modalTitle")}</h2>
               <p className="text-xs text-muted">
-                Add an active student to the {committeeConfig.name}.
+                {t("members.addDescription", { committee: committeeConfig.name })}
               </p>
             </div>
           </div>
@@ -115,7 +131,7 @@ export function AddMemberModal({ isOpen, onClose }: AddMemberModalProps) {
 
         {!canManageMembers && (
           <div className="mt-4 rounded-xl border border-amber-500/20 bg-amber-500/10 p-3 text-xs text-amber-700 dark:text-amber-300">
-            You must be a Leader or Co-Leader to add committee members.
+            {t("members.permission")}
           </div>
         )}
 
@@ -126,11 +142,10 @@ export function AddMemberModal({ isOpen, onClose }: AddMemberModalProps) {
         )}
 
         <form onSubmit={handleSubmit} className="mt-4 space-y-4">
-          {/* Full Name */}
           <div>
             <div className="flex items-center justify-between">
               <label className="block text-xs font-semibold text-foreground">
-                Full Name *
+                {t("members.fullName")} *
               </label>
               <span className="text-[10px] text-muted">
                 {name.length}/100
@@ -145,7 +160,7 @@ export function AddMemberModal({ isOpen, onClose }: AddMemberModalProps) {
                 if (generalError) setGeneralError("");
               }}
               onBlur={() => setTouched((prev) => ({ ...prev, name: true }))}
-              placeholder="e.g. Layla Al-Ghamdi"
+              placeholder={t("members.namePlaceholder")}
               className={`mt-1 h-10 w-full rounded-xl border px-3 text-sm text-foreground outline-none transition ${
                 nameError
                   ? "border-rose-500 bg-rose-50/20 dark:bg-rose-950/20 focus:border-rose-600"
@@ -163,7 +178,7 @@ export function AddMemberModal({ isOpen, onClose }: AddMemberModalProps) {
           <div>
             <div className="flex items-center justify-between">
               <label className="block text-xs font-semibold text-foreground">
-                University Email *
+                {t("members.universityEmail")}
               </label>
               <span className="text-[10px] text-muted">
                 {email.length}/254
@@ -178,7 +193,7 @@ export function AddMemberModal({ isOpen, onClose }: AddMemberModalProps) {
                 if (generalError) setGeneralError("");
               }}
               onBlur={() => setTouched((prev) => ({ ...prev, email: true }))}
-              placeholder="e.g. layla@uj.edu.sa"
+              placeholder={t("members.emailPlaceholder")}
               className={`mt-1 h-10 w-full rounded-xl border px-3 text-sm text-foreground outline-none transition ${
                 emailError
                   ? "border-rose-500 bg-rose-50/20 dark:bg-rose-950/20 focus:border-rose-600"
@@ -195,7 +210,7 @@ export function AddMemberModal({ isOpen, onClose }: AddMemberModalProps) {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold text-foreground">
-                Role
+                {t("members.roleLabel")}
               </label>
               <select
                 value={role}
@@ -203,22 +218,22 @@ export function AddMemberModal({ isOpen, onClose }: AddMemberModalProps) {
                 className="mt-1 h-10 w-full rounded-xl border border-border bg-surface-muted/30 px-3 text-xs text-foreground outline-none focus:border-blue-500 cursor-pointer"
               >
                 {roleOptions.map((memberRole) => (
-                  <option key={memberRole} value={memberRole}>{memberRole}</option>
+                  <option key={memberRole} value={memberRole}>{roleLabels[memberRole]}</option>
                 ))}
               </select>
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-foreground">
-                Status
+                {t("members.statusLabel")}
               </label>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as MemberStatus)}
                 className="mt-1 h-10 w-full rounded-xl border border-border bg-surface-muted/30 px-3 text-xs text-foreground outline-none focus:border-blue-500 cursor-pointer"
               >
-                <option value="Active">Active</option>
-                <option value="Away">Away</option>
+                <option value="Active">{t("members.active")}</option>
+                <option value="Away">{t("members.away")}</option>
               </select>
             </div>
           </div>
@@ -230,14 +245,14 @@ export function AddMemberModal({ isOpen, onClose }: AddMemberModalProps) {
               onClick={onClose}
               className="rounded-xl border border-border px-4 py-2 text-xs font-medium text-foreground hover:bg-surface-muted transition"
             >
-              Cancel
+              {t("members.cancel")}
             </button>
             <button
               type="submit"
               disabled={!canManageMembers}
               className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-95 disabled:opacity-50"
             >
-              Add Member
+              {t("members.add")}
             </button>
           </div>
         </form>

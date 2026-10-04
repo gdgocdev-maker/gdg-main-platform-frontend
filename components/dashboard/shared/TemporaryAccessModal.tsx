@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { useLeaderDashboard } from "./LeaderDashboardContext";
 import type { CommitteeMember } from "./types";
 import { X, Clock, ShieldCheck, AlertCircle } from "lucide-react";
@@ -16,6 +17,7 @@ export function TemporaryAccessModal({
   onClose,
   member,
 }: TemporaryAccessModalProps) {
+  const t = useTranslations("dashboard.leader");
   const { grantTemporaryAccess, revokeTemporaryAccess, canManageMembers } =
     useLeaderDashboard();
 
@@ -34,11 +36,11 @@ export function TemporaryAccessModal({
   if (!isOpen || !member) return null;
 
   const validateCustom = (val: string) => {
-    if (!val.trim()) return "Please enter duration in minutes.";
+    if (!val.trim()) return t("temporaryAccess.durationRequired");
     const num = Number(val);
-    if (isNaN(num) || !Number.isInteger(num)) return "Duration must be a whole integer number.";
-    if (num < 5) return "Duration must be at least 5 minutes.";
-    if (num > 10080) return "Duration cannot exceed 10,080 minutes (7 days).";
+    if (isNaN(num) || !Number.isInteger(num)) return t("temporaryAccess.durationInteger");
+    if (num < 5) return t("temporaryAccess.durationMin");
+    if (num > 10080) return t("temporaryAccess.durationMax");
     return "";
   };
 
@@ -93,7 +95,7 @@ export function TemporaryAccessModal({
             </div>
             <div>
               <h2 className="text-lg font-bold text-foreground">
-                Manage Temporary Elevated Access
+                {t("temporaryAccess.title")}
               </h2>
               <p className="text-xs text-muted">
                 {member.name} ({member.role})
@@ -118,15 +120,15 @@ export function TemporaryAccessModal({
                   ● Access Active
                 </span>
                 <span className="text-xs font-semibold">
-                  Expires in ~{remainingMinutes} min
+                  {t("temporaryAccess.expiresIn", { minutes: remainingMinutes })}
                 </span>
               </div>
               <div className="mt-2 text-xs space-y-1">
                 <p>
-                  <strong>Expiration Time:</strong> Today at {expirationDateString}
+                  <strong>{t("temporaryAccess.expirationTime")}:</strong> {t("temporaryAccess.todayAt", { time: expirationDateString ?? "" })}
                 </p>
                 <p className="text-emerald-700 dark:text-emerald-300">
-                  Member has Leader-level permissions for events and tasks. Access automatically reverts to normal when the timer reaches 0.
+                  {t("temporaryAccess.activeDescription")}
                 </p>
               </div>
             </div>
@@ -135,7 +137,7 @@ export function TemporaryAccessModal({
               <div className="flex items-start gap-2 text-xs text-muted">
                 <AlertCircle className="mt-0.5 size-4 shrink-0 text-blue-500" />
                 <span>
-                  Granting elevated access gives this member temporary permission to create, edit, and publish events and manage committee tasks. It does not permanently change their role.
+                  {t("temporaryAccess.grantDescription")}
                 </span>
               </div>
             </div>
@@ -145,14 +147,14 @@ export function TemporaryAccessModal({
         {/* Duration Selection (if granting or extending) */}
         <div className="mt-5 space-y-3">
           <label className="block text-xs font-semibold text-foreground">
-            {isAccessActive ? "Extend or Reset Duration:" : "Select Access Duration:"}
+            {isAccessActive ? t("temporaryAccess.extendDuration") : t("temporaryAccess.selectDuration")}
           </label>
 
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
             {[
-              { label: "60 mins", mins: 60 },
-              { label: "120 mins", mins: 120 },
-              { label: "24 hours", mins: 1440 },
+              { label: t("temporaryAccess.mins60"), mins: 60 },
+              { label: t("temporaryAccess.mins120"), mins: 120 },
+              { label: t("temporaryAccess.hours24"), mins: 1440 },
             ].map((option) => (
               <button
                 key={option.mins}
@@ -188,9 +190,9 @@ export function TemporaryAccessModal({
             <div className="mt-3">
               <div className="flex items-center justify-between">
                 <label className="block text-[11px] font-medium text-muted">
-                  Access Duration (Minutes: 5 - 10,080):
+                  {t("temporaryAccess.durationLabel")}:
                 </label>
-                <span className="text-[10px] text-muted">Max 7 days</span>
+                <span className="text-[10px] text-muted">{t("temporaryAccess.maxDays")}</span>
               </div>
               <div className="relative mt-1">
                 <Clock className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted" />
@@ -203,7 +205,7 @@ export function TemporaryAccessModal({
                     setCustomMinutes(e.target.value);
                     if (customError) setCustomError("");
                   }}
-                  placeholder="e.g. 180"
+                  placeholder={t("temporaryAccess.placeholder")}
                   className={`h-10 w-full rounded-xl border ps-9 pe-3 text-sm text-foreground outline-none transition ${
                     customError
                       ? "border-rose-500 bg-rose-50/20 dark:bg-rose-950/20 focus:border-rose-600"
@@ -229,7 +231,7 @@ export function TemporaryAccessModal({
               onClick={handleRevoke}
               className="rounded-xl border border-red-500/30 bg-red-50 px-3.5 py-2 text-xs font-semibold text-red-600 transition hover:bg-red-100 dark:bg-red-950/30 dark:text-red-300 disabled:opacity-50"
             >
-              Revoke Access Now
+              {t("temporaryAccess.revoke")}
             </button>
           ) : (
             <div />
@@ -241,7 +243,7 @@ export function TemporaryAccessModal({
               onClick={onClose}
               className="rounded-xl border border-border px-4 py-2 text-xs font-medium text-foreground hover:bg-surface-muted"
             >
-              Cancel
+              {t("temporaryAccess.cancel")}
             </button>
             <button
               type="button"
@@ -249,7 +251,7 @@ export function TemporaryAccessModal({
               onClick={handleGrant}
               className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:opacity-50"
             >
-              {isAccessActive ? "Update Duration" : "Grant Access"}
+              {isAccessActive ? t("temporaryAccess.updateDuration") : t("temporaryAccess.grant")}
             </button>
           </div>
         </div>

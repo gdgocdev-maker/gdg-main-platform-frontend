@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useLeaderDashboard } from "./LeaderDashboardContext";
 import type { CommitteeTask, TaskPriority, TaskStatus } from "./types";
 import { ConfirmModal } from "./ConfirmModal";
@@ -27,6 +28,7 @@ export function TasksSection({
 }: TasksSectionProps) {
   const { tasks, updateTask, deleteTask, canManageTasks } =
     useLeaderDashboard();
+  const t = useTranslations("dashboard.leader");
 
   const [viewMode, setViewMode] = useState<"board" | "table">("board");
   const [filterPriority, setFilterPriority] = useState<string>("all");
@@ -46,19 +48,19 @@ export function TasksSection({
       case "High":
         return (
           <span className="rounded-md bg-rose-50 px-2 py-0.5 text-[10px] font-bold text-rose-600 dark:bg-rose-950/60 dark:text-rose-400">
-            High
+            {t("tasks.high")}
           </span>
         );
       case "Medium":
         return (
           <span className="rounded-md bg-amber-50 px-2 py-0.5 text-[10px] font-bold text-amber-600 dark:bg-amber-950/60 dark:text-amber-400">
-            Medium
+            {t("tasks.medium")}
           </span>
         );
       default:
         return (
           <span className="rounded-md bg-blue-50 px-2 py-0.5 text-[10px] font-bold text-blue-600 dark:bg-blue-950/60 dark:text-blue-400">
-            Low
+            {t("tasks.low")}
           </span>
         );
     }
@@ -74,10 +76,10 @@ export function TasksSection({
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-base font-bold text-foreground">
-            Task Management ({tasks.length} total)
+            {t("tasks.managementTitle", { count: tasks.length })}
           </h2>
           <p className="text-xs text-muted">
-            Assign and track committee deliverables across active events.
+            {t("tasks.description")}
           </p>
         </div>
 
@@ -88,10 +90,10 @@ export function TasksSection({
             onChange={(e) => setFilterPriority(e.target.value)}
             className="h-9 rounded-xl border border-border bg-surface px-3 text-xs font-medium text-foreground outline-none focus:border-blue-500 cursor-pointer"
           >
-            <option value="all">All Priorities</option>
-            <option value="High">High</option>
-            <option value="Medium">Medium</option>
-            <option value="Low">Low</option>
+            <option value="all">{t("tasks.priorityAll")}</option>
+            <option value="High">{t("tasks.high")}</option>
+            <option value="Medium">{t("tasks.medium")}</option>
+            <option value="Low">{t("tasks.low")}</option>
           </select>
 
           {/* View toggle */}
@@ -104,7 +106,7 @@ export function TasksSection({
                   ? "bg-surface text-foreground shadow-2xs font-semibold"
                   : "text-muted hover:text-foreground"
               }`}
-              title="Board View"
+              title={t("tasks.boardView")}
             >
               <LayoutGrid className="size-4" />
             </button>
@@ -116,7 +118,7 @@ export function TasksSection({
                   ? "bg-surface text-foreground shadow-2xs font-semibold"
                   : "text-muted hover:text-foreground"
               }`}
-              title="Table View"
+              title={t("tasks.tableView")}
             >
               <List className="size-4" />
             </button>
@@ -129,7 +131,7 @@ export function TasksSection({
               className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-2 text-xs font-semibold text-white shadow-sm hover:bg-blue-700 transition"
             >
               <Plus className="size-4" />
-              <span>Add Task</span>
+              <span>{t("tasks.add")}</span>
             </button>
           )}
         </div>
@@ -188,16 +190,16 @@ export function TasksSection({
                         onChange={(e) => handleStatusChange(task, e.target.value as TaskStatus)}
                         className="rounded-lg border border-border bg-surface-muted/40 px-2 py-0.5 text-[10px] font-medium text-foreground outline-none"
                       >
-                        <option value="To Do">To Do</option>
-                        <option value="In Progress">Move to In Progress</option>
-                        <option value="Completed">Move to Completed</option>
+                        <option value="To Do">{t("tasks.toDo")}</option>
+                        <option value="In Progress">{t("tasks.moveToInProgress")}</option>
+                        <option value="Completed">{t("tasks.moveToCompleted")}</option>
                       </select>
                       <div className="flex items-center gap-1">
                         <button
                           type="button"
                           onClick={() => onEditTask(task)}
                           className="rounded p-1 text-muted hover:text-foreground"
-                          title="Edit"
+                          title={t("tasks.edit")}
                         >
                           <Pencil className="size-3" />
                         </button>
@@ -205,7 +207,7 @@ export function TasksSection({
                           type="button"
                           onClick={() => setTaskToDelete(task)}
                           className="rounded p-1 text-muted hover:text-rose-600"
-                          title="Delete"
+                          title={t("tasks.delete")}
                         >
                           <Trash2 className="size-3" />
                         </button>
@@ -267,16 +269,16 @@ export function TasksSection({
                         onChange={(e) => handleStatusChange(task, e.target.value as TaskStatus)}
                         className="rounded-lg border border-border bg-surface-muted/40 px-2 py-0.5 text-[10px] font-medium text-foreground outline-none"
                       >
-                        <option value="In Progress">In Progress</option>
-                        <option value="To Do">Move to To Do</option>
-                        <option value="Completed">Move to Completed</option>
+                        <option value="In Progress">{t("tasks.inProgress")}</option>
+                        <option value="To Do">{t("tasks.moveToTodo")}</option>
+                        <option value="Completed">{t("tasks.moveToCompleted")}</option>
                       </select>
                       <div className="flex items-center gap-1">
                         <button
                           type="button"
                           onClick={() => onEditTask(task)}
                           className="rounded p-1 text-muted hover:text-foreground"
-                          title="Edit"
+                          title={t("tasks.edit")}
                         >
                           <Pencil className="size-3" />
                         </button>
@@ -284,7 +286,7 @@ export function TasksSection({
                           type="button"
                           onClick={() => setTaskToDelete(task)}
                           className="rounded p-1 text-muted hover:text-rose-600"
-                          title="Delete"
+                          title={t("tasks.delete")}
                         >
                           <Trash2 className="size-3" />
                         </button>
@@ -339,16 +341,16 @@ export function TasksSection({
                         onChange={(e) => handleStatusChange(task, e.target.value as TaskStatus)}
                         className="rounded-lg border border-border bg-surface-muted/40 px-2 py-0.5 text-[10px] font-medium text-foreground outline-none"
                       >
-                        <option value="Completed">Completed</option>
-                        <option value="In Progress">Move to In Progress</option>
-                        <option value="To Do">Move to To Do</option>
+                        <option value="Completed">{t("tasks.complete")}</option>
+                        <option value="In Progress">{t("tasks.moveToInProgress")}</option>
+                        <option value="To Do">{t("tasks.moveToTodo")}</option>
                       </select>
                       <div className="flex items-center gap-1">
                         <button
                           type="button"
                           onClick={() => setTaskToDelete(task)}
                           className="rounded p-1 text-muted hover:text-rose-600"
-                          title="Delete"
+                          title={t("tasks.delete")}
                         >
                           <Trash2 className="size-3" />
                         </button>
@@ -366,12 +368,12 @@ export function TasksSection({
           <table className="w-full text-start text-xs">
             <thead>
               <tr className="border-b border-border text-[11px] font-semibold uppercase tracking-wider text-muted">
-                <th className="px-5 py-3.5 text-start">Task</th>
-                <th className="px-4 py-3.5 text-start">Assigned To</th>
-                <th className="px-4 py-3.5 text-start">Due Date</th>
-                <th className="px-4 py-3.5 text-start">Priority</th>
-                <th className="px-4 py-3.5 text-start">Status</th>
-                <th className="px-5 py-3.5 text-end">Actions</th>
+                <th className="px-5 py-3.5 text-start">{t("tasks.task")}</th>
+                <th className="px-4 py-3.5 text-start">{t("tasks.assignedTo")}</th>
+                <th className="px-4 py-3.5 text-start">{t("tasks.dueDate")}</th>
+                <th className="px-4 py-3.5 text-start">{t("tasks.priority")}</th>
+                <th className="px-4 py-3.5 text-start">{t("tasks.status")}</th>
+                <th className="px-5 py-3.5 text-end">{t("tasks.actions")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/60">
@@ -383,7 +385,7 @@ export function TasksSection({
                   <td className="px-4 py-3.5 text-muted">{task.assignedMemberName}</td>
                   <td className="px-4 py-3.5 text-muted">{task.dueDate}</td>
                   <td className="px-4 py-3.5">{getPriorityBadge(task.priority)}</td>
-                  <td className="px-4 py-3.5 font-semibold text-foreground/80">{task.status}</td>
+                  <td className="px-4 py-3.5 font-semibold text-foreground/80">{task.status === "To Do" ? t("tasks.toDo") : task.status === "In Progress" ? t("tasks.inProgress") : t("tasks.complete")}</td>
                   <td className="px-5 py-3.5 text-end">
                     {canManageTasks && (
                       <div className="inline-flex items-center gap-1">
@@ -420,7 +422,7 @@ export function TasksSection({
             deleteTask(taskToDelete.id);
           }
         }}
-        title="Delete Task"
+        title={t("tasks.deleteTitle")}
         message={
           <>
             Are you sure you want to delete{" "}
@@ -428,8 +430,8 @@ export function TasksSection({
             will remove it from the committee board.
           </>
         }
-        confirmText="Delete Task"
-        cancelText="Cancel"
+        confirmText={t("tasks.deleteConfirm")}
+        cancelText={t("tasks.cancel")}
         danger
       />
     </div>

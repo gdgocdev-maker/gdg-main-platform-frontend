@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useLeaderDashboard } from "./LeaderDashboardContext";
 import { leaderCommitteeConfig } from "./committee-config";
 import { defaultNewTaskDueDate } from "@/data/leader-dashboard";
@@ -19,6 +20,7 @@ interface TaskFormProps {
 }
 
 function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
+  const t = useTranslations("dashboard.leader");
   const { addTask, updateTask, members, canManageTasks, committeeName, committee } =
     useLeaderDashboard();
   const createdBy = leaderCommitteeConfig[committee].leaderDisplayName;
@@ -43,20 +45,20 @@ function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
 
   const validateTitle = (val: string) => {
     const trimmed = val.trim();
-    if (!trimmed) return "Task title is required.";
-    if (trimmed.length < 3) return "Task title must be at least 3 characters.";
-    if (trimmed.length > 150) return "Task title cannot exceed 150 characters.";
+    if (!trimmed) return t("taskForm.titleRequired");
+    if (trimmed.length < 3) return t("taskForm.titleMin");
+    if (trimmed.length > 150) return t("taskForm.titleMax");
     return "";
   };
 
   const validateAssigned = (val: string) => {
-    if (!val) return "Please select a member to assign this task.";
+    if (!val) return t("taskForm.selectMember");
     return "";
   };
 
   const validateDueDate = (val: string) => {
     const trimmed = val.trim();
-    if (!trimmed) return "Due date is required.";
+    if (!trimmed) return t("taskForm.dateRequired");
     return "";
   };
 
@@ -73,7 +75,7 @@ function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
     const dErr = validateDueDate(dueDate);
 
     if (tErr || aErr || dErr) {
-      setGeneralError("Please resolve the required fields before saving.");
+      setGeneralError(t("taskForm.formError"));
       return;
     }
 
@@ -115,10 +117,10 @@ function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
           </div>
           <div>
             <h2 className="text-lg font-bold text-foreground">
-              {taskToEdit ? "Edit Task" : "Create New Task"}
+              {taskToEdit ? t("taskForm.editTitle") : t("taskForm.createTitle")}
             </h2>
             <p className="text-xs text-muted">
-              Assign and track tasks for {committeeName} members.
+              {t("taskForm.description", { committee: committeeName })}
             </p>
           </div>
         </div>
@@ -133,7 +135,7 @@ function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
 
       {!canManageTasks && (
         <div className="mt-4 rounded-xl border border-amber-500/20 bg-amber-500/10 p-3 text-xs text-amber-700 dark:text-amber-300">
-          You currently have a restricted role. You need Leader, Co-Leader, or Temporary Elevated permissions to assign or modify tasks.
+          {t("taskForm.permission")}
         </div>
       )}
 
@@ -144,7 +146,7 @@ function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
       )}
 
       <div className="mt-4 space-y-4">
-        {/* Task Title */}
+        {/* {t("taskForm.title")}/}
         <div>
           <div className="flex items-center justify-between">
             <label className="block text-xs font-semibold text-foreground">
@@ -163,7 +165,7 @@ function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
               if (generalError) setGeneralError("");
             }}
             onBlur={() => setTouched((p) => ({ ...p, title: true }))}
-            placeholder="e.g. Export and analyze Study Jam registrations"
+            placeholder={t("taskForm.titlePlaceholder")}
             className={`mt-1 h-10 w-full rounded-xl border px-3 text-sm text-foreground outline-none transition ${
               titleError
                 ? "border-rose-500 bg-rose-50/20 dark:bg-rose-950/20 focus:border-rose-600"
@@ -181,7 +183,7 @@ function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
         <div>
           <div className="flex items-center justify-between">
             <label className="block text-xs font-semibold text-foreground">
-              Description (Optional)
+              {t("taskForm.optionalDescription")}
             </label>
             <span className="text-[10px] text-muted">
               {description.length}/500
@@ -192,7 +194,7 @@ function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
             value={description}
             maxLength={500}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Provide context, acceptance criteria, or relevant links..."
+            placeholder={t("taskForm.descriptionPlaceholder")}
             className="mt-1 w-full rounded-xl border border-border bg-surface-muted/30 p-3 text-sm text-foreground outline-none focus:border-blue-500"
           />
         </div>
@@ -201,7 +203,7 @@ function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
         <div>
           <div className="flex items-center justify-between">
             <label className="block text-xs font-semibold text-foreground">
-              Assign To *
+              {t("taskForm.assignTo")}
             </label>
             {members.length > 0 && (
               <button
@@ -212,7 +214,7 @@ function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
                 }}
                 className="text-[11px] font-semibold text-blue-600 hover:underline dark:text-blue-400"
               >
-                Assign to me
+                {t("taskForm.assignMe")}
               </button>
             )}
           </div>
@@ -229,7 +231,7 @@ function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
                 : "border-border bg-surface-muted/30 focus:border-blue-500"
             }`}
           >
-            <option value="">Select Member</option>
+            <option value="">{t("tasks.selectMember")}</option>
             {members.map((m) => (
               <option key={m.id} value={m.id}>
                 {m.name} ({m.role})
@@ -247,7 +249,7 @@ function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
         <div className="grid grid-cols-3 gap-3">
           <div>
             <label className="block text-xs font-semibold text-foreground">
-              Due Date *
+              {t("taskForm.dueDate")}
             </label>
             <div className="relative mt-1">
               <Calendar className="pointer-events-none absolute start-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted" />
@@ -260,7 +262,7 @@ function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
                   if (generalError) setGeneralError("");
                 }}
                 onBlur={() => setTouched((p) => ({ ...p, dueDate: true }))}
-                placeholder="e.g. Oct 20"
+                placeholder={t("taskForm.dueDatePlaceholder")}
                 className={`h-10 w-full rounded-xl border ps-8 pe-2 text-xs text-foreground outline-none transition ${
                   dueDateError
                     ? "border-rose-500 bg-rose-50/20 dark:bg-rose-950/20 focus:border-rose-600"
@@ -284,9 +286,9 @@ function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
               onChange={(e) => setPriority(e.target.value as TaskPriority)}
               className="mt-1 h-10 w-full rounded-xl border border-border bg-surface-muted/30 px-2 text-xs text-foreground outline-none focus:border-blue-500 cursor-pointer"
             >
-              <option value="High">High</option>
-              <option value="Medium">Medium</option>
-              <option value="Low">Low</option>
+              <option value="High">{t("tasks.high")}</option>
+              <option value="Medium">{t("tasks.medium")}</option>
+              <option value="Low">{t("tasks.low")}</option>
             </select>
           </div>
 
@@ -299,9 +301,9 @@ function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
               onChange={(e) => setStatus(e.target.value as TaskStatus)}
               className="mt-1 h-10 w-full rounded-xl border border-border bg-surface-muted/30 px-2 text-xs text-foreground outline-none focus:border-blue-500 cursor-pointer"
             >
-              <option value="To Do">To Do</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Completed">Completed</option>
+              <option value="To Do">{t("tasks.toDo")}</option>
+              <option value="In Progress">{t("tasks.inProgress")}</option>
+              <option value="Completed">{t("tasks.complete")}</option>
             </select>
           </div>
         </div>
@@ -314,14 +316,14 @@ function TaskForm({ taskToEdit, onClose }: TaskFormProps) {
           onClick={onClose}
           className="rounded-xl border border-border px-4 py-2 text-xs font-medium text-foreground hover:bg-surface-muted transition"
         >
-          Cancel
+          {t("taskForm.cancel")}
         </button>
         <button
           type="submit"
           disabled={!canManageTasks}
           className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-95 disabled:opacity-50"
         >
-          {taskToEdit ? "Save Changes" : "Create Task"}
+          {taskToEdit ? t("taskForm.saveChanges") : t("taskForm.create")}
         </button>
       </div>
     </form>
