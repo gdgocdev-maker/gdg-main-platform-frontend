@@ -32,7 +32,11 @@ const initialFormData: FormData = {
     membership: "",
 };
 
-export function RegistrationForm() {
+export function RegistrationForm({
+    onClose,
+}: {
+    onClose?: () => void;
+}) {
     const t = useTranslations("eventRegistration");
     const tValidation = useTranslations("validation");
 
@@ -155,13 +159,16 @@ export function RegistrationForm() {
                         </p>
                     </div>
 
-                    <button
-                        type="button"
-                        aria-label={t("close")}
-                        className="flex h-9 w-9 shrink-0 items-center justify-center text-3xl font-light text-foreground"
-                    >
-                        ×
-                    </button>
+                    {onClose && (
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            aria-label={t("close")}
+                            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-2xl font-light text-foreground transition-colors hover:bg-surface-muted"
+                        >
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    )}
                 </div>
 
                 <form

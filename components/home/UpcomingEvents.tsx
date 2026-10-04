@@ -6,11 +6,14 @@ import { useTextDirection } from "@/i18n/useTextDirection";
 import { useRef, useState } from "react";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import EventCard from "./EventCard";
+import type { HomeEvent } from "./EventCard";
+import EventRegistrationModal from "@/components/event-registration/EventRegistrationModal";
 
 export default function UpcomingEvents() {
   const t = useTranslations("home.events");
   const dir = useTextDirection();
   const [activeEvent, setActiveEvent] = useState(0);
+  const [eventToRegister, setEventToRegister] = useState<HomeEvent | null>(null);
 
   const eventRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -58,7 +61,7 @@ export default function UpcomingEvents() {
               }}
               className="shrink-0 snap-center"
             >
-              <EventCard event={event} />
+              <EventCard event={event} onRegister={setEventToRegister} />
             </div>
           ))}
         </div>
@@ -86,6 +89,13 @@ export default function UpcomingEvents() {
             <GrNext className="rtl:-scale-x-100" />
           </button>
         </div>
+      )}
+
+      {eventToRegister && (
+        <EventRegistrationModal
+          event={eventToRegister}
+          onClose={() => setEventToRegister(null)}
+        />
       )}
     </section>
   );
