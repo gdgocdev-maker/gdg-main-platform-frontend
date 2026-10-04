@@ -15,6 +15,21 @@ export interface CommitteeEvent {
   updated: string; // e.g. "Today"
   description?: string;
   isDraft?: boolean;
+  speakers?: string;
+  mapsLink?: string;
+  registrationDeadline?: string;
+  requirements?: string;
+  imageUrl?: string;
+  requiredRegistrantFields?: string[];
+  registrationQuestions?: RegistrationQuestion[];
+}
+
+export interface RegistrationQuestion {
+  id: string;
+  type: string;
+  text: string;
+  options?: string[];
+  required: boolean;
 }
 
 export type MemberStatus = "Active" | "Away";

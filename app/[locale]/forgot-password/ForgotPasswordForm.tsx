@@ -56,7 +56,7 @@ export default function ForgotPasswordForm() {
 
   return (
     <form
-      className="mt-17.5 w-full"
+      className="mt-8 w-full"
       onSubmit={handleSubmit}
       noValidate
     >

@@ -78,9 +78,6 @@ export function TasksSection({
           <h2 className="text-base font-bold text-foreground">
             {t("tasks.managementTitle", { count: tasks.length })}
           </h2>
-          <p className="text-xs text-muted">
-            {t("tasks.description")}
-          </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">

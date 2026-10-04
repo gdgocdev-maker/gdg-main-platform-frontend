@@ -94,6 +94,8 @@ export default function LoginFlow() {
   return (
     <AuthCard
       size="md"
+      compact
+      className="md:-translate-y-7"
       title={isEmailStep ? t("emailStep.title") : t("passwordStep.title")}
       description={
         isEmailStep

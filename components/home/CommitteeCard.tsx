@@ -68,7 +68,7 @@ export default function CommitteeCard({
 
   return (
     <div
-      className="relative w-full overflow-hidden rounded-[18px] border-3 bg-surface px-5 py-6 sm:px-7 sm:py-7 md:px-10 md:py-8"
+      className="relative w-full overflow-hidden rounded-[18px] border-3 bg-[var(--committee-card-surface)] px-5 py-6 sm:px-7 sm:py-7 md:px-10 md:py-8"
       style={{ borderColor: committee.color }}
     >
       <AnimatePresence mode="wait">

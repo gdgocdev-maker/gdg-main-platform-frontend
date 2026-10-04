@@ -32,6 +32,7 @@ export default function SignUp({ params }: PageProps<"/[locale]/signup">) {
           size="lg"
           title={t("title")}
           description=""
+          className="lg:-translate-y-8"
         >
           <SignupFlow />
 

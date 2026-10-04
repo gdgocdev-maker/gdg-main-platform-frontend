@@ -4,7 +4,7 @@
     "accountLabel": "Account",
     "compactLabel": "Members Dashboard",
     "items": {
-      "dashboard": "Members Dashboard",
+      "dashboard": "Dashboard",
       "events": "Events",
       "tasks": "Tasks",
       "members": "Members",
@@ -100,9 +100,7 @@
     },
     "greeting": {
       "title": "Good morning, {name}",
-      "dateFallback": "Today",
-      "dataDescription": "Focuses on data science, AI workflows, predictive models, database administration, and analytics for GDG on Campus UJ activities.",
-      "prDescription": "Coordinates event registrations and supports the GDG UJ community."
+      "dateFallback": "Today"
     },
     "metrics": {
       "committeeMembers": "Committee Members",
@@ -216,7 +214,6 @@
     "totalBanner": "Total points: {points}",
     "description": "Recognize members for their contributions and completed tasks.",
     "standings": "Member standings",
-    "manageDescription": "Review member points and recent contributions.",
     "role": "Role",
     "currentPoints": "Current Points",
     "tasksCompleted": "Tasks Completed",
@@ -363,7 +360,6 @@
     "complete": "Completed",
       "empty": "No tasks found.",
       "managementTitle": "Task Management ({count} total)",
-      "description": "Assign and track committee deliverables across active events.",
       "boardView": "Board View",
       "tableView": "Table View",
       "done": "Done",
@@ -452,7 +448,6 @@
       "registeredCount": "registered",
       "deleteMessage": "Are you sure you want to delete {name}? This will permanently remove it from the committee schedule.",
       "pageTitle": "Committee Events Management",
-      "pageDescription": "Publish workshops, conferences, and talks managed by the {committee}.",
       "unpublished": "Unpublished Drafts ({count})",
       "draftsDescription": "These events are saved locally and are NOT visible on the public platform until published."
     },

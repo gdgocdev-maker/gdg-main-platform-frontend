@@ -270,13 +270,13 @@ export default function SignupCredentials({
       <div className="relative order-8 col-span-full h-0">
         <AuthErrorMessage
           message={formError}
-          className="absolute inset-x-0 top-1 text-center"
+          className="absolute inset-x-0 -top-4 text-center"
         />
       </div>
 
       <button
         type="submit"
-        className="order-9 col-span-full mt-2 mb-1 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-[var(--white)] transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
+        className="order-9 col-span-full -mt-4 mb-1 h-8.75 w-full rounded-[5px] bg-blue text-sm font-medium text-[var(--white)] transition-colors duration-200 hover:bg-blue/90 active:bg-blue/80"
       >
         {t("continue")}
       </button>

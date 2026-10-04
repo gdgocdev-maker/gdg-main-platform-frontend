@@ -7,6 +7,13 @@ type SelectFieldProps = {
   options: { value: string; label: string }[];
   value: string;
   error?: string;
+  other?: {
+    value: string;
+    placeholder: string;
+    error?: string;
+    onChange: (value: string) => void;
+    onBlur: () => void;
+  };
   className?: string;
   onChange: (value: string) => void;
   onBlur: () => void;
@@ -19,16 +26,18 @@ export default function SelectField({
   options,
   value,
   error,
+  other,
   className = "",
   onChange,
   onBlur,
 }: SelectFieldProps) {
   return (
-    <label
-      htmlFor={id}
+    <div
       className={`relative block text-sm font-medium ${className}`}
     >
-      {label} <span className="text-gdg-red">*</span>
+      <label htmlFor={id}>
+        {label} <span className="text-gdg-red">*</span>
+      </label>
 
       <span className="relative mt-1.5 block">
         <select
@@ -59,11 +68,38 @@ export default function SelectField({
         </span>
       </span>
 
+      {value === "Other" && other && (
+        <span className="relative mt-1.5 block">
+          <input
+            id={`${id}-other`}
+            name={`${id}-other`}
+            type="text"
+            value={other.value}
+            onChange={(event) => other.onChange(event.target.value)}
+            onBlur={other.onBlur}
+            placeholder={other.placeholder}
+            required
+            maxLength={255}
+            aria-label={other.placeholder}
+            aria-invalid={Boolean(other.error)}
+            aria-describedby={other.error ? `${id}-other-error` : undefined}
+            className={`h-8 w-full rounded-md border bg-surface px-2.75 text-base font-normal outline-none placeholder:text-foreground/40 ${
+              other.error ? "border-gdg-red" : "border-foreground/15"
+            }`}
+          />
+          <AuthErrorMessage
+            id={`${id}-other-error`}
+            message={other.error ?? ""}
+            className="absolute start-0 top-full mt-0.5"
+          />
+        </span>
+      )}
+
       <AuthErrorMessage
         id={`${id}-error`}
         message={error ?? ""}
         className="absolute start-0 top-full mt-0.5"
       />
-    </label>
+    </div>
   );
 }

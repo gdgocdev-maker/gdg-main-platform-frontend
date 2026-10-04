@@ -31,9 +31,6 @@ export function LeaderGreeting() {
         <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
           {t("greeting.title", { name: userName })}
         </h2>
-        <p className="mt-1 text-xs text-muted sm:text-sm">
-          {t(committee === "pr" ? "greeting.prDescription" : "greeting.dataDescription")}
-        </p>
       </div>
       <div className="shrink-0 text-xs font-medium text-muted sm:text-end">
         {dateString}

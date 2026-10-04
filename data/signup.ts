@@ -13,6 +13,7 @@ export const collegeOptions = [
   { value: "Computer Science", labelKey: "computerScience" },
   { value: "Information Technology", labelKey: "informationTechnology" },
   { value: "Engineering", labelKey: "engineering" },
+  { value: "Other", labelKey: "other" },
 ] as const;
 
 export const majorOptions = [
@@ -20,6 +21,7 @@ export const majorOptions = [
   { value: "Information Systems", labelKey: "informationSystems" },
   { value: "Cybersecurity", labelKey: "cybersecurity" },
   { value: "Data Science", labelKey: "dataScience" },
+  { value: "Other", labelKey: "other" },
 ] as const;
 
 export const eventRegistrationMembershipValues = ["yes", "no"] as const;

@@ -1,7 +1,6 @@
 "use client"
 
 import { motion, type Variants } from "framer-motion"
-import Image from "next/image"
 import { useTranslations } from "next-intl"
 import useDesktopMediaQuery from "@/app/lib/useDesktopMediaQuery"
 import { useTextDirection } from "@/i18n/useTextDirection"
@@ -60,23 +59,15 @@ export default function AuthVisualPanel({
       layoutId={isDesktop ? "auth-visual-panel" : undefined}
       transition={isDesktop ? { duration: 0.6, ease: "easeInOut" } : undefined}
       className={`
-        relative z-20 hidden h-full w-full flex-col overflow-hidden bg-auth-visual-background text-gdg-dark px-8.5 pt-8.75 shadow-[0_0_15px_rgba(0,0,0,0.15)] lg:flex lg:w-[48%]
-        ${isStart ? "rounded-se-[30px]" : "rounded-ss-[30px]"}`}
+        relative z-20 hidden h-full w-full flex-col overflow-hidden bg-auth-visual-background text-gdg-dark px-8.5 pt-8.75 shadow-[0_0_15px_rgba(0,0,0,0.15)] lg:flex lg:h-[calc(100%-4rem)] lg:w-[48%] lg:self-start
+        ${isStart ? "rounded-se-[30px] rounded-ee-[30px]" : "rounded-ss-[30px] rounded-es-[30px]"}`}
     >
       <motion.div
         variants={contentGroupVariants}
         initial={shouldAnimate ? "hidden" : false}
         animate={isDesktop ? "visible" : false}
       >
-        <Image
-          src="/black-logo-with-colors.svg"
-          alt={t("logoAlt")}
-          width={350}
-          height={30}
-          priority
-        />
-
-        <div className="mt-26">
+        <div className="mt-14">
           <p className="text-base font-bold tracking-[2px] text-gdg-blue">
             {t("eyebrow")}
           </p>
