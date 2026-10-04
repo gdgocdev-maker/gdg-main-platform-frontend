@@ -4,6 +4,7 @@ import { useFormatter, useTranslations } from "next-intl";
 import { useState } from "react";
 import { TopNav } from "@/components/dashboard/TopNav";
 import Footer from "@/components/Footer";
+import { Link } from "@/i18n/navigation";
 import { ProfileBio } from "@/components/profile/ProfileBio";
 import { ProfileChips } from "@/components/profile/ProfileChips";
 import { ProfileHero } from "@/components/profile/ProfileHero";
@@ -224,6 +225,15 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
       />
 
       <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-3 px-4 py-4 sm:px-6 sm:py-6 md:gap-4 md:px-10 md:py-8 lg:px-16">
+        <div className="flex justify-end">
+          <Link
+            href="/registrations"
+            className="rounded-lg border border-border bg-surface px-4 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-surface-muted"
+          >
+            {t("registrationsLink")}
+          </Link>
+        </div>
+
         <ProfileChips chips={chips} />
 
         <ProfileBio
