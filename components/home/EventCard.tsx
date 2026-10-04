@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useTextDirection } from "@/i18n/useTextDirection";
 
-type Event = {
+export type HomeEvent = {
   id: string;
   image: string;
   name: string;
@@ -16,10 +16,11 @@ type Event = {
 };
 
 type EventCardProps = {
-  event: Event;
+  event: HomeEvent;
+  onRegister: (event: HomeEvent) => void;
 };
 
-export default function EventCard({ event }: EventCardProps) {
+export default function EventCard({ event, onRegister }: EventCardProps) {
   const t = useTranslations("home.events");
   const dir = useTextDirection();
 
@@ -70,6 +71,7 @@ export default function EventCard({ event }: EventCardProps) {
         <div className="mt-auto flex justify-end">
           <button
             type="button"
+            onClick={() => onRegister(event)}
             className="flex h-9 w-[108px] cursor-pointer items-center justify-between rounded-full bg-[var(--white)] ps-4 pe-1 text-sm font-medium leading-none text-[var(--gdg-dark)]"
           >
             <span dir={dir}>{t("register")}</span>

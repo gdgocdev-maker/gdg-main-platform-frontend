@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { SpeakerCard } from "./SpeakerCard";
 import type { EventInfoData } from "@/data/event-registration";
