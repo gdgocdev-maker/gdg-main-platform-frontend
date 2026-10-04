@@ -3,6 +3,7 @@
 import { useFormatter, useTranslations } from "next-intl";
 import { useState } from "react";
 import { TopNav } from "@/components/dashboard/TopNav";
+import Footer from "@/components/Footer";
 import { ProfileBio } from "@/components/profile/ProfileBio";
 import { ProfileChips } from "@/components/profile/ProfileChips";
 import { ProfileHero } from "@/components/profile/ProfileHero";
@@ -245,6 +246,8 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
           onSocialLinkChange={handleLinkChange}
         />
       </main>
+
+      <Footer />
     </div>
   );
 }
