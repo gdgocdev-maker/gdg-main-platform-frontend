@@ -28,7 +28,9 @@ type FieldName =
   | "university"
   | "universityId"
   | "college"
+  | "collegeOther"
   | "major"
+  | "majorOther"
 
 type FormValues = Record<FieldName, string>
 type FieldErrors = Partial<Record<FieldName, string>>
@@ -47,11 +49,13 @@ const defaultValues: FormValues = {
   university: "",
   universityId: "",
   college: "",
-  major: ""
+  collegeOther: "",
+  major: "",
+  majorOther: ""
 }
 
-function normalizeText(value: string) {
-  return value.trim()
+function normalizeText(value: unknown) {
+  return typeof value === "string" ? value.trim() : ""
 }
 
 function validateName(value: string) {
@@ -91,6 +95,18 @@ function validatePhone(value: string) {
 function validateSelect(value: string, field: "gender" | "college" | "major") {
   if (!normalizeText(value)) {
     return `${field}Required`
+  }
+
+  return ""
+}
+
+function validateOtherAcademicText(value: string) {
+  const trimmed = normalizeText(value)
+
+  if (!trimmed) return "fieldRequired"
+  if (trimmed.length > 255) return "fieldTooLong"
+  if (!/^[\p{L}\p{M}\p{N}\s.'’&()/+\-]+$/u.test(trimmed)) {
+    return "fieldInvalid"
   }
 
   return ""
@@ -143,9 +159,17 @@ function validateAcademicDetails(values: FormValues) {
 
   const collegeError = validateSelect(values.college, "college")
   if (collegeError) nextErrors.college = collegeError
+  if (values.college === "Other") {
+    const collegeOtherError = validateOtherAcademicText(values.collegeOther ?? "")
+    if (collegeOtherError) nextErrors.collegeOther = collegeOtherError
+  }
 
   const majorError = validateSelect(values.major, "major")
   if (majorError) nextErrors.major = majorError
+  if (values.major === "Other") {
+    const majorOtherError = validateOtherAcademicText(values.majorOther ?? "")
+    if (majorOtherError) nextErrors.majorOther = majorOtherError
+  }
 
   return nextErrors
 }
@@ -243,11 +267,33 @@ export default function SignupFlow() {
 
   const updateFieldValue = (field: string, value: string) => {
     const normalizedField = field as FieldName
-    const nextValue = ["password", "confirmPassword"].includes(normalizedField)
+    const nextValue = [
+      "password",
+      "confirmPassword",
+      "collegeOther",
+      "majorOther"
+    ].includes(normalizedField)
       ? value
       : value.trim()
 
-    setFormValues((current) => ({ ...current, [normalizedField]: nextValue }))
+    setFormValues((current) => ({
+      ...defaultValues,
+      ...current,
+      [normalizedField]: nextValue,
+      ...(normalizedField === "college" && nextValue !== "Other"
+        ? { collegeOther: "" }
+        : {}),
+      ...(normalizedField === "major" && nextValue !== "Other"
+        ? { majorOther: "" }
+        : {})
+    }))
+
+    if (normalizedField === "college" && nextValue !== "Other") {
+      clearFieldError("collegeOther")
+    }
+    if (normalizedField === "major" && nextValue !== "Other") {
+      clearFieldError("majorOther")
+    }
 
     if (fieldErrors[normalizedField]) {
       clearFieldError(normalizedField)
@@ -281,6 +327,9 @@ export default function SignupFlow() {
         return validateRequiredText(value, "universityId")
       case "college":
         return validateSelect(value, "college")
+      case "collegeOther":
+      case "majorOther":
+        return validateOtherAcademicText(value)
       case "major":
         return validateSelect(value, "major")
       default:
@@ -370,7 +419,7 @@ export default function SignupFlow() {
       >
         <AuthStepTransition
           stepKey={step}
-          className="grid w-full grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-2 lg:gap-y-3.5"
+          className="grid w-full grid-cols-1 gap-x-6 gap-y-5 md:grid-cols-2 lg:gap-y-5"
         >
           {step === 1 ? (
             <SignupCredentials

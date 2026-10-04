@@ -1,23 +1,23 @@
 "use client";
 
+import { useState } from "react";
+
 import { useLeaderDashboard } from "@/components/dashboard/shared/LeaderDashboardContext";
 import { useTranslations } from "next-intl";
 import { EventsFilterBar } from "@/components/dashboard/data-analysis/EventsFilterBar";
 import { EventManagementTable } from "@/components/dashboard/data-analysis/EventManagementTable";
+import { CreateEventModal } from "@/components/dashboard/data-analysis/CreateEventForm";
 import { Plus, Sparkles, Send } from "lucide-react";
 
 export default function LeaderEventsPage() {
+  const [createEventOpen, setCreateEventOpen] = useState(false);
   const t = useTranslations("dashboard.leader");
-  const { events, publishDraft, canManageEvents, committeeName } = useLeaderDashboard();
+  const { events, publishDraft, canManageEvents, addEvent } = useLeaderDashboard();
 
   const draftEvents = events.filter((e) => e.isDraft);
 
-  const handleCreateEventClick = () => {
-    // Button is kept simple as requested; user will implement the flow later
-    console.log("Create Event clicked");
-  };
-
   return (
+    <>
     <div className="space-y-6">
       {/* Top Banner & Quick Create */}
       <div className="flex flex-col gap-4 rounded-2xl border border-border bg-surface p-6 sm:flex-row sm:items-center sm:justify-between shadow-2xs">
@@ -25,15 +25,12 @@ export default function LeaderEventsPage() {
           <h2 className="text-xl font-bold text-foreground sm:text-2xl">
             {t("eventManagement.pageTitle")}
           </h2>
-          <p className="mt-1 text-xs text-muted sm:text-sm">
-            {t("eventManagement.pageDescription", { committee: committeeName })}
-          </p>
         </div>
 
         {canManageEvents && (
           <button
             type="button"
-            onClick={handleCreateEventClick}
+            onClick={() => setCreateEventOpen(true)}
             className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-95"
           >
             <Plus className="size-4" />
@@ -93,5 +90,11 @@ export default function LeaderEventsPage() {
       {/* Event Management Table */}
       <EventManagementTable />
     </div>
+    <CreateEventModal
+      isOpen={createEventOpen}
+      onClose={() => setCreateEventOpen(false)}
+      onCreate={addEvent}
+    />
+    </>
   );
 }

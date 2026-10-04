@@ -28,6 +28,8 @@ export default function ForgotPassword({ params }: PageProps<"/[locale]/forgot-p
       <section className="flex h-auto flex-1 items-center justify-center bg-background lg:h-full">
         <AuthCard
           size="sm"
+          compact
+          className="md:-translate-y-6"
           title={t("title")}
           description={t("description")}
         >
@@ -35,7 +37,7 @@ export default function ForgotPassword({ params }: PageProps<"/[locale]/forgot-p
 
           <Link
             href="/login"
-            className="mt-auto pb-8 pt-6 text-center text-sm font-medium text-blue hover:text-blue/90 active:text-blue/80"
+            className="mt-8 pb-4 pt-4 text-center text-sm font-medium text-blue hover:text-blue/90 active:text-blue/80"
           >
             {t("backToSignIn")}
           </Link>

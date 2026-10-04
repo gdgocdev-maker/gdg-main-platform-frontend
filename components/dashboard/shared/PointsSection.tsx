@@ -3,7 +3,7 @@
 import { useLeaderDashboard } from "./LeaderDashboardContext";
 import { useTranslations } from "next-intl";
 import type { CommitteeMember } from "./types";
-import { Trophy, ArrowUpRight, ArrowDownRight, History } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, History } from "lucide-react";
 
 interface PointsSectionProps {
   onOpenUpdatePoints: (member: CommitteeMember) => void;
@@ -17,21 +17,14 @@ export function PointsSection({ onOpenUpdatePoints }: PointsSectionProps) {
 
   return (
     <div className="space-y-6">
-      {/* Top Banner Metric */}
-      <div className="flex flex-col gap-4 rounded-2xl border border-blue-200 bg-blue-50/80 p-6 sm:flex-row sm:items-center sm:justify-between dark:border-blue-800/50 dark:bg-[#0f1f38]">
-        <div className="flex items-center gap-4">
-          <div className="flex size-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-sm">
-            <Trophy className="size-6" />
-          </div>
-          <div>
-            <h2 className="text-xl font-bold text-blue-950 dark:text-blue-100 sm:text-2xl">
-              {t("points.totalBanner", { points: totalPoints.toLocaleString() })}
-            </h2>
-            <p className="text-xs text-blue-800/80 dark:text-blue-300/80">
-              {t("points.description")}
-            </p>
-          </div>
-        </div>
+      {/* Total points summary */}
+      <div className="rounded-xl border border-border border-s-4 border-s-blue-500 bg-surface p-4 shadow-2xs sm:p-5">
+        <h2 className="text-lg font-semibold text-foreground sm:text-xl">
+          {t("points.totalBanner", { points: totalPoints.toLocaleString() })}
+        </h2>
+        <p className="mt-1 text-xs text-muted sm:text-sm">
+          {t("points.description")}
+        </p>
       </div>
 
       {/* Member Points Table */}
@@ -41,9 +34,6 @@ export function PointsSection({ onOpenUpdatePoints }: PointsSectionProps) {
             <h3 className="text-base font-bold text-foreground">
               {t("points.standings")}
             </h3>
-            <p className="text-xs text-muted">
-              {t("points.manageDescription")}
-            </p>
           </div>
         </div>
 

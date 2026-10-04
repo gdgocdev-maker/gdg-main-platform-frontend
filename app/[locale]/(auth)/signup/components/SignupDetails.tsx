@@ -100,6 +100,13 @@ export default function SignupDetails({
         }))}
         value={values.college}
         error={errors.college}
+        other={{
+          value: values.collegeOther ?? "",
+          placeholder: t("fields.college.otherPlaceholder"),
+          error: errors.collegeOther,
+          onChange: (value) => onChange("collegeOther", value),
+          onBlur: () => onBlur("collegeOther")
+        }}
         onChange={(value) => onChange("college", value)}
         onBlur={() => onBlur("college")}
       />
@@ -114,6 +121,13 @@ export default function SignupDetails({
         }))}
         value={values.major}
         error={errors.major}
+        other={{
+          value: values.majorOther ?? "",
+          placeholder: t("fields.major.otherPlaceholder"),
+          error: errors.majorOther,
+          onChange: (value) => onChange("majorOther", value),
+          onBlur: () => onBlur("majorOther")
+        }}
         onChange={(value) => onChange("major", value)}
         onBlur={() => onBlur("major")}
       />

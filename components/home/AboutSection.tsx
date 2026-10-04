@@ -92,7 +92,7 @@ export default function AboutSection() {
           </motion.p>
         </div>
 
-        <div className="relative h-[360px] w-full lg:h-[400px]">
+        <div className="relative mt-6 h-[360px] w-full lg:mt-0 lg:h-[400px]">
           <motion.img
             src="/images/about-community-1.png"
             alt={t("imageAlt", { number: 1 })}
@@ -123,7 +123,7 @@ export default function AboutSection() {
           <motion.img
             src="/images/about-community-3.png"
             alt={t("imageAlt", { number: 3 })}
-            className="absolute start-[-10px] top-[190px] h-[130px] w-[42%] rounded-xl border-t-10 border-e-10 border-background object-cover lg:start-[-30px] lg:top-[200px] lg:h-[170px] lg:w-[160px]"            initial={{ opacity: 0, x: -30 * sign }}
+            className="absolute start-[-10px] top-[190px] h-[130px] w-[42%] rounded-xl border-t-10 border-e-10 border-background object-cover lg:start-0 lg:top-[200px] lg:h-[170px] lg:w-[160px] xl:start-[-30px]"            initial={{ opacity: 0, x: -30 * sign }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{

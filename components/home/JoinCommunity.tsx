@@ -3,10 +3,12 @@
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useTextDirection } from "@/i18n/useTextDirection";
+import { useRouter } from "@/i18n/navigation";
 
 export default function JoinCommunity() {
   const t = useTranslations("home.joinCommunity");
   const dir = useTextDirection();
+  const router = useRouter();
 
   return (
     <section className="mt-5 px-6 py-16 lg:px-10 lg:py-20">
@@ -34,6 +36,7 @@ export default function JoinCommunity() {
 
           <motion.button
             type="button"
+            onClick={() => router.push("/login")}
             className="relative mt-8 flex h-[50px] w-[240px] cursor-pointer items-center justify-center overflow-hidden rounded-full border text-base font-bold text-[var(--white)] backdrop-blur-md lg:h-[56px] lg:w-[250px] lg:text-xl"
             style={{
               borderColor: "var(--glass-border)",

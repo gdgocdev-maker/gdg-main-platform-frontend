@@ -87,7 +87,7 @@ export default function Navbar({ variant = "overlay" }: NavbarProps = {}) {
         )}
       </div>
 
-      <div className="hidden items-center gap-8 lg:flex">
+      <div className="hidden items-center gap-5 whitespace-nowrap lg:flex xl:gap-8">
         <motion.a
           href={sectionHref("#home")}
           whileHover={{ scale: 1.05 }}

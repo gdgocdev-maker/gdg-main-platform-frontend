@@ -27,6 +27,8 @@
   "codeRequired": "Please enter the verification code.",
   "codeIncomplete": "Please enter all 6 digits of the verification code.",
   "fieldRequired": "This field is required",
+  "fieldTooLong": "Use 255 characters or fewer.",
+  "fieldInvalid": "Use letters, numbers, spaces, and common name punctuation only.",
   "profileNameInvalid": "Enter a valid name (letters only)",
   "profileEmailInvalid": "Enter a valid email address",
   "profilePhoneInvalid": "Enter a 9-digit Saudi mobile number starting with 5, e.g. 540505484",
