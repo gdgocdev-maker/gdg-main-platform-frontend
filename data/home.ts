@@ -229,8 +229,8 @@ export const committees = [
 export const sponsors = [
   {
     id: 1,
-    image: "/images/sponsor-arena-beans.png",
-    name: "Arena Beans",
+    image: "/images/wadi.png",
+    name: "Wadi Jeddah",
   },
   {
     id: 2,
@@ -251,6 +251,11 @@ export const sponsors = [
     id: 5,
     image: "/images/sponsor-print.png",
     name: "Print",
+  },
+    {
+    id: 6,
+    image: "/images/sponsor-arena-beans.png",
+    name: "Arena Beans",
   },
 ];
 

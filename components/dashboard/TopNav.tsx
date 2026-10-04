@@ -6,13 +6,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import ThemeToggle from "@/components/ui/ThemeToggle";
+import { Link } from "@/i18n/navigation";
+import { useHomeSectionHref } from "@/components/layout/useHomeSectionHref";
 
-// Same links as the homepage navbar, so they reuse its common.nav translations.
-const navKeys = ["home", "about", "projects", "events", "community"] as const;
+const navItems = [
+  { key: "home", hash: "#home" },
+  { key: "about", hash: "#about" },
+  { key: "projects", hash: "#projects" },
+  { key: "events", hash: "#events" },
+  { key: "community", hash: "#committees" },
+] as const;
 
-// The homepage hover underline: a 2px Google-gradient bar that grows to the
-// link's width. `image:` is required, otherwise Tailwind 4 infers
-// background-color and a gradient value paints nothing.
 const linkUnderline =
   "mt-1 h-[2px] w-0 rounded-full bg-[image:var(--google-gradient)] transition-all duration-300 group-hover:w-full";
 
@@ -38,32 +42,41 @@ function IconMenu({ className }: IconProps) {
 export function TopNav() {
   const t = useTranslations("common");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const sectionHref = useHomeSectionHref();
 
   return (
     <header className="sticky top-0 z-30 bg-gdg-dark text-white">
       <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-        {/* The logo image already includes the group name, so no separate text is needed. */}
-        <Image
-          src="/logo.png"
-          alt={t("logoAlt")}
-          width={3612}
-          height={347}
-          priority
-          className="h-6 w-auto min-w-0 max-w-full object-contain object-left sm:h-7 lg:h-8 rtl:object-right"
-        />
+        <a href={sectionHref("#home")} aria-label={t("logoAlt")}>
+          <Image
+            src="/logo.png"
+            alt={t("logoAlt")}
+            width={3612}
+            height={347}
+            priority
+            className="h-6 w-auto min-w-0 max-w-full object-contain object-left sm:h-7 lg:h-8 rtl:object-right"
+          />
+        </a>
 
         <div className="flex shrink-0 items-center gap-3 lg:gap-6">
           <nav aria-label={t("topNav.navLabel")} className="hidden items-center gap-6 text-sm font-semibold lg:flex">
-            {navKeys.map((key) => (
+            {navItems.map(({ key, hash }) => (
               <a
                 key={key}
-                href="#"
+                href={sectionHref(hash)}
                 className="group flex flex-col items-center text-white/80 transition-colors hover:text-white"
               >
                 {t(`nav.${key}`)}
                 <span className={linkUnderline} />
               </a>
             ))}
+            <Link
+              href="/announcements"
+              className="group flex flex-col items-center text-white/80 transition-colors hover:text-white"
+            >
+              {t("nav.announcements")}
+              <span className={linkUnderline} />
+            </Link>
           </nav>
 
           <ThemeToggle onDark />
@@ -95,16 +108,25 @@ export function TopNav() {
             className="overflow-hidden border-t border-white/10 lg:hidden"
           >
             <div className="flex flex-col gap-1 px-4 py-3 text-sm font-semibold sm:px-6">
-              {navKeys.map((key) => (
+              {navItems.map(({ key, hash }) => (
                 <a
                   key={key}
-                  href="#"
+                  href={sectionHref(hash)}
+                  onClick={() => setMobileOpen(false)}
                   className="group flex flex-col px-2 py-2 text-white/80 transition-colors hover:text-white"
                 >
                   {t(`nav.${key}`)}
                   <span className={linkUnderline} />
                 </a>
               ))}
+              <Link
+                href="/announcements"
+                onClick={() => setMobileOpen(false)}
+                className="group flex flex-col px-2 py-2 text-white/80 transition-colors hover:text-white"
+              >
+                {t("nav.announcements")}
+                <span className={linkUnderline} />
+              </Link>
             </div>
           </motion.nav>
         )}

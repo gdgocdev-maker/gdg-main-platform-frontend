@@ -32,12 +32,8 @@ const initialFormData: FormData = {
     membership: "",
 };
 
-const membershipLabels = {
-    yes: "Yes , I am a member",
-    no: "No , I am not a member",
-} satisfies Record<(typeof eventRegistrationMembershipValues)[number], string>;
-
 export function RegistrationForm() {
+    const t = useTranslations("eventRegistration");
     const tValidation = useTranslations("validation");
 
     const [formData, setFormData] = useState<FormData>(initialFormData);
@@ -147,21 +143,21 @@ export function RegistrationForm() {
                 <div className="flex items-start justify-between gap-5">
                     <div className="text-start">
                         <p className="text-sm uppercase tracking-wide text-foreground/70">
-                            Event Registration
+                            {t("eyebrow")}
                         </p>
 
                         <h2 className="mt-1 text-3xl font-bold leading-tight text-foreground sm:text-4xl">
-                            Join the Event
+                            {t("title")}
                         </h2>
 
                         <p className="mt-4 text-sm text-muted">
-                            Fill in your information to secure your spot
+                            {t("subtitle")}
                         </p>
                     </div>
 
                     <button
                         type="button"
-                        aria-label="Close registration page"
+                        aria-label={t("close")}
                         className="flex h-9 w-9 shrink-0 items-center justify-center text-3xl font-light text-foreground"
                     >
                         ×
@@ -178,7 +174,7 @@ export function RegistrationForm() {
                             htmlFor="fullName"
                             className="block text-start text-sm font-semibold text-foreground"
                         >
-                            Full Name <span className="text-gdg-red">*</span>
+                            {t("fullName")} <span className="text-gdg-red">*</span>
                         </label>
 
                         <div className="relative">
@@ -201,7 +197,7 @@ export function RegistrationForm() {
                                 name="fullName"
                                 type="text"
                                 autoComplete="name"
-                                placeholder="Enter your full name"
+                                placeholder={t("fullNamePlaceholder")}
                                 value={formData.fullName}
                                 onChange={(event) =>
                                     updateField("fullName", event.target.value)
@@ -234,7 +230,7 @@ export function RegistrationForm() {
                                 htmlFor="universityId"
                                 className="block text-start text-sm font-semibold text-foreground"
                             >
-                                University ID <span className="text-gdg-red">*</span>
+                                {t("universityId")} <span className="text-gdg-red">*</span>
                             </label>
 
                             <input
@@ -242,7 +238,7 @@ export function RegistrationForm() {
                                 name="universityId"
                                 type="text"
                                 inputMode="numeric"
-                                placeholder="e.g : 2286291"
+                                placeholder={t("universityIdPlaceholder")}
                                 value={formData.universityId}
                                 onChange={(event) =>
                                     updateField("universityId", event.target.value)
@@ -272,14 +268,14 @@ export function RegistrationForm() {
                                 htmlFor="college"
                                 className="block text-start text-sm font-semibold text-foreground"
                             >
-                                College <span className="text-gdg-red">*</span>
+                                {t("college")} <span className="text-gdg-red">*</span>
                             </label>
 
                             <input
                                 id="college"
                                 name="college"
                                 type="text"
-                                placeholder="e.g : Computer Science and Engineering"
+                                placeholder={t("collegePlaceholder")}
                                 value={formData.college}
                                 onChange={(event) =>
                                     updateField("college", event.target.value)
@@ -311,14 +307,14 @@ export function RegistrationForm() {
                                 htmlFor="major"
                                 className="block text-start text-sm font-semibold text-foreground"
                             >
-                                Major <span className="text-gdg-red">*</span>
+                                {t("major")} <span className="text-gdg-red">*</span>
                             </label>
 
                             <input
                                 id="major"
                                 name="major"
                                 type="text"
-                                placeholder="e.g : Software Engineering"
+                                placeholder={t("majorPlaceholder")}
                                 value={formData.major}
                                 onChange={(event) =>
                                     updateField("major", event.target.value)
@@ -348,7 +344,7 @@ export function RegistrationForm() {
                                 htmlFor="phone"
                                 className="block text-start text-sm font-semibold text-foreground"
                             >
-                                Phone Number <span className="text-gdg-red">*</span>
+                                {t("phone")} <span className="text-gdg-red">*</span>
                             </label>
 
                             <div
@@ -367,7 +363,7 @@ export function RegistrationForm() {
                                     type="tel"
                                     inputMode="numeric"
                                     autoComplete="tel"
-                                    placeholder="5xxxxxxxx"
+                                    placeholder={t("phonePlaceholder")}
                                     value={formData.phone}
                                     onChange={(event) =>
                                         updateField("phone", event.target.value)
@@ -396,7 +392,7 @@ export function RegistrationForm() {
                             htmlFor="email"
                             className="block text-start text-sm font-semibold text-foreground"
                         >
-                            Email Address <span className="text-gdg-red">*</span>
+                            {t("email")} <span className="text-gdg-red">*</span>
                         </label>
 
                         <div className="relative">
@@ -419,7 +415,7 @@ export function RegistrationForm() {
                                 name="email"
                                 type="email"
                                 autoComplete="email"
-                                placeholder="Enter your email address"
+                                placeholder={t("emailPlaceholder")}
                                 value={formData.email}
                                 onChange={(event) =>
                                     updateField("email", event.target.value)
@@ -453,7 +449,7 @@ export function RegistrationForm() {
                         }
                     >
                         <legend className="text-start text-sm font-semibold text-foreground">
-                            Are you a GDG on Campus Member ?{" "}
+                            {t("membershipQuestion")}{" "}
                             <span className="text-gdg-red">*</span>
                         </legend>
 
@@ -468,7 +464,7 @@ export function RegistrationForm() {
                                         onChange={() => updateField("membership", membership)}
                                         className="h-4 w-4 accent-[var(--gdg-dark)]"
                                     />
-                                    {membershipLabels[membership]}
+                                    {t(`membership.${membership}`)}
                                 </label>
                             ))}
                         </div>
@@ -490,7 +486,7 @@ export function RegistrationForm() {
                             className="inline-flex h-10 items-center justify-center gap-3 rounded-md bg-gdg-dark px-4 text-sm font-medium text-[var(--white)] transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
                         >
                             <span>
-                                {isSubmitting ? "Registering..." : "Register Now"}
+                                {isSubmitting ? t("submitting") : t("submit")}
                             </span>
 
                             <span

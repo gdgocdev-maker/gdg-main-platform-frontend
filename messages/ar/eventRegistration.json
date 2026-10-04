@@ -1,0 +1,29 @@
+{
+  "eyebrow": "التسجيل في الفعالية",
+  "title": "انضم إلى الفعالية",
+  "subtitle": "أدخل معلوماتك لتأكيد مقعدك",
+  "close": "إغلاق صفحة التسجيل",
+  "fullName": "الاسم الكامل",
+  "fullNamePlaceholder": "أدخل اسمك الكامل",
+  "universityId": "الرقم الجامعي",
+  "universityIdPlaceholder": "مثال: 2286291",
+  "college": "الكلية",
+  "collegePlaceholder": "مثال: علوم وهندسة الحاسب",
+  "major": "التخصص",
+  "majorPlaceholder": "مثال: هندسة البرمجيات",
+  "phone": "رقم الجوال",
+  "phonePlaceholder": "5xxxxxxxx",
+  "email": "البريد الإلكتروني",
+  "emailPlaceholder": "أدخل بريدك الإلكتروني",
+  "membershipQuestion": "هل أنت عضو في GDG on Campus؟",
+  "membership": {
+    "yes": "نعم، أنا عضو",
+    "no": "لا، لست عضوًا"
+  },
+  "submit": "سجّل الآن",
+  "submitting": "جارٍ التسجيل...",
+  "date": "التاريخ",
+  "time": "الوقت",
+  "location": "الموقع",
+  "speaker": "المتحدث"
+}

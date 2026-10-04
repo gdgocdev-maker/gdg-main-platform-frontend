@@ -2,6 +2,7 @@
 
 import { usePathname } from "@/i18n/navigation";
 import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { leaderCommitteeConfig } from "./committee-config";
 import {
   LayoutDashboard,
@@ -25,15 +26,16 @@ export function LeaderSidebar({
   committee = "data-analysis",
 }: LeaderSidebarProps) {
   const pathname = usePathname();
+  const t = useTranslations("dashboard.leader");
   const config = leaderCommitteeConfig[committee];
   const basePath = config.routeBase;
   const navItems = [
-    { id: "overview", label: "Overview", href: basePath, icon: LayoutDashboard },
-    { id: "events", label: config.eventsLabel, href: `${basePath}/events`, icon: Calendar },
-    { id: "members", label: "Members", href: `${basePath}/members`, icon: Users },
-    { id: "tasks", label: "Tasks", href: `${basePath}/tasks`, icon: CheckSquare },
-    { id: "points", label: "Points", href: `${basePath}/points`, icon: Trophy },
-    { id: "settings", label: "Settings", href: `${basePath}/settings`, icon: Settings },
+    { id: "overview", label: t("nav.overview"), href: basePath, icon: LayoutDashboard },
+    { id: "events", label: t(committee === "pr" ? "nav.eventRegistrations" : "nav.events"), href: `${basePath}/events`, icon: Calendar },
+    { id: "members", label: t("nav.members"), href: `${basePath}/members`, icon: Users },
+    { id: "tasks", label: t("nav.tasks"), href: `${basePath}/tasks`, icon: CheckSquare },
+    { id: "points", label: t("nav.points"), href: `${basePath}/points`, icon: Trophy },
+    { id: "settings", label: t("nav.settings"), href: `${basePath}/settings`, icon: Settings },
   ];
 
   const isItemActive = (href: string) => {
@@ -50,10 +52,10 @@ export function LeaderSidebar({
         <div className="mb-4 flex items-center justify-between rounded-xl border border-border bg-surface-muted/60 p-3 shadow-2xs">
           <div>
             <span className="block text-[11px] font-bold uppercase tracking-wider text-muted">
-              Leader Workspace
+              {t("nav.leaderWorkspace")}
             </span>
             <span className="mt-0.5 block text-sm font-semibold text-foreground">
-              {config.name}
+              {t(committee === "pr" ? "nav.committeePR" : "nav.committeeData")}
             </span>
           </div>
           {onCloseMobile && (
@@ -61,7 +63,7 @@ export function LeaderSidebar({
               type="button"
               onClick={onCloseMobile}
               className="p-1 text-muted hover:text-foreground lg:hidden"
-              aria-label="Close menu"
+              aria-label={t("nav.closeMenu")}
             >
               <X className="size-5" />
             </button>
@@ -71,7 +73,7 @@ export function LeaderSidebar({
         {/* Navigation Section */}
         <div>
           <span className="block px-3 text-[11px] font-bold uppercase tracking-wider text-muted">
-            Workspace
+            {t("nav.workspace")}
           </span>
 
           <nav className="mt-2 flex flex-col gap-1">

@@ -505,23 +505,23 @@ html {
   }
 
   to {
-    transform: translateX(-50%);
+    transform: translateX(-16.666667%);
   }
 }
 
 .sponsors-marquee {
   animation: sponsors-marquee 30s linear infinite;
+  will-change: transform;
 }
 
-/* In RTL the row is anchored to the right edge, so it scrolls the other way
-   (scrolling left would leave an empty gap on the right). */
+/* The track contains repeated identical groups, so the reset lands on the same logos. */
 @keyframes sponsors-marquee-rtl {
   from {
     transform: translateX(0);
   }
 
   to {
-    transform: translateX(50%);
+    transform: translateX(16.666667%);
   }
 }
 

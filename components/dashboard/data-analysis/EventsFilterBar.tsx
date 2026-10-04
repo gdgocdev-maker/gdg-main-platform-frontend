@@ -1,6 +1,7 @@
 "use client";
 
 import { useLeaderDashboard } from "../shared/LeaderDashboardContext";
+import { useTranslations } from "next-intl";
 import { Search, RotateCcw, Calendar, ChevronDown } from "lucide-react";
 import {
   eventDateFilterOptions,
@@ -9,6 +10,7 @@ import {
 } from "./mock-data";
 
 export function EventsFilterBar() {
+  const t = useTranslations("dashboard.leader");
   const {
     searchQuery,
     setSearchQuery,
@@ -36,7 +38,7 @@ export function EventsFilterBar() {
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search events by name or location"
+          placeholder={t("eventFilters.search")}
           className="h-10 w-full rounded-xl border border-border bg-surface-muted/40 ps-9 pe-12 text-sm text-foreground outline-none transition placeholder:text-muted focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
         />
         <span className="pointer-events-none absolute end-3 top-1/2 -translate-y-1/2 rounded border border-border bg-surface px-1.5 py-0.5 text-[10px] font-medium text-muted">
@@ -53,9 +55,9 @@ export function EventsFilterBar() {
             onChange={(e) => setStatusFilter(e.target.value)}
             className="h-10 appearance-none rounded-xl border border-border bg-surface px-3 pe-8 text-xs font-medium text-foreground outline-none transition hover:bg-surface-muted focus:border-blue-500 cursor-pointer"
           >
-            <option value="all">All statuses</option>
+            <option value="all">{t("eventFilters.allStatuses")}</option>
             {eventStatusFilterOptions.map((option) => (
-              <option key={option.value} value={option.value}>{option.label}</option>
+              <option key={option.value} value={option.value}>{option.value === "Upcoming" ? t("eventFilters.upcoming") : option.value === "Completed" ? t("eventFilters.completed") : option.value === "Draft" ? t("eventFilters.draft") : t("eventFilters.needsUpdate")}</option>
             ))}
           </select>
           <ChevronDown className="pointer-events-none absolute end-2.5 size-3.5 text-muted" />
@@ -70,7 +72,7 @@ export function EventsFilterBar() {
             className="h-10 appearance-none rounded-xl border border-border bg-surface ps-8 pe-8 text-xs font-medium text-foreground outline-none transition hover:bg-surface-muted focus:border-blue-500 cursor-pointer"
           >
             {eventDateFilterOptions.map((option) => (
-              <option key={option.value} value={option.value}>{option.label}</option>
+              <option key={option.value} value={option.value}>{option.value === "all" ? t("eventFilters.anyDate") : option.value === "upcoming" ? t("eventFilters.next30Days") : option.value === "october" ? t("eventFilters.october") : t("eventFilters.november")}</option>
             ))}
           </select>
           <ChevronDown className="pointer-events-none absolute end-2.5 size-3.5 text-muted" />
@@ -83,9 +85,9 @@ export function EventsFilterBar() {
             onChange={(e) => setTypeFilter(e.target.value)}
             className="h-10 appearance-none rounded-xl border border-border bg-surface px-3 pe-8 text-xs font-medium text-foreground outline-none transition hover:bg-surface-muted focus:border-blue-500 cursor-pointer"
           >
-            <option value="all">All types</option>
+            <option value="all">{t("eventFilters.allTypes")}</option>
             {eventTypeFilterOptions.map((option) => (
-              <option key={option.value} value={option.value}>{option.label}</option>
+              <option key={option.value} value={option.value}>{option.value === "Workshop" ? t("eventFilters.workshop") : option.value === "Conference" ? t("eventFilters.conference") : option.value === "Talk" ? t("eventFilters.talk") : t("eventFilters.panel")}</option>
             ))}
           </select>
           <ChevronDown className="pointer-events-none absolute end-2.5 size-3.5 text-muted" />
@@ -99,7 +101,7 @@ export function EventsFilterBar() {
             className="inline-flex h-10 items-center gap-1.5 rounded-xl border border-dashed border-border px-3 text-xs font-medium text-muted transition hover:border-foreground/30 hover:text-foreground"
           >
             <RotateCcw className="size-3.5" />
-            <span>Clear</span>
+            <span>{t("eventFilters.clear")}</span>
           </button>
         )}
       </div>

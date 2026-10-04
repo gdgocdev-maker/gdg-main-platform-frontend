@@ -2,6 +2,7 @@
 
 import { usePathname } from "@/i18n/navigation";
 import { Menu } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { leaderCommitteeConfig } from "./committee-config";
 import type { LeaderCommittee } from "./types";
 
@@ -15,6 +16,7 @@ export function LeaderHeader({
   committee = "data-analysis",
 }: LeaderHeaderProps) {
   const pathname = usePathname();
+  const t = useTranslations("dashboard.leader");
   const config = leaderCommitteeConfig[committee];
   const routeRoot = config.routeBase;
   const leaderInitials = config.leaderDisplayName
@@ -26,13 +28,13 @@ export function LeaderHeader({
     .toUpperCase();
 
   // Determine current section title based on pathname
-  let pageTitle = "Overview";
+  let pageTitle = t("nav.overview");
   if (pathname.startsWith(`${routeRoot}/events`)) {
-    pageTitle = config.eventsLabel;
-  } else if (pathname.startsWith(`${routeRoot}/members`)) pageTitle = "Members";
-  else if (pathname.startsWith(`${routeRoot}/tasks`)) pageTitle = "Tasks";
-  else if (pathname.startsWith(`${routeRoot}/points`)) pageTitle = "Points";
-  else if (pathname.startsWith(`${routeRoot}/settings`)) pageTitle = "Settings";
+    pageTitle = t(committee === "pr" ? "nav.eventRegistrations" : "nav.events");
+  } else if (pathname.startsWith(`${routeRoot}/members`)) pageTitle = t("nav.members");
+  else if (pathname.startsWith(`${routeRoot}/tasks`)) pageTitle = t("nav.tasks");
+  else if (pathname.startsWith(`${routeRoot}/points`)) pageTitle = t("nav.points");
+  else if (pathname.startsWith(`${routeRoot}/settings`)) pageTitle = t("nav.settings");
 
   return (
     <div className="border-b border-border bg-surface px-4 py-4 sm:px-6 lg:px-8">
@@ -43,7 +45,7 @@ export function LeaderHeader({
             type="button"
             onClick={onOpenMobileMenu}
             className="p-1.5 text-foreground/70 hover:text-foreground lg:hidden"
-            aria-label="Open sidebar"
+            aria-label={t("nav.openSidebar")}
           >
             <Menu className="size-5" />
           </button>

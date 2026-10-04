@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useLeaderDashboard } from "../shared/LeaderDashboardContext";
 import type { CommitteeEvent } from "../shared/types";
 import { EditEventModal } from "./EditEventModal";
@@ -28,6 +29,7 @@ export function EventManagementTable({
   onEditEvent: externalOnEdit,
   isCompact = false,
 }: EventManagementTableProps = {}) {
+  const t = useTranslations("dashboard.leader");
   const {
     events,
     deleteEvent,
@@ -76,28 +78,28 @@ export function EventManagementTable({
         return (
           <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">
             <span className="size-1.5 rounded-full bg-blue-600" />
-            Upcoming
+            {t("eventFilters.upcoming")}
           </span>
         );
       case "Completed":
         return (
           <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300">
             <span className="size-1.5 rounded-full bg-emerald-600" />
-            Completed
+            {t("eventFilters.completed")}
           </span>
         );
       case "Draft":
         return (
           <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">
             <span className="size-1.5 rounded-full bg-slate-400" />
-            Draft
+            {t("eventFilters.draft")}
           </span>
         );
       case "Needs Update":
         return (
           <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-semibold text-amber-700 dark:bg-amber-950/60 dark:text-amber-300">
             <span className="size-1.5 rounded-full bg-amber-600" />
-            Needs Update
+            {t("eventFilters.needsUpdate")}
           </span>
         );
     }
@@ -110,10 +112,10 @@ export function EventManagementTable({
         <div className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between border-b border-border/80">
           <div>
             <h2 className="text-base font-bold text-foreground">
-              Event management
+              {t("eventManagement.title")}
             </h2>
             <p className="text-xs text-muted">
-              Create, publish, and maintain events visible to the GDG UJ community.
+              {t("eventManagement.description")}
             </p>
           </div>
 
@@ -129,8 +131,8 @@ export function EventManagementTable({
                       ? "bg-surface text-foreground shadow-2xs font-semibold"
                       : "text-muted hover:text-foreground"
                   }`}
-                  title="List / Table View"
-                  aria-label="Table View"
+                  title={t("eventManagement.listView")}
+                  aria-label={t("eventManagement.tableView")}
                 >
                   <List className="size-4" />
                 </button>
@@ -142,8 +144,8 @@ export function EventManagementTable({
                       ? "bg-surface text-foreground shadow-2xs font-semibold"
                       : "text-muted hover:text-foreground"
                   }`}
-                  title="Grid / Cards View"
-                  aria-label="Grid View"
+                  title={t("eventManagement.gridCardsView")}
+                  aria-label={t("eventManagement.gridView")}
                 >
                   <LayoutGrid className="size-4" />
                 </button>
@@ -152,7 +154,7 @@ export function EventManagementTable({
 
             <div className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface-muted/50 px-3 py-1 text-xs font-medium text-foreground">
               <span className="size-1.5 rounded-full bg-blue-500" />
-              <span>{filteredEvents.length} events</span>
+              <span>{t("eventManagement.eventsCount", { count: filteredEvents.length })}</span>
             </div>
           </div>
         </div>
@@ -162,7 +164,7 @@ export function EventManagementTable({
           <div className="flex items-center gap-2">
             <Info className="size-4 shrink-0 text-blue-600 dark:text-blue-400" />
             <span className="text-blue-950 dark:text-blue-200">
-              Data Analysis Leader/co-Leader can create, view, edit, and delete events. Submitted events publish to the platform homepage and this Events page.
+              {t("eventManagement.permission")}
             </span>
           </div>
         </div>
@@ -173,22 +175,22 @@ export function EventManagementTable({
             <table className="w-full text-start text-xs">
               <thead>
                 <tr className="border-b border-border text-[11px] font-semibold uppercase tracking-wider text-muted">
-                  <th className="px-5 py-3.5 text-start">Event</th>
-                  <th className="px-4 py-3.5 text-start">Date</th>
-                  <th className="px-4 py-3.5 text-start">Time</th>
-                  <th className="px-4 py-3.5 text-start">Location</th>
-                  <th className="px-4 py-3.5 text-start">Registered</th>
-                  <th className="px-4 py-3.5 text-start">Status</th>
-                  <th className="px-4 py-3.5 text-start">Created</th>
-                  <th className="px-4 py-3.5 text-start">Updated</th>
-                  <th className="px-5 py-3.5 text-end">Actions</th>
+                  <th className="px-5 py-3.5 text-start">{t("eventManagement.event")}</th>
+                  <th className="px-4 py-3.5 text-start">{t("eventManagement.date")}</th>
+                  <th className="px-4 py-3.5 text-start">{t("eventManagement.time")}</th>
+                  <th className="px-4 py-3.5 text-start">{t("eventManagement.location")}</th>
+                  <th className="px-4 py-3.5 text-start">{t("eventManagement.registered")}</th>
+                  <th className="px-4 py-3.5 text-start">{t("eventManagement.status")}</th>
+                  <th className="px-4 py-3.5 text-start">{t("eventManagement.created")}</th>
+                  <th className="px-4 py-3.5 text-start">{t("eventManagement.updated")}</th>
+                  <th className="px-5 py-3.5 text-end">{t("eventManagement.actions")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/60">
                 {displayEvents.length === 0 ? (
                   <tr>
                     <td colSpan={9} className="py-8 text-center text-sm text-muted">
-                      No events found matching your search and filters.
+                      {t("eventManagement.empty")}
                     </td>
                   </tr>
                 ) : (
@@ -253,7 +255,7 @@ export function EventManagementTable({
                           {event.isDraft && canManageEvents && (
                             <button
                               type="button"
-                              title="Publish Draft"
+                              title={t("eventManagement.publishDraft")}
                               onClick={() => publishDraft(event.id)}
                               className="rounded-lg p-1 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/50"
                             >
@@ -264,7 +266,7 @@ export function EventManagementTable({
                           {/* View action */}
                           <button
                             type="button"
-                            title="View Event Details"
+                            title={t("eventManagement.viewDetails")}
                             onClick={() => setViewingEvent(event)}
                             className="rounded-lg p-1 text-muted hover:bg-surface-muted hover:text-foreground"
                           >
@@ -275,7 +277,7 @@ export function EventManagementTable({
                           {canManageEvents && (
                             <button
                               type="button"
-                              title="Edit Event"
+                              title={t("eventManagement.edit")}
                               onClick={() => handleEditClick(event)}
                               className="rounded-lg p-1 text-muted hover:bg-surface-muted hover:text-foreground"
                             >
@@ -287,7 +289,7 @@ export function EventManagementTable({
                           {canManageEvents && (
                             <button
                               type="button"
-                              title="Delete Event"
+                              title={t("eventManagement.delete")}
                               onClick={() => setEventToDelete(event)}
                               className="rounded-lg p-1 text-muted hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/50"
                             >
@@ -343,10 +345,10 @@ export function EventManagementTable({
                     <div className="mt-4 border-t border-border/80 pt-3 flex items-center justify-between text-xs">
                       <div>
                         {event.isDraft ? (
-                          <span className="text-muted">Draft</span>
+                          <span className="text-muted">{t("eventManagement.draft")}</span>
                         ) : (
                           <span className="font-semibold text-foreground">
-                            {event.registered}/{event.capacity} <span className="text-muted font-normal">registered</span>
+                            {event.registered}/{event.capacity} <span className="text-muted font-normal">{t("eventManagement.registeredCount")}</span>
                           </span>
                         )}
                       </div>
@@ -365,7 +367,7 @@ export function EventManagementTable({
 
                         <button
                           type="button"
-                          title="View Details"
+                          title={t("eventManagement.viewDetails")}
                           onClick={() => setViewingEvent(event)}
                           className="rounded-lg p-1 text-muted hover:bg-surface-muted hover:text-foreground"
                         >
@@ -386,7 +388,7 @@ export function EventManagementTable({
                         {canManageEvents && (
                           <button
                             type="button"
-                            title="Delete Event"
+                            title={t("eventManagement.delete")}
                             onClick={() => setEventToDelete(event)}
                             className="rounded-lg p-1 text-muted hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/50"
                           >
@@ -405,7 +407,7 @@ export function EventManagementTable({
         {/* Table Footer / Pagination */}
         <div className="flex items-center justify-between border-t border-border px-5 py-3 text-xs text-muted">
           <span>
-            Showing {displayEvents.length > 0 ? "1" : "0"}-{displayEvents.length} of {events.length} events
+            {t("eventManagement.showing", { start: displayEvents.length > 0 ? "1" : "0", end: displayEvents.length, total: events.length })}
           </span>
           <div className="flex items-center gap-1">
             <button
@@ -471,14 +473,14 @@ export function EventManagementTable({
                 <span>{viewingEvent.location}</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="font-semibold">Capacity & Attendance:</span>
+                <span className="font-semibold">{t("eventManagement.capacityAttendance")}</span>
                 <span>
-                  {viewingEvent.registered} of {viewingEvent.capacity} seats filled ({Math.round((viewingEvent.registered / viewingEvent.capacity) * 100)}%)
+                  {t("eventManagement.seatsFilled", { registered: viewingEvent.registered, capacity: viewingEvent.capacity, percent: Math.round((viewingEvent.registered / viewingEvent.capacity) * 100) })}
                 </span>
               </div>
               {viewingEvent.description && (
                 <div className="mt-3 rounded-xl border border-border bg-surface-muted/30 p-3">
-                  <div className="font-semibold text-foreground mb-1">Description:</div>
+                  <div className="font-semibold text-foreground mb-1">{t("eventManagement.descriptionLabel")}</div>
                   <p className="text-muted leading-relaxed">{viewingEvent.description}</p>
                 </div>
               )}
@@ -490,7 +492,7 @@ export function EventManagementTable({
                 onClick={() => setViewingEvent(null)}
                 className="rounded-xl border border-border px-4 py-2 text-xs font-medium text-foreground hover:bg-surface-muted"
               >
-                Close
+                {t("eventManagement.close")}
               </button>
               {canManageEvents && (
                 <button
@@ -502,7 +504,7 @@ export function EventManagementTable({
                   }}
                   className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-blue-700"
                 >
-                  Edit Event
+                  {t("eventManagement.edit")}
                 </button>
               )}
             </div>
@@ -534,8 +536,8 @@ export function EventManagementTable({
             will permanently remove it from the committee schedule.
           </>
         }
-        confirmText="Delete Event"
-        cancelText="Cancel"
+        confirmText={t("eventManagement.delete")}
+        cancelText={t("eventForm.cancel")}
         danger
       />
     </>

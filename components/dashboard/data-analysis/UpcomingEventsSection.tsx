@@ -1,11 +1,13 @@
 "use client";
 
 import { useLeaderDashboard } from "../shared/LeaderDashboardContext";
+import { useTranslations } from "next-intl";
 import { Calendar } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 
 export function UpcomingEventsSection() {
   const { events } = useLeaderDashboard();
+  const t = useTranslations("dashboard.leader");
 
   // Pick upcoming events
   const upcomingEvents = events.filter((e) => e.status === "Upcoming" || e.status === "Needs Update").slice(0, 3);
@@ -15,10 +17,10 @@ export function UpcomingEventsSection() {
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-border/80 pb-4">
         <div>
           <h2 className="text-base font-bold text-foreground">
-            Upcoming events
+            {t("upcomingEvents.title")}
           </h2>
           <p className="text-xs text-muted">
-            At-a-glance readiness for the next 30 days.
+            {t("upcomingEvents.description")}
           </p>
         </div>
         <Link
@@ -26,7 +28,7 @@ export function UpcomingEventsSection() {
           className="inline-flex items-center gap-1.5 rounded-xl border border-border px-3 py-1.5 text-xs font-semibold text-foreground transition hover:bg-surface-muted"
         >
           <Calendar className="size-3.5" />
-          <span>View calendar</span>
+          <span>{t("upcomingEvents.viewCalendar")}</span>
         </Link>
       </div>
 
@@ -67,7 +69,7 @@ export function UpcomingEventsSection() {
               {/* Progress & Badge */}
               <div className="flex items-center gap-4 sm:justify-end">
                 <div className="flex items-center gap-2">
-                  <span className="text-[11px] text-muted">Capacity</span>
+                  <span className="text-[11px] text-muted">{t("upcomingEvents.capacity")}</span>
                   <div className="h-1.5 w-16 sm:w-20 overflow-hidden rounded-full bg-surface-muted">
                     <div
                       className="h-full rounded-full bg-blue-600"
@@ -79,7 +81,7 @@ export function UpcomingEventsSection() {
 
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">
                   <span className="size-1.5 rounded-full bg-blue-600" />
-                  {evt.registered} registered
+                  {t("upcomingEvents.registered", { count: evt.registered })}
                 </span>
               </div>
             </div>

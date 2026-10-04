@@ -3,7 +3,7 @@ import { hasLocale } from "next-intl";
 import { routing } from "./routing";
 
 // Namespaces are split per page/feature so new pages only load what they need.
-const namespaces = ["common", "home", "auth", "validation", "profile", "dashboard", "announcements"] as const;
+const namespaces = ["common", "home", "auth", "validation", "profile", "dashboard", "announcements", "eventRegistration"] as const;
 
 export default getRequestConfig(async ({ requestLocale }) => {
   const requested = await requestLocale;

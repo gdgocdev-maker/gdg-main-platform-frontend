@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useLeaderDashboard } from "./LeaderDashboardContext";
 import { leaderCommitteeConfig } from "./committee-config";
 import { leaderDashboardMockData } from "@/data/leader-dashboard";
 import { Check, Shield, Bell, Save } from "lucide-react";
 
 export function SettingsSection() {
+  const t = useTranslations("dashboard.leader");
   const { canManageSettings, committeeName, committeeDescription, committee } = useLeaderDashboard();
   const config = leaderCommitteeConfig[committee];
   const defaultSettings = leaderDashboardMockData[committee].settings;
@@ -22,17 +24,17 @@ export function SettingsSection() {
 
   const validateName = (val: string) => {
     const trimmed = val.trim();
-    if (!trimmed) return "Committee name is required.";
-    if (trimmed.length < 3) return "Committee name must be at least 3 characters.";
-    if (trimmed.length > 100) return "Committee name cannot exceed 100 characters.";
+    if (!trimmed) return t("settings.requiredName");
+    if (trimmed.length < 3) return t("settings.nameMin");
+    if (trimmed.length > 100) return t("settings.nameMax");
     return "";
   };
 
   const validateDesc = (val: string) => {
     const trimmed = val.trim();
-    if (!trimmed) return "Description is required.";
-    if (trimmed.length < 10) return "Description must be at least 10 characters.";
-    if (trimmed.length > 500) return "Description cannot exceed 500 characters.";
+    if (!trimmed) return t("settings.requiredDescription");
+    if (trimmed.length < 10) return t("settings.descriptionMin");
+    if (trimmed.length > 500) return t("settings.descriptionMax");
     return "";
   };
 
@@ -45,7 +47,7 @@ export function SettingsSection() {
     const dErr = validateDesc(description);
 
     if (nErr || dErr) {
-      setGeneralError("Please fix the validation errors before saving settings.");
+      setGeneralError(t("settings.validationSummary"));
       return;
     }
 
@@ -59,7 +61,7 @@ export function SettingsSection() {
       {savedSuccess && (
         <div className="flex items-center gap-2 rounded-2xl border border-emerald-500/30 bg-emerald-50 p-4 text-xs font-semibold text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-200">
           <Check className="size-4 text-emerald-600" />
-          <span>Committee configuration saved successfully.</span>
+          <span>{t("settings.saved")}</span>
         </div>
       )}
 
@@ -72,17 +74,17 @@ export function SettingsSection() {
       {/* Committee Profile */}
       <div className="rounded-2xl border border-border bg-surface p-6 shadow-2xs">
         <h3 className="text-base font-bold text-foreground">
-          Committee Information
+          {t("settings.info")}
         </h3>
         <p className="text-xs text-muted">
-          Update the profile and primary focus of the {committeeName} workspace.
+          {t("settings.profileDescription", { committee: committeeName })}
         </p>
 
         <div className="mt-5 space-y-4 text-xs">
           <div>
             <div className="flex items-center justify-between">
               <label className="block font-semibold text-foreground">
-                Committee Name *
+                {t("settings.committeeName")}
               </label>
               <span className="text-[10px] text-muted">
                 {name.length}/100
@@ -114,7 +116,7 @@ export function SettingsSection() {
           <div>
             <div className="flex items-center justify-between">
               <label className="block font-semibold text-foreground">
-                Description *
+                {t("settings.description")}
               </label>
               <span className="text-[10px] text-muted">
                 {description.length}/500
@@ -150,11 +152,11 @@ export function SettingsSection() {
         <div className="flex items-center gap-2">
           <Shield className="size-4 text-blue-500" />
           <h3 className="text-base font-bold text-foreground">
-            Leadership & Access Policy
+            {t("settings.leadership")}
           </h3>
         </div>
         <p className="text-xs text-muted">
-          Review who holds permanent and temporary administrative privileges.
+          {t("settings.leadershipDescription")}
         </p>
 
         <div className="mt-4 space-y-3 text-xs">
@@ -164,7 +166,7 @@ export function SettingsSection() {
               <span className="text-muted block text-[11px]">{config.leaderRoleDescription}</span>
             </div>
             <span className="rounded-full bg-blue-100 px-2.5 py-0.5 text-[10px] font-bold text-blue-700 dark:bg-blue-950 dark:text-blue-300">
-              Leader
+              {t("settings.leader")}
             </span>
           </div>
 
@@ -174,7 +176,7 @@ export function SettingsSection() {
               <span className="text-muted block text-[11px]">{config.coLeaderRoleDescription}</span>
             </div>
             <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-[10px] font-bold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
-              Co-Leader
+              {t("settings.coLeader")}
             </span>
           </div>
         </div>
@@ -185,7 +187,7 @@ export function SettingsSection() {
         <div className="flex items-center gap-2">
           <Bell className="size-4 text-blue-500" />
           <h3 className="text-base font-bold text-foreground">
-            Notification & Approval Preferences
+            {t("settings.notificationPreferences")}
           </h3>
         </div>
 
@@ -211,10 +213,10 @@ export function SettingsSection() {
           <label className="flex items-center justify-between cursor-pointer border-t border-border/60 pt-3">
             <div>
               <span className="font-semibold text-foreground block">
-                Allow self-assignment of committee tasks
+                {t("settings.selfAssign")}
               </span>
               <span className="text-muted text-[11px]">
-                Members can claim open tasks from the Notion task board.
+                {t("settings.selfAssignDescription")}
               </span>
             </div>
             <input
@@ -237,7 +239,7 @@ export function SettingsSection() {
             className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-semibold text-white shadow-sm hover:bg-blue-700 transition"
           >
             <Save className="size-4" />
-            <span>Save Settings</span>
+            <span>{t("settings.save")}</span>
           </button>
         </div>
       )}
