@@ -1,0 +1,36 @@
+{
+  "eyebrow": "Your activity",
+  "greeting": "Welcome, {name}",
+  "title": "My registrations",
+  "description": "View your event and trip registrations, check their status, and confirm or cancel when asked.",
+  "kind": { "event": "Event", "trip": "Trip" },
+  "sections": { "events": "Events", "trips": "Trips" },
+  "sectionCount": "{count} registrations",
+  "status": {
+    "pending": "Pending",
+    "need-confirmation": "Need to Confirm",
+    "approved": "Approved",
+    "declined": "Declined",
+    "attended": "Attended",
+    "not-attended": "Not Attended"
+  },
+  "confirmPrompt": "Your place is ready. Confirm your participation to keep it, or cancel if you cannot attend.",
+  "confirmBefore": "Please confirm by {date}.",
+  "confirmAction": "Confirm attendance",
+  "cancelAction": "Cancel registration",
+  "confirmationUnavailable": "Confirmation will be available when the registration service is connected.",
+  "cancellationUnavailable": "Cancellation will be available when the registration service is connected.",
+  "actionDialog": {
+    "confirmTitle": "Confirm your attendance?",
+    "confirmMessage": "By confirming, you commit to attending this event. If you confirm and do not attend, it may affect whether your future event registrations are accepted.",
+    "cancelTitle": "Cancel this registration?",
+    "cancelMessage": "Are you sure you want to cancel your place for this event?",
+    "backButton": "Go back",
+    "confirmButton": "Yes, confirm attendance",
+    "cancelButton": "Yes, cancel registration"
+  },
+  "unavailableTitle": "Registrations are not connected yet",
+  "unavailableDescription": "Your event and trip registrations will appear here after the registration service is connected.",
+  "emptyTitle": "No registrations yet",
+  "emptyDescription": "When you register for an event or trip, you can follow its status here."
+}
