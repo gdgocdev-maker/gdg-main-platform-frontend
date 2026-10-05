@@ -1,0 +1,49 @@
+{
+  "eyebrow": "Event day",
+  "title": "Attendance overview",
+  "description": "Track confirmations and check-ins for this event. QR codes are verified by the backend when that integration is available.",
+  "metrics": {
+    "accepted": "Accepted",
+    "confirmed": "Confirmed attendance",
+    "checkedIn": "Checked in",
+    "noShow": "Did not attend",
+    "attendanceRate": "Attendance rate",
+    "attendanceRateDetail": "{checkedIn} checked in from {confirmed} confirmed"
+  },
+  "scanner": {
+    "title": "Scan attendee QR",
+    "description": "Scan the attendee’s code. Event, approval, confirmation, and duplicate-use checks belong to the backend.",
+    "startCamera": "Open camera",
+    "stopCamera": "Close camera",
+    "unsupported": "QR camera scanning is not supported by this browser. Enter a token below instead.",
+    "cameraDenied": "Camera access is unavailable. Check browser permissions or enter the token below.",
+    "readFailed": "Could not read a QR code. Try again or enter the token below.",
+    "manualLabel": "Attendance token",
+    "manualPlaceholder": "Enter scanned token privately",
+    "submitToken": "Check in",
+    "result": {
+      "checked-in": "Check-in recorded successfully.",
+      "already-checked-in": "Already checked in.",
+      "invalid-qr": "Invalid QR code or event mismatch.",
+      "service-unavailable": "QR was read, but check-in is unavailable until the backend is connected. No attendance was recorded."
+    }
+  },
+  "table": {
+    "title": "Attendee check-in list",
+    "empty": "No registrations are available for this event yet.",
+    "person": "Attendee",
+    "confirmation": "Confirmation",
+    "attendance": "Attendance",
+    "checkInTime": "Check-in time",
+    "confirmed": "Confirmed",
+    "awaitingConfirmation": "Awaiting confirmation",
+    "declined": "Declined",
+    "expired": "Expired",
+    "notAccepted": "Not accepted",
+    "notApplicable": "—",
+    "checkedIn": "Checked in",
+    "notCheckedIn": "Not checked in",
+    "noShow": "Did not attend",
+    "noTime": "—"
+  }
+}

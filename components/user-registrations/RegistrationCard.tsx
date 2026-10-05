@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useFormatter, useTranslations } from "next-intl";
 import { RegistrationStatusBadge } from "./RegistrationStatusBadge";
 import type { UserRegistration } from "@/lib/user-registrations/types";
@@ -62,6 +63,53 @@ export function RegistrationCard({
         </div>
       </div>
 
+      {registration.attendanceConfirmationStatus === "confirmed" && (
+        <section className="mt-5 flex flex-col gap-4 rounded-xl border border-gdg-green/20 bg-gdg-green/5 p-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="min-w-0">
+            <h4 className="text-sm font-semibold text-foreground">{t("attendance.qrTitle")}</h4>
+            <p className="mt-1 text-xs leading-5 text-muted">{t("attendance.qrDescription")}</p>
+            {registration.attendanceConfirmedAt && (
+              <p className="mt-2 text-xs font-medium text-gdg-green">
+                {t("attendance.confirmedAt", {
+                  date: format.dateTime(new Date(registration.attendanceConfirmedAt), {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  }),
+                })}
+              </p>
+            )}
+            {registration.checkInStatus === "checked-in" && registration.checkedInAt && (
+              <p className="mt-2 text-xs font-medium text-gdg-green">
+                {t("attendance.checkedInAt", {
+                  date: format.dateTime(new Date(registration.checkedInAt), {
+                    dateStyle: "medium",
+                    timeStyle: "short",
+                  }),
+                })}
+              </p>
+            )}
+            {registration.checkInStatus === "no-show" && (
+              <p className="mt-2 text-xs font-medium text-rose-700 dark:text-rose-300">
+                {t("attendance.noShow")}
+              </p>
+            )}
+          </div>
+          {registration.attendanceQrCodeDataUrl ? (
+            <Image
+              src={registration.attendanceQrCodeDataUrl}
+              alt={t("attendance.qrAlt")}
+              width={144}
+              height={144}
+              unoptimized
+              className="size-36 shrink-0 rounded-lg border border-border bg-white p-2"
+            />
+          ) : (
+            <div className="grid size-36 shrink-0 place-items-center rounded-lg border border-dashed border-border bg-surface px-3 text-center text-xs leading-5 text-muted">
+              {t("attendance.qrPending")}
+            </div>
+          )}
+        </section>
+      )}
       {registration.status === "need-confirmation" && (
         <div className="mt-5 border-t border-border pt-4">
           <p className="text-sm leading-6 text-muted">

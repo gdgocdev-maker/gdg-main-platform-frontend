@@ -35,8 +35,6 @@ export function MetricCards() {
       { label: t("metrics.pendingRegistrations"), value: registrations.filter((r) => r.status === "Pending").length, detail: t("metrics.awaitingReview"), icon: ClipboardList, border: "border-gdg-yellow", iconStyle: "bg-amber-50 text-gdg-yellow dark:bg-amber-950/50" },
       { label: t("metrics.acceptedRegistrations"), value: registrations.filter((r) => r.status === "Accepted").length, detail: t("metrics.acceptedApplicants"), icon: CircleCheck, border: "border-gdg-green", iconStyle: "bg-emerald-50 text-gdg-green dark:bg-emerald-950/50" },
       { label: t("metrics.rejectedRegistrations"), value: registrations.filter((r) => r.status === "Rejected").length, detail: t("metrics.rejectedApplicants"), icon: CircleX, border: "border-gdg-blue", iconStyle: "bg-blue-50 text-gdg-blue dark:bg-blue-950/50" },
-      { label: t("metrics.totalPoints"), value: members.reduce((sum, member) => sum + member.points, 0).toLocaleString(), detail: t("metrics.committeeMemberPoints"), icon: Trophy, border: "border-gdg-red", iconStyle: "bg-red-50 text-gdg-red dark:bg-red-950/50" },
-      { label: t("metrics.activeTasks"), value: activeTasksCount, detail: t("metrics.todoOrInProgress"), icon: CheckSquare, border: "border-gdg-green", iconStyle: "bg-emerald-50 text-gdg-green dark:bg-emerald-950/50" },
     ]
     : [
       { label: t("metrics.totalCommitteeMembers"), value: baseline.committeeMembers + members.length, detail: t("metrics.activeAway", { active: activeMembersCount + baseline.activeMembers, away: awayMembersCount + baseline.awayMembers }), icon: Users, border: "border-gdg-blue", iconStyle: "bg-blue-50 text-gdg-blue dark:bg-blue-950/50" },
