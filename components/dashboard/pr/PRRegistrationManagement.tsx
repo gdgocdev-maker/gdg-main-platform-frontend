@@ -14,6 +14,7 @@ import {
   prRegistrationStatusFilterOptions,
 } from "./mock-data";
 import { ConfirmModal } from "../shared/ConfirmModal";
+import { PRAttendancePanel } from "./PRAttendancePanel";
 import {
   ArrowLeft,
   Calendar,
@@ -377,6 +378,8 @@ export function PREventRegistrations({ eventId }: { eventId: string }) {
           ))}
         </div>
       </section>
+
+      <PRAttendancePanel event={event} registrations={eventRegistrations} />
 
       <section className="overflow-hidden rounded-2xl border border-border bg-surface shadow-2xs">
         <div className="flex flex-col gap-3 border-b border-border/80 p-5 sm:flex-row sm:items-center sm:justify-between">

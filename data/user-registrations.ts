@@ -1,4 +1,4 @@
-﻿import type { UserRegistration } from "@/lib/user-registrations/types";
+import type { UserRegistration } from "@/lib/user-registrations/types";
 
 /** Demo user until the authenticated user profile API is connected. */
 export const userRegistrationsMockUser = {
@@ -37,6 +37,9 @@ export const userRegistrationsMock: UserRegistration[] = [
     startsAt: "2026-10-25T18:30:00+03:00",
     location: "مسرح الجامعة | University Auditorium",
     status: "approved",
+    attendanceConfirmationStatus: "confirmed",
+    attendanceConfirmedAt: "2026-10-02T13:20:00+03:00",
+    checkInStatus: "not-checked-in",
   },
   {
     id: "mock-trip-declined",

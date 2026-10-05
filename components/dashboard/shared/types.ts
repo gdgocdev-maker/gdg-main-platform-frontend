@@ -110,6 +110,7 @@ export interface LeaderDashboardSeed {
   tasks?: CommitteeTask[];
   pointHistory?: PointHistoryItem[];
   recentActivities?: RecentActivityItem[];
+  registrations?: EventRegistration[];
 }
 
 export interface RegistrationAnswer {
@@ -126,6 +127,10 @@ export interface EventRegistration {
   registeredAt: string;
   status: RegistrationStatus;
   confirmationStatus?: RegistrationConfirmationStatus;
+  attendanceConfirmedAt?: string;
+  checkInStatus?: "NotCheckedIn" | "CheckedIn" | "NoShow";
+  checkedInAt?: string;
+  attendanceQrCodeDataUrl?: string;
   waitlistPosition?: number;
   profile: Record<string, string>;
   answers: RegistrationAnswer[];

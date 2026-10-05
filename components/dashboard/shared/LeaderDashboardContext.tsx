@@ -96,8 +96,8 @@ export function LeaderDashboardProvider({
   const [recentActivities, setRecentActivities] = useState<RecentActivityItem[]>(
     seed?.recentActivities ?? []
   );
-  // Registration records stay empty until an approved backend registration contract exists.
-  const [registrations, setRegistrations] = useState<EventRegistration[]>([]);
+  // Registration records come from the typed demo seed until a backend contract exists.
+  const [registrations, setRegistrations] = useState<EventRegistration[]>(seed?.registrations ?? []);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");

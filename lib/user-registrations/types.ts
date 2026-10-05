@@ -1,4 +1,4 @@
-export type UserRegistrationKind = "event" | "trip";
+﻿export type UserRegistrationKind = "event" | "trip";
 
 export type UserRegistrationStatus =
   | "pending"
@@ -8,7 +8,15 @@ export type UserRegistrationStatus =
   | "attended"
   | "not-attended";
 
-/** UI-facing record that can be mapped from the backend contract when it exists. */
+export type UserAttendanceConfirmationStatus =
+  | "awaiting"
+  | "confirmed"
+  | "declined"
+  | "expired";
+
+export type UserCheckInStatus = "not-checked-in" | "checked-in" | "no-show";
+
+/** UI-facing view model; the backend supplies a QR image without exposing its token. */
 export interface UserRegistration {
   id: string;
   kind: UserRegistrationKind;
@@ -17,6 +25,11 @@ export interface UserRegistration {
   location: string;
   status: UserRegistrationStatus;
   confirmationDeadline?: string;
+  attendanceConfirmationStatus?: UserAttendanceConfirmationStatus;
+  attendanceConfirmedAt?: string;
+  attendanceQrCodeDataUrl?: string;
+  checkInStatus?: UserCheckInStatus;
+  checkedInAt?: string;
 }
 
 export type UserRegistrationsResult =
