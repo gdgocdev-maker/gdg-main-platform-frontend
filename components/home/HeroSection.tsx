@@ -5,10 +5,13 @@ import Navbar from "@/components/home/Navbar";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import {
+  animate,
   motion,
   useAnimationFrame,
-  useInView,
+  useMotionValue,
   useReducedMotion,
+  useScroll,
+  useTransform,
 } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
 import { useTextDirection } from "@/i18n/useTextDirection";
@@ -20,8 +23,8 @@ import { getPathname } from "@/i18n/navigation";
 
 const LOGO_SRC = "/gdg-logo.png";
 
-const LOGO_W = 630;
-const LOGO_H = 380;
+const LOGO_W = 480;
+const LOGO_H = 290;
 
 const CX = 835;
 const CY = 395;
@@ -567,8 +570,35 @@ export default function HeroSection() {
   const metrics = useStageMetrics();
 
   // الحاوية الثابتة حق اللوقو: نراقبها هي بدل النصفين المزاحين برا الشاشة
-  const logoRef = useRef<HTMLDivElement>(null);
-  const logoInView = useInView(logoRef, { amount: 0.3 });
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const logoSpread = useTransform(scrollYProgress, [0, 0.75], [0, LOGO_W * 0.2], {
+    clamp: true,
+  });
+  const reduceMotion = useReducedMotion();
+  const introSpread = useMotionValue(LOGO_W * 0.2);
+  const [introComplete, setIntroComplete] = useState(false);
+  const activeLogoSpread = introComplete ? logoSpread : introSpread;
+  const leftLogoSpread = useTransform(activeLogoSpread, (value) => -value);
+
+  useEffect(() => {
+    if (reduceMotion) {
+      introSpread.set(0);
+      setIntroComplete(true);
+      return;
+    }
+
+    const animation = animate(introSpread, 0, {
+      duration: 1.15,
+      ease: "easeInOut",
+      onComplete: () => setIntroComplete(true),
+    });
+
+    return () => animation.stop();
+  }, [introSpread, reduceMotion]);
 
   const sectionStyle = {
     ...(metrics
@@ -584,6 +614,7 @@ export default function HeroSection() {
 
   return (
     <section
+      ref={heroRef}
       id="home"
       className="relative overflow-hidden bg-[var(--hero-background)] [--ribbon-x:0.5] [--stage-scale:0.42] sm:[--ribbon-x:0.65] sm:[--stage-scale:0.6] md:[--ribbon-x:0.75] md:[--stage-scale:0.72] xl:[--ribbon-x:1] xl:[--stage-scale:1] 2xl:[--stage-scale:1.12]"
       style={sectionStyle}
@@ -840,7 +871,6 @@ export default function HeroSection() {
         {/* ======================================================= */}
 
         <div
-          ref={logoRef}
           className="absolute"
           style={{
             left: -LOGO_W / 2,
@@ -853,19 +883,8 @@ export default function HeroSection() {
 
           <motion.div
             className="absolute inset-[-40px] -z-10 rounded-full bg-[radial-gradient(circle,var(--hero-logo-glow),transparent_65%)] blur-2xl"
-            initial={{
-              opacity: 0,
-              scale: 0.7,
-            }}
-            animate={
-              logoInView
-                ? { opacity: 1, scale: 1 }
-                : { opacity: 0, scale: 0.7 }
-            }
-            transition={{
-              duration: 0.8,
-              ease: "easeOut",
-            }}
+            initial={false}
+            animate={{ opacity: 1, scale: 1 }}
           />
 
           {/* LEFT HALF */}
@@ -873,23 +892,11 @@ export default function HeroSection() {
           <motion.div
             className="absolute inset-0 overflow-hidden"
             style={{
+              x: leftLogoSpread,
               clipPath:
                 "inset(0 50% 0 0)",
               WebkitClipPath:
                 "inset(0 50% 0 0)",
-            }}
-            initial={{
-              x: -LOGO_W * 0.65,
-              opacity: 0,
-            }}
-            animate={
-              logoInView
-                ? { x: 0, opacity: 1 }
-                : { x: -LOGO_W * 0.65, opacity: 0 }
-            }
-            transition={{
-              duration: 1,
-              ease: "easeOut",
             }}
           >
             <Image
@@ -907,23 +914,11 @@ export default function HeroSection() {
           <motion.div
             className="absolute inset-0 overflow-hidden"
             style={{
+              x: activeLogoSpread,
               clipPath:
                 "inset(0 0 0 50%)",
               WebkitClipPath:
                 "inset(0 0 0 50%)",
-            }}
-            initial={{
-              x: LOGO_W * 0.65,
-              opacity: 0,
-            }}
-            animate={
-              logoInView
-                ? { x: 0, opacity: 1 }
-                : { x: LOGO_W * 0.65, opacity: 0 }
-            }
-            transition={{
-              duration: 1,
-              ease: "easeOut",
             }}
           >
             <Image
