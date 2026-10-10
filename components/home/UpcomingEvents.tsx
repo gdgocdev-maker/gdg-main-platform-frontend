@@ -3,63 +3,103 @@
 import { events } from "@/data/home";
 import { useTranslations } from "next-intl";
 import { useTextDirection } from "@/i18n/useTextDirection";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import EventCard from "./EventCard";
 import type { HomeEvent } from "./EventCard";
 import EventRegistrationModal from "@/components/event-registration/EventRegistrationModal";
 
+const GAP = 24;
+
 export default function UpcomingEvents() {
   const t = useTranslations("home.events");
   const dir = useTextDirection();
   const [activeEvent, setActiveEvent] = useState(0);
+  const [perView, setPerView] = useState(1);
   const [eventToRegister, setEventToRegister] = useState<HomeEvent | null>(null);
 
+  const trackRef = useRef<HTMLDivElement>(null);
   const eventRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const handleNext = () => {
-    if (activeEvent >= events.length - 1) return;
+  const maxIndex = Math.max(0, events.length - perView);
 
-    const nextIndex = activeEvent + 1;
+  // كم كارد يظهر في نفس الوقت (1 على الجوال، 2 على الشاشات الكبيرة)
+  useEffect(() => {
+    const update = () => {
+      const track = trackRef.current;
+      const first = eventRefs.current[0];
+      if (!track || !first) return;
 
-    setActiveEvent(nextIndex);
+      setPerView(
+        Math.max(1, Math.round((track.clientWidth + GAP) / (first.offsetWidth + GAP)))
+      );
+    };
 
-    eventRefs.current[nextIndex]?.scrollIntoView({
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const goTo = (index: number) => {
+    const target = Math.min(Math.max(index, 0), maxIndex);
+
+    setActiveEvent(target);
+
+    eventRefs.current[target]?.scrollIntoView({
       behavior: "smooth",
       block: "nearest",
-      inline: "center",
+      inline: "start",
     });
   };
 
-  const handlePrevious = () => {
-    if (activeEvent <= 0) return;
+  const handleScroll = () => {
+    const track = trackRef.current;
+    const first = eventRefs.current[0];
+    if (!track || !first) return;
 
-    const previousIndex = activeEvent - 1;
-
-    setActiveEvent(previousIndex);
-
-    eventRefs.current[previousIndex]?.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "center",
-    });
+    const index = Math.round(Math.abs(track.scrollLeft) / (first.offsetWidth + GAP));
+    setActiveEvent(Math.min(index, maxIndex));
   };
 
   return (
-    <section id="events" className="px-6 py-16 lg:px-10 lg:py-20">
-      <h2 dir={dir} className="text-3xl font-bold leading-snug">
-        {t("title")}
-      </h2>
+    <section id="events" className="bg-background px-6 py-16 lg:px-10 lg:py-20">
+      <div className="max-w-2xl">
+        <p
+          dir={dir}
+          className="mb-3 text-xs font-medium uppercase tracking-widest text-gdg-blue"
+        >
+          {t("label")}
+        </p>
 
-      <div className="mt-10 overflow-hidden">
-        <div className="scrollbar-hide flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 lg:overflow-x-hidden">
+        <h2
+          dir={dir}
+          className="text-4xl font-bold leading-snug text-foreground md:text-5xl"
+        >
+          {t("title")}{" "}
+          <span className="bg-gradient-to-r from-gdg-blue to-gdg-red bg-clip-text pe-1 italic text-transparent rtl:not-italic">
+            {t("highlight")}
+          </span>
+        </h2>
+
+        <p dir={dir} className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
+          {t("subtitle")}
+        </p>
+      </div>
+
+      <div className="mt-10">
+        <div
+          ref={trackRef}
+          onScroll={handleScroll}
+          style={{ gap: GAP }}
+          className="scrollbar-hide flex snap-x snap-mandatory overflow-x-auto py-2"
+        >
           {events.map((event, index) => (
             <div
               key={event.id}
               ref={(element) => {
                 eventRefs.current[index] = element;
               }}
-              className="shrink-0 snap-center"
+              className="w-full shrink-0 snap-start lg:w-[calc((100%-24px)/2)]"
             >
               <EventCard event={event} onRegister={setEventToRegister} />
             </div>
@@ -67,26 +107,40 @@ export default function UpcomingEvents() {
         </div>
       </div>
 
-      {events.length > 1 && (
-        <div className="mt-8 flex justify-center gap-3 lg:hidden">
+      {maxIndex > 0 && (
+        <div className="mt-8 flex items-center justify-center gap-4">
           <button
             type="button"
             aria-label={t("previous")}
-            onClick={handlePrevious}
+            onClick={() => goTo(activeEvent - 1)}
             disabled={activeEvent === 0}
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-muted text-[var(--white)] disabled:cursor-default disabled:opacity-50"
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-border bg-surface text-foreground shadow-sm disabled:cursor-default disabled:opacity-50"
           >
-            <GrPrevious className="rtl:-scale-x-100" />
+            <GrPrevious className="h-3.5 w-3.5 rtl:-scale-x-100" />
           </button>
+
+          <div className="flex items-center gap-2">
+            {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+              <button
+                key={index}
+                type="button"
+                aria-label={`${index + 1}`}
+                onClick={() => goTo(index)}
+                className={`h-1.5 w-1.5 cursor-pointer rounded-full transition-colors ${
+                  index === activeEvent ? "bg-foreground" : "bg-gray-300"
+                }`}
+              />
+            ))}
+          </div>
 
           <button
             type="button"
             aria-label={t("next")}
-            onClick={handleNext}
-            disabled={activeEvent === events.length - 1}
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-gdg-dark text-[var(--white)] disabled:cursor-default disabled:opacity-50"
+            onClick={() => goTo(activeEvent + 1)}
+            disabled={activeEvent === maxIndex}
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-border bg-surface text-foreground shadow-sm disabled:cursor-default disabled:opacity-50"
           >
-            <GrNext className="rtl:-scale-x-100" />
+            <GrNext className="h-3.5 w-3.5 rtl:-scale-x-100" />
           </button>
         </div>
       )}

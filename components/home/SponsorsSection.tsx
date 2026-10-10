@@ -31,10 +31,19 @@ export default function SponsorsSection() {
   const dir = useTextDirection();
 
   return (
-    <section id="sponsors" className="p-8 lg:p-10">
-      <h2 dir={dir} className="text-3xl font-bold leading-snug">
-        {t("title")}
+    <section id="sponsors" className="p-8 lg:p-10 bg-sponsor-gray ">
+      <div className="max-w-2xl">
+      <h2 className="text-4xl font-bold leading-snug text-foreground md:text-5xl">
+        {t("title")}{" "}
+        <span className="bg-gradient-to-r from-gdg-blue to-gdg-red bg-clip-text pe-1 italic text-transparent rtl:not-italic">
+          {t("highlight")}
+        </span>
       </h2>
+
+      <p className="mt-4 max-w-xl text-base leading-relaxed text-foreground/60 md:text-lg">
+        {t("subtitle")}
+      </p>
+      </div>
 
       <div className="mt-10 overflow-hidden">
         <div className="sponsors-marquee flex w-max">

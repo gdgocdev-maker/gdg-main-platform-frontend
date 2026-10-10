@@ -4,84 +4,245 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useTextDirection } from "@/i18n/useTextDirection";
 
-type Project = {
+/* ============================================================
+   الأنواع (Types)
+   ============================================================ */
+
+export type Project = {
   id: string;
   img: string;
   projectName: string;
   description: string;
   madeBy: string;
+  tags?: string[]; // اختيارية: إذا ما وجدت ما تظهر الشارات
 };
 
 type ProjectCardProps = {
   project: Project;
+  position: number; // موقع الكرت بالنسبة للكرت النشط: 0 = المنتصف، -1 = يسار، 1 = يمين ...
+  index: number; // رقم المشروع الفعلي (يظهر في التبويبة)
+  isActive?: boolean;
+  onSelect?: () => void; // عند الضغط على كرت جانبي ينتقل له
 };
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+/* ============================================================
+   إعدادات التصميم (غيّري هنا فقط)
+   ============================================================ */
+
+const CARD_W = 280; // عرض الكرت بالبكسل
+const HALF_W = CARD_W / 2;
+
+/** المسافة الظاهرة بين كل كرتين متجاورين (بالبكسل) */
+const GAP = 5;
+
+/** قوة الـ perspective: لازم نفس القيمة تنستخدم في FeaturedProjects */
+export const PERSPECTIVE = 1800;
+
+/**
+ * خصائص كل موقع:
+ * scale   = التصغير
+ * rotateY = زاوية الدوران (تزيد كل ما ابتعد الكرت)
+ * opacity = الشفافية
+ * dim     = قوة التغميق فوق الكرت
+ */
+const RAW = [
+  { scale: 1, rotateY: 0, opacity: 1, dim: 0 }, // الكرت النشط
+  { scale: 0.92, rotateY: 24, opacity: 1, dim: 0.08 },
+  { scale: 0.84, rotateY: 38, opacity: 1, dim: 0.16 },
+  { scale: 0.76, rotateY: 50, opacity: 0.9, dim: 0.24 },
+];
+
+/* ============================================================
+   حساب الإزاحة الأفقية لكل موقع
+   ------------------------------------------------------------
+   الهدف: الفراغ بين حافة كرت وحافة اللي بجانبه = GAP بالضبط.
+
+   الـ perspective يغيّر مكان الحواف على الشاشة، فنحسبها بالمعادلة:
+   موضع نقطة على الشاشة = (x + مسافتها من المركز بعد الدوران والتصغير)
+                          × P / (P ± العمق)
+   ============================================================ */
+
+const toRad = (deg: number) => (deg * Math.PI) / 180;
+
+type Slot = (typeof RAW)[number] & { x: number };
+
+const SLOTS: Slot[] = (() => {
+  const result: Slot[] = [];
+
+  // مكان الحافة الخارجية (اليمنى) للكرت السابق على الشاشة
+  let prevOuterEdge = 0;
+
+  RAW.forEach((slot, i) => {
+    // الكرت الأول (النشط) في المنتصف تمامًا
+    if (i === 0) {
+      result.push({ ...slot, x: 0 });
+      prevOuterEdge = HALF_W;
+      return;
+    }
+
+    const rad = toRad(slot.rotateY);
+
+    // A: نصف العرض الأفقي للكرت بعد التصغير والدوران
+    const A = slot.scale * HALF_W * Math.cos(rad);
+
+    // B: عمق الحافة (كم تقترب أو تبتعد عن العين بسبب الدوران)
+    const B = HALF_W * Math.sin(rad);
+
+    // نحل المعادلة بحيث: الحافة الداخلية للكرت = الحافة الخارجية للسابق + GAP
+    const x = A + (prevOuterEdge + GAP) * ((PERSPECTIVE - B) / PERSPECTIVE);
+
+    // نحفظ مكان الحافة الخارجية لهذا الكرت للكرت اللي بعده
+    prevOuterEdge = ((x + A) * PERSPECTIVE) / (PERSPECTIVE + B);
+
+    result.push({ ...slot, x });
+  });
+
+  return result;
+})();
+
+/** أقصى عدد كروت تظهر في كل جهة */
+export const MAX_SIDE = SLOTS.length - 1;
+
+/* ============================================================
+   المكوّن (Component)
+   ============================================================ */
+
+export default function ProjectCard({
+  project,
+  position,
+  index,
+  isActive = false,
+  onSelect,
+}: ProjectCardProps) {
   const t = useTranslations("home.projects");
   const dir = useTextDirection();
-  const sign = dir === "rtl" ? -1 : 1;
+
+  // abs = بُعد الكرت عن المنتصف، side = جهته (-1 يسار، 1 يمين)
+  const abs = Math.min(Math.abs(position), MAX_SIDE);
+  const side = Math.sign(position);
+  const slot = SLOTS[abs];
+
+  // عكس الاتجاه في اللغة العربية (RTL)
+  const mirror = dir === "rtl" ? -1 : 1;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 15 * sign }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{
-        duration: 0.35,
-        ease: "easeOut",
+    <motion.article
+      initial={false}
+      animate={{
+        x: slot.x * side * mirror, // الإزاحة الأفقية
+        scale: slot.scale,
+        rotateY: slot.rotateY * side * mirror, // الدوران ثلاثي الأبعاد
+        opacity: slot.opacity,
       }}
-      className="flex h-[415px] w-[310px] shrink-0 flex-col overflow-hidden rounded-4xl bg-gradient-to-b from-[var(--project-pink)] to-[var(--project-blue)] p-3 text-[var(--white)] md:h-[430px] md:w-[310px]"
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        // التصغير والدوران من أسفل الكرت => كل الكروت قاعها على نفس الخط
+        originX: 0.5,
+        originY: 1,
+        zIndex: 10 - abs, // الكرت النشط فوق الباقي
+        // انعكاس الكرت على الأرضية
+        WebkitBoxReflect:
+          "below 4px linear-gradient(transparent 78%, rgba(255,255,255,0.16))",
+      }}
+      onClick={!isActive ? onSelect : undefined}
+      className={`absolute left-1/2 top-0 -ml-[140px] h-[420px] w-[280px] ${
+        !isActive && onSelect ? "cursor-pointer" : ""
+      }`}
     >
-      {/* Project Image */}
-      <div className="h-[212px] w-full overflow-hidden rounded-4xl">
+      {/* جسم الكرت */}
+      <div
+        className={`relative h-full w-full overflow-hidden rounded-[24px] border-3 border-border bg-surface ${
+          isActive
+            ? "shadow-[0_28px_50px_rgba(40,40,70,0.25)]"
+            : "shadow-[0_18px_32px_rgba(40,40,70,0.14)]"
+        }`}
+      >
+        {/* صورة المشروع */}
         <img
           src={project.img}
           alt={project.projectName}
-          className="h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover"
         />
-      </div>
 
-      {/* Project Info */}
-      <div className="flex flex-1 flex-col px-2 pt-4">
-        <h3 className="text-2xl font-semibold leading-snug">
-          {project.projectName}
-        </h3>
+        {/* تدرج داكن في أسفل الكرت عشان يوضح النص */}
+        <div className="absolute inset-x-0 bottom-0 h-[62%] bg-gradient-to-b from-transparent via-[color:var(--gdg-dark)]/55 to-[color:var(--gdg-dark)]/90" />
 
-        <p className="mt-3 line-clamp-3 text-justify text-base font-normal leading-normal">
-          {project.description}
-        </p>
+        {/* طبقة تغميق للكروت الجانبية (كل ما ابتعدت زادت) */}
+        <motion.div
+          initial={false}
+          animate={{ opacity: slot.dim }}
+          transition={{ duration: 0.7 }}
+          className="pointer-events-none absolute inset-0 z-20 bg-foreground/10"
+        />
 
-        <p dir={dir} className="mt-2 text-sm font-normal leading-normal">
-          {t("madeBy", { name: project.madeBy })}
-        </p>
+        {/* تبويبة الرقم (نفس لون خلفية السيكشن عشان تبان مقصوصة) */}
+        <div className="absolute right-0 top-0 z-30 flex h-[54px] w-[88px] items-center justify-center rounded-bl-[22px] bg-background text-foreground">
+          <span className="text-xl font-medium tracking-tight">
+            {String(index + 1).padStart(2, "0")}
+          </span>
 
-        {/* View Project Button */}
-        <div className="mt-auto flex justify-end">
-          <button
-            type="button"
-            className="flex h-9 w-[135px] cursor-pointer items-center justify-between rounded-full bg-[var(--white)] ps-4 pe-1 text-sm font-medium leading-none text-[var(--black)]"
-          >
-            <span dir={dir}>{t("viewProject")}</span>
+          <span className="absolute -left-[18px] top-0 h-[18px] w-[18px] rounded-tr-[18px] bg-transparent shadow-[5px_-5px_0_5px_var(--background)]" />
+          <span className="absolute -bottom-[18px] right-0 h-[18px] w-[18px] rounded-tr-[18px] bg-transparent shadow-[5px_-5px_0_5px_var(--background)]" />
+        </div>
 
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--black)]">
+        {/* محتوى الكرت: الاسم، المطوّر، الوصف، الزر، الشارات */}
+        <div
+          dir={dir}
+          className="absolute inset-x-0 bottom-0 z-10 p-5 text-white"
+        >
+          {/* اسم المشروع */}
+          <h3 className="text-2xl font-semibold leading-tight tracking-tight text-white">
+            {project.projectName}
+          </h3>
+
+          {/* صانع المشروع (madeBy) */}
+          <p className="mt-1 text-[11px] text-white/60">
+            {t("madeBy", { name: project.madeBy })}
+          </p>
+
+          {/* الوصف + زر السهم */}
+          <div className="mt-2 flex items-end justify-between gap-3">
+            <p className="line-clamp-4 max-w-[190px] text-xs leading-[1.6] text-white/80">
+              {project.description}
+            </p>
+
+            <button
+              type="button"
+              aria-label={t("viewProject")}
+              className="group flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-white/80 bg-white/5 transition-all duration-300 hover:scale-110 hover:bg-white"
+            >
+              {/* rtl:-scale-x-100 تقلب السهم في العربي */}
               <svg
-                className="h-4 w-4 rtl:-scale-x-100"
+                className="h-[18px] w-[18px] rtl:-scale-x-100 group-hover:[&>path]:stroke-black"
                 viewBox="0 0 24 24"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   d="M5 12H19M19 12L12 5M19 12L12 19"
-                  stroke="var(--white)"
-                  strokeWidth="2"
+                  stroke="white"
+                  strokeWidth="1.8"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
               </svg>
-            </span>
-          </button>
+            </button>
+          </div>
+
+          {/* الشارات (Tags) – تظهر فقط إذا موجودة في البيانات */}
+          {project.tags && project.tags.length > 0 && (
+            <ul className="mt-4 flex flex-wrap gap-1.5">
+              {project.tags.map((tag) => (
+                <li
+                  key={tag}
+                  className="rounded-full border border-white/20 bg-white/15 px-3 py-1 text-[11px] font-medium text-white/90"
+                >
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
-    </motion.div>
+    </motion.article>
   );
 }

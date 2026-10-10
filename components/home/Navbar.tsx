@@ -133,8 +133,8 @@ export default function Navbar({ variant = "overlay" }: NavbarProps = {}) {
         </motion.a>
 
         <MotionLink
-          href="/announcements"
-          aria-current={isAnnouncementsActive ? "page" : undefined}
+          href={sectionHref("#announcements")}
+          // aria-current={isAnnouncementsActive ? "page" : undefined}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
           className="group flex flex-col items-center text-md font-medium leading-none"
