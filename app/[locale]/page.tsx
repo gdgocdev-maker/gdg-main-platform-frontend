@@ -9,6 +9,8 @@ import JoinCommunity from "@/components/home/JoinCommunity";
 import LeadershipTeam from "@/components/home/LeadershipTeam"
 import Committees from "@/components/home/Committees"
 import Footer from "@/components/Footer"
+import AnnouncementsSection from "@/components/home/AnnouncementsSection";
+import { announcementFixtures } from "@/data/announcements";
 
 export default function Home() {
   return (
@@ -18,10 +20,12 @@ export default function Home() {
         <HeroSection />
         <AboutSection />
         <WhatWeOffer/>
+        <LeadershipTeam/>
         <FeaturedProjects/>
+        <AnnouncementsSection announcements={announcementFixtures} />
         <UpcomingEvents/>
         <SponsorSection/>
-        <LeadershipTeam/>
+        {/* <LeadershipTeam/> */}
         <Committees/>
         <JoinCommunity/>
         <Footer/>

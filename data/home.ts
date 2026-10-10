@@ -21,6 +21,34 @@ export const projects = [
       description: "Short Description of the project here",
       madeBy: "Developer community",
     },
+    {
+      id: "4",
+      img: "/images/project-placeholder.png",
+      projectName: "Project Name 4",
+      description: "Short Description of the project here",
+      madeBy: "Developer community",
+    },
+    {
+      id: "5",
+      img: "/images/project-placeholder.png",
+      projectName: "Project Name 5",
+      description: "Short Description of the project here",
+      madeBy: "Developer community",
+    },    
+    {
+      id: "6",
+      img: "/images/project-placeholder.png",
+      projectName: "Project Name 6",
+      description: "Short Description of the project here",
+      madeBy: "Developer community",
+    },
+    {
+      id: "7",
+      img: "/images/project-placeholder.png",
+      projectName: "Project Name 7",
+      description: "Short Description of the project here",
+      madeBy: "Developer community",
+    },
   ];
     
 //   Mock data, The actual data will be retrieved from database 
@@ -51,33 +79,43 @@ export const events = [
     },
   ];
 
-  export const teamMembers = [
-    {
+export const teamMembers = [
+  {
     id: "1",
+    type: "leader",
     image: "/images/abdullah-leader.png",
     role: "Lead",
     name: "Abdullah Misar",
+    linkedin: "#", // حطي الرابط الحقيقي
+    x: "#",        // حطي الرابط الحقيقي
   },
   {
     id: "2",
+    type: "leader",
     image: "/images/jumanah-coleader.png",
     role: "Co-Lead",
     name: "Jumanah Alshaibi",
-  },   
-
+    linkedin: "#",
+    x: "#",
+  },
   {
     id: "3",
+    type: "advisor",
     image: "/images/Fahad-advisor.png",
     role: "Advisor",
     name: "Fahad Aljudaibi",
+    linkedin: "#",
+    x: "#",
   },
   {
     id: "4",
+    type: "advisor",
     image: "/images/Ahmed-advisor.png",
     role: "Advisor",
     name: "Ahmed Bawazeer",
-  }, 
-
+    linkedin: "#",
+    x: "#",
+  },
 ];
 
 export const committees = [
@@ -155,22 +193,23 @@ export const committees = [
       name: "Shadi Alnajar",
       image: "/images/Developers-Lead.png",
     },
-
-    subCommittees: [
-      {
+  },
+    {
         id: "web-development",
         name: "Web Design & Development",
+        color: "#000000",
         description:
           " A creative space for developers passionate about building modern web experiences. Members explore frontend and backend development, from design to deployment. The committee works with modern technologies to create functional and responsive websites. It encourages collaboration, problem solving, and clean development practices. Members turn ideas into real digital experiences and practical projects. ",
         lead: {
           name: "Leen Alghamdi",
           image: "/images/web-lead.png",
         },
-      },
+    },
 
       {
         id: "artificial-intelligence",
         name: "Artificial Intelligence",
+        color: "#000000",
         description:
           "A space for exploring the world of artificial intelligence and emerging technologies. Members learn about AI concepts, machine learning, and intelligent applications. The committee encourages experimentation with AI tools and real-world use cases. Members collaborate on innovative projects that use AI to solve meaningful problems. It aims to make AI more accessible, practical, and impactful. ",
         lead: {
@@ -182,6 +221,7 @@ export const committees = [
       {
         id: "robotics-iot",
         name: "Robotics & IOT",
+        color: "#000000",
         description:
           "A hands-on space for building smart systems that connect the physical and digital worlds. Members explore robotics, sensors, embedded systems, and Internet of Things technologies. The committee encourages experimentation, prototyping, and practical problem-solving. Members work together to design and build interactive and connected solutions. It turns ideas into real-world systems through technology and creativity. ",
         lead: {
@@ -193,6 +233,7 @@ export const committees = [
       {
         id: "cybersecurity",
         name: "Cybersecurity",
+        color: "#000000",
         description:
           "A space for learning how to protect systems, applications, networks, and digital information. Members explore cybersecurity concepts, security practices, and common digital threats. The committee promotes awareness of secure development and responsible technology use. Members practice identifying vulnerabilities and understanding how systems can be protected. It builds a strong foundation for creating safer and more secure digital environments. ",
         lead: {
@@ -204,6 +245,7 @@ export const committees = [
       {
         id: "automation",
         name: "Automation",
+        color: "#000000",
         description:
           " A space focused on using technology to simplify tasks and improve workflows. Members explore automation tools, scripting, APIs, and process optimization. The committee encourages finding repetitive tasks that can be transformed into efficient solutions. Members collaborate to build automated workflows and practical productivity tools. It helps turn time-consuming processes into smarter and more efficient systems. ",
         lead: {
@@ -215,6 +257,7 @@ export const committees = [
       {
         id: "data-analysis",
         name: "Data Analysis",
+        color: "#000000",
         description:
           "A space for turning raw data into meaningful insights and informed decisions. Members explore data collection, cleaning, analysis, visualization, and interpretation. The committee works with real-world datasets to understand patterns and trends. Members develop analytical thinking and learn how to communicate insights effectively. It connects data with practical solutions, helping transform information into knowledge. ",
         lead: {
@@ -222,8 +265,75 @@ export const committees = [
           image: "/images/PM-colead.png",
         },
       },
-    ],
-  },
+    // ],
+
+  // subCommittees: [
+  //     {
+  //       id: "web-development",
+  //       name: "Web Design & Development",
+  //       description:
+  //         " A creative space for developers passionate about building modern web experiences. Members explore frontend and backend development, from design to deployment. The committee works with modern technologies to create functional and responsive websites. It encourages collaboration, problem solving, and clean development practices. Members turn ideas into real digital experiences and practical projects. ",
+  //       lead: {
+  //         name: "Leen Alghamdi",
+  //         image: "/images/web-lead.png",
+  //       },
+  //     },
+
+  //     {
+  //       id: "artificial-intelligence",
+  //       name: "Artificial Intelligence",
+  //       description:
+  //         "A space for exploring the world of artificial intelligence and emerging technologies. Members learn about AI concepts, machine learning, and intelligent applications. The committee encourages experimentation with AI tools and real-world use cases. Members collaborate on innovative projects that use AI to solve meaningful problems. It aims to make AI more accessible, practical, and impactful. ",
+  //       lead: {
+  //         name: "Atheer Alzahrani",
+  //         image: "/images/leader-default.png",
+  //       },
+  //     },
+
+  //     {
+  //       id: "robotics-iot",
+  //       name: "Robotics & IOT",
+  //       description:
+  //         "A hands-on space for building smart systems that connect the physical and digital worlds. Members explore robotics, sensors, embedded systems, and Internet of Things technologies. The committee encourages experimentation, prototyping, and practical problem-solving. Members work together to design and build interactive and connected solutions. It turns ideas into real-world systems through technology and creativity. ",
+  //       lead: {
+  //         name: "Saeed Alghamdi",
+  //         image: "/images/leader-default.png",
+  //       },
+  //     },
+
+  //     {
+  //       id: "cybersecurity",
+  //       name: "Cybersecurity",
+  //       description:
+  //         "A space for learning how to protect systems, applications, networks, and digital information. Members explore cybersecurity concepts, security practices, and common digital threats. The committee promotes awareness of secure development and responsible technology use. Members practice identifying vulnerabilities and understanding how systems can be protected. It builds a strong foundation for creating safer and more secure digital environments. ",
+  //       lead: {
+  //         name: "Shadi Alnajar",
+  //         image: "/images/Developers-Lead.png",
+  //       },
+  //     },
+
+  //     {
+  //       id: "automation",
+  //       name: "Automation",
+  //       description:
+  //         " A space focused on using technology to simplify tasks and improve workflows. Members explore automation tools, scripting, APIs, and process optimization. The committee encourages finding repetitive tasks that can be transformed into efficient solutions. Members collaborate to build automated workflows and practical productivity tools. It helps turn time-consuming processes into smarter and more efficient systems. ",
+  //       lead: {
+  //         name: "Asma Aldossari",
+  //         image: "/images/leader-default.png",
+  //       },
+  //     },
+
+  //     {
+  //       id: "data-analysis",
+  //       name: "Data Analysis",
+  //       description:
+  //         "A space for turning raw data into meaningful insights and informed decisions. Members explore data collection, cleaning, analysis, visualization, and interpretation. The committee works with real-world datasets to understand patterns and trends. Members develop analytical thinking and learn how to communicate insights effectively. It connects data with practical solutions, helping transform information into knowledge. ",
+  //       lead: {
+  //         name: "Shahad Almazrui",
+  //         image: "/images/PM-colead.png",
+  //       },
+  //     },
+  //   ],
 ];
 
 export const sponsors = [

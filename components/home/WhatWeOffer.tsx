@@ -35,11 +35,41 @@ export default function WhatWeOffer() {
   });
 
   return (
-    <section id="offers" className="bg-background px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24">
-      {/* Section Title */}
-      <h2 dir={dir} className="text-3xl font-bold leading-snug">
-        {t("title")}
-      </h2>
+    <section
+      id="offers"
+      className="relative isolate overflow-hidden bg-background px-6 py-16 sm:px-8 sm:py-20 lg:px-10 lg:py-24"
+    >
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-8 opacity-100">
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1440 80"
+          preserveAspectRatio="none"
+          className="h-full w-full"
+        >
+          <defs>
+            <linearGradient id="gdg-offers-wave-gradient" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0%" stopColor="var(--gdg-blue)" />
+              <stop offset="33%" stopColor="var(--gdg-green)" />
+              <stop offset="66%" stopColor="var(--gdg-yellow)" />
+              <stop offset="100%" stopColor="var(--gdg-red)" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M0 80 C180 10 300 62 480 44 S780 14 960 50 S1260 64 1440 42"
+            fill="none"
+            stroke="url(#gdg-offers-wave-gradient)"
+            strokeWidth="5"
+            strokeLinecap="round"
+          />
+        </svg>
+      </div>
+      {/* <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-[linear-gradient(90deg,transparent_0%,color-mix(in_srgb,var(--gdg-blue)_12%,transparent)_48%,color-mix(in_srgb,var(--gdg-blue)_30%,transparent)_100%)]" /> */}
+
+      <div className="relative max-w-2xl">
+        <h2 dir={dir} className="text-3xl font-bold leading-snug text-foreground md:text-4xl">
+          {t("title")}
+        </h2>
+      </div>
 
       {/* ===================================================== */}
       {/* DESKTOP / LAPTOP */}
