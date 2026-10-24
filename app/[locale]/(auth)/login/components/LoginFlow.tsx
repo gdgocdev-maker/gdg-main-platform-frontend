@@ -2,6 +2,10 @@
 
 import { useTranslations } from "next-intl"
 import { useState } from "react"
+import AuthErrorMessage from "@/app/components/auth/AuthErrorMessage"
+import { API_ENABLED, apiRequest } from "@/lib/api/client"
+import { storeAuthSession, type AuthSession } from "@/lib/auth/session"
+import { useRouter } from "@/i18n/navigation"
 import AuthCard from "@/app/components/auth/AuthCard"
 import AuthStepTransition from "@/app/components/auth/AuthStepTransition"
 import { validateEmail } from "@/app/lib/validation/email"
@@ -15,12 +19,14 @@ function normalizeText(value: string) {
 
 export default function LoginFlow() {
   const t = useTranslations("auth.login")
+  const router = useRouter()
   const [step, setStep] = useState<1 | 2>(1)
   const [email, setEmail] = useState("")
   const [emailError, setEmailError] = useState("")
   const [password, setPassword] = useState("")
   const [passwordError, setPasswordError] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState("")
   const isEmailStep = step === 1
 
   const handleEmailChange = (value: string) => {
@@ -67,7 +73,7 @@ export default function LoginFlow() {
     setPasswordError(validatePassword(password))
   }
 
-  const handlePasswordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handlePasswordSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const nextPasswordError = validatePassword(password)
@@ -79,11 +85,24 @@ export default function LoginFlow() {
 
     const nextPassword = normalizeText(password)
     setPassword(nextPassword)
+    setSubmitError("")
     setIsSubmitting(true)
-
-    window.setTimeout(() => {
+    if (!API_ENABLED) {
+      setSubmitError("apiRequired")
       setIsSubmitting(false)
-    }, 800)
+      return
+    }
+    const result = await apiRequest<AuthSession>("/auth/login", {
+      method: "POST",
+      body: { email: normalizeText(email), password: nextPassword },
+    })
+    if (!result.ok) {
+      setSubmitError("authRequestFailed")
+      setIsSubmitting(false)
+      return
+    }
+    storeAuthSession(result.data)
+    router.replace("/dashboard")
   }
 
   const handleBack = () => {
@@ -103,6 +122,7 @@ export default function LoginFlow() {
           : t("passwordStep.description")
       }
     >
+      <AuthErrorMessage message={submitError} className="mb-3 w-full" />
       <AuthStepTransition
         stepKey={step}
         className="flex w-full flex-col items-center"
