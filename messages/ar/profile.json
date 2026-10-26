@@ -41,6 +41,14 @@
 
   "universityPlaceholder": "اختر الجامعة",
   "registrationsLink": "تسجيلاتي",
+  "account": {
+    "loading": "جارٍ تحميل بيانات حسابك…",
+    "loadFailed": "تعذر تحميل بيانات حسابك.",
+    "unavailable": "بيانات الحساب غير متاحة حتى يتم إعداد واجهة المنصة.",
+    "retry": "إعادة المحاولة",
+    "committees": "اللجان",
+    "roles": "الأدوار في المنصة"
+  },
   "social": {
     "platforms": {
       "github": "GitHub",

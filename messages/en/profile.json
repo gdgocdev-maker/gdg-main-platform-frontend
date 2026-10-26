@@ -40,6 +40,14 @@
 
   "universityPlaceholder": "Select a university",
   "registrationsLink": "My registrations",
+  "account": {
+    "loading": "Loading your account…",
+    "loadFailed": "We couldn't load your account details.",
+    "unavailable": "Account details are unavailable until the platform API is configured.",
+    "retry": "Try again",
+    "committees": "Committees",
+    "roles": "Platform roles"
+  },
   "social": {
     "platforms": {
       "github": "GitHub",
