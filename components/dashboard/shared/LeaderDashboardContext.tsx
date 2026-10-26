@@ -25,7 +25,7 @@ import { committeeTranslationKeys, leaderCommitteeConfig } from "./committee-con
 import { setElevatedAccess, clearElevatedAccess } from "./accessStore";
 import { readPublishedHomeEvents, toPublishedHomeEvent, PUBLISHED_HOME_EVENTS_KEY } from "@/lib/events/published-home-events";
 import { applyDecision, fetchPrEvents, fetchRegistrants } from "@/lib/pr-registrations/api";
-import { fetchCommitteeDashboard, fetchClubLeadershipDashboard, fetchDeveloperCommitteeOverview, createCommitteeMember, createCommitteeTask, updateCommitteeTask, deleteCommitteeTask, updateCommitteePoints, type CommitteeDashboardStats, type DeveloperCommitteeOverview } from "@/lib/committee-dashboard/api";
+import { fetchCommitteeDashboard, fetchClubLeadershipDashboard, fetchDeveloperCommitteeOverview, createCommitteeMember, createCommitteeTask, updateCommitteeTask, deleteCommitteeTask, updateCommitteePoints, reviewCommitteeTask, type CommitteeDashboardStats, type DeveloperCommitteeOverview } from "@/lib/committee-dashboard/api";
 
 interface LeaderDashboardContextValue {
   committee: LeaderCommittee;
@@ -68,6 +68,8 @@ interface LeaderDashboardContextValue {
   addTask: (task: Omit<CommitteeTask, "id">) => Promise<void>;
   updateTask: (id: string, updates: Partial<CommitteeTask>) => Promise<void>;
   deleteTask: (id: string) => Promise<void>;
+  /** Confirms a task a member marked done, or sends it back. */
+  reviewTask: (id: string, decision: "APPROVE" | "RETURN") => Promise<void>;
   // Points Actions
   updateMemberPoints: (memberId: string, delta: number, reason: string) => Promise<void>;
   updateRegistrationStatus: (
@@ -447,6 +449,12 @@ export function LeaderDashboardProvider({
     await reloadDashboard();
   };
 
+  const reviewTask = async (id: string, decision: "APPROVE" | "RETURN") => {
+    const result = await reviewCommitteeTask(committeeConfig.committeeCode, id, decision);
+    if (!result.ok) throw new Error(result.message);
+    await reloadDashboard();
+  };
+
   const deleteTask = async (id: string) => {
     const result = await deleteCommitteeTask(committeeConfig.committeeCode, id);
     if (!result.ok) throw new Error(result.message);
@@ -496,6 +504,7 @@ export function LeaderDashboardProvider({
     addTask,
     updateTask,
     deleteTask,
+    reviewTask,
     updateMemberPoints,
     updateRegistrationStatus,
     registrationError,

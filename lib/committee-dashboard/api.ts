@@ -5,6 +5,7 @@ import type {
   LeaderDashboardSeed,
   PointHistoryItem,
   RecentActivityItem,
+  TaskStatus,
 } from "@/components/dashboard/shared/types";
 import { apiRequest, type ApiResult } from "@/lib/api/client";
 
@@ -112,11 +113,33 @@ function mapDashboardData(data: RawCommitteeDashboardData): CommitteeDashboardDa
         createdBy: memberById.get(task.createdByMemberId)?.name ?? "",
         dueDate: task.dueAt,
         priority: task.priority === "HIGH" ? "High" : task.priority === "LOW" ? "Low" : "Medium",
-        status: task.status === "COMPLETED" ? "Completed" : task.status === "IN_PROGRESS" ? "In Progress" : "To Do",
+        status: TASK_STATUS_FROM_API[task.status] ?? "To Do",
       })),
       pointHistory: data.pointHistory.map((item) => ({ ...item, timestamp: relativeTime(item.createdAt) })),
       recentActivities: data.recentActivities.map((item) => ({ ...item, timeAgo: relativeTime(item.createdAt) })),
     };
+}
+
+const TASK_STATUS_FROM_API: Record<string, TaskStatus> = {
+  TODO: "To Do",
+  IN_PROGRESS: "In Progress",
+  PENDING_REVIEW: "Pending Review",
+  COMPLETED: "Completed",
+};
+
+const TASK_STATUS_TO_API: Record<TaskStatus, string> = {
+  "To Do": "TODO",
+  "In Progress": "IN_PROGRESS",
+  "Pending Review": "PENDING_REVIEW",
+  Completed: "COMPLETED",
+};
+
+/** Confirms a task a member marked done, or sends it back to In Progress. */
+export function reviewCommitteeTask(code: string, taskId: string, decision: "APPROVE" | "RETURN") {
+  return apiRequest(`/committees/${encodeURIComponent(code)}/tasks/${encodeURIComponent(taskId)}/review`, {
+    method: "POST",
+    body: { decision },
+  });
 }
 
 export async function createCommitteeTask(code: string, task: Omit<CommitteeTask, "id">) {
@@ -128,7 +151,7 @@ export async function createCommitteeTask(code: string, task: Omit<CommitteeTask
       assignedMemberId: Number(task.assignedMemberId),
       dueAt: new Date(task.dueDate).toISOString(),
       priority: task.priority.toUpperCase(),
-      status: task.status === "Completed" ? "COMPLETED" : task.status === "In Progress" ? "IN_PROGRESS" : "TODO",
+      status: TASK_STATUS_TO_API[task.status],
     },
   });
   return response;
@@ -143,7 +166,7 @@ export async function updateCommitteeTask(code: string, id: string, updates: Par
       ...(updates.assignedMemberId !== undefined ? { assignedMemberId: Number(updates.assignedMemberId) } : {}),
       ...(updates.dueDate !== undefined ? { dueAt: new Date(updates.dueDate).toISOString() } : {}),
       ...(updates.priority !== undefined ? { priority: updates.priority.toUpperCase() } : {}),
-      ...(updates.status !== undefined ? { status: updates.status === "Completed" ? "COMPLETED" : updates.status === "In Progress" ? "IN_PROGRESS" : "TODO" } : {}),
+      ...(updates.status !== undefined ? { status: TASK_STATUS_TO_API[updates.status] } : {}),
     },
   });
 }
