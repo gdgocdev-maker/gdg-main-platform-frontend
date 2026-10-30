@@ -1,7 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { applyThemeChoice, readThemeChoice, resolveTheme, subscribeToTheme } from "@/lib/theme";
 
 type Theme = "light" | "dark";
@@ -15,6 +16,7 @@ type ThemeToggleProps = {
 export default function ThemeToggle({ onDark = false }: ThemeToggleProps = {}) {
   const t = useTranslations("common.theme");
   const [theme, setTheme] = useState<Theme>("light");
+  const transition = useRef<ViewTransition | null>(null);
 
   useEffect(() => {
     // Guarded read: browsers that block site storage would otherwise throw here.
@@ -22,31 +24,52 @@ export default function ThemeToggle({ onDark = false }: ThemeToggleProps = {}) {
 
     if (savedTheme === "light" || savedTheme === "dark") {
       document.documentElement.dataset.theme = savedTheme;
-      window.requestAnimationFrame(() => {
-        setTheme(savedTheme);
-      });
-      return;
     }
 
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)",
-    ).matches;
-
-    const systemTheme: Theme = prefersDark ? "dark" : "light";
-
-    window.requestAnimationFrame(() => {
-      setTheme(systemTheme);
+    const frame = window.requestAnimationFrame(() => {
+      setTheme(resolveTheme(savedTheme));
     });
+    return () => {
+      window.cancelAnimationFrame(frame);
+      transition.current?.skipTransition();
+    };
   }, []);
 
   // Stay in sync when the theme changes elsewhere (e.g. Member Settings → Appearance).
   useEffect(() => subscribeToTheme(() => setTheme(resolveTheme(readThemeChoice()))), []);
 
-  const toggleTheme = () => {
-    const nextTheme: Theme = theme === "light" ? "dark" : "light";
+  const toggleTheme = async () => {
+    if (transition.current) return;
+    const root = document.documentElement;
+    const visibleTheme = root.dataset.theme === "light" || root.dataset.theme === "dark"
+      ? root.dataset.theme
+      : resolveTheme(readThemeChoice());
+    const nextTheme: Theme = visibleTheme === "light" ? "dark" : "light";
+    const updateTheme = () => {
+      flushSync(() => {
+        applyThemeChoice(nextTheme);
+        setTheme(nextTheme);
+      });
+    };
 
-    applyThemeChoice(nextTheme);
-    setTheme(nextTheme);
+    if (!document.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      updateTheme();
+      return;
+    }
+
+    root.dataset.themeTransition = "logo";
+    try {
+      const current = document.startViewTransition(updateTheme);
+      transition.current = current;
+      // A hidden tab or a skipped transition can reject ready without failing the update.
+      void current.ready.catch(() => {});
+      await current.finished;
+    } catch {
+      updateTheme();
+    } finally {
+      transition.current = null;
+      delete root.dataset.themeTransition;
+    }
   };
 
   return (
