@@ -70,7 +70,7 @@ export function LeaderHeader({
           </button>
 
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+            <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">
               {pageTitle}
             </h1>
           </div>
@@ -80,7 +80,7 @@ export function LeaderHeader({
         <div className="flex items-center gap-3">
           {/* Profile Card */}
           <div className="flex items-center gap-2.5 rounded-xl border border-border bg-surface-muted/50 px-3 py-1.5">
-              <div className="flex size-7 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-700 dark:bg-blue-900/60 dark:text-blue-200">
+              <div className="flex size-9 items-center justify-center rounded-full bg-avatar-bg text-sm font-semibold text-foreground">
               {leaderInitials}
             </div>
             <div className="text-start">

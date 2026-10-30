@@ -4,6 +4,7 @@ import { useLeaderDashboard } from "../shared/LeaderDashboardContext";
 import { Calendar, Pencil, Trophy, AlertTriangle } from "lucide-react";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { DASHBOARD_CARD } from "../members/card-styles";
 
 export function RecentActivityPreview() {
   const { recentActivities } = useLeaderDashboard();
@@ -40,7 +41,7 @@ export function RecentActivityPreview() {
   };
 
   return (
-    <div className="flex flex-col justify-between rounded-2xl border border-border bg-surface p-5 shadow-2xs">
+    <div className={`${DASHBOARD_CARD} flex flex-col justify-between`}>
       <div>
         <div className="border-b border-border/80 pb-4">
           <h2 className="text-base font-bold text-foreground">

@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import type { CommitteeMember } from "../shared/types";
 import { Link } from "@/i18n/navigation";
 import { leaderCommitteeConfig } from "../shared/committee-config";
+import { DASHBOARD_CARD } from "../members/card-styles";
 
 interface MemberPointsPreviewProps {
   onUpdatePoints: (member: CommitteeMember) => void;
@@ -18,7 +19,7 @@ export function MemberPointsPreview({ onUpdatePoints }: MemberPointsPreviewProps
   const previewMembers = members.slice(0, 4);
 
   return (
-    <div className="rounded-2xl border border-border bg-surface p-5 shadow-2xs">
+    <div className={DASHBOARD_CARD}>
       <div className="flex items-center justify-between border-b border-border/80 pb-4">
         <div>
           <h2 className="text-base font-bold text-foreground">

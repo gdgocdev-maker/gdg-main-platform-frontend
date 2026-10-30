@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { CalendarCheck, UserCheck, ScanLine } from "lucide-react";
 import { useLeaderDashboard } from "../shared/LeaderDashboardContext";
+import { DASHBOARD_CARD, CARD_TITLE } from "../members/card-styles";
 
 export function EventReportsPanel({ eventId }: { eventId?: string }) {
   const t = useTranslations("dashboard.leader.eventReports");
@@ -42,9 +43,9 @@ export function EventReportsPanel({ eventId }: { eventId?: string }) {
             { label: t("going"), value: selectedEvent.confirmed ?? 0, icon: UserCheck },
             { label: t("checkedIn"), value: selectedEvent.checkedIn ?? 0, icon: ScanLine },
           ].map(({ label, value, icon: Icon }) => (
-            <article key={label} className="flex min-h-40 flex-col rounded-2xl border border-border bg-surface p-5 shadow-2xs">
-              <span className="grid size-10 place-items-center rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-300"><Icon className="size-5" /></span>
-              <h3 className="mt-4 text-base font-bold text-foreground">{label}</h3>
+            <article key={label} className={`${DASHBOARD_CARD} flex min-h-40 flex-col`}>
+              <span className="grid size-10 place-items-center rounded-xl bg-[var(--dashboard-blue-bg)] text-[var(--dashboard-blue-text)]"><Icon className="size-5" /></span>
+              <h3 className={`${CARD_TITLE} mt-4`}>{label}</h3>
               <span className="mt-2 text-3xl font-bold text-foreground">{value}</span>
             </article>
           ))}

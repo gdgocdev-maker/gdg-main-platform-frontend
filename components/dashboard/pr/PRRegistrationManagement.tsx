@@ -117,13 +117,13 @@ function RegistrationCounts({ eventId }: { eventId: string }) {
   ).length;
 
   return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
-      <span className="font-semibold text-foreground">{t("registrations.total", { count: eventRegistrations.length })}</span>
-      <span className="text-amber-700 dark:text-amber-300">{t("registrations.pendingCount", { count: pending })}</span>
-      <span className="text-emerald-700 dark:text-emerald-300">{t("registrations.acceptedCount", { count: accepted })}</span>
-      <span className="text-rose-700 dark:text-rose-300">{t("registrations.rejectedCount", { count: rejected })}</span>
-      <span className="text-blue-700 dark:text-blue-300">{t("registrations.waitlistedCount", { count: waitlisted })}</span>
-      <span className="text-muted">{t("registrations.confirmationOutstandingCount", { count: awaitingConfirmation })}</span>
+    <div className="grid w-full min-w-0 grid-cols-2 gap-1.5 text-[11px]">
+      <span className="col-span-2 min-w-0 break-words rounded-lg bg-surface-muted/70 px-2.5 py-1.5 font-bold leading-4 text-foreground">{t("registrations.total", { count: eventRegistrations.length })}</span>
+      <span className="min-w-0 break-words rounded-lg bg-amber-500/10 px-2 py-1.5 leading-4 text-amber-800 dark:text-amber-200">{t("registrations.pendingCount", { count: pending })}</span>
+      <span className="min-w-0 break-words rounded-lg bg-emerald-500/10 px-2 py-1.5 leading-4 text-emerald-800 dark:text-emerald-200">{t("registrations.acceptedCount", { count: accepted })}</span>
+      <span className="min-w-0 break-words rounded-lg bg-rose-500/10 px-2 py-1.5 leading-4 text-rose-800 dark:text-rose-200">{t("registrations.rejectedCount", { count: rejected })}</span>
+      <span className="min-w-0 break-words rounded-lg bg-blue-500/10 px-2 py-1.5 leading-4 text-blue-800 dark:text-blue-200">{t("registrations.waitlistedCount", { count: waitlisted })}</span>
+      <span className="col-span-2 min-w-0 break-words rounded-lg bg-surface-muted/50 px-2 py-1.5 leading-4 text-muted">{t("registrations.confirmationOutstandingCount", { count: awaitingConfirmation })}</span>
     </div>
   );
 }
@@ -452,39 +452,39 @@ export function PREventsList() {
           <p className="p-5 text-sm text-muted">{t("registrations.emptyFilter")}</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-start text-xs">
+            <table className="w-full min-w-[1200px] table-fixed text-start text-xs">
               <thead>
-                <tr className="border-b border-border text-[11px] font-semibold uppercase tracking-wider text-muted">
-                  <th className="px-5 py-3.5 text-start">{t("registrations.event")}</th>
-                  <th className="px-4 py-3.5 text-start">{t("registrations.date")}</th>
-                  <th className="px-4 py-3.5 text-start">{t("registrations.location")}</th>
-                  <th className="px-4 py-3.5 text-start">{t("registrations.registrationStatus")}</th>
-                  <th className="px-4 py-3.5 text-start">{t("registrations.registrations")}</th>
-                  <th className="px-5 py-3.5 text-end">{t("registrations.action")}</th>
+                <tr className="border-b border-border bg-surface-muted/30 text-[11px] font-semibold uppercase tracking-wider text-muted">
+                  <th className="w-[20%] px-5 py-4 text-start">{t("registrations.event")}</th>
+                  <th className="w-[13%] px-4 py-4 text-start">{t("registrations.date")}</th>
+                  <th className="w-[16%] px-4 py-4 text-start">{t("registrations.location")}</th>
+                  <th className="w-[12%] px-4 py-4 text-start">{t("registrations.registrationStatus")}</th>
+                  <th className="w-[25%] px-4 py-4 text-start">{t("registrations.registrations")}</th>
+                  <th className="w-[14%] px-5 py-4 text-end">{t("registrations.action")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border/60">
                 {filteredEvents.map((event) => (
-                  <tr key={event.id} className="hover:bg-surface-muted/30">
-                    <td className="px-5 py-3.5">
-                      <div className="flex items-center gap-3">{event.imageUrl ? <div aria-hidden="true" className="size-10 shrink-0 rounded-lg bg-cover bg-center" style={{ backgroundImage: `url(${JSON.stringify(event.imageUrl)})` }} /> : <div aria-hidden="true" className="size-10 shrink-0 rounded-lg bg-[image:var(--google-gradient)] opacity-70" />}<div className="min-w-0"><span className="block truncate font-semibold text-foreground">{event.title}</span><span className="text-[11px] text-muted">{event.type}</span></div></div>
+                  <tr key={event.id} className="align-middle transition-colors hover:bg-surface-muted/30">
+                    <td className="px-5 py-5">
+                      <div className="flex items-center gap-3">{event.imageUrl ? <div aria-hidden="true" className="size-11 shrink-0 rounded-xl bg-cover bg-center" style={{ backgroundImage: `url(${JSON.stringify(event.imageUrl)})` }} /> : <div aria-hidden="true" className="size-11 shrink-0 rounded-xl bg-[image:var(--google-gradient)] opacity-70" />}<div className="min-w-0"><span className="line-clamp-2 font-semibold leading-5 text-foreground">{event.title}</span><span className="mt-1 block text-[11px] text-muted">{event.type}</span></div></div>
                     </td>
-                    <td className="px-4 py-3.5 text-foreground/80">{event.date} · {event.time}</td>
-                    <td className="px-4 py-3.5 text-foreground/80">{event.location}</td>
-                    <td className="px-4 py-3.5">
+                    <td className="px-4 py-5 text-foreground/80"><span className="block font-medium">{event.date}</span><span className="mt-1 block text-muted">{event.time}</span></td>
+                    <td className="px-4 py-5 leading-5 text-foreground/80"><span className="line-clamp-2">{event.location}</span></td>
+                    <td className="px-4 py-5">
                       <span className="inline-flex items-center gap-1.5 rounded-full bg-surface-muted px-2.5 py-1 text-[11px] font-medium text-muted">
                         {t(`eventFilters.${event.status === "Needs Update" ? "needsUpdate" : event.status.toLowerCase()}`)}
                       </span>
                     </td>
-                    <td className="px-4 py-3.5"><RegistrationCounts eventId={event.id} /></td>
-                    <td className="px-5 py-3.5 text-end">
-                      <div className="flex items-center justify-end gap-2">
+                    <td className="px-4 py-5"><RegistrationCounts eventId={event.id} /></td>
+                    <td className="px-5 py-5 text-end">
+                      <div className="flex flex-col items-end gap-2">
                         {(canManageEvents || canCreateEvents) && <button type="button" onClick={() => openEdit(event)} disabled={loadingEditId === event.id} className="inline-flex items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5 font-semibold text-foreground transition hover:bg-surface-muted disabled:opacity-50" aria-label={t("eventManagement.edit")}>
                           <Pencil className="size-3.5" /> {t("eventManagement.edit")}
                         </button>}
                         <Link
                           href={`/dashboard/pr-dashboard/events/${event.id}`}
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-border px-2.5 py-1.5 font-semibold text-foreground transition hover:bg-surface-muted"
+                          className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-border px-3 py-2.5 text-center font-semibold leading-5 text-foreground transition hover:bg-surface-muted"
                         >
                           <ClipboardList className="size-3.5" /> {t("registrations.viewAllRegistrations")}
                         </Link>

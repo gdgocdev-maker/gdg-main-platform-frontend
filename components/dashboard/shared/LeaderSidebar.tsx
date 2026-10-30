@@ -110,13 +110,13 @@ export function LeaderSidebar({
                   onClick={onCloseMobile}
                   className={`group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
                     active
-                      ? "border-s-4 border-gdg-blue bg-surface-muted ps-2.5 font-semibold text-foreground"
+                      ? "border-s-4 border-gdg-red bg-[var(--dashboard-red-bg)] ps-2.5 font-semibold text-[var(--dashboard-red-text)]"
                       : "text-foreground/70 hover:bg-surface-muted hover:text-foreground"
                   }`}
                 >
                   <Icon
                     className={`size-4.5 shrink-0 transition-colors ${
-                      active ? "text-gdg-blue" : "text-muted group-hover:text-foreground"
+                      active ? "text-[var(--dashboard-red-text)]" : "text-muted group-hover:text-foreground"
                     }`}
                   />
                   <span className="truncate">{item.label}</span>
