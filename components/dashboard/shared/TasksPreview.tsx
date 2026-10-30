@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { CheckSquare } from "lucide-react";
 import { leaderCommitteeConfig } from "./committee-config";
+import { DASHBOARD_CARD } from "../members/card-styles";
 
 export function TasksPreview() {
   const { tasks, committee } = useLeaderDashboard();
@@ -38,7 +39,7 @@ export function TasksPreview() {
   };
 
   return (
-    <div className="rounded-2xl border border-border bg-surface p-5 shadow-2xs">
+    <div className={DASHBOARD_CARD}>
       <div className="flex items-center justify-between border-b border-border/80 pb-4">
         <div>
           <h2 className="text-base font-bold text-foreground">

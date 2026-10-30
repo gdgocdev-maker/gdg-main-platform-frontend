@@ -6,6 +6,7 @@ import { LeaderGreeting } from "./LeaderGreeting";
 import { LeadershipApprovalsPanel } from "./LeadershipApprovalsPanel";
 import { TopNav } from "@/components/dashboard/TopNav";
 import Footer from "@/components/Footer";
+import { DASHBOARD_CARD, CARD_TITLE } from "../members/card-styles";
 
 export function LeadershipDashboard({ scope }: { scope: "CLUB" | "DEVELOPER_COMMITTEES" }) {
   return scope === "CLUB" ? <ClubLeadershipDashboard /> : <DeveloperCommitteesDashboard />;
@@ -41,8 +42,8 @@ function DeveloperCommitteesDashboard() {
         </div>
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {developerCommitteesOverview.map((item) => (
-            <article key={item.code} className="rounded-xl border border-border bg-surface p-4">
-              <h3 className="font-semibold">{item.name}</h3>
+            <article key={item.code} className={DASHBOARD_CARD}>
+              <h3 className={CARD_TITLE}>{item.name}</h3>
               <dl className="mt-3 grid grid-cols-3 gap-2 text-center text-sm">
                 <div><dt className="text-foreground/60">{t("committeeMembers")}</dt><dd className="mt-1 font-semibold">{item.memberCount}</dd></div>
                 <div><dt className="text-foreground/60">{t("committeeLeaders")}</dt><dd className="mt-1 font-semibold">{item.leaderCount}</dd></div>
