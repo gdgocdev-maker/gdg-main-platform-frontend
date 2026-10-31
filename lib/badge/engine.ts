@@ -111,7 +111,7 @@ export async function createBadgeEngine(
   };
   const front = makeFace(), back = makeFace();
 
-  const CW = 1.8, CH = CW / 0.68, CLIP = 0.42, CY = light ? -1.12 : -0.38;   // CY: hangs a little low, for more strap
+  const CW = 1.8, CH = CW / 0.68, CLIP = 0.42, CY = light ? -1.05 : -0.38;   // CY: hangs a little low, for more strap
   const card = new THREE.Group();
   card.matrixAutoUpdate = false;
   scene.add(card);
