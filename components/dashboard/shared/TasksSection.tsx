@@ -439,9 +439,9 @@ export function TasksSection({
       ) : (
         /* Table View */
         <div className="rounded-2xl border border-border bg-surface overflow-x-auto shadow-2xs">
-          <table className="w-full text-start text-xs">
+          <table className="w-full min-w-max text-start text-sm md:min-w-full md:text-xs">
             <thead>
-              <tr className="border-b border-border text-[11px] font-semibold uppercase tracking-wider text-muted">
+              <tr className="border-b border-border text-xs font-semibold uppercase tracking-wider text-muted">
                 <th className="px-5 py-3.5 text-start">{t("tasks.task")}</th>
                 {clubLeadership && <th className="px-4 py-3.5 text-start">{t("groupFilters.committee")}</th>}
                 <th className="px-4 py-3.5 text-start">{t("tasks.assignedTo")}</th>

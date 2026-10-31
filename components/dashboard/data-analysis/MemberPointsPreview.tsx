@@ -37,15 +37,15 @@ export function MemberPointsPreview({ onUpdatePoints }: MemberPointsPreviewProps
       </div>
 
       <div className="mt-2 overflow-x-auto">
-        <table className="w-full text-start text-xs">
+        <table className="w-full min-w-max text-start text-sm md:min-w-full md:text-xs">
           <thead>
-            <tr className="border-b border-border text-[11px] font-semibold uppercase tracking-wider text-muted">
-              <th className="py-3 text-start">{t("points.member")}</th>
-              <th className="py-3 text-start">{t("points.points")}</th>
-              <th className="py-3 text-start">{t("points.tasks")}</th>
-              <th className="py-3 text-start">{t("points.lastActivity")}</th>
-              <th className="py-3 text-start">{t("members.status")}</th>
-              <th className="py-3 text-end"></th>
+            <tr className="border-b border-border text-xs font-semibold uppercase tracking-wider text-muted">
+              <th className="px-2 py-3 text-start">{t("points.member")}</th>
+              <th className="px-2 py-3 text-start">{t("points.points")}</th>
+              <th className="px-2 py-3 text-start">{t("points.tasks")}</th>
+              <th className="px-2 py-3 text-start">{t("points.lastActivity")}</th>
+              <th className="px-2 py-3 text-start">{t("members.status")}</th>
+              <th className="px-2 py-3 text-end"></th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border/60">
@@ -90,7 +90,7 @@ export function MemberPointsPreview({ onUpdatePoints }: MemberPointsPreviewProps
                     </span>
                   )}
                 </td>
-                <td className="py-3 text-end">
+                <td className="px-2 py-3 text-end">
                   {canManagePoints && member.id !== currentMember?.id && (
                     <button
                       type="button"
