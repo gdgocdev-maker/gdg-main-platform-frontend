@@ -69,11 +69,11 @@ export function InfoCard({
                 key={row.key}
                 className={`flex min-w-0 gap-3 border-b border-border pb-3 last:border-b-0 last:pb-0 ${isEditing
                     ? "flex-col sm:flex-row sm:items-center sm:justify-between"
-                    : "items-baseline justify-between"
+                    : "items-baseline gap-x-1.5"
                   }`}
               >
                 <dt className="shrink-0 text-sm text-muted">
-                  {t(`fields.${row.key}`)}
+                  {t(`fields.${row.key}`)}:
                 </dt>
 
                 {isEditing ? (
@@ -126,7 +126,7 @@ export function InfoCard({
                     )}
                   </div>
                 ) : (
-                  <dd className="min-w-0 break-words text-end text-sm font-semibold text-foreground">
+                  <dd className="min-w-0 flex-1 break-words text-start text-sm font-semibold text-foreground">
                     {isPhone ? (
                       <span dir="ltr">{row.value}</span>
                     ) : (
