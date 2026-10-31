@@ -292,7 +292,10 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
             {badge && (
               <div className="relative order-first h-[31rem] translate-y-3 md:order-none md:sticky md:top-24 md:col-start-2 md:row-start-1 md:h-[38rem]">
                 <HangingBadge
-                  {...badge}
+                  key={badge.key}
+                  data={badge.data}
+                  theme={badge.theme}
+                  label={badge.label}
                   className="absolute inset-x-0 top-0 h-[26rem] md:h-full"
                   stageClassName="top-0 -bottom-40 md:top-0 md:-bottom-[26rem]"
                   spanViewport
