@@ -1,12 +1,23 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useLeaderDashboard } from "./LeaderDashboardContext";
 import { LeaderGreeting } from "./LeaderGreeting";
 import { LeadershipApprovalsPanel } from "./LeadershipApprovalsPanel";
+import { LeaderDashboardStatus } from "./LeaderDashboardStatus";
 import { TopNav } from "@/components/dashboard/TopNav";
 import Footer from "@/components/Footer";
-import { DASHBOARD_CARD, CARD_TITLE } from "../members/card-styles";
+import { committees } from "@/lib/badge/themes";
+
+const developerCommitteeAccents: Record<string, string> = {
+  DATA: committees.DATA.theme.bg,
+  CYBER: committees.CYBER.theme.bg,
+  AI: committees.AI.theme.bg,
+  AUTOMATION: committees.AUTOMATION.theme.bg,
+  ROBOTICS: committees.ROBOTICS.theme.bg,
+  WEB: committees.WEB.theme.bg,
+};
 
 export function LeadershipDashboard({ scope }: { scope: "CLUB" | "DEVELOPER_COMMITTEES" }) {
   return scope === "CLUB" ? <ClubLeadershipDashboard /> : <DeveloperCommitteesDashboard />;
@@ -30,28 +41,84 @@ function ClubLeadershipDashboard() {
 
 function DeveloperCommitteesDashboard() {
   const t = useTranslations("dashboard.leadershipDashboard");
-  const { developerCommitteesOverview } = useLeaderDashboard();
+  const { developerCommitteesOverview, dashboardLoading, dashboardError } = useLeaderDashboard();
+  const [selectedCommittee, setSelectedCommittee] = useState("all");
+  const visibleCommittees = selectedCommittee === "all"
+    ? developerCommitteesOverview
+    : developerCommitteesOverview.filter((item) => item.code === selectedCommittee);
 
   return (
     <div className="space-y-6">
       <LeaderGreeting />
+      <LeaderDashboardStatus />
       <section className="space-y-3" aria-labelledby="developer-committee-overview-title">
-        <div>
-          <h2 id="developer-committee-overview-title" className="text-lg font-bold">{t("overviewTitle")}</h2>
-          <p className="mt-1 text-sm text-foreground/65">{t("developerDescription")}</p>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 id="developer-committee-overview-title" className="text-lg font-bold">{t("overviewTitle")}</h2>
+            <p className="mt-1 text-sm leading-6 text-foreground/80">{t("developerDescription")}</p>
+          </div>
+          <label className="flex flex-col gap-1.5 text-xs font-semibold text-foreground/85">
+            {t("committeeFilter")}
+            <select
+              value={selectedCommittee}
+              onChange={(event) => setSelectedCommittee(event.target.value)}
+              className="h-10 min-w-56 rounded-xl border border-border bg-surface px-3 text-sm font-medium text-foreground outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30"
+            >
+              <option value="all">{t("allCommittees")}</option>
+              {developerCommitteesOverview.map((item) => (
+                <option key={item.code} value={item.code}>{item.name}</option>
+              ))}
+            </select>
+          </label>
         </div>
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-          {developerCommitteesOverview.map((item) => (
-            <article key={item.code} className={DASHBOARD_CARD}>
-              <h3 className={CARD_TITLE}>{item.name}</h3>
-              <dl className="mt-3 grid grid-cols-3 gap-2 text-center text-sm">
-                <div><dt className="text-foreground/60">{t("committeeMembers")}</dt><dd className="mt-1 font-semibold">{item.memberCount}</dd></div>
-                <div><dt className="text-foreground/60">{t("committeeLeaders")}</dt><dd className="mt-1 font-semibold">{item.leaderCount}</dd></div>
-                <div><dt className="text-foreground/60">{t("activeTasks")}</dt><dd className="mt-1 font-semibold">{item.activeTaskCount}</dd></div>
-              </dl>
-            </article>
-          ))}
-        </div>
+        {visibleCommittees.length > 0 ? (
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {visibleCommittees.map((item) => {
+              const accent = developerCommitteeAccents[item.code] ?? "var(--gdg-blue)";
+              const accentSurface = `color-mix(in srgb, ${accent} 7%, var(--surface))`;
+              const accentBorder = `color-mix(in srgb, ${accent} 30%, var(--border))`;
+
+              return (
+                <article
+                  key={item.code}
+                  className="overflow-hidden rounded-2xl border bg-surface shadow-sm transition-shadow hover:shadow-md"
+                  style={{
+                    borderColor: accentBorder,
+                    borderInlineStart: `4px solid ${accent}`,
+                    backgroundColor: accentSurface,
+                  }}
+                >
+                  <div className="p-4 sm:p-5">
+                    <header className="flex items-center justify-between gap-3">
+                      <div className="flex min-w-0 items-center gap-3">
+                        <span className="size-3 shrink-0 rounded-full" style={{ backgroundColor: accent }} aria-hidden="true" />
+                        <h3 className="truncate text-base font-bold text-foreground">{item.name}</h3>
+                      </div>
+                      <span className="shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-bold tracking-wide text-foreground/85" style={{ borderColor: accentBorder, backgroundColor: accentSurface }}>
+                        {item.code}
+                      </span>
+                    </header>
+                    <dl className="mt-4 grid grid-cols-3 gap-2">
+                      {[
+                        { label: t("committeeMembers"), value: item.memberCount },
+                        { label: t("committeeLeaders"), value: item.leaderCount },
+                        { label: t("activeTasks"), value: item.activeTaskCount },
+                      ].map((metric) => (
+                        <div key={metric.label} className="rounded-xl border px-2 py-3 text-center sm:px-3" style={{ borderColor: accentBorder, backgroundColor: accentSurface }}>
+                          <dt className="min-h-8 text-xs font-medium leading-4 text-foreground/75">{metric.label}</dt>
+                          <dd className="mt-1 text-xl font-bold tabular-nums text-foreground">{metric.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+                  <div className="h-1 w-full" style={{ backgroundColor: accent }} aria-hidden="true" />
+                </article>
+              );
+            })}
+          </div>
+        ) : !dashboardLoading && !dashboardError ? (
+          <p className="rounded-xl border border-dashed border-border bg-surface p-6 text-center text-sm font-medium text-foreground/75">{t("noDeveloperCommittees")}</p>
+        ) : null}
       </section>
       <LeadershipApprovalsPanel scope="DEVELOPER_COMMITTEES" />
     </div>

@@ -23,8 +23,8 @@ import { getPathname } from "@/i18n/navigation";
 
 const LOGO_SRC = "/gdg-logo-motion.png";
 
-const LOGO_W = 190;
-const LOGO_H = 115;
+const LOGO_W = 240;
+const LOGO_H = 145;
 
 const CX = 835;
 const CY = 395;
@@ -815,14 +815,14 @@ export default function HeroSection() {
             ease: "easeOut",
           }}
         >
-          Google Developer Group
+          {locale === "ar" ? "مجموعة مطوّري جوجل" : "Google Developer Group"}
         </motion.h1>
 
         {/* SUBTITLE */}
 
         <motion.p
           dir={dir}
-          className="mt-1 text-balance text-center text-[clamp(1.05rem,0.8rem+1.1vw,2.2rem)] font-normal leading-snug text-[var(--hero-white-muted)]"
+          className="mt-4 text-balance text-center text-[clamp(1.05rem,0.8rem+1.1vw,2.2rem)] font-normal leading-snug text-[var(--hero-white-muted)]"
           initial={{
             opacity: 0,
             y: 20,
@@ -840,7 +840,7 @@ export default function HeroSection() {
             delay: 0.35,
           }}
         >
-          on Campus | University of Jeddah
+          {locale === "ar" ? "بجامعة جدة" : "on Campus | University of Jeddah"}
         </motion.p>
 
         {/* TAGLINE */}

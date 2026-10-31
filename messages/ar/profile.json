@@ -4,9 +4,10 @@
   },
   "badge": {
     "label": "بطاقة العضوية: {name}، {role}، {committee}",
+    "globalLabel": "بطاقة العضوية: {name}، {role}",
     "globalRoles": {
       "groupLeader": "قائد المجموعة",
-      "groupCoLeader": "نائب قائد المجموعة",
+      "groupCoLeader": "نائبة قائد المجموعة",
       "groupLeadership": "قيادة المجموعة",
       "developerCommitteesLeader": "قائد لجنة المطورين",
       "developerCommittees": "لجنة المطورين"

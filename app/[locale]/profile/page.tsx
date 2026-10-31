@@ -2,9 +2,9 @@
 
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
-import { CalendarDays, ChevronRight } from "lucide-react";
+import { CalendarDays, ChevronLeft, ChevronRight } from "lucide-react";
 import { HangingBadge } from "@/components/badge/HangingBadge";
-import { useMemberBadge } from "@/components/badge/useMemberBadge";
+import { useMemberBadges } from "@/components/badge/useMemberBadge";
 import { TopNav } from "@/components/dashboard/TopNav";
 import Footer from "@/components/Footer";
 import { ProfileBio } from "@/components/profile/ProfileBio";
@@ -75,6 +75,7 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
   const tSocial = useTranslations("profile.social");
   const router = useRouter();
   const [account, setAccount] = useState<ProfileAccount | null>(null);
+  const [activeBadgeIndex, setActiveBadgeIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const [bioDraft, setBioDraft] = useState("");
@@ -134,7 +135,7 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
   // Committee members and global leaders get a 3D badge beside the cards, hanging
   // from the cover and staying in view while the page scrolls; on phones it
   // sits between the header and the cards. Anyone else gets the page without it.
-  const badge = useMemberBadge({
+  const badges = useMemberBadges({
     name: account?.fullName,
     university: account?.university,
     photoUrl: account?.profileImageUrl,
@@ -142,6 +143,7 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
     committees: account?.committees,
     roles: account?.roles,
   });
+  const badge = badges[activeBadgeIndex] ?? badges[0];
 
   async function saveBio() {
     if (isSavingBio) return;
@@ -244,12 +246,12 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
             <div className="flex min-w-0 flex-col gap-4 md:col-start-1">
               <Link
                 href="/registrations"
-                className="group flex w-full items-center gap-4 rounded-2xl border border-[#e5e7eb] bg-white px-5 py-3 shadow-sm transition-all duration-200 hover:border-[#4285f4]/50 hover:shadow-md dark:border-[#243b64]/70 dark:bg-surface sm:px-6"
+                className="group flex w-full items-center gap-4 rounded-2xl border border-border bg-surface px-5 py-3 text-foreground shadow-sm transition-all duration-200 hover:border-[#4285f4]/50 hover:shadow-md sm:px-6"
               >
                 <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#eaf2ff] text-[#325fa6] dark:bg-[#243b64] dark:text-[#8ab4f8]">
                   <CalendarDays className="size-6" aria-hidden="true" />
                 </span>
-                <span className="min-w-0 flex-1 text-start text-base font-semibold text-[#243b64] dark:text-white">
+                <span className="min-w-0 flex-1 text-start text-base font-semibold text-foreground">
                   {t("registrationsLink")}
                 </span>
                 <ChevronRight className="size-5 shrink-0 text-[#325fa6] transition-transform group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1 dark:text-[#8ab4f8]" aria-hidden="true" />
@@ -288,14 +290,42 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
               />
             </div>
             {badge && (
-              <HangingBadge
-                {...badge}
-                className="order-first h-[26rem] translate-y-3 md:order-none md:sticky md:top-24 md:col-start-2 md:row-start-1 md:h-[38rem]"
-                stageClassName="top-0 -bottom-40 md:top-0 md:-bottom-[26rem]"
-                spanViewport
-                desktop={{ fit: 0.66, fitW: 0.86 }}
-                phone={{ fit: 0.8, fitW: 0.62 }}
-              />
+              <div className="relative order-first h-[31rem] translate-y-3 md:order-none md:sticky md:top-24 md:col-start-2 md:row-start-1 md:h-[38rem]">
+                <HangingBadge
+                  key={badge.key}
+                  data={badge.data}
+                  theme={badge.theme}
+                  label={badge.label}
+                  className="absolute inset-x-0 top-0 h-[26rem] md:h-full"
+                  stageClassName="top-0 -bottom-40 md:top-0 md:-bottom-[26rem]"
+                  spanViewport
+                  desktop={{ fit: 0.66, fitW: 0.86 }}
+                  phone={{ fit: 0.8, fitW: 0.62 }}
+                />
+                {badges.length > 1 && (
+                  <div className="absolute inset-x-0 bottom-2 z-10 flex items-center justify-center gap-3">
+                    <button
+                      type="button"
+                      aria-label="Previous committee badge"
+                      onClick={() => setActiveBadgeIndex((index) => (index - 1 + badges.length) % badges.length)}
+                      className="flex size-9 items-center justify-center rounded-full border border-border bg-surface/95 text-foreground shadow-md transition hover:bg-surface-muted"
+                    >
+                      <ChevronLeft className="size-5 rtl:rotate-180" aria-hidden="true" />
+                    </button>
+                    <span className="rounded-full border border-border bg-surface/95 px-3 py-1 text-xs font-medium text-foreground shadow-md" aria-live="polite">
+                      {activeBadgeIndex + 1} / {badges.length}
+                    </span>
+                    <button
+                      type="button"
+                      aria-label="Next committee badge"
+                      onClick={() => setActiveBadgeIndex((index) => (index + 1) % badges.length)}
+                      className="flex size-9 items-center justify-center rounded-full border border-border bg-surface/95 text-foreground shadow-md transition hover:bg-surface-muted"
+                    >
+                      <ChevronRight className="size-5 rtl:rotate-180" aria-hidden="true" />
+                    </button>
+                  </div>
+                )}
+              </div>
             )}
           </div>
         )}

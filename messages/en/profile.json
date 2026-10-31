@@ -4,6 +4,7 @@
   },
   "badge": {
     "label": "Member badge: {name}, {role}, {committee}",
+    "globalLabel": "Member badge: {name}, {role}",
     "globalRoles": {
       "groupLeader": "Group Leader",
       "groupCoLeader": "Group Co-Leader",
