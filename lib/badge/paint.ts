@@ -129,13 +129,17 @@ export function paintFront(cv: HTMLCanvasElement, data: BadgeData, t: BadgeTheme
   paintBackground(ctx, t);
   ctx.textAlign = "center";
   ctx.fillStyle = t.ink;
-  // the committee line breaks into two even lines when it's long
-  ctx.font = `400 15px ${font}`;
-  const sub = balance(ctx, data.committee, CARD_W - 50);
-  const subBase = sub.length > 1 ? 93 : 104;
-  sub.forEach((line, k) => ctx.fillText(line, CARD_W / 2, subBase + k * 18));
+  // Global leadership badges have no committee line.
+  let roleY = 104;
+  if (data.committee) {
+    ctx.font = `400 15px ${font}`;
+    const sub = balance(ctx, data.committee, CARD_W - 50);
+    const subBase = sub.length > 1 ? 93 : 104;
+    sub.forEach((line, k) => ctx.fillText(line, CARD_W / 2, subBase + k * 18));
+    roleY = subBase - 24;
+  }
   ctx.font = `700 30px ${font}`;
-  ctx.fillText(data.role, CARD_W / 2, subBase - 24, CARD_W - 32);
+  ctx.fillText(data.role, CARD_W / 2, roleY, CARD_W - 32);
 
   // the pattern strip tucked behind the photo, cropped to fill
   const top = 126, pw = 118, ph = 160, px = 61, patW = 89;

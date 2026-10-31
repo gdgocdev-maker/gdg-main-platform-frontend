@@ -54,14 +54,14 @@ export function useMemberBadges({ name, university, photoUrl, gender, committees
 
     if (roles?.includes("GROUP_LEADER")) {
       const role = t("globalRoles.groupLeader");
-      const committee = t("globalRoles.groupLeadership");
+      const committee = "";
       const data: BadgeData = { ...shared, role, committee };
-      badges.unshift({ data, theme: clubLeadershipTheme, label: t("label", { name: data.name, role, committee }), key: "group-leader" });
+      badges.unshift({ data, theme: clubLeadershipTheme, label: t("globalLabel", { name: data.name, role }), key: "group-leader" });
     } else if (roles?.includes("GROUP_CO_LEADER")) {
       const role = t("globalRoles.groupCoLeader");
-      const committee = t("globalRoles.groupLeadership");
+      const committee = "";
       const data: BadgeData = { ...shared, role, committee };
-      badges.unshift({ data, theme: clubLeadershipTheme, label: t("label", { name: data.name, role, committee }), key: "group-co-leader" });
+      badges.unshift({ data, theme: clubLeadershipTheme, label: t("globalLabel", { name: data.name, role }), key: "group-co-leader" });
     }
     if (roles?.includes("DEVELOPER_COMMITTEES_LEADER")) {
       const role = t("globalRoles.developerCommitteesLeader");
