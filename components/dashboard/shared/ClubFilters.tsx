@@ -108,7 +108,7 @@ export function CommitteeBadges({ member }: { member: CommitteeMember }) {
       {memberCommittees.map((item) => (
         <span
           key={item.code}
-          className="rounded-md bg-blue-50 px-2 py-0.5 text-[10px] font-semibold text-blue-700 dark:bg-blue-950/60 dark:text-blue-300"
+          className="rounded-md bg-blue-50 px-2 py-0.5 text-xs font-semibold sm:text-sm text-blue-700 dark:bg-blue-950/60 dark:text-blue-300"
         >
           {committeeName(item.code, item.name)} · {item.role}
         </span>
@@ -121,7 +121,7 @@ export function CommitteeTag({ code, name }: { code?: string; name?: string }) {
   const committeeName = useCommitteeName();
   if (!code && !name) return null;
   return (
-    <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+    <span className="rounded-md bg-slate-100 px-2 py-0.5 text-xs font-semibold sm:text-sm text-slate-700 dark:bg-slate-800 dark:text-slate-200">
       {committeeName(code, name)}
     </span>
   );
