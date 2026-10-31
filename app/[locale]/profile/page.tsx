@@ -290,7 +290,7 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
               />
             </div>
             {badge && (
-              <div className={`relative order-first ${badges.length > 1 ? "h-[30rem]" : "h-[28rem]"} translate-y-3 md:order-none md:sticky md:top-24 md:col-start-2 md:row-start-1 md:h-[38rem]`}>
+              <div className={`relative order-first ${badges.length > 1 ? "h-[33rem]" : "h-[28rem]"} translate-y-3 md:order-none md:sticky md:top-24 md:col-start-2 md:row-start-1 md:h-[38rem]`}>
                 <HangingBadge
                   key={badge.key}
                   data={badge.data}

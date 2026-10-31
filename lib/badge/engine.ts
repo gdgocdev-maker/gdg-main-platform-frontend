@@ -425,6 +425,7 @@ export async function createBadgeEngine(
   // listened for on the window, since the canvas lets every click through
   const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), hitPt = new THREE.Vector3();
   const targets = [frontMesh, backMesh];
+  const originalColumnZIndex = column.style.zIndex;
   const aim = (e: { clientX: number; clientY: number }) => {
     const r = canvas.getBoundingClientRect();
     ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
@@ -453,6 +454,7 @@ export async function createBadgeEngine(
     e.preventDefault();
     grab = { id: e.pointerId, z: h.point.z, dx: C.x - h.point.x, dy: C.y - h.point.y, tx: C.x, ty: C.y, tz: C.z };
     C.w = 0;
+    column.style.zIndex = "9999";
     setCursor("grabbing");
     wake();
   };
@@ -472,6 +474,7 @@ export async function createBadgeEngine(
   const onUp = (e: PointerEvent) => {
     if (!grab || e.pointerId !== grab.id) return;
     grab = null;
+    column.style.zIndex = originalColumnZIndex;
     C.w = C.w0;
     const vx = C.x - C.px, vy = C.y - C.py, m = Math.hypot(vx, vy), cap = 0.16;
     if (m > cap) { C.px = C.x - (vx * cap) / m; C.py = C.y - (vy * cap) / m; }
@@ -507,6 +510,7 @@ export async function createBadgeEngine(
       wake();
     },
     destroy() {
+      column.style.zIndex = originalColumnZIndex;
       sleep();
       sizer.disconnect();
       seen.disconnect();

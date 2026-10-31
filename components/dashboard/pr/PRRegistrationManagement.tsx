@@ -155,9 +155,9 @@ export function PROverviewRegistrations() {
           <p className="p-5 text-sm text-muted">{t("registrations.emptyPending")}</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-start text-xs">
+            <table className="w-full min-w-max text-start text-sm md:min-w-full md:text-xs">
               <thead>
-                <tr className="border-b border-border text-[11px] font-semibold uppercase tracking-wider text-muted">
+                <tr className="border-b border-border text-xs font-semibold uppercase tracking-wider text-muted">
                   <th className="px-5 py-3 text-start">{t("registrations.applicant")}</th>
                   <th className="px-4 py-3 text-start">{t("registrations.event")}</th>
                   <th className="px-4 py-3 text-start">{t("registrations.registrationDate")}</th>
@@ -454,7 +454,7 @@ export function PREventsList() {
           <div className="overflow-x-auto">
             <table className="w-full min-w-[1200px] table-fixed text-start text-xs">
               <thead>
-                <tr className="border-b border-border bg-surface-muted/30 text-[11px] font-semibold uppercase tracking-wider text-muted">
+                <tr className="border-b border-border bg-surface-muted/30 text-xs font-semibold uppercase tracking-wider text-muted">
                   <th className="w-[20%] px-5 py-4 text-start">{t("registrations.event")}</th>
                   <th className="w-[13%] px-4 py-4 text-start">{t("registrations.date")}</th>
                   <th className="w-[16%] px-4 py-4 text-start">{t("registrations.location")}</th>
@@ -689,9 +689,9 @@ export function PREventRegistrations({ eventId }: { eventId: string }) {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-start text-xs">
+            <table className="w-full min-w-max text-start text-sm md:min-w-full md:text-xs">
               <thead>
-                <tr className="border-b border-border text-[11px] font-semibold uppercase tracking-wider text-muted">
+                <tr className="border-b border-border text-xs font-semibold uppercase tracking-wider text-muted">
                   <th className="px-5 py-3.5 text-start">{t("registrations.applicant")}</th>
                   <th className="px-4 py-3.5 text-start">{t("registrations.registrationDate")}</th>
                   <th className="px-4 py-3.5 text-start">{t("registrations.status")}</th>
