@@ -1,14 +1,11 @@
 "use client";
 
-import { SN_Pro } from "next/font/google";
 import { useEffect, useRef, useState } from "react";
 import { createBadgeEngine } from "@/lib/badge/engine";
 import { CARD_H, CARD_W, loadBadgeAssets, paintBack, paintFront } from "@/lib/badge/paint";
 import type { BadgeData, BadgeTheme } from "@/lib/badge/types";
 
-// The badge card's own typeface, from the original GDG card design.
-const snPro = SN_Pro({ subsets: ["latin"] });
-
+// Canvas badge text follows the page font, including the Arabic site font.
 type Fit = { fit: number; fitW: number };
 
 function resolveThemeColor(value: string) {
@@ -71,7 +68,7 @@ export function HangingBadge({
 
     (async () => {
       const canvasTheme = resolveBadgeTheme(theme);
-      const assets = await loadBadgeAssets(data, canvasTheme, snPro.style.fontFamily);
+      const assets = await loadBadgeAssets(data, canvasTheme, getComputedStyle(document.body).fontFamily);
       if (cancelled) return;
       const light = window.matchMedia("(max-width: 767px)").matches;
       engine = await createBadgeEngine(
@@ -112,7 +109,7 @@ export function HangingBadge({
     if (!flat || !cv) return;
     let cancelled = false;
     const canvasTheme = resolveBadgeTheme(theme);
-    loadBadgeAssets(data, canvasTheme, snPro.style.fontFamily).then((assets) => {
+    loadBadgeAssets(data, canvasTheme, getComputedStyle(document.body).fontFamily).then((assets) => {
       if (cancelled) return;
       const width = Math.round(cv.clientWidth * Math.min(window.devicePixelRatio || 1, 3));
       cv.width = width;
@@ -125,7 +122,7 @@ export function HangingBadge({
   }, [flat, data, theme]);
 
   return (
-    <div ref={columnRef} role="img" aria-label={label} className={`relative ${snPro.className} ${className}`}>
+    <div ref={columnRef} role="img" aria-label={label} className={`relative ${className}`}>
       <div ref={stageRef} aria-hidden="true" className={`pointer-events-none absolute z-20 ${stageClassName}`} />
       {flat && (
         <canvas

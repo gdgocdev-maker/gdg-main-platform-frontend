@@ -17,7 +17,7 @@ export default async function Home() {
   return (
     <>
       
-      <main>
+      <main className="flex min-h-screen flex-col">
         <HeroSection />
         <AboutSection />
         <WhatWeOffer/>
