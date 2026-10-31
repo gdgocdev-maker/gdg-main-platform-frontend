@@ -22,7 +22,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative isolate overflow-hidden bg-gdg-dark text-white">
+    <footer className="relative isolate mt-auto overflow-hidden bg-gdg-dark text-white">
       <div
         aria-hidden="true"
         className="gdg-spectrum h-1 w-full bg-[length:200%_100%]"

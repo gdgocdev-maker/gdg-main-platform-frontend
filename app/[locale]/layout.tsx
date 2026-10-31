@@ -54,7 +54,7 @@ export default async function RootLayout({
       dir={localeMetadata[locale].dir}
       className={`${googleSans.variable} ${ibmPlexSansArabic.variable} h-full antialiased`}
     >
-      <body className="min-h-screen w-full flex flex-col items-stretch">
+      <body className="min-h-dvh w-full flex flex-col items-stretch">
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
