@@ -127,7 +127,7 @@ export default function Committees() {
                           borderInlineStartColor: subCommittee.color,
                         }}
                       >
-                        <span className="w-full min-w-0 truncate whitespace-nowrap text-center text-xs font-medium leading-snug sm:text-sm" title={t(`items.${developersCommittee?.id}.subCommittees.${subCommittee.id}.name`)}>
+                        <span className="w-full min-w-0 truncate whitespace-nowrap text-center text-sm font-medium leading-snug sm:text-base" title={t(`items.${developersCommittee?.id}.subCommittees.${subCommittee.id}.name`)}>
                           {t(`items.${developersCommittee?.id}.subCommittees.${subCommittee.id}.name`)}
                         </span>
                       </button>
@@ -228,7 +228,7 @@ export default function Committees() {
                           borderInlineStartColor: accent,
                         }}
                       >
-                        <span className="w-full min-w-0 truncate whitespace-nowrap text-center text-xs font-medium leading-snug sm:text-sm" title={t(`items.${committee.id}.name`)}>
+                        <span className="w-full min-w-0 truncate whitespace-nowrap text-center text-sm font-medium leading-snug sm:text-base" title={t(`items.${committee.id}.name`)}>
                           {t(`items.${committee.id}.name`)}
                         </span>
                       </button>

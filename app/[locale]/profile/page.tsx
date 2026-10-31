@@ -290,20 +290,20 @@ export default function ProfilePage({}: PageProps<"/[locale]/profile">) {
               />
             </div>
             {badge && (
-              <div className="relative order-first h-[28rem] translate-y-3 md:order-none md:sticky md:top-24 md:col-start-2 md:row-start-1 md:h-[38rem]">
+              <div className={`relative order-first ${badges.length > 1 ? "h-[30rem]" : "h-[28rem]"} translate-y-3 md:order-none md:sticky md:top-24 md:col-start-2 md:row-start-1 md:h-[38rem]`}>
                 <HangingBadge
                   key={badge.key}
                   data={badge.data}
                   theme={badge.theme}
                   label={badge.label}
-                  className="absolute inset-x-0 top-0 h-[26rem] md:h-full"
+                  className={`absolute inset-x-0 top-0 ${badges.length > 1 ? "h-[28rem]" : "h-[26rem]"} md:h-full`}
                   stageClassName="top-0 -bottom-40 md:top-0 md:-bottom-[26rem]"
                   spanViewport
                   desktop={{ fit: 0.66, fitW: 0.86 }}
                   phone={{ fit: 0.9, fitW: 0.62 }}
                 />
                 {badges.length > 1 && (
-                  <div className="absolute inset-x-0 bottom-2 z-10 flex items-center justify-center gap-3">
+                  <div className={`absolute inset-x-0 bottom-2 ${badges.length > 1 ? "z-30" : "z-10"} flex items-center justify-center gap-3`}>
                     <button
                       type="button"
                       aria-label="Previous committee badge"
