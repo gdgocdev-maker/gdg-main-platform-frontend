@@ -55,7 +55,6 @@ function DeveloperCommitteesDashboard() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 id="developer-committee-overview-title" className="text-lg font-bold">{t("overviewTitle")}</h2>
-            <p className="mt-1 text-sm leading-6 text-foreground/80">{t("developerDescription")}</p>
           </div>
           <label className="flex flex-col gap-1.5 text-xs font-semibold text-foreground/85">
             {t("committeeFilter")}
