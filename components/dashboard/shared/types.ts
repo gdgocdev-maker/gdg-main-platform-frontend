@@ -64,6 +64,8 @@ export interface CommitteeMember {
   pointsVisible?: boolean;
   globalPoints?: number;
   globalPointsVisible?: boolean;
+  advisorPoints?: number;
+  advisorPointsVisible?: boolean;
   pointsCommitteeCode?: string;
   tasksCompleted: number;
   lastActivity: string;

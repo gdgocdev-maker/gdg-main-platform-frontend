@@ -27,7 +27,7 @@ import { setElevatedAccess, clearElevatedAccess } from "./accessStore";
 import { readPublishedHomeEvents, toPublishedHomeEvent, PUBLISHED_HOME_EVENTS_KEY } from "@/lib/events/published-home-events";
 import { applyDecision, fetchPrEvents, fetchRegistrants } from "@/lib/pr-registrations/api";
 import { API_ENABLED } from "@/lib/api/client";
-import { fetchCommitteeDashboard, fetchClubLeadershipDashboard, fetchDeveloperCommitteeOverview, createCommitteeEvent, publishCommitteeEvent, deleteCommitteeDraftEvent, fetchCommitteeEvent, type CommitteeEventDetails, type EventSchedule, createCommitteeMember, addClubMemberToCommittee, assignClubPerson, assignDeveloperCommitteeMember, removeClubPerson, type MemberAssignmentRole, createCommitteeTask, updateCommitteeTask, reviewCommitteeTask, deleteCommitteeTask, updateCommitteePoints, updateDeveloperLeaderGlobalPoints, type CommitteeDashboardStats, type DeveloperCommitteeOverview } from "@/lib/committee-dashboard/api";
+import { fetchCommitteeDashboard, fetchClubLeadershipDashboard, fetchDeveloperCommitteeOverview, createCommitteeEvent, publishCommitteeEvent, deleteCommitteeDraftEvent, fetchCommitteeEvent, type CommitteeEventDetails, type EventSchedule, createCommitteeMember, addClubMemberToCommittee, assignClubPerson, assignDeveloperCommitteeMember, removeClubPerson, type MemberAssignmentRole, createCommitteeTask, updateCommitteeTask, reviewCommitteeTask, deleteCommitteeTask, updateCommitteePoints, updateGlobalRolePoints, type CommitteeDashboardStats, type DeveloperCommitteeOverview } from "@/lib/committee-dashboard/api";
 
 interface LeaderDashboardContextValue {
   committee: LeaderCommittee;
@@ -85,7 +85,7 @@ interface LeaderDashboardContextValue {
   /** Confirms a task a member marked done, or sends it back. */
   reviewTask: (id: string, decision: "APPROVE" | "RETURN") => Promise<void>;
   // Points Actions
-  updateMemberPoints: (memberId: string, delta: number, reason: string, scope?: { committeeCode?: string; global?: boolean }) => Promise<void>;
+  updateMemberPoints: (memberId: string, delta: number, reason: string, scope?: { committeeCode?: string; globalRoleCode?: "ADVISOR" | "DEVELOPER_COMMITTEES_LEADER" }) => Promise<void>;
   updateRegistrationStatus: (
     registrationId: string,
     status: RegistrationStatus,
@@ -569,9 +569,9 @@ export function LeaderDashboardProvider({
   };
 
   // Points handler
-  const updateMemberPoints = async (memberId: string, delta: number, reason: string, scope?: { committeeCode?: string; global?: boolean }) => {
-    const result = scope?.global
-      ? await updateDeveloperLeaderGlobalPoints(memberId, delta, reason)
+  const updateMemberPoints = async (memberId: string, delta: number, reason: string, scope?: { committeeCode?: string; globalRoleCode?: "ADVISOR" | "DEVELOPER_COMMITTEES_LEADER" }) => {
+    const result = scope?.globalRoleCode
+      ? await updateGlobalRolePoints(memberId, delta, reason, scope.globalRoleCode)
       : await updateCommitteePoints(scope?.committeeCode ?? committeeConfig.committeeCode, memberId, delta, reason);
     if (!result.ok) throw new Error(result.message);
     await reloadDashboard();

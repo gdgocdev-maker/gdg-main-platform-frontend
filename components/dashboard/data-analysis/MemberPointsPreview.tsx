@@ -2,16 +2,11 @@
 
 import { useLeaderDashboard } from "../shared/LeaderDashboardContext";
 import { useTranslations } from "next-intl";
-import type { CommitteeMember } from "../shared/types";
 import { Link } from "@/i18n/navigation";
 import { leaderCommitteeConfig } from "../shared/committee-config";
 
-interface MemberPointsPreviewProps {
-  onUpdatePoints: (member: CommitteeMember) => void;
-}
-
-export function MemberPointsPreview({ onUpdatePoints }: MemberPointsPreviewProps) {
-  const { members, canManagePoints, currentMember, committee } = useLeaderDashboard();
+export function MemberPointsPreview() {
+  const { members, committee } = useLeaderDashboard();
   const pointsHref = `${leaderCommitteeConfig[committee].routeBase}/points`;
   const t = useTranslations("dashboard.leader");
 
@@ -45,7 +40,6 @@ export function MemberPointsPreview({ onUpdatePoints }: MemberPointsPreviewProps
               <th className="px-2 py-3 text-start">{t("points.tasks")}</th>
               <th className="px-2 py-3 text-start">{t("points.lastActivity")}</th>
               <th className="px-2 py-3 text-start">{t("members.status")}</th>
-              <th className="px-2 py-3 text-end"></th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border/60">
@@ -88,17 +82,6 @@ export function MemberPointsPreview({ onUpdatePoints }: MemberPointsPreviewProps
                       <span className="size-1.5 rounded-full bg-amber-600" />
                       {t("members.away")}
                     </span>
-                  )}
-                </td>
-                <td className="px-2 py-3 text-end">
-                  {canManagePoints && member.id !== currentMember?.id && (
-                    <button
-                      type="button"
-                      onClick={() => onUpdatePoints(member)}
-                      className="rounded-xl border border-border px-2.5 py-1 text-xs font-semibold text-foreground transition hover:bg-surface-muted"
-                    >
-                      {t("points.updatePoints")}
-                    </button>
                   )}
                 </td>
               </tr>

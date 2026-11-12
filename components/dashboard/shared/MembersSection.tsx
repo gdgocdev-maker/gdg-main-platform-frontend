@@ -12,7 +12,6 @@ import {
   Search,
   Plus,
   Trash2,
-  Trophy,
   Clock,
   ChevronLeft,
   ChevronRight,
@@ -55,17 +54,15 @@ interface MembersSectionProps {
   onOpenAddMember: () => void;
   onOpenRemoveMember?: (email?: string) => void;
   onOpenTemporaryAccess?: (member: CommitteeMember) => void;
-  onOpenUpdatePoints: (member: CommitteeMember) => void;
 }
 
 export function MembersSection({
   onOpenAddMember,
   onOpenRemoveMember,
   onOpenTemporaryAccess,
-  onOpenUpdatePoints,
 }: MembersSectionProps) {
   const t = useTranslations("dashboard.leader");
-  const { members, canManageMembers, canAddMembers, canManagePoints, currentMember, committeeName, committee, clubLeadership, developerCommitteesLeader } = useLeaderDashboard();
+  const { members, canManageMembers, canAddMembers, committeeName, committee, clubLeadership } = useLeaderDashboard();
   const showTemporaryAccess = !clubLeadership && leaderCommitteeConfig[committee].canGrantTemporaryAccess;
   const [searchTerm, setSearchTerm] = useState("");
   const [committeeFilter, setCommitteeFilter] = useState(ALL);
@@ -235,19 +232,6 @@ export function MembersSection({
                   );
                 }
                 const { member } = row;
-                const globalDeveloperLeader = member.globalRoles?.includes("DEVELOPER_COMMITTEES_LEADER") ?? false;
-                const leadershipCommittees = (member.committees ?? []).filter((item) => item.role === "Leader" || item.role === "Co-Leader");
-                const visibleLeadershipCommittees = committeeFilter === ALL
-                  ? leadershipCommittees
-                  : leadershipCommittees.filter((item) => item.code === committeeFilter);
-                const committeePointTarget = clubLeadership
-                  ? visibleLeadershipCommittees[0]
-                  : (member.committees ?? []).find((item) => item.code === leaderCommitteeConfig[committee].committeeCode) ?? member.committees?.[0];
-                const canManageThisMemberPoints = clubLeadership
-                  ? globalDeveloperLeader || visibleLeadershipCommittees.length > 0
-                  : developerCommitteesLeader
-                    ? leadershipCommittees.length > 0
-                    : member.role === "Member";
                 const isElevatedActive =
                   member.isElevated &&
                   member.accessExpiresAt &&
@@ -287,7 +271,11 @@ export function MembersSection({
 
                     {/* ROLE */}
                     <td className="px-4 py-3.5 font-medium text-foreground/90 whitespace-nowrap">
-                      {member.role.split(" / ").map((role) => role === "DEVELOPER_COMMITTEES_LEADER" ? t("groupFilters.roleDeveloperLeader") : role).join(" / ")}
+                      {member.role.split(" / ").map((role) => {
+                        if (role === "DEVELOPER_COMMITTEES_LEADER") return t("groupFilters.roleDeveloperLeader");
+                        if (role === "ADVISOR") return t("groupFilters.roleAdvisor");
+                        return role;
+                      }).join(" / ")}
                     </td>
 
                     {/* COMMITTEES */}
@@ -352,22 +340,6 @@ export function MembersSection({
                           >
                             <Clock className="size-3.5 text-blue-600 dark:text-blue-400" />
                             <span>{isElevatedActive ? "Manage Access" : "Grant Access"}</span>
-                          </button>
-                        )}
-
-                        {/* Update Points */}
-                        {canManagePoints && canManageThisMemberPoints && member.id !== currentMember?.id && (
-                          <button
-                            type="button"
-                            title={t("members.updatePoints")}
-                            onClick={() => onOpenUpdatePoints({
-                              ...member,
-                              points: globalDeveloperLeader ? member.globalPoints ?? 0 : committeePointTarget?.points ?? member.points,
-                              pointsCommitteeCode: globalDeveloperLeader ? undefined : committeePointTarget?.code,
-                            })}
-                            className="rounded-lg p-1.5 text-muted hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950/50"
-                          >
-                            <Trophy className="size-4" />
                           </button>
                         )}
 

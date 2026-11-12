@@ -806,6 +806,7 @@
       "selectScope": "اختاري الدور أو اللجنة",
       "selectScopeRequired": "اختاري الدور أو اللجنة قبل حفظ النقاط.",
       "developerLeaderScope": "قائد لجان المطورين",
+      "advisorScope": "مستشار",
       "current": "النقاط الحالية: {count}",
       "permission": "ليست لديك صلاحية تحديث النقاط في هذه اللجنة.",
       "award": "إضافة نقاط",

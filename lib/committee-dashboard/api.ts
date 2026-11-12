@@ -338,10 +338,10 @@ export async function updateCommitteePoints(code: string, memberId: string, poin
   });
 }
 
-export async function updateDeveloperLeaderGlobalPoints(memberId: string, pointsDelta: number, reason: string) {
+export async function updateGlobalRolePoints(memberId: string, pointsDelta: number, reason: string, globalRoleCode: "ADVISOR" | "DEVELOPER_COMMITTEES_LEADER") {
   return apiRequest(`/club-leadership/members/${encodeURIComponent(memberId)}/global-points`, {
     method: "POST",
-    body: { pointsDelta, reason },
+    body: { pointsDelta, reason, globalRoleCode },
   });
 }
 

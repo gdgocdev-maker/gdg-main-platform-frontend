@@ -806,6 +806,7 @@
       "selectScope": "Choose where these points apply",
       "selectScopeRequired": "Choose a role or committee before saving points.",
       "developerLeaderScope": "Developer committees overall leader",
+      "advisorScope": "Advisor",
       "current": "Current points: {count}",
       "permission": "You do not have permission to update points in this committee.",
       "award": "Award points",

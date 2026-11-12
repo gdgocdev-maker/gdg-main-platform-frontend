@@ -56,6 +56,7 @@ export function PointsModal({ isOpen, onClose, member }: PointsModalProps) {
     ...eligibleCommitteeScopes.map((item) => ({
       key: `committee:${item.code}`,
       kind: "committee" as const,
+      globalRoleCode: undefined,
       committeeCode: item.code,
       label: `${item.name} — ${item.role}`,
       points: item.points,
@@ -65,9 +66,20 @@ export function PointsModal({ isOpen, onClose, member }: PointsModalProps) {
       ? [{
           key: "global:DEVELOPER_COMMITTEES_LEADER",
           kind: "global" as const,
+          globalRoleCode: "DEVELOPER_COMMITTEES_LEADER" as const,
           label: t("points.developerLeaderScope"),
           points: member.globalPoints ?? member.points,
           pointsVisible: member.globalPointsVisible ?? member.pointsVisible,
+        }]
+      : []),
+    ...(clubLeadership && member?.globalRoles?.includes("ADVISOR")
+      ? [{
+          key: "global:ADVISOR",
+          kind: "global" as const,
+          globalRoleCode: "ADVISOR" as const,
+          label: t("points.advisorScope"),
+          points: member.advisorPoints ?? 0,
+          pointsVisible: member.advisorPointsVisible ?? false,
         }]
       : []),
   ];
@@ -136,7 +148,7 @@ export function PointsModal({ isOpen, onClose, member }: PointsModalProps) {
         return;
       }
       await updateMemberPoints(member.id, delta, reason.trim(), selectedScope.kind === "global"
-        ? { global: true }
+        ? { globalRoleCode: selectedScope.globalRoleCode }
         : { committeeCode: selectedScope.committeeCode });
       setPointsAmount(50);
       setReason("");
