@@ -4,7 +4,7 @@ import { useLocale, useTranslations } from "next-intl"
 import { type FormEvent, useState } from "react"
 import AuthErrorMessage from "@/app/components/auth/AuthErrorMessage"
 import { EMAIL_MAX_LENGTH, validateEmail } from "@/app/lib/validation/email"
-import { apiRequest } from "@/lib/api/client"
+import { authClient } from "@/lib/auth/better-auth-client"
 
 function normalizeText(value: string) {
   return value.trim();
@@ -52,13 +52,13 @@ export default function ForgotPasswordForm() {
     setIsSubmitting(true);
     setRequestMessage("");
     setRequestSucceeded(false);
-    const result = await apiRequest<null>("/auth/setup-password/request", {
-      method: "POST",
-      body: { email: normalizeText(email), locale },
+    const result = await authClient.requestPasswordReset({
+      email: normalizeText(email),
+      redirectTo: `${window.location.origin}/${locale}/reset-password`,
     });
     setIsSubmitting(false);
-    setRequestSucceeded(result.ok);
-    setRequestMessage(result.ok ? t("requestSent") : t("requestFailed"));
+    setRequestSucceeded(!result.error);
+    setRequestMessage(!result.error ? t("requestSent") : t("requestFailed"));
   };
 
   return (

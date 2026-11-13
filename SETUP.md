@@ -47,3 +47,13 @@
 - محليًا: افتح أدوات المطور > Network وتأكد أن الطلبات تذهب إلى `http://localhost:3000/api/...`، وأن خدمة الباكند تعمل على المنفذ `3001`.
 - على Render: افتح نفس المسارات من واجهة Render؛ يجب أن تمر من نطاق الواجهة عبر `/api`، بينما `API_PROXY_TARGET` يشير إلى خدمة الباكند.
 - استخدم `pnpm check` لفحوصات الواجهة و`pnpm build` لبناء الإنتاج.
+
+## Better Auth migration branch
+
+The frontend now uses Better Auth through same-origin `/api/auth/*`. NestJS owns the auth handler and database; no frontend Supabase URL/key is needed. Keep `NEXT_PUBLIC_USE_API=true` and `API_PROXY_TARGET` pointing to NestJS. Credential endpoints preserve `/api/auth`; application profile endpoints use `/api/account/*` and the proxy strips only that outer `/api` prefix.
+
+The backend must be deployed together with this frontend. Configure Better Auth's public URL and trusted frontend origin on the backend. Google redirects to `https://<frontend-origin>/api/auth/callback/google`, then the localized frontend callback checks the server session and routes to profile completion or the dashboard. The frontend never exchanges or stores OAuth tokens. Existing Supabase sessions and emailed links must be replaced at cutover.
+
+Email verification now uses a link. Password recovery uses Better Auth's single-use reset token and removes it from the visible URL after loading. Arabic/English text and the current auth-page design are retained. Proxy cookie checks are navigation hints; NestJS remains responsible for authentication and permissions.
+
+Run `pnpm test` for auth-routing checks, `pnpm lint`, `pnpm typecheck` (run `pnpm exec next typegen` on a fresh checkout), and `pnpm build`. PNG previews are in `artifacts/auth-pages`; backend `artifacts/auth-emails` contains HTML, plain text and PNG templates. These previews contain synthetic links only.
