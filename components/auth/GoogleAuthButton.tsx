@@ -17,6 +17,7 @@ export default function GoogleAuthButton({ className = "" }: { className?: strin
     try {
       const { error: authError } = await authClient.signIn.social({
         provider: "google",
+        additionalData: { locale: locale === "ar" ? "ar" : "en" },
         callbackURL: `${window.location.origin}/${locale}/auth/callback`,
         errorCallbackURL: `${window.location.origin}/${locale}/auth/callback?error=oauth`,
       });
