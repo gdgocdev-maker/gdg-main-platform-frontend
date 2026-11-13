@@ -532,7 +532,7 @@ export default function SignupForm() {
       refreshToken?: string;
       expiresAt?: number;
       emailVerificationRequired?: boolean;
-    }>("/auth/signup", {
+    }>("/account/signup", {
       method: "POST",
       body: {
         fullName: values.fullName,

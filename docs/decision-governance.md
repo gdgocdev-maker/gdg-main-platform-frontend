@@ -80,3 +80,5 @@ Web Doc Final describes some Next.js full-stack capabilities, including Server A
 ## 2026-11-13 — Better Auth migration
 
 Owner-authorized migration replaces Supabase Auth with backend-owned Better Auth and Resend email. The Next.js frontend retains its existing same-origin API proxy and bilingual interface; it does not become an authentication authority. Base verified with fetch/prune and remote/PR inspection: origin/main `15c68e2914f5de63fb1c8ac73486dedf3a068d5a`, latest integration branch, no open PRs. See backend `docs/auth-migration-plan.md` for the coordinated plan. Implementation is in progress, not ready for deployment. No push or PR is authorized.
+
+Native Better Auth requests retain `/api/auth/*` through the Next rewrite. Application profile operations move to `/api/account/*` (backend `/account/*`) to avoid namespace collisions; credential operations use native Better Auth response shapes. See backend `docs/better-auth-openapi.yaml` and Better Auth's generated `/api/auth/open-api/generate-schema` contract. Frontend flow migration is still in progress.

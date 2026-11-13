@@ -169,7 +169,7 @@ export default function GoogleSignupCompletion() {
     }
 
     setIsSubmitting(true);
-    const result = await apiRequest<{ registrationPendingApproval: boolean }>("/auth/google/complete-signup", {
+    const result = await apiRequest<{ registrationPendingApproval: boolean }>("/account/complete-profile", {
       method: "POST",
       accessToken: profile.accessToken,
       body: {

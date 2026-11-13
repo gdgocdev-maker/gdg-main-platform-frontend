@@ -91,7 +91,7 @@ export async function apiRequest<T>(
       "/auth/login",
       "/auth/logout",
       "/auth/google/session",
-      "/auth/google/complete-signup",
+      "/account/complete-profile",
       "/auth/setup-password",
       "/auth/setup-password/complete",
     ].includes(path);
