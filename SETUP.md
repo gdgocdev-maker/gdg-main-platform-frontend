@@ -38,7 +38,7 @@
 - Build command: `corepack enable && corepack prepare pnpm@12.3.4 --activate && pnpm install --frozen-lockfile && pnpm build`
 - Start command: `pnpm start:prod`
 - قبل التشغيل، طبّق migrations عبر Pre-Deploy Command: `pnpm prisma:migrate:deploy` إذا كانت الخطة تدعمه. وإلا استخدم Start command: `pnpm prisma:migrate:deploy && pnpm start:prod`.
-- اضبط `NODE_VERSION=24.20.0` و`NODE_ENV=production`، `FRONTEND_URL=https://<frontend-service>.onrender.com`، وقيم الإنتاج الفعلية لـ`DATABASE_URL` وSupabase وبقية الإعدادات المطلوبة. Render يمرر `PORT` تلقائيًا؛ لا تثبته على `3001` في الإنتاج.
+- اضبط `NODE_VERSION=24.20.0` و`NODE_ENV=production`، `FRONTEND_URL=https://<frontend-service>.onrender.com`، وقيم الإنتاج الفعلية لـ`DATABASE_URL` وBetter Auth وResend وبقية الإعدادات المطلوبة. Render يمرر `PORT` تلقائيًا؛ لا تثبته على `3001` في الإنتاج.
 
 `FRONTEND_URL` لازم يطابق أصل موقع الواجهة حرفيًا، بدون مسار. لا تضع أسرار الباكند في إعدادات الواجهة أو في أي متغير يبدأ بـ`NEXT_PUBLIC_`. لا تعدّل `.env.local` لتشغيل Render؛ إعدادات الخدمة محفوظة في Render منفصلة عن إعداد localhost.
 
