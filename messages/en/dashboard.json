@@ -743,6 +743,7 @@
       "updatePoints": "Update Points",
       "remove": "Remove Member",
       "confirmRemove": "Are you sure you want to remove {name} from the committee? They will lose access to committee tasks and permissions.",
+      "confirmDeleteCommitteeData": "Remove {name} from this committee? Their points, committee tasks, and wallet link for this committee will also be permanently deleted. Their account and other committee memberships will remain.",
       "pointsUnit": "{count} pts",
       "expired": "Standard Member",
       "modalTitle": "Add Committee Member",

@@ -27,7 +27,7 @@ import { setElevatedAccess, clearElevatedAccess } from "./accessStore";
 import { readPublishedHomeEvents, toPublishedHomeEvent, PUBLISHED_HOME_EVENTS_KEY } from "@/lib/events/published-home-events";
 import { applyDecision, fetchPrEvents, fetchRegistrants } from "@/lib/pr-registrations/api";
 import { API_ENABLED } from "@/lib/api/client";
-import { fetchCommitteeDashboard, fetchClubLeadershipDashboard, fetchDeveloperCommitteeOverview, createCommitteeEvent, publishCommitteeEvent, deleteCommitteeDraftEvent, fetchCommitteeEvent, type CommitteeEventDetails, type EventSchedule, createCommitteeMember, addClubMemberToCommittee, assignClubPerson, assignDeveloperCommitteeMember, removeClubPerson, type MemberAssignmentRole, createCommitteeTask, updateCommitteeTask, reviewCommitteeTask, deleteCommitteeTask, updateCommitteePoints, updateDeveloperLeaderGlobalPoints, type CommitteeDashboardStats, type DeveloperCommitteeOverview } from "@/lib/committee-dashboard/api";
+import { fetchCommitteeDashboard, fetchClubLeadershipDashboard, fetchDeveloperCommitteeOverview, createCommitteeEvent, publishCommitteeEvent, deleteCommitteeDraftEvent, fetchCommitteeEvent, type CommitteeEventDetails, type EventSchedule, createCommitteeMember, addClubMemberToCommittee, assignClubPerson, assignDeveloperCommitteeMember, removeClubPerson, removeCommitteeMember as removeCommitteeMemberRequest, removeDeveloperCommitteeLeader as removeDeveloperCommitteeLeaderRequest, type MemberAssignmentRole, createCommitteeTask, updateCommitteeTask, reviewCommitteeTask, deleteCommitteeTask, updateCommitteePoints, updateDeveloperLeaderGlobalPoints, type CommitteeDashboardStats, type DeveloperCommitteeOverview } from "@/lib/committee-dashboard/api";
 
 interface LeaderDashboardContextValue {
   committee: LeaderCommittee;
@@ -75,6 +75,8 @@ interface LeaderDashboardContextValue {
   assignPerson: (assignment: { email: string; role: MemberAssignmentRole; committeeCode?: string }) => Promise<void>;
   addMemberToCommittee: (memberId: string, committeeCode: string) => Promise<void>;
   removeClubMemberByEmail: (email: string, committeeCode?: string) => Promise<void>;
+  removeOwnCommitteeMember: (memberId: string) => Promise<void>;
+  removeDeveloperCommitteeLeader: (committeeCode: string, memberId: string) => Promise<void>;
   updateMember: (id: string, updates: Partial<CommitteeMember>) => void;
   grantTemporaryAccess: (memberId: string, durationMinutes: number) => void;
   revokeTemporaryAccess: (memberId: string) => void;
@@ -506,6 +508,18 @@ export function LeaderDashboardProvider({
     await reloadDashboard();
   };
 
+  const removeOwnCommitteeMember = async (memberId: string) => {
+    const result = await removeCommitteeMemberRequest(committeeConfig.committeeCode, memberId);
+    if (!result.ok) throw new Error(result.message);
+    await reloadDashboard();
+  };
+
+  const removeDeveloperCommitteeLeader = async (committeeCode: string, memberId: string) => {
+    const result = await removeDeveloperCommitteeLeaderRequest(committeeCode, memberId);
+    if (!result.ok) throw new Error(result.message);
+    await reloadDashboard();
+  };
+
   const updateMember =(id: string, updates: Partial<CommitteeMember>) => {
     setMembers((prev) => prev.map((m) => (m.id === id ? { ...m, ...updates } : m)));
   };
@@ -630,6 +644,8 @@ export function LeaderDashboardProvider({
     addMember,
     addMemberToCommittee,
     removeClubMemberByEmail,
+    removeOwnCommitteeMember,
+    removeDeveloperCommitteeLeader,
     assignPerson,
     updateMember,
     grantTemporaryAccess,

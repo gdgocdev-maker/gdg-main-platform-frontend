@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Trophy } from "lucide-react";
+import { Plus, Trophy, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useLeaderDashboard } from "./LeaderDashboardContext";
 import { LeaderGreeting } from "./LeaderGreeting";
@@ -13,6 +13,7 @@ import { committees } from "@/lib/badge/themes";
 import { AssignPersonModal } from "./AssignPersonModal";
 import { PointsModal } from "./PointsModal";
 import type { CommitteeMember } from "./types";
+import { ConfirmModal } from "./ConfirmModal";
 
 const developerCommitteeAccents: Record<string, string> = {
   DATA: committees.DATA.theme.bg,
@@ -46,10 +47,11 @@ function ClubLeadershipDashboard() {
 function DeveloperCommitteesDashboard() {
   const t = useTranslations("dashboard.leadershipDashboard");
   const membersT = useTranslations("dashboard.leader.members");
-  const { developerCommitteesOverview, members, canAssignDeveloperMembers, canManagePoints, currentMember, dashboardLoading, dashboardError } = useLeaderDashboard();
+  const { developerCommitteesOverview, members, canAssignDeveloperMembers, canManagePoints, currentMember, dashboardLoading, dashboardError, removeDeveloperCommitteeLeader } = useLeaderDashboard();
   const [selectedCommittee, setSelectedCommittee] = useState("all");
   const [assignOpen, setAssignOpen] = useState(false);
   const [pointsMember, setPointsMember] = useState<CommitteeMember | null>(null);
+  const [leaderToRemove, setLeaderToRemove] = useState<{ member: CommitteeMember; code: string } | null>(null);
   const visibleCommittees = selectedCommittee === "all"
     ? developerCommitteesOverview
     : developerCommitteesOverview.filter((item) => item.code === selectedCommittee);
@@ -128,7 +130,7 @@ function DeveloperCommitteesDashboard() {
           <p className="rounded-xl border border-dashed border-border bg-surface p-6 text-center text-sm font-medium text-foreground/75">{t("noDeveloperCommittees")}</p>
         ) : null}
       </section>
-      {canManagePoints && <section className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm">
+      {(canManagePoints || canAssignDeveloperMembers) && <section className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm">
         <div className="border-b border-border px-5 py-4">
           <h2 className="text-base font-bold text-foreground">{t("committeeLeaders")}</h2>
         </div>
@@ -146,7 +148,8 @@ function DeveloperCommitteesDashboard() {
                 <td className="px-4 py-3 text-muted">{member.role}</td>
                 <td className="px-4 py-3 font-bold text-blue-600 dark:text-blue-400">{member.pointsVisible === false ? "—" : member.points.toLocaleString()}</td>
                 <td className="px-5 py-3 text-end">
-                  {member.pointsVisible !== false && member.id !== currentMember?.id && <button type="button" title={membersT("updatePoints")} aria-label={membersT("updatePoints")} onClick={() => setPointsMember(member)} className="rounded-lg p-1.5 text-muted hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950/50"><Trophy className="size-4" /></button>}
+                  {canManagePoints && member.pointsVisible !== false && member.id !== currentMember?.id && <button type="button" title={membersT("updatePoints")} aria-label={membersT("updatePoints")} onClick={() => setPointsMember(member)} className="rounded-lg p-1.5 text-muted hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950/50"><Trophy className="size-4" /></button>}
+                  {canAssignDeveloperMembers && member.id !== currentMember?.id && (member.committees ?? []).filter((item) => visibleCommittees.some((committee) => committee.code === item.code) && ["Leader", "Co-Leader"].includes(item.role)).map((item) => <button key={item.code} type="button" title={`${membersT("remove")} · ${item.name}`} aria-label={`${membersT("remove")} · ${item.name}`} onClick={() => setLeaderToRemove({ member, code: item.code })} className="rounded-lg p-1.5 text-muted hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/50"><Trash2 className="size-4" /></button>)}
                 </td>
               </tr>)}
               {visibleLeaders.length === 0 && <tr><td colSpan={4} className="px-5 py-8 text-center text-sm text-muted">{t("noDeveloperCommittees")}</td></tr>}
@@ -155,6 +158,9 @@ function DeveloperCommitteesDashboard() {
         </div>
       </section>}
       <PointsModal isOpen={Boolean(pointsMember)} onClose={() => setPointsMember(null)} member={pointsMember} />
+      <ConfirmModal isOpen={Boolean(leaderToRemove)} onClose={() => setLeaderToRemove(null)} onConfirm={() => {
+        if (leaderToRemove) void removeDeveloperCommitteeLeader(leaderToRemove.code, leaderToRemove.member.id).catch((error: unknown) => window.alert(error instanceof Error ? error.message : String(error)));
+      }} title={membersT("remove")} message={membersT("confirmDeleteCommitteeData", { name: leaderToRemove?.member.name ?? "" })} confirmText={membersT("remove")} cancelText={membersT("cancel")} />
       <LeadershipApprovalsPanel scope="DEVELOPER_COMMITTEES" />
       <AssignPersonModal isOpen={assignOpen} onClose={() => setAssignOpen(false)} scope="developer" />
     </div>

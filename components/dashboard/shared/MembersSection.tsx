@@ -54,6 +54,7 @@ const MEMBER_GROUP_ORDER: Record<MemberGroup, number> = {
 interface MembersSectionProps {
   onOpenAddMember: () => void;
   onOpenRemoveMember?: (email?: string) => void;
+  onOpenRemoveCommitteeMember?: (member: CommitteeMember) => void;
   onOpenTemporaryAccess?: (member: CommitteeMember) => void;
   onOpenUpdatePoints: (member: CommitteeMember) => void;
 }
@@ -61,6 +62,7 @@ interface MembersSectionProps {
 export function MembersSection({
   onOpenAddMember,
   onOpenRemoveMember,
+  onOpenRemoveCommitteeMember,
   onOpenTemporaryAccess,
   onOpenUpdatePoints,
 }: MembersSectionProps) {
@@ -400,13 +402,18 @@ export function MembersSection({
                         )}
 
                         {/* Remove Member */}
-                        {clubLeadership && canManageMembers && onOpenRemoveMember && member.id !== currentMember?.id && (
+        {clubLeadership && canManageMembers && onOpenRemoveMember && member.id !== currentMember?.id && (
                           <button
                             type="button"
                             title={t("members.remove")}
                             onClick={() => onOpenRemoveMember(member.email)}
                             className="rounded-lg p-1.5 text-muted hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/50"
                           >
+                            <Trash2 className="size-4" />
+                          </button>
+                        )}
+                        {!clubLeadership && canAddMembers && onOpenRemoveCommitteeMember && member.id !== currentMember?.id && (
+                          <button type="button" title={t("members.remove")} aria-label={t("members.remove")} onClick={() => onOpenRemoveCommitteeMember(member)} className="rounded-lg p-1.5 text-muted hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/50">
                             <Trash2 className="size-4" />
                           </button>
                         )}

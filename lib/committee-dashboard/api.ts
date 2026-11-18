@@ -225,6 +225,14 @@ export async function assignDeveloperCommitteeMember(input: { email: string; com
   return apiRequest('/developer-committees/members', { method: 'POST', body: input });
 }
 
+export async function removeCommitteeMember(code: string, memberId: string) {
+  return apiRequest(`/committees/${encodeURIComponent(code)}/members/${encodeURIComponent(memberId)}`, { method: 'DELETE' });
+}
+
+export async function removeDeveloperCommitteeLeader(code: string, memberId: string) {
+  return apiRequest(`/developer-committees/committees/${encodeURIComponent(code)}/members/${encodeURIComponent(memberId)}`, { method: 'DELETE' });
+}
+
 export async function assignClubPerson(input: { email: string; committeeCode?: string; role: MemberAssignmentRole }) {
   return apiRequest('/club-leadership/members', { method: 'POST', body: input });
 }
